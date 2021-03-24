@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=0">
+	<link rel="manifest" href="manifest.json">
+	<title></title>
+	<link rel="stylesheet" href="css/buttons.css">
+	<link rel="stylesheet" href="css/index.css">
+</head>
+<body class="preload">
+	<svg class="icons">
+		<defs>
+			<g id="triangle"><path d="M6 12L0 24h24l-6-12-6-12-6 12zm10.7 1l4.6 9.2a283.4 283.4 0 01-18.6 0 889.3 889.3 0 019.4-18.4l4.6 9.3z"/></g>
+			<g id="x"><path d="M.7.6l-.7.7 5.3 5.3 5.3 5.4s-2.3 2.5-5.3 5.4L0 22.7l.7.7.6.6 1.8-1.8L8.5 17l3.5-3.5 1.9 1.8 5.3 5.3 3.5 3.5.7-.6.6-.7A261.7 261.7 0 0013.4 12 239.6 239.6 0 0124 1.3l-.6-.7-.7-.6L21 2l-5.4 5.3-3.5 3.5L8.5 7 3 1.8 1.3 0 .7.6z"/></g>
+			<g id="square"><path d="M0 12v12h24V0H0v12zm22.2 0v10.3H1.8V1.7h20.4V12z"/></g>
+			<g id="up"><path d="M6 12L0 24h24l-6-12-6-12-6 12zm10.7 1l4.6 9.2a283.4 283.4 0 01-18.6 0 889.3 889.3 0 019.4-18.4l4.6 9.3z"/></g>
+			<g id="right"><path d="M12 6L0 0v24l12-6 12-6-12-6zm-1 10.7l-9.2 4.6a283.6 283.6 0 010-18.6 889.3 889.3 0 0118.4 9.4l-9.3 4.6z"/></g>
+			<g id="left"><path d="M12 18l12 6V0L12 6 0 12l12 6zm1-10.7l9.2-4.6a283.4 283.4 0 010 18.6 888.5 888.5 0 01-18.4-9.4l9.3-4.6z"/></g>
+			<g id="down"><path d="M18 12l6-12H0l6 12 6 12 6-12zM7.4 11L2.7 1.7a283.6 283.6 0 0118.6 0 888.5 888.5 0 01-9.4 18.4l-4.6-9.3z"/></g>
+			<g id="circle"><path d="M10.36.07a12.26 12.26 0 00-9.63 7.7c-.97 2.5-.97 5.94 0 8.45a12.13 12.13 0 0011.96 7.76c4.59-.25 8.76-3.2 10.49-7.4a9.7 9.7 0 00.82-4.59 9.7 9.7 0 00-.82-4.58 12.25 12.25 0 00-8.3-7.08c-1.2-.3-3.4-.42-4.52-.26zm3.31 1.73c3.97.67 7.05 3.4 8.3 7.32.27.88.29 1.06.29 2.87s-.02 2-.3 2.88c-2.08 6.6-9.44 9.47-15.3 5.95-1-.6-2.4-1.92-3.06-2.86A10.32 10.32 0 0113.67 1.8z"/></g>
+		</defs>
+	</svg>
+
+	<!-- PSP preset -->
+	<button class="l handleTouch" data-cmd="l">L</button>
+	<button class="r handleTouch lock" data-cmd="r">R</button>
+
+	<div class="arrows group">
+		<button class="up handleTouch" data-cmd="up">
+			<svg width="24" height="24"><use xlink:href="#up" /></svg>
+		</button>
+		<button class="down handleTouch" data-cmd="down">
+			<svg width="24" height="24"><use xlink:href="#down" /></svg>
+		</button>
+		<button class="left handleTouch" data-cmd="left">
+			<svg width="24" height="24"><use xlink:href="#left" /></svg>
+		</button>
+		<button class="right handleTouch" data-cmd="right">
+			<svg width="24" height="24"><use xlink:href="#right" /></svg>
+		</button>
+	</div>
+
+	<div id="joystick" class="analog group handleTouch"></div>
+
+	<div class="actions group">
+		<button class="triangle handleTouch" data-cmd="triangle">
+			<svg width="24" height="24"><use xlink:href="#triangle" /></svg>
+		</button>
+		<button class="circle handleTouch" data-cmd="circle">
+			<svg width="24" height="24"><use xlink:href="#circle" /></svg>
+		</button>
+		<button class="square handleTouch" data-cmd="square">
+			<svg width="24" height="24"><use xlink:href="#square" /></svg>
+		</button>
+		<button class="x handleTouch" data-cmd="x">
+			<svg width="24" height="24"><use xlink:href="#x" /></svg>
+		</button>
+	</div>
+
+	<button class="select handleTouch" data-cmd="select">SELECT</button>
+	<button class="start handleTouch" data-cmd="start">START</button>
+
+	<script src="lib/js/nipplejs.min.js"></script>
+	<script src="js/index.js"></script>
+</body>
+</html>
