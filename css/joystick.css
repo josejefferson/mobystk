@@ -1,0 +1,107 @@
+:root {
+	--color: #ff08;
+	--active: #ff03;
+}
+
+* {
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+body {
+	margin: 0;
+	height: 100vh;
+	background-color: black;
+	overscroll-behavior: contain;
+}
+
+body.color {
+	background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+	background-size: 1800% 1800%;
+	animation: rainbow 40s ease infinite;
+}
+
+.preload * {
+	transition: none !important;
+}
+
+button {
+	background-color: transparent;
+	border: var(--color) 2.5px solid;
+	position: absolute;
+	color: var(--color);
+	font-size: 12.5px;
+	outline: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: border-color 1s ease, color 1s ease;
+}
+
+button.active {
+	background-color: var(--active);
+}
+
+button svg {
+	pointer-events: none;
+	z-index: -1;
+}
+
+button.lock {
+	border-style: dashed;
+}
+
+.icons, button, .group, .analog {
+	display: none;
+}
+
+button.edit {
+	display: flex;
+	top: 0;
+	border-top: none;
+	font-size: 16px;
+	border-radius: 0 0 10px 10px;
+	width: 60px;
+	height: 30px;
+	left: calc(50% - 60px / 2);
+}
+
+.nipple {
+	opacity: 1 !important;
+}
+
+.nipple .back {
+	opacity: 1 !important;
+	background: none !important;
+	border: var(--color) 2.5px solid;
+	transition: border-color 1s ease;
+}
+
+.nipple .front {
+	opacity: 1 !important;
+	background: var(--color) !important;
+	border: var(--color) 2.5px solid;
+	transition: border-color 1s ease, background 1s ease;
+}
+
+.icons path {
+	fill: var(--color);
+	transition: fill 1s ease;
+}
+
+.group {
+	position: absolute;
+}
+
+@keyframes rainbow {
+	0% {background-position: 0 0}
+	50% {background-position: 100% 100%}
+	100% {background-position: 0 0}	
+}
+
+.group button {
+	font-size: 20px;
+	border-radius: 50%;
+	width: 44px;
+	height: 44px;
+}

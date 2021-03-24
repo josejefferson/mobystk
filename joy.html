@@ -5,8 +5,8 @@
 	<meta name="viewport" content="width=device-width, user-scalable=0">
 	<link rel="manifest" href="manifest.json">
 	<title></title>
-	<link rel="stylesheet" href="css/buttons.css">
-	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="css/joystick.css">
+	<link rel="stylesheet" class="layout">
 </head>
 <body class="preload">
 	<svg class="icons">
@@ -22,9 +22,11 @@
 		</defs>
 	</svg>
 
-	<!-- PSP preset -->
+	<a href="index.html"><button class="edit">Editar</button></a>
+
 	<button class="l handleTouch" data-cmd="l">L</button>
-	<button class="r handleTouch lock" data-cmd="r">R</button>
+	<button class="r handleTouch" data-cmd="r">R</button>
+	<button class="rLock handleTouch lock" data-cmd="r">R</button>
 
 	<div class="arrows group">
 		<button class="up handleTouch" data-cmd="up">
@@ -43,7 +45,7 @@
 
 	<div id="joystick" class="analog group handleTouch"></div>
 
-	<div class="actions group">
+	<div class="actions psp group">
 		<button class="triangle handleTouch" data-cmd="triangle">
 			<svg width="24" height="24"><use xlink:href="#triangle" /></svg>
 		</button>
@@ -58,10 +60,17 @@
 		</button>
 	</div>
 
+	<div class="actions snes group">
+		<button class="snes_x handleTouch" data-cmd="triangle">X</button>
+		<button class="snes_a handleTouch" data-cmd="circle">A</button>
+		<button class="snes_y handleTouch" data-cmd="square">Y</button>
+		<button class="snes_b handleTouch" data-cmd="x">B</button>
+	</div>
+
 	<button class="select handleTouch" data-cmd="select">SELECT</button>
 	<button class="start handleTouch" data-cmd="start">START</button>
 
 	<script src="lib/js/nipplejs.min.js"></script>
-	<script src="js/index.js"></script>
+	<script src="js/joystick.js"></script>
 </body>
 </html>

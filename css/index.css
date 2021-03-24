@@ -1,85 +1,70 @@
-:root {
-	--color: #ff08;
-	--active: #ff03;
-}
-
-* {
-	user-select: none;
+body {
+	background-color: black;
+	color: white;
+	overscroll-behavior: contain;
+	font-family: sans-serif;
+	text-align: center;
+	margin: 40px 0;
 	-webkit-tap-highlight-color: transparent;
 }
 
-body {
-	margin: 0;
-	height: 100vh;
-	background-color: black;
-	overscroll-behavior: contain;
+.label {
+	margin-top: 20px;
+	margin-bottom: 10px;
+	font-size: 20px;
 }
 
-body.color {
-	background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
-	background-size: 1800% 1800%;
-	animation: rainbow 40s ease infinite;
-}
-
-.preload * {
-	transition: none !important;
-}
-
-button {
-	background-color: transparent;
-	border: var(--color) 2.5px solid;
-	position: absolute;
-	color: var(--color);
-	font-size: 12.5px;
+input[type=text] {
+	background: none;
+	font-family: monospace;
+	font-size: 16px;
+	height: 30px;
+	width: 200px;
+	color: white; 
+	border: #fff8 2px solid;
+	transition: border-color .15s ease;
 	outline: none;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	transition: border-color 1s ease, color 1s ease;
 }
 
-button.active {
-	background-color: var(--active);
+input[type=text]:focus {
+	border-color: white;
 }
 
-button svg {
-	pointer-events: none;
-	z-index: -1;
+.select input {
+	display: none;
 }
 
-button.lock {
-	border-style: dashed;
+.select .selLabel {
+	padding: 10px 15px;
+	display: inline-block;
+	border: #fff8 2px solid;
+	color: #fff8;
+	transition: .15s ease;
 }
 
-.nipple {
-	opacity: 1 !important;
+.select input:checked + .selLabel {
+	background: #00f8;
+	color: white;
 }
 
-.nipple .back {
-	opacity: 1 !important;
-	background: none !important;
-	border: var(--color) 2.5px solid;
-	transition: border-color 1s ease;
+.start {
+	text-align: center;
+	margin-top: 40px;
 }
 
-.nipple .front {
-	opacity: 1 !important;
-	background: var(--color) !important;
-	border: var(--color) 2.5px solid;
-	transition: border-color 1s ease, background 1s ease;
+.start button {
+	border: #ff08 2px solid;
+	border-radius: 200px 70px 200px 70px;
+	background: none;
+	color: white;
+	font-size: 30px;
+	padding: 10px 40px;
+	outline: none;
+	transition: .15s ease;
+	cursor: pointer;
 }
 
-.icons path {
-	fill: var(--color);
-	transition: fill 1s ease;
-}
-
-.group {
-	position: absolute;
-}
-
-@keyframes rainbow {
-	0% {background-position: 0 0}
-	50% {background-position: 100% 100%}
-	100% {background-position: 0 0}	
+.start button:hover,
+.start button:active {
+	background: #ff05;
 }

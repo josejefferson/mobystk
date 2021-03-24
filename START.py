@@ -1,11 +1,13 @@
+import socket
 import asyncio
 import websockets
 from pynput.keyboard import Key, Controller
 
 keyboard = Controller()
 
+PORT = 5000
 async def server(websocket, path):
-	print('Usuário conectado!')
+	print('[WEBSOCKET] Usuário conectado')
 	async for msg in websocket:
 		msg = msg.split(' ')
 		msg[1] = msg[1].lower()
@@ -30,8 +32,18 @@ async def server(websocket, path):
 			# print('[ PRESS ] ' + msg[1])
 			keyboard.press(msg[1])
 
-start_server = websockets.serve(server, port=5000)
-print('Servidor iniciado na porta 5000')
+start_server = websockets.serve(server, port=PORT)
+ip = socket.gethostbyname(socket.gethostname()) + ':' + str(PORT)
+
+print('\n[WEBSOCKET] Servidor iniciado')
+print('\n# Digite este código no aplicativo:')
+print('┏━━━━━━━━━━━━━━━━━━━━━━━┓')
+print('┃ ' + ip.ljust(21) +  ' ┃')
+print('┗━━━━━━━━━━━━━━━━━━━━━━━┛\n')
 
 asyncio.get_event_loop().run_until_complete(start_server)
-asyncio.get_event_loop().run_forever()
+try:
+	asyncio.get_event_loop().run_forever()
+except KeyboardInterrupt:
+	print('[WEBSOCKET] Servidor encerrado')
+	pass

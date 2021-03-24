@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=0">
+	<link rel="manifest" href="manifest.json">
+	<title>Joystick Remoto</title>
+	<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+	<form action="joy.html" method="GET" name="settings">
+		<label>
+			<div class="label">Digite o código que aparece no seu computador</div>
+			<input type="text" name="code" autocomplete="off" required>
+		</label>
+
+		<div class="label">Selecione o layout</div>
+		<label class="select">
+			<input type="radio" name="layout" value="psp" checked>
+			<div class="selLabel">PSP</div>
+		</label>
+
+		<label class="select">
+			<input type="radio" name="layout" value="pspRLock">
+			<div class="selLabel">PSP R LOCK</div>
+		</label>
+
+		<label class="select">
+			<input type="radio" name="layout" value="snes">
+			<div class="selLabel">SNES</div>
+		</label>
+
+		<div class="start">
+			<button type="submit">Iniciar</button>
+		</div>
+	</form>
+
+	<script src="js/index.js"></script>
+</body>
+</html>
