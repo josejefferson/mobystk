@@ -1,10 +1,29 @@
+// Configuração do IP e do Layout
 const ip = localStorage.getItem('joystick.code') || '127.0.0.1:5000'
 const layout = localStorage.getItem('joystick.layout')
+if (!layout) location.href = 'index.html'
 document.querySelector('.layout').href = 'layouts/' + layout + '.css'
 
-if (!layout) location.href = 'index.html'
+// Conexão do socket
+let socket = socketConn()
+function socketConn() {
+	const ws = new WebSocket('ws://' + ip);
+	ws.onopen = e => {
+		document.documentElement.style.setProperty('--color', '#fff8')
+		document.documentElement.style.setProperty('--active', '#fff3')
+	}
+	ws.onclose = e => {
+		document.documentElement.style.setProperty('--color', '#f008')
+		document.documentElement.style.setProperty('--active', '#f003')
+		setTimeout(() => socket = socketConn(), 3000)
+	}
+	return ws
+}
 
+// Carregamento da página
+document.oncontextmenu = () => false
 window.onload = () => {
+	// Joystick
 	const joy = nipplejs.create({
 		zone: document.getElementById('joystick'),
 		size: 90,
@@ -13,29 +32,20 @@ window.onload = () => {
 			left: '50%',
 			top: '50%'
 		}
+	}).on('move end', (e, d) => {
+		updateAnalog(d?.angle?.degree, d?.direction)
 	})
 
 	document.querySelector('#joystick .nipple .front').classList.add('joystick', 'handleTouch')
-	joy.on('move end', (e, d) => updateAnalog(d?.angle?.degree, d?.direction))
 	document.body.classList.remove('preload')
 }
 
-const socket = new WebSocket('ws://' + ip);
-socket.addEventListener('open', e => {
-	document.documentElement.style.setProperty('--color', '#fff8')
-	document.documentElement.style.setProperty('--active', '#fff3')
-})
-
-socket.addEventListener('close', e => {
-	document.documentElement.style.setProperty('--color', '#f008')
-	document.documentElement.style.setProperty('--active', '#f003')
-})
-
+// Toques
 const currentTouches = []
-document.ontouchstart = e => {
-	const touches = e.changedTouches
 
-	for (const touch of touches) {
+// Início do toque
+document.ontouchstart = e => {
+	for (const touch of e.changedTouches) {
 		let target = document.elementFromPoint(touch.clientX, touch.clientY)
 		if (!target.classList.contains('joystick') &&
 			(!target.classList.contains('handleTouch') ||
@@ -43,55 +53,48 @@ document.ontouchstart = e => {
 			target.classList.contains('lock'))) target = null
 
 		const analog = target?.classList.contains('joystick') ? true : false
-
-		if (target) {
-			target.classList.add('active')
-			sendCmd(target.dataset.cmd)
-			navigator.vibrate(15)
-		}
-		currentTouches.push({
-			target,
-			touch,
-			analog,
-		})
+		currentTouches.push({ target, touch, analog })
+		if (!target) continue
+		target.classList.add('active')
+		sendCmd(target.dataset.cmd)
+		navigator.vibrate(15)
 	}
 }
 
+// Movimento do toque
 document.ontouchmove = e => {
-	const touches = e.changedTouches
-
-	for (const touch of touches) {
+	for (const touch of e.changedTouches) {
 		const i = currentTouches.findIndex(t => {
 			return t.touch.identifier === touch.identifier
 		})
 		if (i < 0) continue
+
+		const oldtouch = currentTouches[i]
+		if (oldtouch.analog) continue
+		oldtouch.touch = touch
+
 		let target = document.elementFromPoint(touch.clientX, touch.clientY)
 		if (!target?.classList.contains('handleTouch') ||
 			target.classList.contains('joystick')) target = null
-		const oldtouch = currentTouches[i]
 
-		if (oldtouch.analog) continue
+		if (oldtouch.target === target) continue
+		oldtouch.target?.classList.remove('active')
+		sendCmd(oldtouch.target?.dataset.cmd, true)
 
-		if (oldtouch.target !== target) {
-			oldtouch.target?.classList.remove('active')
-			sendCmd(oldtouch.target?.dataset.cmd, true)
-			if (target && (!target.classList.contains('handleTouch') ||
-				target.classList.contains('active') ||
-				target.classList.contains('lock'))) target = null
-			if (target) {
-				target.classList.add('active')
-				sendCmd(target.dataset.cmd)
-				navigator.vibrate(15)
-			}
-			oldtouch.target = target
-		}
-		oldtouch.touch = touch
+		if (target && (!target.classList.contains('handleTouch') ||
+			target.classList.contains('active') ||
+			target.classList.contains('lock'))) target = null
+		oldtouch.target = target
+		if (!target) continue
+		target.classList.add('active')
+		sendCmd(target.dataset.cmd)
+		navigator.vibrate(15)
 	}
 }
 
+// Fim do toque
 document.ontouchend = e => {
-	const touches = e.changedTouches
-	for (const touch of touches) {
+	for (const touch of e.changedTouches) {
 		const i = currentTouches.findIndex(t => {
 			return t.touch.identifier === touch.identifier
 		})
@@ -104,19 +107,21 @@ document.ontouchend = e => {
 	}
 }
 
-document.querySelectorAll('.lock').forEach(el => {
-	el.onclick = () => {
-		if (el.classList.contains('active')) {
-			el.classList.remove('active')
-			sendCmd(el.dataset.cmd, true)
-		} else {
-			el.classList.add('active')
-			sendCmd(el.dataset.cmd)
-		}
-		navigator.vibrate(15)
+// Botões bloqueáveis
+document.querySelectorAll('.lock').forEach(el => el.ontouchend = () => {
+	navigator.vibrate(15)
+	if (el.classList.contains('active')) {
+		// Ativa o botão
+		el.classList.remove('active')
+		sendCmd(el.dataset.cmd, true)
+	} else {
+		// Desativa o botão
+		el.classList.add('active')
+		sendCmd(el.dataset.cmd)
 	}
 })
 
+// Joystick
 const analog = {
 	up: false,
 	down: false,
@@ -141,6 +146,7 @@ function updateAnalog(angle, direction) {
 	if (angle > 292.5 || angle < 67.5) update('right', true)
 	else update('right', false)
 
+	// Atualiza a direção do joystick
 	function update(dir, value) {
 		if (analog[dir] === value) return
 		analog[dir] = value
@@ -148,11 +154,21 @@ function updateAnalog(angle, direction) {
 	}
 }
 
+// Função de enviar comandos para o computador
 function sendCmd(cmd, release = false) {
-	try {
-		if (!cmd) return
-		cmd = cmd.toLowerCase()
-		const str = (release ? 'R' : 'P') + ' ' + cmd
-		socket.send(str)
-	} catch (err) {console.error(err)}
+	// Trata o comando
+	if (!cmd) return
+	cmd = cmd.toLowerCase()
+	cmd = cmd.split(',')
+	cmd.forEach(c => {
+		// Diagonais
+		if (cmd.length > 1) document.querySelectorAll(`[data-cmd="${c}"]`)
+				.forEach(e => e.classList[release ? 'remove' : 'add']('dActive'))
+
+		// Não envia o comando se o websocket não estiver conectado
+		if (socket.readyState !== 1) return
+
+		// Envia o comando
+		socket.send((release ? 'R' : 'P') + ' ' + c)
+	})
 }

@@ -2,16 +2,16 @@
 	display: block;
 	bottom: 135px;
 	left: 30px;
-	width: 120px;
-	height: 120px;
+	width: 128px;
+	height: 128px;
 }
 
-.actions.psp {
+.actions {
 	display: block;
 	bottom: 18px;
 	right: 30px;
-	width: 120px;
-	height: 120px;
+	width: 128px;
+	height: 128px;
 }
 
 .analog {
@@ -27,51 +27,51 @@
 
 .up {
 	display: flex;
-	left: calc(50% - 44px / 2);
+	left: calc(50% - 48px / 2);
 	top: 0;
 }
 
 .down {
 	display: flex;
-	left: calc(50% - 44px / 2);
+	left: calc(50% - 48px / 2);
 	bottom: 0;
 }
 
 .left {
 	display: flex;
-	top: calc(50% - 44px / 2);
+	top: calc(50% - 48px / 2);
 	left: 0;
 }
 
 .right {
 	display: flex;
-	top: calc(50% - 44px / 2);
+	top: calc(50% - 48px / 2);
 	right: 0;
 }
 
 
 
-.triangle {
+.actup {
 	display: flex;
-	left: calc(50% - 44px / 2);
+	left: calc(50% - 48px / 2);
 	top: 0;
 }
 
-.circle {
+.actright {
 	display: flex;
-	top: calc(50% - 44px / 2);
+	top: calc(50% - 48px / 2);
 	right: 0;
 }
 
-.square {
+.actleft {
 	display: flex;
-	top: calc(50% - 44px / 2);
+	top: calc(50% - 48px / 2);
 	left: 0;
 }
 
-.x {
+.actdown {
 	display: flex;
-	left: calc(50% - 44px / 2);
+	left: calc(50% - 48px / 2);
 	bottom: 0;
 }
 

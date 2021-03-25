@@ -1,107 +1,167 @@
+/* Variáveis */
 :root {
 	--color: #ff08;
+	--border: var(--color);
 	--active: #ff03;
 }
 
 * {
-	user-select: none;
 	-webkit-tap-highlight-color: transparent;
+	user-select: none;
 }
 
 body {
-	margin: 0;
-	height: 100vh;
 	background-color: black;
+	height: 100vh;
+	margin: 0;
 	overscroll-behavior: contain;
 }
 
-body.color {
-	background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
-	background-size: 1800% 1800%;
-	animation: rainbow 40s ease infinite;
-}
-
-.preload * {
+/* Desativa as transições enquanto carrega a página */
+body.preload * {
 	transition: none !important;
 }
 
-button {
-	background-color: transparent;
-	border: var(--color) 2.5px solid;
+/* Anima o fundo com cores */
+body.color {
+	animation: rainbow 40s ease infinite;
+	background: linear-gradient(124deg, 
+		#ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+	background-size: 1800% 1800%;
+}
+
+/* Grupos */
+.group {
 	position: absolute;
-	color: var(--color);
-	font-size: 12.5px;
-	outline: none;
-	display: flex;
+}
+
+/* Botões do grupo */
+.group button {
+	border-radius: 50%;
+	font-size: 20px;
+	height: 48px;
+	width: 48px;
+	z-index: 2;
+}
+
+/* Diagonais do grupo */
+.group .diag {
+	height: 50%;
+	position: absolute;
+	width: 50%;
+}
+
+.diag.dLT { left: 0; top: 0; }
+.diag.dRT { right: 0; top: 0; }
+.diag.dLB { left: 0; bottom: 0; }
+.diag.dRB { right: 0; bottom: 0; }
+
+/* Botões */
+button {
 	align-items: center;
+	background-color: transparent;
+	border: var(--border) 2.5px solid;
+	color: var(--color);
+	display: flex;
+	font-size: 12.5px;
 	justify-content: center;
+	outline: none;
+	position: absolute;
 	transition: border-color 1s ease, color 1s ease;
 }
 
-button.active {
+/* Botões bloqueáveis */
+button.lock {
+	border-style: dashed;
+}
+
+/* Botões ativados */
+button.active,
+button.dActive {
 	background-color: var(--active);
 }
 
+/* Ícones dos botões */
 button svg {
 	pointer-events: none;
 	z-index: -1;
 }
 
-button.lock {
-	border-style: dashed;
-}
-
-.icons, button, .group, .analog {
-	display: none;
-}
-
+/* Botão de editar */
 button.edit {
-	display: flex;
-	top: 0;
-	border-top: none;
-	font-size: 16px;
 	border-radius: 0 0 10px 10px;
-	width: 60px;
+	border-top: none;
+	display: flex;
+	font-size: 16px;
 	height: 30px;
 	left: calc(50% - 60px / 2);
+	top: 0;
+	width: 60px;
 }
 
+/* Joystick */
 .nipple {
 	opacity: 1 !important;
 }
 
+/* Fundo do joystick */
 .nipple .back {
-	opacity: 1 !important;
 	background: none !important;
-	border: var(--color) 2.5px solid;
+	border: var(--border) 2.5px solid;
+	opacity: 1 !important;
 	transition: border-color 1s ease;
 }
 
+/* Interior do joystick */
 .nipple .front {
-	opacity: 1 !important;
 	background: var(--color) !important;
-	border: var(--color) 2.5px solid;
+	border: var(--border) 2.5px solid;
+	opacity: 1 !important;
 	transition: border-color 1s ease, background 1s ease;
 }
 
+/* Ícones */
 .icons path {
 	fill: var(--color);
 	transition: fill 1s ease;
 }
 
-.group {
-	position: absolute;
+/* Oculta os botões enquanto não carregar o layout */
+button, .group, .analog {
+	display: none;
 }
 
+
+/* Animações */
 @keyframes rainbow {
 	0% {background-position: 0 0}
 	50% {background-position: 100% 100%}
 	100% {background-position: 0 0}	
 }
 
-.group button {
-	font-size: 20px;
-	border-radius: 50%;
-	width: 44px;
-	height: 44px;
+@keyframes colors {
+	0% { --color: #FF0000 !important; }
+	4.35% { --color: #FF4000 !important; }
+	8.70% { --color: #FF8000 !important; }
+	13.04% { --color: #FFBF00 !important; }
+	17.39% { --color: #FFFF00 !important; }
+	21.74% { --color: #BFFF00 !important; }
+	26.09% { --color: #80FF00 !important; }
+	30.43% { --color: #40FF00 !important; }
+	34.78% { --color: #00FF00 !important; }
+	39.13% { --color: #00FF40 !important; }
+	43.48% { --color: #00FF80 !important; }
+	47.83% { --color: #00FFBF !important; }
+	52.17% { --color: #00FFFF !important; }
+	56.52% { --color: #00BFFF !important; }
+	60.87% { --color: #0080FF !important; }
+	65.22% { --color: #0040FF !important; }
+	69.57% { --color: #0000FF !important; }
+	73.91% { --color: #4000FF !important; }
+	78.26% { --color: #8000FF !important; }
+	82.61% { --color: #BF00FF !important; }
+	86.96% { --color: #FF00FF !important; }
+	91.30% { --color: #FF00BF !important; }
+	95.65% { --color: #FF0080 !important; }
+	100% { --color: #FF0040 !important; }
 }
