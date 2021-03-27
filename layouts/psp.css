@@ -1,88 +1,132 @@
+/**
+ * WebJoy - Layout
+ *
+ * @name: PSP
+ * @description: Layout for PSP games
+ * @author: Jefferson Dantas
+ */
+
+/* ==========================================================================
+   BUTTON GROUPS
+   ========================================================================== */
+
+/* Arrows (up, down, left, right) */
 .arrows {
 	display: block;
-	bottom: 135px;
+	bottom: 150px;
 	left: 30px;
 	width: 128px;
 	height: 128px;
 }
 
+/* Actions (triangle, circle, square, cross) */
 .actions {
 	display: block;
-	bottom: 18px;
+	bottom: 20px;
 	right: 30px;
-	width: 128px;
-	height: 128px;
+	width: 140px;
+	height: 140px;
 }
 
-.analog {
+/* Joystick */
+.joystick {
 	display: block;
-	bottom: 10px;
+	bottom: 20px;
 	left: 30px;
 	width: 110px;
 	height: 110px;
 	border-radius: 50%;
 }
 
+/* ==========================================================================
+   ARROW BUTTONS
+   ========================================================================== */
 
+/* General arrow buttons */
+.up, .down, .left, .right {
+	display: flex;
+	width: 48px;
+	height: 48px;
+}
 
+/* Up arrow button */
 .up {
-	display: flex;
-	left: calc(50% - 48px / 2);
+	left: 50%;
 	top: 0;
+	transform: translateX(-50%);
 }
 
+/* Down arrow button */
 .down {
-	display: flex;
-	left: calc(50% - 48px / 2);
+	left: 50%;
 	bottom: 0;
+	transform: translateX(-50%);
 }
 
+/* Left arrow button */
 .left {
-	display: flex;
-	top: calc(50% - 48px / 2);
+	top: 50%;
 	left: 0;
+	transform: translateY(-50%);
 }
 
+/* Right arrow button */
 .right {
-	display: flex;
-	top: calc(50% - 48px / 2);
+	top: 50%;
 	right: 0;
+	transform: translateY(-50%);
 }
 
+/* ==========================================================================
+   ACTION BUTTONS
+   ========================================================================== */
 
+/* General action buttons */
+.actup, .actright, .actleft, .actdown {
+	display: flex;
+	width: 52px;
+	height: 52px;
+}
 
+/* Triangle button */
 .actup {
-	display: flex;
-	left: calc(50% - 48px / 2);
+	left: 50%;
 	top: 0;
+	transform: translateX(-50%);
 }
 
-.actright {
-	display: flex;
-	top: calc(50% - 48px / 2);
-	right: 0;
-}
-
-.actleft {
-	display: flex;
-	top: calc(50% - 48px / 2);
-	left: 0;
-}
-
+/* Cross button */
 .actdown {
-	display: flex;
-	left: calc(50% - 48px / 2);
+	left: 50%;
 	bottom: 0;
+	transform: translateX(-50%);
 }
 
+/* Square button */
+.actleft {
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
+}
 
+/* Circle button */
+.actright {
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+}
 
+/* ==========================================================================
+   OTHER BUTTONS
+   ========================================================================== */
+
+/* L button */
 .l {
 	display: flex;
 	top: 0px;
 	left: 0px;
 	width: 250px;
-	height: 80px;
+	height: 60px;
 	font-size: 20px;
 	border-radius: 0 0 50px 0;
 	border-top: none;
@@ -91,12 +135,13 @@
 	border-left-style: hidden !important;
 }
 
+/* R button */
 .r {
 	display: flex;
 	top: 0px;
 	right: 0px;
 	width: 250px;
-	height: 80px;
+	height: 60px;
 	font-size: 20px;
 	border-radius: 0 0 0 50px;
 	border-top: none;
@@ -105,6 +150,7 @@
 	border-right-style: hidden !important;
 }
 
+/* Select button */
 .select {
 	display: flex;
 	bottom: 0;
@@ -117,6 +163,7 @@
 	border-bottom-style: hidden !important;
 }
 
+/* Start button */
 .start {
 	display: flex;
 	bottom: 0;

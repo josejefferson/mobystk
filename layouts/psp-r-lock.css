@@ -1,8 +1,8 @@
 /**
  * WebJoy - Layout
  *
- * @name: SNES
- * @description: Layout for SNES games
+ * @name: PSP R Lock
+ * @description: Layout for PSP games with lockable R button
  * @author: Jefferson Dantas
  */
 
@@ -10,13 +10,13 @@
    BUTTON GROUPS
    ========================================================================== */
 
- /* Arrows (up, down, left, right) */
+/* Arrows (up, down, left, right) */
 .arrows {
 	display: block;
-	bottom: 20px;
+	bottom: 150px;
 	left: 30px;
-	width: 140px;
-	height: 140px;
+	width: 128px;
+	height: 128px;
 }
 
 /* Actions (triangle, circle, square, cross) */
@@ -28,15 +28,28 @@
 	height: 140px;
 }
 
+/* Joystick */
+.joystick {
+	display: block;
+	bottom: 20px;
+	left: 30px;
+	width: 110px;
+	height: 110px;
+	border-radius: 50%;
+}
+
 /* ==========================================================================
    ARROW BUTTONS
-   ========================
-	 ================================================== */
+   ========================================================================== */
+
 /* General arrow buttons */
-.up, .down, .left, .right {
+.up,
+.down,
+.left,
+.right {
 	display: flex;
-	width: 52px;
-	height: 52px;
+	width: 48px;
+	height: 48px;
 }
 
 /* Up arrow button */
@@ -72,42 +85,45 @@
    ========================================================================== */
 
 /* General action buttons */
-.snesactup, .snesactright, .snesactleft, .snesactdown {
+.actup,
+.actright,
+.actleft,
+.actdown {
 	display: flex;
 	width: 52px;
 	height: 52px;
 }
 
-/* X button */
-.snesactup {
+/* Triangle button */
+.actup {
 	left: 50%;
 	top: 0;
 	transform: translateX(-50%);
 }
 
-/* B button */
-.snesactdown {
+/* Cross button */
+.actdown {
 	left: 50%;
 	bottom: 0;
 	transform: translateX(-50%);
 }
 
-/* Y button */
-.snesactleft {
+/* Square button */
+.actleft {
 	top: 50%;
 	left: 0;
 	transform: translateY(-50%);
 }
 
-/* A button */
-.snesactright {
+/* Circle button */
+.actright {
 	top: 50%;
 	right: 0;
 	transform: translateY(-50%);
 }
 
 /* ==========================================================================
-   ACTION BUTTONS
+   OTHER BUTTONS
    ========================================================================== */
 
 /* L button */
@@ -125,8 +141,8 @@
 	border-left-style: hidden !important;
 }
 
-/* R button */
-.r {
+/* R button (lockable) */
+.rLock {
 	display: flex;
 	top: 0px;
 	right: 0px;

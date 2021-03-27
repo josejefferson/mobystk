@@ -1,96 +1,106 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=0">
 	<link rel="manifest" href="manifest.json">
-	<title>Joystick</title>
+	<title>WebJoy</title>
 	<link rel="stylesheet" href="css/joystick.css">
+	<link rel="stylesheet" href="themes/default.css">
+	<link rel="stylesheet" class="theme">
 	<link rel="stylesheet" class="layout">
 </head>
 
 <body class="preload">
-	<!-- Ícones -->
-	<svg class="icons" width="0" height="0">
-		<defs>
-			<g id="triangle"><path d="M6 12L0 24h24l-6-12-6-12-6 12zm10.7 1l4.6 9.2a283.4 283.4 0 01-18.6 0 889.3 889.3 0 019.4-18.4l4.6 9.3z"/></g>
-			<g id="cross"><path d="M.7.6l-.7.7 5.3 5.3 5.3 5.4s-2.3 2.5-5.3 5.4L0 22.7l.7.7.6.6 1.8-1.8L8.5 17l3.5-3.5 1.9 1.8 5.3 5.3 3.5 3.5.7-.6.6-.7A261.7 261.7 0 0013.4 12 239.6 239.6 0 0124 1.3l-.6-.7-.7-.6L21 2l-5.4 5.3-3.5 3.5L8.5 7 3 1.8 1.3 0 .7.6z"/></g>
-			<g id="square"><path d="M0 12v12h24V0H0v12zm22.2 0v10.3H1.8V1.7h20.4V12z"/></g>
-			<g id="up"><path d="M6 12L0 24h24l-6-12-6-12-6 12zm10.7 1l4.6 9.2a283.4 283.4 0 01-18.6 0 889.3 889.3 0 019.4-18.4l4.6 9.3z"/></g>
-			<g id="right"><path d="M12 6L0 0v24l12-6 12-6-12-6zm-1 10.7l-9.2 4.6a283.6 283.6 0 010-18.6 889.3 889.3 0 0118.4 9.4l-9.3 4.6z"/></g>
-			<g id="left"><path d="M12 18l12 6V0L12 6 0 12l12 6zm1-10.7l9.2-4.6a283.4 283.4 0 010 18.6 888.5 888.5 0 01-18.4-9.4l9.3-4.6z"/></g>
-			<g id="down"><path d="M18 12l6-12H0l6 12 6 12 6-12zM7.4 11L2.7 1.7a283.6 283.6 0 0118.6 0 888.5 888.5 0 01-9.4 18.4l-4.6-9.3z"/></g>
-			<g id="circle"><path d="M10.36.07a12.26 12.26 0 00-9.63 7.7c-.97 2.5-.97 5.94 0 8.45a12.13 12.13 0 0011.96 7.76c4.59-.25 8.76-3.2 10.49-7.4a9.7 9.7 0 00.82-4.59 9.7 9.7 0 00-.82-4.58 12.25 12.25 0 00-8.3-7.08c-1.2-.3-3.4-.42-4.52-.26zm3.31 1.73c3.97.67 7.05 3.4 8.3 7.32.27.88.29 1.06.29 2.87s-.02 2-.3 2.88c-2.08 6.6-9.44 9.47-15.3 5.95-1-.6-2.4-1.92-3.06-2.86A10.32 10.32 0 0113.67 1.8z"/></g>
-		</defs>
-	</svg>
-
-	<!-- Botão de editar -->
-	<a href="index.html"><button class="edit handleTouch">Editar</button></a>
-
-	<!-- L e R -->
-	<button class="l handleTouch" data-cmd="l">L</button>
-	<button class="r handleTouch" data-cmd="r">R</button>
-	<button class="rLock handleTouch lock" data-cmd="r">R</button>
-
 	<!-- Joystick -->
-	<div id="joystick" class="analog group handleTouch"></div>
+	<div id="joystick" class="joystick group touch"></div>
 
-	<!-- Setas -->
+	<!-- Arrow buttons -->
 	<div class="arrows group">
-		<button class="up handleTouch" data-cmd="up">
-			<svg width="24" height="24"><use xlink:href="#up" /></svg>
-		</button>
-		<button class="down handleTouch" data-cmd="down">
-			<svg width="24" height="24"><use xlink:href="#down" /></svg>
-		</button>
-		<button class="left handleTouch" data-cmd="left">
-			<svg width="24" height="24"><use xlink:href="#left" /></svg>
-		</button>
-		<button class="right handleTouch" data-cmd="right">
-			<svg width="24" height="24"><use xlink:href="#right" /></svg>
-		</button>
+		<!-- Up arrow -->
+		<button class="up touch" data-key="up"><svg>
+				<use xlink:href="img/icons.svg#arrUp">
+			</svg></button>
 
-		<!-- Diagonais das setas -->
-		<div class="diag dLT handleTouch" data-cmd="left,up"></div>
-		<div class="diag dRT handleTouch" data-cmd="right,up"></div>
-		<div class="diag dLB handleTouch" data-cmd="left,down"></div>
-		<div class="diag dRB handleTouch" data-cmd="right,down"></div>
+		<!-- Down arrow -->
+		<button class="down touch" data-key="down"><svg>
+				<use xlink:href="img/icons.svg#arrDown">
+			</svg></button>
+
+		<!-- Left arrow -->
+		<button class="left touch" data-key="left"><svg>
+				<use xlink:href="img/icons.svg#arrLeft">
+			</svg></button>
+
+		<!-- Right arrow -->
+		<button class="right touch" data-key="right"><svg>
+				<use xlink:href="img/icons.svg#arrRight">
+			</svg></button>
+
+		<!-- Diagonal arrows -->
+		<div class="diag dLT touch" data-key="left,up"></div>
+		<div class="diag dRT touch" data-key="right,up"></div>
+		<div class="diag dLB touch" data-key="left,down"></div>
+		<div class="diag dRB touch" data-key="right,down"></div>
 	</div>
 
-	<!-- Botões de ação -->
+	<!-- Action buttons -->
 	<div class="actions group">
-		<!-- PSP -->
-		<button class="actup handleTouch" data-cmd="actup">
-			<svg width="24" height="24"><use xlink:href="#triangle" /></svg>
-		</button>
-		<button class="actright handleTouch" data-cmd="actright">
-			<svg width="24" height="24"><use xlink:href="#circle" /></svg>
-		</button>
-		<button class="actleft handleTouch" data-cmd="actleft">
-			<svg width="24" height="24"><use xlink:href="#square" /></svg>
-		</button>
-		<button class="actdown handleTouch" data-cmd="actdown">
-			<svg width="24" height="24"><use xlink:href="#cross" /></svg>
-		</button>
+		<!-- PSP buttons -->
 
-		<!-- SNES -->
-		<button class="snesactup handleTouch" data-cmd="actup">X</button>
-		<button class="snesactright handleTouch" data-cmd="actright">A</button>
-		<button class="snesactleft handleTouch" data-cmd="actleft">Y</button>
-		<button class="snesactdown handleTouch" data-cmd="actdown">B</button>
+		<!-- Triangle -->
+		<button class="actup touch" data-key="actup"><svg>
+				<use xlink:href="img/icons.svg#actTriangle">
+			</svg></button>
 
-		<!-- Diagonais -->
-		<div class="diag dLT handleTouch" data-cmd="actleft,actup"></div>
-		<div class="diag dRT handleTouch" data-cmd="actright,actup"></div>
-		<div class="diag dLB handleTouch" data-cmd="actleft,actdown"></div>
-		<div class="diag dRB handleTouch" data-cmd="actright,actdown"></div>
+		<!-- Cross -->
+		<button class="actdown touch" data-key="actdown"><svg>
+				<use xlink:href="img/icons.svg#actCross">
+			</svg></button>
+
+		<!-- Square -->
+		<button class="actleft touch" data-key="actleft"><svg>
+				<use xlink:href="img/icons.svg#actSquare">
+			</svg></button>
+
+		<!-- Circle -->
+		<button class="actright touch" data-key="actright"><svg>
+				<use xlink:href="img/icons.svg#actCircle">
+			</svg></button>
+
+		<!-- SNES buttons -->
+		<!-- X --><button class="snesactup touch" data-key="actup">X</button>
+		<!-- B --><button class="snesactdown touch" data-key="actdown">B</button>
+		<!-- Y --><button class="snesactleft touch" data-key="actleft">Y</button>
+		<!-- A --><button class="snesactright touch" data-key="actright">A</button>
+
+		<!-- Diagonal actions -->
+		<div class="diag dLT touch" data-key="actleft,actup"></div>
+		<div class="diag dRT touch" data-key="actright,actup"></div>
+		<div class="diag dLB touch" data-key="actleft,actdown"></div>
+		<div class="diag dRB touch" data-key="actright,actdown"></div>
 	</div>
 
-	<!-- Select, start -->
-	<button class="select handleTouch" data-cmd="select">SELECT</button>
-	<button class="start handleTouch" data-cmd="start">START</button>
+	<!-- L, R, Select and Start buttons -->
+	<button class="l touch" data-key="l">L</button>
+	<button class="r touch" data-key="r">R</button>
+	<button class="select touch" data-key="select">SELECT</button>
+	<button class="start touch" data-key="start">START</button>
+
+	<!-- Locked buttons -->
+	<button class="rLock touch lock" data-key="r">R</button>
+
+	<!-- Edit button -->
+	<a href="index.html"><button class="edit touch">Editar</button></a>
+	<a href="" style="left:50%;top:10%;position:absolute;"><button
+			style="display:block;position:relative;left:-50%">Atualizar</button></a>
+
+	<!-- Custom buttons (coming soon) -->
+	<span class="customButtons"></span>
 
 	<script src="lib/js/nipplejs.min.js"></script>
 	<script src="js/joystick.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,77 @@
+/**
+ * WebJoy - Theme
+ *
+ * @name: Default
+ * @description: Default WebJoy theme
+ * @author: Jefferson Dantas
+ */
+
+/* ==========================================================================
+   COLORS
+   ========================================================================== */
+:root {
+	--color: #ff08;
+	--border: var(--color);
+	--active: #ff03;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+button {
+	background-color: transparent;
+	border: var(--border) 2.5px solid;
+	color: var(--color);
+	font-size: 12.5px;
+	transition:
+		border-color 1s ease,
+		color 1s ease;
+}
+
+/* Grouped buttons */
+.group button {
+	border-radius: 50%;
+	font-size: 20px;
+}
+
+/* Lockable buttons */
+button.lock {
+	border-style: dashed;
+}
+
+/* Active button state */
+button.active,
+button.dActive {
+	background-color: var(--active);
+}
+
+/* Button icons */
+use {
+	fill: var(--color);
+	transition: fill 1s ease;
+}
+
+/* "Edit" button */
+button.edit {
+	border-radius: 0 0 10px 10px;
+	border-top: none;
+	font-size: 16px;
+}
+
+/* ==========================================================================
+   JOYSTICK
+   ========================================================================== */
+
+/* Joystick back */
+.nipple .back {
+	background: none !important;
+	border: var(--border) 2.5px solid;
+	transition: border-color 1s ease;
+}
+
+/* Joystick front */
+.nipple .front {
+	background: var(--color) !important;
+	border: var(--border) 2.5px solid;
+	transition: border-color 1s ease, background 1s ease;
+}

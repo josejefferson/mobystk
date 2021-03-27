@@ -24,7 +24,7 @@ function socketConn() {
 document.oncontextmenu = () => false
 window.onload = () => {
 	// Joystick
-	const joy = nipplejs.create({
+	nipplejs.create({
 		zone: document.getElementById('joystick'),
 		size: 90,
 		mode: 'static',
@@ -33,10 +33,10 @@ window.onload = () => {
 			top: '50%'
 		}
 	}).on('move end', (e, d) => {
-		updateAnalog(d?.angle?.degree, d?.direction)
+		updateJoystick(d?.angle?.degree, d?.direction)
 	})
 
-	document.querySelector('#joystick .nipple .front').classList.add('joystick', 'handleTouch')
+	document.querySelector('#joystick .nipple .front').classList.add('joystick', 'touch')
 	document.body.classList.remove('preload')
 }
 
@@ -48,15 +48,15 @@ document.ontouchstart = e => {
 	for (const touch of e.changedTouches) {
 		let target = document.elementFromPoint(touch.clientX, touch.clientY)
 		if (!target.classList.contains('joystick') &&
-			(!target.classList.contains('handleTouch') ||
+			(!target.classList.contains('touch') ||
 			target.classList.contains('active') ||
 			target.classList.contains('lock'))) target = null
 
-		const analog = target?.classList.contains('joystick') ? true : false
-		currentTouches.push({ target, touch, analog })
+		const joystick = target?.classList.contains('joystick') ? true : false
+		currentTouches.push({ target, touch, joystick })
 		if (!target) continue
 		target.classList.add('active')
-		sendCmd(target.dataset.cmd)
+		sendCmd(target.dataset.key)
 		navigator.vibrate(15)
 	}
 }
@@ -70,24 +70,24 @@ document.ontouchmove = e => {
 		if (i < 0) continue
 
 		const oldtouch = currentTouches[i]
-		if (oldtouch.analog) continue
+		if (oldtouch.joystick) continue
 		oldtouch.touch = touch
 
 		let target = document.elementFromPoint(touch.clientX, touch.clientY)
-		if (!target?.classList.contains('handleTouch') ||
+		if (!target?.classList.contains('touch') ||
 			target.classList.contains('joystick')) target = null
 
 		if (oldtouch.target === target) continue
 		oldtouch.target?.classList.remove('active')
-		sendCmd(oldtouch.target?.dataset.cmd, true)
+		sendCmd(oldtouch.target?.dataset.key, true)
 
-		if (target && (!target.classList.contains('handleTouch') ||
+		if (target && (!target.classList.contains('touch') ||
 			target.classList.contains('active') ||
 			target.classList.contains('lock'))) target = null
 		oldtouch.target = target
 		if (!target) continue
 		target.classList.add('active')
-		sendCmd(target.dataset.cmd)
+		sendCmd(target.dataset.key)
 		navigator.vibrate(15)
 	}
 }
@@ -101,35 +101,35 @@ document.ontouchend = e => {
 		if (i < 0) continue
 		if (currentTouches[i].target) {
 			currentTouches[i].target.classList.remove('active')
-			sendCmd(currentTouches[i].target.dataset.cmd, true)
+			sendCmd(currentTouches[i].target.dataset.key, true)
 		}
 		currentTouches.splice(i, 1)
 	}
 }
 
 // Botões bloqueáveis
-document.querySelectorAll('.lock').forEach(el => el.ontouchend = () => {
+document.querySelectorAll('.lock').forEach(el => el.ontouchstart = () => {
 	navigator.vibrate(15)
 	if (el.classList.contains('active')) {
 		// Ativa o botão
 		el.classList.remove('active')
-		sendCmd(el.dataset.cmd, true)
+		sendCmd(el.dataset.key, true)
 	} else {
 		// Desativa o botão
 		el.classList.add('active')
-		sendCmd(el.dataset.cmd)
+		sendCmd(el.dataset.key)
 	}
 })
 
 // Joystick
-const analog = {
+const joystick = {
 	up: false,
 	down: false,
 	left: false,
 	right: false
 }
 
-function updateAnalog(angle, direction) {
+function updateJoystick(angle, direction) {
 	if (!direction) {
 		update('up', false)
 		update('left', false)
@@ -148,21 +148,21 @@ function updateAnalog(angle, direction) {
 
 	// Atualiza a direção do joystick
 	function update(dir, value) {
-		if (analog[dir] === value) return
-		analog[dir] = value
+		if (joystick[dir] === value) return
+		joystick[dir] = value
 		sendCmd(dir, !value)
 	}
 }
 
 // Função de enviar comandos para o computador
-function sendCmd(cmd, release = false) {
+function sendCmd(key, release = false) {
 	// Trata o comando
-	if (!cmd) return
-	cmd = cmd.toLowerCase()
-	cmd = cmd.split(',')
-	cmd.forEach(c => {
+	if (!key) return
+	key = key.toLowerCase()
+	key = key.split(',')
+	key.forEach(c => {
 		// Diagonais
-		if (cmd.length > 1) document.querySelectorAll(`[data-cmd="${c}"]`)
+		if (key.length > 1) document.querySelectorAll(`[data-key="${c}"]`)
 				.forEach(e => e.classList[release ? 'remove' : 'add']('dActive'))
 
 		// Não envia o comando se o websocket não estiver conectado
