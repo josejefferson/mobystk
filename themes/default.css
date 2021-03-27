@@ -10,7 +10,22 @@
    COLORS
    ========================================================================== */
 :root {
-	--color: #ff08;
+	--color: #fff8;
+	--border: var(--color);
+	--active: #fff3;
+	--border-size: 2.5px;
+	--btn-background: transparent;
+	--border-style: solid;
+}
+
+body.disconnected {
+	--color: #f008;
+	--border: var(--color);
+	--active: #f003;
+}
+
+body.connecting {
+	--color: #f008;
 	--border: var(--color);
 	--active: #ff03;
 }
@@ -19,8 +34,8 @@
    BUTTONS
    ========================================================================== */
 button {
-	background-color: transparent;
-	border: var(--border) 2.5px solid;
+	background-color: var(--btn-background);
+	border: var(--border) var(--border-size) var(--border-style);
 	color: var(--color);
 	font-size: 12.5px;
 	transition:
@@ -64,14 +79,14 @@ button.edit {
 
 /* Joystick back */
 .nipple .back {
-	background: none !important;
-	border: var(--border) 2.5px solid;
+	background-color: var(--btn-background) !important;
+	border: var(--border) var(--border-size) var(--border-style);
 	transition: border-color 1s ease;
 }
 
 /* Joystick front */
 .nipple .front {
-	background: var(--color) !important;
-	border: var(--border) 2.5px solid;
-	transition: border-color 1s ease, background 1s ease;
+	background-color: var(--color) !important;
+	border: var(--border) var(--border-size) var(--border-style);
+	transition: border-color 1s ease, background-color 1s ease;
 }

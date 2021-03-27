@@ -9,12 +9,11 @@ let socket = socketConn()
 function socketConn() {
 	const ws = new WebSocket('ws://' + ip);
 	ws.onopen = e => {
-		document.documentElement.style.setProperty('--color', '#fff8')
-		document.documentElement.style.setProperty('--active', '#fff3')
+		document.body.classList.remove('connecting', 'disconnected')
 	}
 	ws.onclose = e => {
-		document.documentElement.style.setProperty('--color', '#f008')
-		document.documentElement.style.setProperty('--active', '#f003')
+		document.body.classList.remove('connecting')
+		document.body.classList.add('disconnected')
 		setTimeout(() => socket = socketConn(), 3000)
 	}
 	return ws
