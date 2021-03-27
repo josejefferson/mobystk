@@ -4,180 +4,50 @@
  * @name: PSP R Lock
  * @description: Layout for PSP games with lockable R button
  * @author: Jefferson Dantas
+ * @override: Default
  */
 
 /* ==========================================================================
    BUTTON GROUPS
    ========================================================================== */
 
-/* Arrows (up, down, left, right) */
-.arrows {
+.arrows,
+.actions,
+.joystick {
 	display: block;
+}
+
+/* Change position and size of arrow group */
+.arrows {
 	bottom: 150px;
-	left: 30px;
 	width: 128px;
 	height: 128px;
 }
 
-/* Actions (triangle, circle, square, cross) */
-.actions {
-	display: block;
-	bottom: 20px;
-	right: 30px;
-	width: 140px;
-	height: 140px;
-}
-
-/* Joystick */
-.joystick {
-	display: block;
-	bottom: 20px;
-	left: 30px;
-	width: 110px;
-	height: 110px;
-	border-radius: 50%;
-}
-
 /* ==========================================================================
-   ARROW BUTTONS
+   BUTTONS
    ========================================================================== */
 
-/* General arrow buttons */
+.up,
+.down,
+.left,
+.right,
+.actup,
+.actright,
+.actleft,
+.actdown,
+.l,
+.rLock,
+.select,
+.start {
+	display: flex;
+}
+
+/* Change size of arrow buttons */
 .up,
 .down,
 .left,
 .right {
-	display: flex;
 	width: 48px;
 	height: 48px;
-}
-
-/* Up arrow button */
-.up {
-	left: 50%;
-	top: 0;
-	transform: translateX(-50%);
-}
-
-/* Down arrow button */
-.down {
-	left: 50%;
-	bottom: 0;
-	transform: translateX(-50%);
-}
-
-/* Left arrow button */
-.left {
-	top: 50%;
-	left: 0;
-	transform: translateY(-50%);
-}
-
-/* Right arrow button */
-.right {
-	top: 50%;
-	right: 0;
-	transform: translateY(-50%);
-}
-
-/* ==========================================================================
-   ACTION BUTTONS
-   ========================================================================== */
-
-/* General action buttons */
-.actup,
-.actright,
-.actleft,
-.actdown {
-	display: flex;
-	width: 52px;
-	height: 52px;
-}
-
-/* Triangle button */
-.actup {
-	left: 50%;
-	top: 0;
-	transform: translateX(-50%);
-}
-
-/* Cross button */
-.actdown {
-	left: 50%;
-	bottom: 0;
-	transform: translateX(-50%);
-}
-
-/* Square button */
-.actleft {
-	top: 50%;
-	left: 0;
-	transform: translateY(-50%);
-}
-
-/* Circle button */
-.actright {
-	top: 50%;
-	right: 0;
-	transform: translateY(-50%);
-}
-
-/* ==========================================================================
-   OTHER BUTTONS
-   ========================================================================== */
-
-/* L button */
-.l {
-	display: flex;
-	top: 0px;
-	left: 0px;
-	width: 250px;
-	height: 60px;
-	font-size: 20px;
-	border-radius: 0 0 50px 0;
-	border-top: none;
-	border-left: none;
-	border-top-style: hidden !important;
-	border-left-style: hidden !important;
-}
-
-/* R button (lockable) */
-.rLock {
-	display: flex;
-	top: 0px;
-	right: 0px;
-	width: 250px;
-	height: 60px;
-	font-size: 20px;
-	border-radius: 0 0 0 50px;
-	border-top: none;
-	border-right: none;
-	border-top-style: hidden !important;
-	border-right-style: hidden !important;
-}
-
-/* Select button */
-.select {
-	display: flex;
-	bottom: 0;
-	left: 180px;
-	width: 130px;
-	height: 50px;
-	border-radius: 20px 10px 0 0;
-	font-size: 18px;
-	border-bottom: none;
-	border-bottom-style: hidden !important;
-}
-
-/* Start button */
-.start {
-	display: flex;
-	bottom: 0;
-	right: 180px;
-	width: 130px;
-	height: 50px;
-	border-radius: 10px 20px 0 0;
-	font-size: 18px;
-	border-bottom: none;
-	border-bottom-style: hidden !important;
 }

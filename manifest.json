@@ -1,6 +1,6 @@
 {
-	"name": "Joystick",
-	"short_name": "Joy",
+	"name": "Web Joystick",
+	"short_name": "WebJoy",
 	"description": "",
 	"icons": [
 		{
@@ -9,7 +9,7 @@
 			"sizes": "256x256"
 		}
 	],
-	"start_url": "joy.html",
+	"start_url": "joystick.html",
 	"display": "fullscreen",
 	"orientation": "landscape",
 	"background_color": "#000000",

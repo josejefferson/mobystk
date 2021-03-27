@@ -1,6 +1,6 @@
 // Configuração do IP e do Layout
-const ip = localStorage.getItem('joystick.code') || '127.0.0.1:5000'
-const layout = localStorage.getItem('joystick.layout')
+const ip = localStorage.getItem('webJoy.code') || '127.0.0.1:5000'
+const layout = localStorage.getItem('webJoy.layout')
 if (!layout) location.href = 'index.html'
 document.querySelector('.layout').href = 'layouts/' + layout + '.css'
 

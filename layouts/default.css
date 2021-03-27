@@ -1,0 +1,181 @@
+/**
+ * WebJoy - Layout
+ *
+ * @name: Default
+ * @description: Default layout for overwrite
+ * @author: Jefferson Dantas
+ */
+
+/* ==========================================================================
+   BUTTON GROUPS
+   ========================================================================== */
+
+/* Arrows (up, down, left, right) */
+.arrows {
+	bottom: 20px;
+	left: 30px;
+	width: 140px;
+	height: 140px;
+}
+
+/* Actions */
+.actions {
+	bottom: 20px;
+	right: 30px;
+	width: 140px;
+	height: 140px;
+}
+
+/* Joystick */
+.joystick {
+	bottom: 20px;
+	left: 30px;
+	width: 110px;
+	height: 110px;
+}
+
+/* ==========================================================================
+   ARROW BUTTONS
+   ========================================================================== */
+
+/* General arrow buttons */
+.up,
+.down,
+.left,
+.right {
+	width: 52px;
+	height: 52px;
+}
+
+/* Up arrow button */
+.up {
+	left: 50%;
+	top: 0;
+	transform: translateX(-50%);
+}
+
+/* Down arrow button */
+.down {
+	left: 50%;
+	bottom: 0;
+	transform: translateX(-50%);
+}
+
+/* Left arrow button */
+.left {
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
+}
+
+/* Right arrow button */
+.right {
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+}
+
+/* ==========================================================================
+   ACTION BUTTONS
+   ========================================================================== */
+
+/* General action buttons */
+.actup,
+.actright,
+.actleft,
+.actdown,
+.snesactup,
+.snesactright,
+.snesactleft,
+.snesactdown {
+	width: 52px;
+	height: 52px;
+}
+
+/* Up action button */
+.actup,
+.snesactup {
+	left: 50%;
+	top: 0;
+	transform: translateX(-50%);
+}
+
+/* Down action button */
+.actdown,
+.snesactdown {
+	left: 50%;
+	bottom: 0;
+	transform: translateX(-50%);
+}
+
+/* Left action button */
+.actleft,
+.snesactleft {
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
+}
+
+/* Right action button */
+.actright,
+.snesactright {
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+}
+
+/* ==========================================================================
+   OTHER BUTTONS
+   ========================================================================== */
+
+/* L button */
+.l {
+	top: 0px;
+	left: 0px;
+	width: 250px;
+	height: 60px;
+	font-size: 20px;
+	border-radius: 0 0 50px 0;
+	border-top: none;
+	border-left: none;
+	border-top-style: hidden !important;
+	border-left-style: hidden !important;
+}
+
+/* R button */
+.r, .rLock {
+	top: 0px;
+	right: 0px;
+	width: 250px;
+	height: 60px;
+	font-size: 20px;
+	border-radius: 0 0 0 50px;
+	border-top: none;
+	border-right: none;
+	border-top-style: hidden !important;
+	border-right-style: hidden !important;
+}
+
+/* Select button */
+.select {
+	bottom: 0;
+	left: 180px;
+	width: 130px;
+	height: 50px;
+	border-radius: 20px 10px 0 0;
+	font-size: 18px;
+	border-bottom: none;
+	border-bottom-style: hidden !important;
+}
+
+/* Start button */
+.start {
+	bottom: 0;
+	right: 180px;
+	width: 130px;
+	height: 50px;
+	border-radius: 10px 20px 0 0;
+	font-size: 18px;
+	border-bottom: none;
+	border-bottom-style: hidden !important;
+}

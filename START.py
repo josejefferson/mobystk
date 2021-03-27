@@ -7,7 +7,7 @@ keyboard = Controller()
 
 PORT = 5000
 async def server(websocket, path):
-	print('[WEBSOCKET] Usuário conectado')
+	print('[WEBSOCKET] Connected user')
 	async for msg in websocket:
 		msg = msg.split(' ')
 		msg[1] = msg[1].lower()
@@ -35,8 +35,8 @@ async def server(websocket, path):
 start_server = websockets.serve(server, port=PORT)
 ip = socket.gethostbyname(socket.gethostname()) + ':' + str(PORT)
 
-print('\n[WEBSOCKET] Servidor iniciado')
-print('\n# Digite este código no aplicativo:')
+print('\n[WEBSOCKET] Server started')
+print('\n# Enter this code on the website:')
 print('┏━━━━━━━━━━━━━━━━━━━━━━━┓')
 print('┃ ' + ip.ljust(21) +  ' ┃')
 print('┗━━━━━━━━━━━━━━━━━━━━━━━┛\n')
@@ -45,5 +45,5 @@ asyncio.get_event_loop().run_until_complete(start_server)
 try:
 	asyncio.get_event_loop().run_forever()
 except KeyboardInterrupt:
-	print('[WEBSOCKET] Servidor encerrado')
+	print('[WEBSOCKET] Server closed')
 	pass
