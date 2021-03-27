@@ -5,32 +5,36 @@ from pynput.keyboard import Key, Controller
 
 keyboard = Controller()
 
+def getKey(cmd):
+	if cmd == 'L': return 'Q'              # L
+	elif cmd == 'R': return 'E'            # R
+	elif cmd == 'ACTUP': return 'W'        # Triangle or X
+	elif cmd == 'ACTRIGHT': return 'D'     # Circle   or A
+	elif cmd == 'ACTLEFT': return 'A'      # Square   or Y
+	elif cmd == 'ACTDOWN': return 'S'      # Cross    or B
+	elif cmd == 'START': return Key.space  # Start
+	elif cmd == 'SELECT': return Key.enter # Select
+	elif cmd == 'UP': return Key.up        # Arrow up
+	elif cmd == 'DOWN': return Key.down    # Arrow down
+	elif cmd == 'LEFT': return Key.left    # Arrow left
+	elif cmd == 'RIGHT': return Key.right  # Arrow right
+	else: return cmd
+
 PORT = 5000
 async def server(websocket, path):
 	print('[WEBSOCKET] Connected user')
 	async for msg in websocket:
+		msg = msg.upper()
 		msg = msg.split(' ')
-		msg[1] = msg[1].lower()
+		msg[1] = msg[1].split(',')
 
-		if msg[1] == 'l': msg[1] = 'q'              # L
-		elif msg[1] == 'r': msg[1] = 'e'            # R
-		elif msg[1] == 'actup': msg[1] = 'w'        # Triangle or X
-		elif msg[1] == 'actright': msg[1] = 'd'     # Circle   or A
-		elif msg[1] == 'actleft': msg[1] = 'a'      # Square   or Y
-		elif msg[1] == 'actdown': msg[1] = 's'      # Cross    or B
-		elif msg[1] == 'start': msg[1] = Key.space  # Start
-		elif msg[1] == 'select': msg[1] = Key.enter # Select
-		elif msg[1] == 'up': msg[1] = Key.up        # Arrow up
-		elif msg[1] == 'down': msg[1] = Key.down    # Arrow down
-		elif msg[1] == 'left': msg[1] = Key.left    # Arrow left
-		elif msg[1] == 'right': msg[1] = Key.right  # Arrow right
-
-		if msg[0] == 'R':
-			# print('[RELEASE] ' + msg[1])
-			keyboard.release(msg[1])
-		else:
-			# print('[ PRESS ] ' + msg[1])
-			keyboard.press(msg[1])
+		for key in msg[1]:
+			if msg[0] == 'R':
+				print('[RELEASE] ' + key)
+				keyboard.release(getKey(key))
+			else:
+				print('[ PRESS ] ' + key)
+				keyboard.press(getKey(key))
 
 start_server = websockets.serve(server, port=PORT)
 ip = socket.gethostbyname(socket.gethostname()) + ':' + str(PORT)

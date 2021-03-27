@@ -49,8 +49,8 @@ document.ontouchstart = e => {
 		let target = document.elementFromPoint(touch.clientX, touch.clientY)
 		if (!target.classList.contains('joystick') &&
 			(!target.classList.contains('touch') ||
-			target.classList.contains('active') ||
-			target.classList.contains('lock'))) target = null
+				target.classList.contains('active') ||
+				target.classList.contains('lock'))) target = null
 
 		const joystick = target?.classList.contains('joystick') ? true : false
 		currentTouches.push({ target, touch, joystick })
@@ -158,17 +158,16 @@ function updateJoystick(angle, direction) {
 function sendCmd(key, release = false) {
 	// Trata o comando
 	if (!key) return
-	key = key.toLowerCase()
+	key = key.toUpperCase()
 	key = key.split(',')
 	key.forEach(c => {
 		// Diagonais
 		if (key.length > 1) document.querySelectorAll(`[data-key="${c}"]`)
-				.forEach(e => e.classList[release ? 'remove' : 'add']('dActive'))
-
-		// Não envia o comando se o websocket não estiver conectado
-		if (socket.readyState !== 1) return
-
-		// Envia o comando
-		socket.send((release ? 'R' : 'P') + ' ' + c)
+			.forEach(e => e.classList[release ? 'remove' : 'add']('dActive'))
 	})
+	// Não envia o comando se o websocket não estiver conectado
+	if (socket.readyState !== 1) return
+
+	// Envia o comando
+	socket.send((release ? 'R' : 'P') + ' ' + key)
 }
