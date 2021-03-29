@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en-US" ng-app="joystick">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Editar layout</title>
+	<link rel="stylesheet" href="css/editLayout.css">
+</head>
+
+<body ng-controller="editLayoutCtrl">
+	<ng-include src="'templates/editLayout/preview.html'"></ng-include>
+	<ng-include src="'templates/editLayout/tree.html'"></ng-include>
+	<ng-include src="'templates/editLayout/controls.html'"></ng-include>
+
+	<script src="lib/js/angular.min.js"></script>
+	<script src="lib/js/lockr.min.js"></script>
+	<script src="js/editLayout.js"></script>
+</body>
+
+</html>

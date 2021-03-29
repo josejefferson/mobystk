@@ -1,0 +1,7 @@
+<div class="preview">
+	<button ng-if="!isGroup(item)" ng-repeat="item in layout.data"
+		ng-style="btnStyle(item)">{{item.content}}</button>
+	<div class="group" ng-if="isGroup(group)" ng-repeat="group in layout.data" ng-style="grpStyle(group)">
+		<button ng-repeat="item in group.buttons" ng-style="btnStyle(item)">{{item.content}}</button>
+	</div>
+</div>

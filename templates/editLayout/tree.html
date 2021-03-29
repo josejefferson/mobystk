@@ -1,0 +1,27 @@
+<div class="tree">
+	<div class="layoutTitle">Layout - {{layout.name}}</div>
+		<details ng-repeat="item in layout.data" ng-if="!isGroup(item)" open>
+			<summary><b>{{item.name}}</b></summary>
+			<ul>
+				<li ng-class="{'nowEditing': nowEditing === item && nowEditingKey === 'details'}" ng-click="setNowEditing(item, 'details')">Detalhes</li>
+				<li ng-class="{'nowEditing': nowEditing === item && nowEditingKey === 'content'}" ng-click="setNowEditing(item, 'content')">Conteúdo</li>
+				<li ng-class="{'nowEditing': nowEditing === item && nowEditingKey === 'sizePosition'}" ng-click="setNowEditing(item, 'sizePosition')">Tamanho e posição</li>
+				<li ng-class="{'nowEditing': nowEditing === item && nowEditingKey === 'style'}" ng-click="setNowEditing(item, 'style')">Estilo</li>
+				<li ng-class="{'nowEditing': nowEditing === item && nowEditingKey === 'css'}" ng-click="setNowEditing(item, 'css')">CSS</li>
+			</ul>
+		</details>
+		
+		<details ng-repeat="item in layout.data" ng-if="isGroup(item)">
+			<summary>[GROUP]</summary>
+			<details ng-repeat="button in item.buttons" open>
+				<summary>{{button.name}}</summary>
+				<ul>
+					<li ng-class="{'nowEditing': nowEditing === button && nowEditingKey === 'details'}" ng-click="setNowEditing(button, 'details')">Detalhes</li>
+					<li ng-class="{'nowEditing': nowEditing === button && nowEditingKey === 'content'}" ng-click="setNowEditing(button, 'content')">Conteúdo</li>
+					<li ng-class="{'nowEditing': nowEditing === button && nowEditingKey === 'sizePosition'}" ng-click="setNowEditing(button, 'sizePosition')">Tamanho e posição</li>
+					<li ng-class="{'nowEditing': nowEditing === button && nowEditingKey === 'style'}" ng-click="setNowEditing(button, 'style')">Estilo</li>
+					<li ng-class="{'nowEditing': nowEditing === button && nowEditingKey === 'css'}" ng-click="setNowEditing(button, 'css')">CSS</li>
+				</ul>
+			</details>
+		</details>
+</div>

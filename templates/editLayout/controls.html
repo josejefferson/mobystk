@@ -1,0 +1,68 @@
+<div class="controls" ng-switch="nowEditingKey">
+	<div ng-switch-when="details">
+		Nome: <input type="text" ng-model="nowEditing.name"><br>
+		Visivel: <select ng-model="nowEditing.visible"><br>
+			<option ng-value="true">Yes</option>
+			<option ng-value="false">No</option>
+		</select><br>
+		Tecla: <input type="text" ng-model="nowEditing.key"><br>
+		Bloqueavel: <select ng-model="nowEditing.lock">
+			<option ng-value="true">Yes</option>
+			<option ng-value="false">No</option>
+		</select>
+	</div>
+
+	<div ng-switch-when="content">
+		<textarea ng-model="nowEditing.content"></textarea>
+	</div>
+
+	<div ng-switch-when="sizePosition">
+		AnchorX: <select ng-model="nowEditing.anchorX">
+			<option ng-value="'left'">Left</option>
+			<option ng-value="'right'">Right</option>
+			<option ng-value="center">Center</option>
+		</select><br>
+
+		anchorY: <select ng-model="nowEditing.anchorY">
+			<option ng-value="'top'">Top</option>
+			<option ng-value="'bottom'">Bottom</option>
+			<option ng-value="center">Center</option>
+		</select><br>
+
+		X: <input type="number" ng-model="nowEditing.x[0]">
+		<select ng-model="nowEditing.x[1]">
+			<option ng-value="'px'">px</option>
+			<option ng-value="'%'">%</option>
+		</select><br>
+
+		Y: <input type="number" ng-model="nowEditing.y[0]">
+		<select ng-model="nowEditing.y[1]">
+			<option ng-value="'px'">px</option>
+			<option ng-value="'%'">%</option>
+		</select>
+	</div>
+
+	<div ng-switch-when="style">
+		Hide Border Top: <input type="checkbox" ng-model="nowEditing.hiddenBorders.top"><br>
+		Hide Border Left: <input type="checkbox" ng-model="nowEditing.hiddenBorders.left"><br>
+		Hide Border Bottom: <input type="checkbox" ng-model="nowEditing.hiddenBorders.bottom"><br>
+		Hide Border Right: <input type="checkbox" ng-model="nowEditing.hiddenBorders.right"><br>
+		<div ng-repeat="radius in nowEditing.borderRadius">
+			<input type="number" ng-model="radius[0]">
+			<select ng-model="radius[1]">
+				<option ng-value="'px'">px</option>
+				<option ng-value="'%'">%</option>
+			</select>
+		</div>
+		Rounded: <input type="checkbox" ng-model="nowEditing.rounded"><br><!--select radius: rounded, pill, custom-->
+		Fontsize:<input type="number" ng-model="nowEditing.fontSize[0]">
+		<select ng-model="nowEditing.fontSize[1]">
+			<option ng-value="'px'">px</option>
+			<option ng-value="'%'">%</option>
+		</select>
+	</div>
+
+	<div ng-switch-when="css">
+		<textarea ng-model="nowEditing.css"></textarea>
+	</div>
+</div>

@@ -1,0 +1,120 @@
+:root {
+	--color: #fff8;
+	--border: var(--color);
+	--active: #fff3;
+	--border-size: 2.5px;
+	--btn-background: transparent;
+	--border-style: solid;
+}
+
+* {
+	-webkit-tap-highlight-color: transparent;
+	user-select: none;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #000;
+	color: #fff;
+	height: 100vh;
+	margin: 0;
+	overscroll-behavior: contain;
+	font-family: sans-serif;
+}
+
+.preview {
+	border: #fff 1px solid;
+	width: 70%;
+	height: 70%;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.preview .group {
+	position: absolute;
+}
+
+.preview button {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	outline: none;
+	position: absolute;
+	background-color: var(--btn-background);
+	border: var(--border) var(--border-size) var(--border-style);
+	color: var(--color);
+	font-size: 12.5px;
+	transition: border-color 1s ease,
+	color 1s ease;
+}
+
+.preview .group button {
+	border-radius: 50%;
+	font-size: 20px;
+}
+
+.preview button.lock {
+	border-style: dashed;
+}
+
+.preview button.active,
+.preview button.dActive {
+	background-color: var(--active);
+}
+
+
+.tree {
+	position: absolute;
+	left: 70%;
+	top: 0;
+	height: 100%;
+	width: 30%;
+	overflow: auto;
+}
+
+.tree .layoutTitle {
+	padding: 10px;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.controls {
+	position: absolute;
+	top: 70%;
+	left: 0;
+	height: 30%;
+	width: 70%;
+}
+
+details {
+	margin-left: 10px;
+}
+summary {
+	border-top: gray 1px solid;
+	border-bottom: gray 1px solid;
+	padding: 5px 10px;
+}
+
+ul {
+	margin: 0;
+	margin-left: 10px;
+	padding: 0;
+	list-style-type: none;
+}
+
+li {
+	padding: 5px 10px;
+	cursor: pointer;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+li.nowEditing {
+	background: red;
+}
+
+li:not(:first-child) {
+	border-top: gray 1px solid;
+}
