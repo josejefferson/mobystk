@@ -36,6 +36,11 @@ select {
 	outline: none;
 }
 
+input[type="number"],
+select {
+	width: 70px;
+}
+
 .preview {
 	border: #fff 1px solid;
 	width: 70%;
@@ -97,13 +102,29 @@ select {
 	top: 0;
 	height: 100%;
 	width: 30%;
-	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 .tree .layoutTitle {
 	padding: 10px;
 	font-weight: bold;
 	font-size: 20px;
+}
+
+.viewTree {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	right: 0;
+	top: 0;
+	background-color: #000;
+	transition: transform .2s ease;
+	transform: translateX(100%);
+}
+
+.viewTree.open {
+	transform: translateX(0%);
 }
 
 .controls {
@@ -113,27 +134,23 @@ select {
 	height: 30%;
 	width: 70%;
 	overflow: auto;
-	display: flex;
-	align-items: center;
+	/* display: flex;
+	align-items: center; */
 	padding: 10px 15px;
 }
 
-details {
-	margin-left: 10px;
+.controls > div {
+	height: 100%;
 }
 
-summary {
-	border-top: gray 1px solid;
-	border-bottom: gray 1px solid;
-	padding: 5px 10px;
-	font-weight: bold;
-	background: #333;
-	outline: none;
+.controls .content {
+	width: 100%;
+	height: 100%;
 }
 
 ul {
 	margin: auto;
-	margin-left: 10px;
+	/* margin-left: 10px; */
 	padding: 0;
 	list-style-type: none;
 	width: 100%;
@@ -147,6 +164,21 @@ li {
 	white-space: nowrap;
 }
 
+li.label {
+	font-size: 10px;
+	padding-left: 10px;
+	padding-bottom: 2px;
+	padding-top: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+li.return {
+	line-height: 30px;
+	font-size: 20px;
+}
+
 li.add {
 	background-color: #020;
 }
@@ -156,9 +188,23 @@ li.remove {
 }
 
 li.nowEditing {
-	background: red;
+	outline: red 2px solid;
+	outline-offset: -2px;
 }
 
-li:not(:first-child) {
+li.group,
+li.button {
+	background-color: #222;
+}
+
+li.option {
+	background-color: #003;
+}
+
+li:first-child {
 	border-top: gray 1px solid;
+}
+
+li {
+	border-bottom: gray 1px solid;
 }

@@ -1,78 +1,60 @@
 <div class="controls" ng-switch="nowEditingKey">
-	<ul ng-switch-when="layout">
-		<li>
-			Name: <input type="text" ng-model="nowEditing.name">
-		</li>
-	</ul>
-
-	<ul ng-switch-when="details">
-		<li>Name: <input type="text" ng-model="nowEditing.name"></li>
-		<li>Visible: <select ng-model="nowEditing.visible">
-			<option ng-value="true">Yes</option>
-			<option ng-value="false">No</option>
-		</select></li>
-		<li>Keymap: <input type="text" ng-model="nowEditing.key"></li>
-		<li>Lockable: <select ng-model="nowEditing.lock">
-			<option ng-value="true">Yes</option>
-			<option ng-value="false">No</option>
-		</select></li>
-	</ul>
-
-	<div ng-switch-when="content">
-		<textarea ng-model="nowEditing.content"></textarea>
+	<div ng-switch-when="layout">
+		Name: <input type="text" ng-model="nowEditing.name">
 	</div>
 
-	<div ng-switch-when="sizePosition">
-		<div style="width:70%">
-			AnchorX: <select ng-model="nowEditing.anchorX">
+	<div ng-switch-when="details">
+		<div>
+			Name: <input type="text" ng-model="nowEditing.name">
+			<i class="fas fa-fw fa-eye{{nowEditing.visible ? '' : '-slash'}}"
+				ng-click="nowEditing.visible = !nowEditing.visible"></i>
+			<i class="fas fa-fw fa-lock{{nowEditing.lock ? '' : '-open'}}" ng-click="nowEditing.lock = !nowEditing.lock"></i>
+		</div>
+
+		<div>Keymap: <input type="text" ng-model="nowEditing.key"></div>
+	</div>
+
+	<div ng-switch-when="content">
+		<textarea class="content" ng-model="nowEditing.content" placeholder="Text or HTML content"></textarea>
+	</div>
+
+	<div class="row" ng-switch-when="sizePosition">
+		<div>
+			AnchorX: <select ng-model="nowEditing.anchorX" style="width:100px">
 				<option ng-value="'left'">Left</option>
 				<option ng-value="'right'">Right</option>
 				<option ng-value="'center'">Center</option>
-			</select><br>
-	
-			anchorY: <select ng-model="nowEditing.anchorY">
-				<option ng-value="'top'">Top</option>
-				<option ng-value="'bottom'">Bottom</option>
-				<option ng-value="'center'">Center</option>
-			</select><br>
-	
+			</select>
+
 			X: <input type="number" ng-model="nowEditing.x[0]" ng-disabled="nowEditing.anchorX === 'center'">
 			<select ng-model="nowEditing.x[1]" ng-disabled="nowEditing.anchorX === 'center'">
 				<option ng-value="'px'">px</option>
 				<option ng-value="'%'">%</option>
 			</select><br>
-	
+
+			AnchorY: <select ng-model="nowEditing.anchorY" style="width:100px">
+				<option ng-value="'top'">Top</option>
+				<option ng-value="'bottom'">Bottom</option>
+				<option ng-value="'center'">Center</option>
+			</select>
+
 			Y: <input type="number" ng-model="nowEditing.y[0]" ng-disabled="nowEditing.anchorY === 'center'">
 			<select ng-model="nowEditing.y[1]" ng-disabled="nowEditing.anchorY === 'center'">
 				<option ng-value="'px'">px</option>
 				<option ng-value="'%'">%</option>
 			</select><br>
-	
+
 			Width: <input type="number" ng-model="nowEditing.width[0]">
 			<select ng-model="nowEditing.width[1]">
 				<option ng-value="'px'">px</option>
 				<option ng-value="'%'">%</option>
-			</select><br>
-	
+			</select>
+
 			Height: <input type="number" ng-model="nowEditing.height[0]">
 			<select ng-model="nowEditing.height[1]">
 				<option ng-value="'px'">px</option>
 				<option ng-value="'%'">%</option>
 			</select>
-		</div>
-		
-		<div style="width:10%">
-			<button><i class="fas fa-angle-left"></i><i class="fas fa-angle-right"></i></button>
-			<button><i class="fas fa-angle-right"></i><i class="fas fa-angle-left"></i></button>
-			<button><i class="fas fa-angle-up"></i><i class="fas fa-angle-down"></i></button>
-			<button><i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i></button>
-		</div>
-		
-		<div style="width:20%">
-			<button><i class="fas fa-caret-up"></i></button>
-			<button><i class="fas fa-caret-left"></i></button>
-			<button><i class="fas fa-caret-right"></i></button>
-			<button><i class="fas fa-caret-down"></i></button>
 		</div>
 	</div>
 

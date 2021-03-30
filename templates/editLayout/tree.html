@@ -1,64 +1,69 @@
 <div class="tree">
 	<!-- Layout info -->
 	<div class="layoutTitle">Layout - {{layout.name}}</div>
+
 	<ul>
-		<li ng-class="{'nowEditing': nowEditing === layout && nowEditingKey === 'layout'}"
-			ng-click="setNowEditing(layout, 'layout')"><i class="fas fa-fw fa-info-circle"></i> Layout info</li>
+		<li class="option" ng-class="{'nowEditing': nowEditing === layout && nowEditingKey === 'layout'}"
+			ng-click="setNowEditing('layout')"><i class="fas fa-fw fa-info-circle"></i> Layout info</li>
+
+		<!-- Groups -->
+		<li class="label">Groups</li>
+		<li class="group" ng-repeat="group in layout.data" ng-if="isGroup(group)" ng-click="setGroup(group)">
+			<i class="fas fa-fw fa-object-group"></i> {{group.name}}
+		</li>
+
+		<!-- Buttons -->
+		<li class="label">Buttons</li>
+		<li class="button" ng-repeat="button in layout.data" ng-if="!isGroup(button)" ng-click="setButton(button)">
+			<i class="fas fa-fw fa-caret-square-right"></i> {{button.name}}
+		</li>
+
+		<!-- Add -->
+		<li class="label">Add</li>
+		<li class="add" ng-click="add()"><i class="fas fa-fw fa-plus"></i> Button</li>
+		<li class="add" ng-click="add(true)"><i class="fas fa-fw fa-plus"></i> Group</li>
 	</ul>
 
-	<!-- Groups -->
-	<details ng-repeat="group in layout.data" ng-if="isGroup(group)">
-		<summary><i class="fas fa-fw fa-object-group"></i> {{group.name}}</summary>
+
+	<!-- Group view -->
+	<div class="viewTree viewTreeGroup" ng-class="{'open': openGroup}">
 		<ul>
-			<li class="remove" ng-click="remove(group, layout.data)">
-				<div class="fas fa-trash-alt fa-fw"></div> Remove
+			<li class="return" ng-click="setGroup(null)">
+				<i class="fas fa-arrow-left fa-fw"></i> Edit group
 			</li>
-			<li ng-class="{'nowEditing': nowEditing === group && nowEditingKey === 'sizePosition'}"
-				ng-click="setNowEditing(group, 'sizePosition')"><i class="fas fa-fw fa-arrows-alt"></i> Size and position</li>
+			<li class="remove" ng-click="remove()">
+				<i class="fas fa-trash-alt fa-fw"></i> Remove
+			</li>
+			<li class="option" ng-class="{'nowEditing': nowEditing === viewGroup && nowEditingKey === 'sizePosition'}"
+				ng-click="setNowEditing('sizePosition')"><i class="fas fa-fw fa-arrows-alt"></i> Size and position</li>
+
+			<li class="label">Buttons</li>
+			<li class="button" ng-repeat="button in viewGroup.buttons" ng-click="setButton(button)">
+				<i class="fas fa-fw fa-caret-square-right"></i> {{button.name}}
+			</li>
+			<li class="label">Add</li>
+			<li class="add" ng-click="add()"><i class="fas fa-fw fa-plus"></i> Button</li>
 		</ul>
+	</div>
 
-		<!-- Group buttons -->
-		<details ng-repeat="button in group.buttons">
-			<summary><i class="fas fa-fw fa-caret-square-right"></i> {{button.name}}</summary>
-			<ul>
-				<li class="remove" ng-click="remove(button, group.buttons)">
-					<div class="fas fa-trash-alt fa-fw"></div> Remove
-				</li>
-				<li ng-class="{'nowEditing': nowEditing === button && nowEditingKey === 'details'}"
-					ng-click="setNowEditing(button, 'details')"><i class="fas fa-fw fa-info-circle"></i> Details</li>
-				<li ng-class="{'nowEditing': nowEditing === button && nowEditingKey === 'content'}"
-					ng-click="setNowEditing(button, 'content')"><i class="fas fa-fw fa-file-alt"></i> Content</li>
-				<li ng-class="{'nowEditing': nowEditing === button && nowEditingKey === 'sizePosition'}"
-					ng-click="setNowEditing(button, 'sizePosition')"><i class="fas fa-fw fa-arrows-alt"></i> Size and position</li>
-				<li ng-class="{'nowEditing': nowEditing === button && nowEditingKey === 'style'}"
-					ng-click="setNowEditing(button, 'style')"><i class="fas fa-fw fa-border-style"></i> Style</li>
-			</ul>
-		</details>
-
+	<!-- Button view -->
+	<div class="viewTree viewTreeButton" ng-class="{'open': openButton}">
 		<ul>
-			<li class="add" ng-click="add(group.buttons)"><i class="fas fa-fw fa-plus"></i> Add button</li>
+			<li class="return" ng-click="setButton(null)">
+				<i class="fas fa-arrow-left fa-fw"></i> Edit button
+			</li>
+			<li class="remove" ng-click="remove()">
+				<i class="fas fa-trash-alt fa-fw"></i> Remove
+			</li>
+			<li class="option" ng-class="{'nowEditing': nowEditing === viewButton && nowEditingKey === 'details'}"
+				ng-click="setNowEditing('details')"><i class="fas fa-fw fa-info-circle"></i> Details</li>
+			<li class="option" ng-class="{'nowEditing': nowEditing === viewButton && nowEditingKey === 'content'}"
+				ng-click="setNowEditing('content')"><i class="fas fa-fw fa-file-alt"></i> Content</li>
+			<li class="option" ng-class="{'nowEditing': nowEditing === viewButton && nowEditingKey === 'sizePosition'}"
+				ng-click="setNowEditing('sizePosition')"><i class="fas fa-fw fa-arrows-alt"></i> Size and position</li>
+			<li class="option" ng-class="{'nowEditing': nowEditing === viewButton && nowEditingKey === 'style'}"
+				ng-click="setNowEditing('style')"><i class="fas fa-fw fa-border-style"></i> Style</li>
 		</ul>
-	</details>
+	</div>
 
-	<!-- Buttons -->
-	<details ng-repeat="button in layout.data" ng-if="!isGroup(button)">
-		<summary><i class="fas fa-fw fa-caret-square-right"></i> {{button.name}}</summary>
-		<ul>
-			<li class="remove" ng-click="remove(button, layout.data)"><div class="fas fa-trash-alt fa-fw"></div> Remove</li>
-			<li ng-class="{'nowEditing': nowEditing === button && nowEditingKey === 'details'}"
-				ng-click="setNowEditing(button, 'details')"><i class="fas fa-fw fa-info-circle"></i> Details</li>
-			<li ng-class="{'nowEditing': nowEditing === button && nowEditingKey === 'content'}"
-				ng-click="setNowEditing(button, 'content')"><i class="fas fa-fw fa-file-alt"></i> Content</li>
-			<li ng-class="{'nowEditing': nowEditing === button && nowEditingKey === 'sizePosition'}"
-				ng-click="setNowEditing(button, 'sizePosition')"><i class="fas fa-fw fa-arrows-alt"></i> Size and position</li>
-			<li ng-class="{'nowEditing': nowEditing === button && nowEditingKey === 'style'}"
-				ng-click="setNowEditing(button, 'style')"><i class="fas fa-fw fa-border-style"></i> Style</li>
-		</ul>
-	</details>
-
-	<!-- Add -->
-	<ul>
-		<li class="add" ng-click="add(layout.data)"><i class="fas fa-fw fa-plus"></i> Add button</li>
-		<li class="add" ng-click="add(layout.data, true)"><i class="fas fa-fw fa-plus"></i> Add group</li>
-	</ul>
 </div>

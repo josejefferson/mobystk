@@ -1,8 +1,24 @@
 angular.module('joystick', []).controller('editLayoutCtrl', ['$scope', ($scope) => {
 	Lockr.prefix = 'joystick.'
-	$scope.nowEditing = null
-	$scope.fullscreen = false
 	$scope.layouts = Lockr.smembers('layouts')
+	$scope.fullscreen = false
+	$scope.nowEditing = null
+	$scope.viewGroup = null
+	$scope.viewButton = null
+	$scope.openGroup = false
+	$scope.openButton = false
+	$scope.setGroup = group => {
+		$scope.openGroup = false
+		if (!group) return
+		$scope.openGroup = true
+		$scope.viewGroup = group
+	}
+	$scope.setButton = button => {
+		$scope.openButton = false
+		if (!button) return
+		$scope.openButton = true
+		$scope.viewButton = button
+	}
 	$scope.layout = {
 		id: 'da87bkab',
 		platformVersion: '0.0.0',
@@ -79,11 +95,10 @@ angular.module('joystick', []).controller('editLayoutCtrl', ['$scope', ($scope) 
 		]
 	}
 
-	$scope.test = [[['HIII']]]
 	$scope.isGroup = e => !!e.group
-	$scope.setNowEditing = (n, k) => {
-		$scope.nowEditing = n
-		$scope.nowEditingKey = k
+	$scope.setNowEditing = (key) => {
+		$scope.nowEditing = $scope.openButton ? $scope.viewButton : $scope.openGroup ? $scope.viewGroup : $scope.layout
+		$scope.nowEditingKey = key
 	}
 
 	$scope.btnStyle = (button) => {
@@ -140,54 +155,72 @@ angular.module('joystick', []).controller('editLayoutCtrl', ['$scope', ($scope) 
 		}
 	}
 
-	$scope.add = (parent, group = false) => {
-		if (!group) parent.push({
-			id: 'randomSTRING', //
-			name: '[New button]',
-			content: 'NEW BUTTON',
-			visible: true,
-			key: '',
-			anchorX: 'left',
-			anchorY: 'top',
-			x: [0, 'px'],
-			y: [0, 'px'],
-			width: [200, 'px'],
-			height: [30, 'px'],
-			fontSize: [20, 'px'],
-			hiddenBorders: {
-				top: false,
-				left: false,
-				bottom: false,
-				right: false
-			},
-			borderRadius: [
-				[0, 'px'],
-				[0, 'px'],
-				[0, 'px'],
-				[0, 'px']
-			],
-			rounded: false, //
-			lock: false
-		})
+	$scope.add = (group = false, parent) => {
+		if ($scope.openGroup) parent = $scope.viewGroup.buttons
+		else parent = $scope.layout.data
 
-		if (group) parent.push({
-			id: 'reandasodasd',
-			name: '[New group]',
-			group: true,
-			anchorX: 'left',
-			anchorY: 'top',
-			x: [0, 'px'],
-			y: [0, 'px'],
-			width: [200, 'px'],
-			height: [200, 'px'],
-			buttons: []
-		})
+		if (group) {
+			parent.push({
+				id: 'reandasodasd',
+				name: '[New group]',
+				group: true,
+				anchorX: 'left',
+				anchorY: 'top',
+				x: [0, 'px'],
+				y: [0, 'px'],
+				width: [200, 'px'],
+				height: [200, 'px'],
+				buttons: []
+			})
+			$scope.viewGroup = parent[parent.length - 1]
+			$scope.openGroup = true
+		} else {
+
+			parent.push({
+				id: 'randomSTRING', //
+				name: '[New button]',
+				content: 'NEW BUTTON',
+				visible: true,
+				key: '',
+				anchorX: 'left',
+				anchorY: 'top',
+				x: [0, 'px'],
+				y: [0, 'px'],
+				width: [200, 'px'],
+				height: [30, 'px'],
+				fontSize: [20, 'px'],
+				hiddenBorders: {
+					top: false,
+					left: false,
+					bottom: false,
+					right: false
+				},
+				borderRadius: [
+					[0, 'px'],
+					[0, 'px'],
+					[0, 'px'],
+					[0, 'px']
+				],
+				rounded: false, //
+				lock: false
+			})
+			$scope.viewButton = parent[parent.length - 1]
+			$scope.openButton = true
+		}
 	}
 
 	$scope.remove = (item, parent) => {
+		if ($scope.openButton) item = $scope.viewButton
+		else if ($scope.openGroup) item = $scope.viewGroup
+		parent = $scope.layout.data
+		if ($scope.openGroup && $scope.openButton) parent = $scope.viewGroup.buttons
+
 		if (confirm('Are you sure?')) {
 			const i = parent.indexOf(item)
 			if (i > -1) parent.splice(i, 1)
+			if ($scope.openButton && $scope.openGroup) $scope.openButton = false
+			else if ($scope.openButton) $scope.openButton = false
+			else if ($scope.openGroup) $scope.openGroup = false
 		}
 	}
 }])

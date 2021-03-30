@@ -1,9 +1,9 @@
 <div class="preview" ng-click="fullscreen = !fullscreen" ng-class="{'fullscreen': fullscreen}">
 	<button ng-if="!isGroup(item)" ng-repeat="item in layout.data" ng-style="btnStyle(item)" ng-attr-id="{{::item.id}}"
-		ng-class="{'lock': item.lock, 'nowEditing': nowEditing === item}">{{item.content}}</button>
-	<div class="group" ng-if="isGroup(group)" ng-repeat="group in layout.data" ng-style="grpStyle(group)" ng-attr-id="{{::group.id}}"
-		ng-class="{'nowEditing': nowEditing === group}">
+		ng-class="{'lock': item.lock, 'nowEditing': openButton && viewButton === item}">{{item.content}}</button>
+	<div class="group" ng-if="isGroup(group)" ng-repeat="group in layout.data" ng-style="grpStyle(group)"
+		ng-attr-id="{{::group.id}}" ng-class="{'nowEditing': openGroup && viewGroup === group}">
 		<button ng-repeat="item in group.buttons" ng-style="btnStyle(item)" ng-attr-id="{{::item.id}}"
-			ng-class="{'lock': item.lock, 'nowEditing': nowEditing === item}">{{item.content}}</button>
+			ng-class="{'lock': item.lock, 'nowEditing': openButton && viewButton === item}">{{item.content}}</button>
 	</div>
 </div>
