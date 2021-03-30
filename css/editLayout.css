@@ -24,10 +24,11 @@ body {
 
 input[type="text"],
 input[type="number"],
+textarea,
 select {
 	background: none;
 	font-size: 16px;
-	height: 30px;
+	padding: 2px 5px;
 	width: 200px;
 	color: white;
 	border: #fff8 2px solid;
@@ -127,6 +128,7 @@ summary {
 	padding: 5px 10px;
 	font-weight: bold;
 	background: #333;
+	outline: none;
 }
 
 ul {
