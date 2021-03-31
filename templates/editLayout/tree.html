@@ -1,6 +1,7 @@
 <div class="tree">
 	<!-- Layout info -->
 	<div class="layoutTitle">Layout - {{layout.name}}</div>
+	<a href="" class="link external">Refresh</a>
 
 	<ul>
 		<li class="option" ng-class="{'nowEditing': nowEditing === layout && nowEditingKey === 'layout'}"
@@ -15,7 +16,11 @@
 		<!-- Buttons -->
 		<li class="label">Buttons</li>
 		<li class="button" ng-repeat="button in layout.data" ng-if="!isGroup(button)" ng-click="setButton(button)">
-			<i class="fas fa-fw fa-caret-square-right"></i> {{button.name}}
+			<span class="fa-layers fa-fw">
+				<i class="fas fa-fw fa-caret-square-right"></i>
+				<span class="fa-layers-text fa-inverse">A</span>
+			</span>
+			 {{button.name}}
 		</li>
 
 		<!-- Add -->
@@ -34,6 +39,8 @@
 			<li class="remove" ng-click="remove()">
 				<i class="fas fa-trash-alt fa-fw"></i> Remove
 			</li>
+			<li class="option" ng-class="{'nowEditing': nowEditing === viewGroup && nowEditingKey === 'details'}"
+				ng-click="setNowEditing('details')"><i class="fas fa-fw fa-info-circle"></i> Details</li>
 			<li class="option" ng-class="{'nowEditing': nowEditing === viewGroup && nowEditingKey === 'sizePosition'}"
 				ng-click="setNowEditing('sizePosition')"><i class="fas fa-fw fa-arrows-alt"></i> Size and position</li>
 

@@ -19,81 +19,7 @@ angular.module('joystick', []).controller('editLayoutCtrl', ['$scope', ($scope) 
 		$scope.openButton = true
 		$scope.viewButton = button
 	}
-	$scope.layout = {
-		id: 'da87bkab',
-		platformVersion: '0.0.0',
-		version: 1,
-		name: 'PSP',
-		data: [
-			{
-				id: 'ddasdasd',
-				name: 'Left trigger',
-				content: 'L',
-				visible: true,
-				key: 'ctrl,a',
-				anchorX: 'left',
-				anchorY: 'top',
-				x: [0, 'px'],
-				y: [0, 'px'],
-				width: [50, '%'],
-				height: [30, 'px'],
-				fontSize: [20, 'px'],
-				hiddenBorders: {
-					top: true,
-					left: true,
-					bottom: false,
-					right: false
-				},
-				borderRadius: [
-					[10, 'px'],
-					[10, 'px'],
-					[10, 'px'],
-					[10, 'px']
-				],
-				rounded: false,
-				css: '',
-				lock: false
-			},
-			{
-				id: 'dsadasds',
-				group: true,
-				anchorX: 'center',
-				anchorY: 'center',
-				x: [0, 'px'],
-				y: [0, 'px'],
-				width: [50, '%'],
-				height: [30, 'px'],
-				buttons: [{
-					id: 'ddasdasd',
-					name: 'Left trigger',
-					content: 'L',
-					visible: true,
-					key: 'ctrl,a',
-					anchorX: 'left',
-					anchorY: 'top',
-					x: [0, 'px'],
-					y: [0, 'px'],
-					width: [50, '%'],
-					height: [30, 'px'],
-					fontSize: [20, 'px'],
-					hiddenBorders: {
-						top: true,
-						left: true,
-						bottom: false,
-						right: false
-					},
-					borderRadius: [
-						[10, 'px'],
-						[10, 'px'],
-						[10, 'px'],
-						[10, 'px']
-					],
-					rounded: false,
-					lock: false
-				}]
-			}
-		]
-	}
+	$scope.layout = newLayout()
 
 	$scope.isGroup = e => !!e.group
 	$scope.setNowEditing = (key) => {
@@ -160,50 +86,11 @@ angular.module('joystick', []).controller('editLayoutCtrl', ['$scope', ($scope) 
 		else parent = $scope.layout.data
 
 		if (group) {
-			parent.push({
-				id: 'reandasodasd',
-				name: '[New group]',
-				group: true,
-				anchorX: 'left',
-				anchorY: 'top',
-				x: [0, 'px'],
-				y: [0, 'px'],
-				width: [200, 'px'],
-				height: [200, 'px'],
-				buttons: []
-			})
+			parent.push(newGroup())
 			$scope.viewGroup = parent[parent.length - 1]
 			$scope.openGroup = true
 		} else {
-
-			parent.push({
-				id: 'randomSTRING', //
-				name: '[New button]',
-				content: 'NEW BUTTON',
-				visible: true,
-				key: '',
-				anchorX: 'left',
-				anchorY: 'top',
-				x: [0, 'px'],
-				y: [0, 'px'],
-				width: [200, 'px'],
-				height: [30, 'px'],
-				fontSize: [20, 'px'],
-				hiddenBorders: {
-					top: false,
-					left: false,
-					bottom: false,
-					right: false
-				},
-				borderRadius: [
-					[0, 'px'],
-					[0, 'px'],
-					[0, 'px'],
-					[0, 'px']
-				],
-				rounded: false, //
-				lock: false
-			})
+			parent.push(newButton())
 			$scope.viewButton = parent[parent.length - 1]
 			$scope.openButton = true
 		}

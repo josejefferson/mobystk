@@ -157,11 +157,14 @@ ul {
 }
 
 li {
-	padding: 5px 10px;
+	padding: 10px;
 	cursor: pointer;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	margin: 3px;
+	border-radius: 3px;
+	font-size: 18px;
 }
 
 li.label {
@@ -175,36 +178,38 @@ li.label {
 }
 
 li.return {
-	line-height: 30px;
 	font-size: 20px;
 }
 
 li.add {
-	background-color: #020;
+	background-color: #090;
 }
 
 li.remove {
-	background-color: #200;
+	background-color: #900;
 }
 
 li.nowEditing {
-	outline: red 2px solid;
-	outline-offset: -2px;
+	filter: brightness(300%);
 }
 
 li.group,
 li.button {
-	background-color: #222;
+	background-color: #666;
 }
 
 li.option {
-	background-color: #003;
+	background-color: #009;
 }
 
-li:first-child {
-	border-top: gray 1px solid;
+.fa-layers {
+	width: 1.25rem;
+	display: inline-block;
+	position: relative;
 }
 
-li {
-	border-bottom: gray 1px solid;
+.fa-layers > * {
+	position: absolute;
+	left: 0;
+	top: 0;
 }
