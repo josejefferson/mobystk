@@ -6,6 +6,7 @@
 	width: 30%;
 	overflow-x: hidden;
 	overflow-y: auto;
+	background-color: #000;
 }
 
 .tree .layoutTitle {

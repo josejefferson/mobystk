@@ -1,9 +1,21 @@
-<div class="preview" ng-click="fullscreen = !fullscreen" ng-class="{'fullscreen': fullscreen}">
-	<button ng-if="!isGroup(item)" ng-repeat="item in layout.data" ng-style="btnStyle(item)" ng-attr-id="{{::item.id}}"
-		ng-class="{'lock': item.lock, 'nowEditing': !fullscreen && openButton && viewButton === item}">{{item.content}}</button>
-	<div class="group" ng-if="isGroup(group)" ng-repeat="group in layout.data" ng-style="grpStyle(group)"
-		ng-attr-id="{{::group.id}}" ng-class="{'nowEditing': openGroup && viewGroup === group}">
-		<button ng-repeat="item in group.buttons" ng-style="btnStyle(item)" ng-attr-id="{{::item.id}}"
-			ng-class="{'lock': item.lock, 'nowEditing': !fullscreen && openButton && viewButton === item}">{{item.content}}</button>
+<div class="preview" ng-right-click="fllscr()" ng-class="{fullscreen: fullscreen}">
+	<style ng-bind="layout.css"></style>
+
+	<button ng-if="!isGroup(item)" ng-repeat="item in layout.data track by $index" ng-style="btnStyle(item)"
+		ng-attr-id="{{::item.id}}"
+		ng-class="{lock: item.lock, nowEditing: !fullscreen && openButton && viewButton === item}"
+		ng-click="setButton(item); setGroup(null)">{{item.content}}</button>
+
+	<div class="group" ng-if="isGroup(group)" ng-repeat="group in layout.data track by $index" ng-style="grpStyle(group)"
+		ng-attr-id="{{::group.id}}" ng-class="{'nowEditing': !fullscreen && openGroup && viewGroup === group}"
+		ng-click="setGroup(group); setButton(null)">
+
+		<button ng-repeat="item in group.buttons track by $index" ng-style="btnStyle(item)" ng-attr-id="{{::item.id}}"
+			ng-class="{lock: item.lock, 'nowEditing': !fullscreen && openButton && viewButton === item}">{{item.content}}</button>
+
+	</div>
+
+	<div class="joystick" ng-style="joyStyle(layout)">
+		<div class="front" ng-style="joyFrontStyle(layout)"></div>
 	</div>
 </div>

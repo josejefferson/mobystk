@@ -18,6 +18,25 @@
 		</tbody>
 	</table>
 
+	<table ng-switch-when="joystick">
+		<tbody>
+			<tr>
+				<th>Active:</th>
+				<td>
+					<input type="checkbox" ng-model="nowEditing.active">
+				</td>
+			</tr>
+			<tr>
+				<th>Size:</th>
+				<td>
+					<i class="fas fa-fw fa-minus" ng-click="nowEditing.size=nowEditing.size-2"></i>
+					<input type="number" ng-model="nowEditing.size">
+					<i class="fas fa-fw fa-plus" ng-click="nowEditing.size=nowEditing.size+2"></i>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
 	<table ng-switch-when="btnDetails">
 		<tbody>
 			<tr>
@@ -61,8 +80,7 @@
 		<tbody>
 			<tr>
 				<th>Name:</th>
-				<td>{{nowEditing.name}}</td>
-				<td><i class="fas fa-fw fa-pencil-alt" ng-click="edit(nowEditing,'name')"></i></td>
+				<td><input type="text" ng-model="nowEditing.name"></td>
 			</tr>
 
 			<tr>
@@ -118,10 +136,14 @@
 				<td></td>
 				<td></td>
 				<td colspan="2">
-					<i ng-class="{disabled:nowEditing.anchorY==='center'}" class="fas fa-fw fa-arrow-up" ng-click="move(nowEditing, 'up')"></i>
-					<i ng-class="{disabled:nowEditing.anchorX==='center'}" class="fas fa-fw fa-arrow-left" ng-click="move(nowEditing, 'left')"></i>
-					<i ng-class="{disabled:nowEditing.anchorX==='center'}" class="fas fa-fw fa-arrow-right" ng-click="move(nowEditing, 'right')"></i>
-					<i ng-class="{disabled:nowEditing.anchorY==='center'}" class="fas fa-fw fa-arrow-down" ng-click="move(nowEditing, 'down')"></i>
+					<i ng-class="{disabled:nowEditing.anchorY==='center'}" class="fas fa-fw fa-arrow-up"
+						ng-click="move(nowEditing, 'up')"></i>
+					<i ng-class="{disabled:nowEditing.anchorX==='center'}" class="fas fa-fw fa-arrow-left"
+						ng-click="move(nowEditing, 'left')"></i>
+					<i ng-class="{disabled:nowEditing.anchorX==='center'}" class="fas fa-fw fa-arrow-right"
+						ng-click="move(nowEditing, 'right')"></i>
+					<i ng-class="{disabled:nowEditing.anchorY==='center'}" class="fas fa-fw fa-arrow-down"
+						ng-click="move(nowEditing, 'down')"></i>
 				</td>
 			</tr>
 		</tbody>
@@ -164,18 +186,18 @@
 					<input type="checkbox" ng-model="nowEditing.rounded">
 				</td>
 			</tr>
-			<tr ng-repeat="round in nowEditing.borderRadius">
-				<th ng-switch="$index">
+			<tr ng-repeat="round in nowEditing.borderRadius track by $index">
+				<th ng-switch="$index" ng-class="{disabled: nowEditing.rounded}">
 					<span ng-switch-when="0">Top left:</span>
 					<span ng-switch-when="1">Top right:</span>
 					<span ng-switch-when="2">Bottom right:</span>
 					<span ng-switch-when="3">Bottom left:</span>
 				</th>
-				<td>
+				<td ng-class="{disabled: nowEditing.rounded}">
 					<i class="fas fa-fw fa-minus" ng-click="round[0]=round[0]-1"></i>
-					<input type="number" ng-model="round[0]">
+					<input type="number" ng-model="round[0]" ng-disabled="nowEditing.rounded">
 					<i class="fas fa-fw fa-plus" ng-click="round[0]=round[0]+1"></i>
-					<select ng-model="round[1]">
+					<select ng-model="round[1]" ng-disabled="nowEditing.rounded">
 						<option ng-value="'px'">px</option>
 						<option ng-value="'%'">%</option>
 					</select>
@@ -187,18 +209,19 @@
 	<table ng-switch-when="style">
 		<tbody>
 			<tr>
-				<th colspan="8">Hide borders</th>
+				<th>Show borders:</th>
+				<td>
+					<button ng-click="nowEditing.hiddenBorders.top = !nowEditing.hiddenBorders.top"
+						ng-class="{transparent: nowEditing.hiddenBorders.top}">Top</button>
+					<button ng-click="nowEditing.hiddenBorders.bottom = !nowEditing.hiddenBorders.bottom"
+						ng-class="{transparent: nowEditing.hiddenBorders.bottom}">Bottom</button>
+					<button ng-click="nowEditing.hiddenBorders.left = !nowEditing.hiddenBorders.left"
+						ng-class="{transparent: nowEditing.hiddenBorders.left}">Left</button>
+					<button ng-click="nowEditing.hiddenBorders.right = !nowEditing.hiddenBorders.right"
+						ng-class="{transparent: nowEditing.hiddenBorders.right}">Right</button>
+				</td>
 			</tr>
-			<tr>
-				<th>Top:</th>
-				<td><input type="checkbox" ng-model="nowEditing.hiddenBorders.top"><br></td>
-				<th>Bottom:</th>
-				<td><input type="checkbox" ng-model="nowEditing.hiddenBorders.bottom"><br></td>
-				<th>Left:</th>
-				<td><input type="checkbox" ng-model="nowEditing.hiddenBorders.left"><br></td>
-				<th>Right:</th>
-				<td><input type="checkbox" ng-model="nowEditing.hiddenBorders.right"><br></td>
-			</tr>
+
 			<tr>
 				<th>Font size:</th>
 				<td colspan="7">

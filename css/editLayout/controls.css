@@ -8,7 +8,7 @@
 	width: 200px;
 	color: white;
 	border: #888 2px solid;
-	transition: border-color .15s ease;
+	transition: all .15s ease;
 	outline: none;
 	border-radius: 4px;
 }
@@ -20,11 +20,24 @@
 .disabled {
 	border-color: #333;
 	color: #333;
+	pointer-events: none;
+	transition: all .15s ease;
 }
 
 .controls input[type="number"],
 .controls select {
 	width: 70px;
+}
+
+.controls button {
+	background: none;
+	font-size: 16px;
+	padding: 2px 5px;
+	color: white;
+	border: #888 2px solid;
+	border-radius: 4px;
+	outline: none;
+	transition: all .15s ease;
 }
 
 .controls {
@@ -50,4 +63,8 @@
 .controls th {
 	text-align: left;
 	padding: 2px 5px;
+}
+
+.controls .transparent {
+	opacity: 0.5;
 }

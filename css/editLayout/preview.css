@@ -8,6 +8,7 @@
 	background-color: #000;
 	z-index: 1;
 	transition: all .2s ease;
+	overflow: hidden;
 }
 
 .preview.fullscreen {
@@ -50,4 +51,20 @@
 .preview button.active,
 .preview button.dActive {
 	background-color: var(--active);
+}
+
+.preview .joystick {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	border: var(--border) var(--border-size) var(--border-style);
+}
+
+.preview .joystick .front {
+	display: block;
+	border-radius: 50%;
+	border: var(--border) var(--border-size) var(--border-style);
+	background-color: var(--color);
 }

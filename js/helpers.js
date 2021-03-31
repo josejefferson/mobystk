@@ -20,21 +20,46 @@ function copy(text) {
 	document.body.removeChild(el)
 }
 
-function newLayout(content = [], ppt = false) {
+async function newLayout(content = [], ppt = true) {
+	let name = ''
+	if (ppt) {
+		name = (await Swal.fire({
+			input: 'text',
+			inputLabel: 'Name of layout',
+			inputPlaceholder: '[New layout]'
+		})).value
+	}
 	return {
 		id: rndStr(),
 		platformVersion: '0.0.0',
 		version: 1,
-		name: '[New layout]',
+		name: name || '[New layout]',
+		joystick: {
+			active: true,
+			anchorX: 'left',
+			anchorY: 'bottom',
+			x: [10, 'px'],
+			y: [10, 'px'],
+			size: 90
+		},
 		data: content
 	}
 }
 
-function newGroup(buttons = []) {
+async function newGroup(buttons = [], ppt = true) {
+	let name = ''
+	if (ppt) {
+		name = (await Swal.fire({
+			input: 'text',
+			inputLabel: 'Name of group',
+			inputPlaceholder: '[New group]'
+		})).value
+	}
+
 	return {
 		group: true,
 		id: rndStr(),
-		name: '[New group]',
+		name: name || '[New group]',
 		anchorX: 'left',
 		anchorY: 'top',
 		x: [0, 'px'],
@@ -45,10 +70,19 @@ function newGroup(buttons = []) {
 	}
 }
 
-function newButton(ppt = false) {
+async function newButton(ppt = true) {
+	let name = ''
+	if (ppt) {
+		name = (await Swal.fire({
+			input: 'text',
+			inputLabel: 'Name of button',
+			inputPlaceholder: '[New button]'
+		})).value
+	}
+
 	return {
 		id: rndStr(),
-		name: '[New button]', // if ppt Swal.fire
+		name: name || '[New button]',
 		content: '[NEW]',
 		visible: true,
 		lock: false,
