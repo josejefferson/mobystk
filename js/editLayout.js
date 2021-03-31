@@ -110,4 +110,26 @@ angular.module('joystick', []).controller('editLayoutCtrl', ['$scope', ($scope) 
 			else if ($scope.openGroup) $scope.openGroup = false
 		}
 	}
+
+	$scope.move = (obj, dir) => {
+		if (dir === 'left' || dir === 'right' && obj.anchorX === 'center') return
+		if (dir === 'up' || dir === 'down' && obj.anchorY === 'center') return
+		switch (dir) {
+			case 'up': obj.anchorY === 'top' ? obj.y[0] -= 2 : obj.y[0] += 2
+			case 'down': obj.anchorY === 'top' ? obj.y[0] += 2 : obj.y[0] -= 2
+			case 'left': obj.anchorX === 'left' ? obj.x[0] -= 2 : obj.x[0] += 2
+			case 'right': obj.anchorX === 'left' ? obj.x[0] += 2 : obj.x[0] -= 2
+		}
+	}
+
+	$scope.edit = async (obj, prop) => {
+		const { value } = await Swal.fire({
+			title: 'Edit',
+			input: 'text',
+			inputLabel: '',
+			inputValue: obj[prop]
+		})
+		obj[prop] = value
+		$scope.$apply()
+	}
 }])
