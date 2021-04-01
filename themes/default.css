@@ -61,9 +61,11 @@ button.dActive {
 }
 
 /* Button icons */
-use {
-	fill: var(--color);
-	transition: fill 1s ease;
+.mdi {
+	color: var(--color);
+	font-size: inherit !important;
+	transition: color 1s ease;
+	pointer-events: none;
 }
 
 /* "Edit" button */

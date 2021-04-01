@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
 	<link rel="manifest" href="manifest.json">
 	<title>WebJoy</title>
+	<link rel="stylesheet" href="lib/css/materialdesignicons.min.css"></script>
 	<link rel="stylesheet" href="css/joystick.css">
 	<link rel="stylesheet" href="themes/default.css">
 	<link rel="stylesheet" class="theme">
@@ -20,24 +21,24 @@
 	<!-- Arrow buttons -->
 	<div class="arrows group">
 		<!-- Up arrow -->
-		<button class="up touch" data-key="UP"><svg>
-				<use xlink:href="img/icons.svg#arrUp">
-			</svg></button>
+		<button class="up touch" data-key="UP">
+			<i class="mdi mdi-menu-up-outline"></i>
+		</button>
 
 		<!-- Down arrow -->
-		<button class="down touch" data-key="DOWN"><svg>
-				<use xlink:href="img/icons.svg#arrDown">
-			</svg></button>
+		<button class="down touch" data-key="DOWN">
+			<i class="mdi mdi-menu-down-outline"></i>
+		</button>
 
 		<!-- Left arrow -->
-		<button class="left touch" data-key="LEFT"><svg>
-				<use xlink:href="img/icons.svg#arrLeft">
-			</svg></button>
+		<button class="left touch" data-key="LEFT">
+			<i class="mdi mdi-menu-left-outline"></i>
+		</button>
 
 		<!-- Right arrow -->
-		<button class="right touch" data-key="RIGHT"><svg>
-				<use xlink:href="img/icons.svg#arrRight">
-			</svg></button>
+		<button class="right touch" data-key="RIGHT">
+			<i class="mdi mdi-menu-right-outline"></i>
+		</button>
 
 		<!-- Diagonal arrows -->
 		<div class="diag dLT touch" data-key="LEFT,UP"></div>
@@ -51,24 +52,24 @@
 		<!-- PSP buttons -->
 
 		<!-- Triangle -->
-		<button class="actup touch" data-key="ACTUP"><svg>
-				<use xlink:href="img/icons.svg#actTriangle">
-			</svg></button>
+		<button class="actup touch" data-key="ACTUP">
+			<i class="mdi mdi-triangle-outline"></i>
+		</button>
 
 		<!-- Cross -->
-		<button class="actdown touch" data-key="ACTDOWN"><svg>
-				<use xlink:href="img/icons.svg#actCross">
-			</svg></button>
+		<button class="actdown touch" data-key="ACTDOWN">
+				<i class="mdi mdi-close"></i>
+		</button>
 
 		<!-- Square -->
-		<button class="actleft touch" data-key="ACTLEFT"><svg>
-				<use xlink:href="img/icons.svg#actSquare">
-			</svg></button>
+		<button class="actleft touch" data-key="ACTLEFT">
+			<i class="mdi mdi-square-outline"></i>
+		</button>
 
 		<!-- Circle -->
-		<button class="actright touch" data-key="ACTRIGHT"><svg>
-				<use xlink:href="img/icons.svg#actCircle">
-			</svg></button>
+		<button class="actright touch" data-key="ACTRIGHT">
+			<i class="mdi mdi-circle-outline"></i>
+		</button>
 
 		<!-- SNES buttons -->
 		<!-- X --><button class="snesactup touch" data-key="ACTUP">X</button>
@@ -89,20 +90,20 @@
 	<button class="select touch" data-key="SELECT">SELECT</button>
 	<button class="start touch" data-key="START">START</button>
 
-	<button class="load touch" data-key="LOAD"><svg>
-			<use xlink:href="img/icons.svg#load">
-		</svg></button>
-	<button class="save touch" data-key="SAVE"><svg>
-			<use xlink:href="img/icons.svg#save">
-		</svg></button>
+	<button class="load touch" data-key="LOAD">
+		<i class="mdi mdi-file-download"></i>
+	</button>
+	<button class="save touch" data-key="SAVE">
+		<i class="mdi mdi-content-save"></i>
+	</button>
 
 	<!-- Locked buttons -->
 	<button class="rLock touch lock" data-key="R">R</button>
 
 	<!-- Edit button -->
 	<a href="index.html"><button class="edit touch">Editar</button></a>
-	<a href="" style="left:50%;top:10%;position:absolute;"><button
-			style="display:block;position:relative;left:-50%">Atualizar</button></a>
+	<!--<a href="" style="left:50%;top:10%;position:absolute;"><button
+			style="display:block;position:relative;left:-50%">Atualizar</button></a>-->
 
 	<!-- Custom buttons (coming soon) -->
 	<span class="customButtons"></span>

@@ -43,6 +43,7 @@
 .down,
 .left,
 .right {
+	font-size: 36px !important;
 	width: 52px;
 	height: 52px;
 }
@@ -88,6 +89,7 @@
 .snesactright,
 .snesactleft,
 .snesactdown {
+	font-size: 32px !important;
 	width: 52px;
 	height: 52px;
 }
@@ -180,20 +182,22 @@
 	border-bottom-style: hidden !important;
 }
 
-/* Load button */
-.load {
-	left: 200px;
+/* Load and save */
+.load,
+.save {
 	top: 100px;
 	width: 52px;
 	height: 52px;
 	border-radius: 50%;
+	font-size: 28px !important;
 }
 
 /* Load button */
+.load {
+	left: 30px;
+}
+
+/* Save button */
 .save {
-	right: 200px;
-	top: 100px;
-	width: 52px;
-	height: 52px;
-	border-radius: 50%;
+	right: 30px;
 }
