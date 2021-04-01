@@ -6,18 +6,22 @@ from pynput.keyboard import Key, Controller
 keyboard = Controller()
 
 def getKey(cmd):
-	if cmd == 'L': return 'Q'              # L
-	elif cmd == 'R': return 'E'            # R
-	elif cmd == 'ACTUP': return 'W'        # Triangle or X
-	elif cmd == 'ACTRIGHT': return 'D'     # Circle   or A
-	elif cmd == 'ACTLEFT': return 'A'      # Square   or Y
-	elif cmd == 'ACTDOWN': return 'S'      # Cross    or B
+	if cmd == 'L': return 'q'              # L
+	elif cmd == 'R': return 'e'            # R
+	elif cmd == 'ACTUP': return 'i'        # Triangle or X
+	elif cmd == 'ACTRIGHT': return 'l'     # Circle   or A
+	elif cmd == 'ACTLEFT': return 'j'      # Square   or Y
+	elif cmd == 'ACTDOWN': return 'k'      # Cross    or B
 	elif cmd == 'START': return Key.space  # Start
 	elif cmd == 'SELECT': return Key.enter # Select
 	elif cmd == 'UP': return Key.up        # Arrow up
 	elif cmd == 'DOWN': return Key.down    # Arrow down
 	elif cmd == 'LEFT': return Key.left    # Arrow left
 	elif cmd == 'RIGHT': return Key.right  # Arrow right
+	elif cmd == 'JOYUP': return 'w'        # Joystick up
+	elif cmd == 'JOYDOWN': return 'a'      # Joystick down
+	elif cmd == 'JOYLEFT': return 's'      # Joystick left
+	elif cmd == 'JOYRIGHT': return 'd'     # Joystick right
 	else: return cmd
 
 PORT = 5000

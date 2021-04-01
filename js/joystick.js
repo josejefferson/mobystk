@@ -130,20 +130,20 @@ const joystick = {
 
 function updateJoystick(angle, direction) {
 	if (!direction) {
-		update('up', false)
-		update('left', false)
-		update('down', false)
-		update('right', false)
+		update('joyup', false)
+		update('joyleft', false)
+		update('joydown', false)
+		update('joyright', false)
 		return
 	}
-	if (angle > 22.5 && angle < 157.5) update('up', true)
-	else update('up', false)
-	if (angle > 112.5 && angle < 247.5) update('left', true)
-	else update('left', false)
-	if (angle > 202.5 && angle < 337.5) update('down', true)
-	else update('down', false)
-	if (angle > 292.5 || angle < 67.5) update('right', true)
-	else update('right', false)
+	if (angle > 22.5 && angle < 157.5) update('joyup', true)
+	else update('joyup', false)
+	if (angle > 112.5 && angle < 247.5) update('joyleft', true)
+	else update('joyleft', false)
+	if (angle > 202.5 && angle < 337.5) update('joydown', true)
+	else update('joydown', false)
+	if (angle > 292.5 || angle < 67.5) update('joyright', true)
+	else update('joyright', false)
 
 	// Atualiza a direção do joystick
 	function update(dir, value) {
