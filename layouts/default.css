@@ -179,3 +179,21 @@
 	border-bottom: none;
 	border-bottom-style: hidden !important;
 }
+
+/* Load button */
+.load {
+	left: 200px;
+	top: 100px;
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+}
+
+/* Load button */
+.save {
+	right: 200px;
+	top: 100px;
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+}

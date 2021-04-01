@@ -31,6 +31,8 @@
 .l,
 .r,
 .select,
-.start {
+.start,
+.load,
+.save {
 	display: flex;
 }

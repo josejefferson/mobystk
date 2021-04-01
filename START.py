@@ -22,6 +22,8 @@ def getKey(cmd):
 	elif cmd == 'JOYDOWN': return 'a'      # Joystick down
 	elif cmd == 'JOYLEFT': return 's'      # Joystick left
 	elif cmd == 'JOYRIGHT': return 'd'     # Joystick right
+	elif cmd == 'LOAD': return 'o'         # Load state
+	elif cmd == 'SAVE': return 'p'         # Save state
 	else: return cmd
 
 PORT = 5000
