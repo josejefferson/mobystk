@@ -4,34 +4,45 @@ const layout = localStorage.getItem('webJoy.layout')
 if (!layout) location.href = 'index.html'
 document.querySelector('.layout').href = 'layouts/' + layout + '.css'
 
-// Conexão do socket
+const $drive = document.querySelector('.drive')
+const $driveIcon = document.querySelector('.drive svg')
 
-let y = 0, d = null
+// Drive sensor mode
+$drive.onclick = e => {
+	// Change sensitivity of sensor
+	const SENSITIVITY = 4
 
-window.addEventListener('devicemotion', e => {
-	const o = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
-	y = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
-	dir = y > 4 ? 'right' : y < -4 ? 'left' : null
-	if (dir != d) {
-		d = dir
-		if (d == null) {
+	// Turn off drive mode
+	if (e.target.classList.contains('active')) {
+		e.target.classList.remove('active')
+		$driveIcon.style.transform = 'rotate(0deg)'
+		window.ondevicemotion = null
+		return
+	}
+
+	// Turn on drive mode
+	e.target.classList.add('active')
+	let driveY = 0, driveDirection = null
+
+	// Detect movement
+	window.ondevicemotion = e => {
+		const orientation = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
+		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
+		$driveIcon.style.transform = `rotate(${driveY / 10 * 90 * orientation}deg)`
+		direction = y > SENSITIVITY ? 'right' : y < -SENSITIVITY ? 'left' : null
+		if (direction === driveDirection) return
+		driveDirection = direction
+
+		if (direction === null) {
 			sendCmd('joyleft', true)
 			sendCmd('joyright', true)
 		} else {
-			sendCmd('joy' + d)
+			sendCmd('joy' + direction)
 		}
 	}
-	document.getElementById('debug').innerText = 'Y: ' + y + ' | O: ' + o + ' | D: ' + (y > 4 ? 'RIGHT' : y < -4 ? 'LEFT' : 'NONE')
-})
-// setInterval(() => {
-// 	sendCmd(y > 0 ? 'joyright' : 'joyleft')
-// 	setTimeout(() => {
-// 		sendCmd('joyright', true)
-// 		sendCmd('joyleft', true)
-// 	}, y / 10 * 1000)
-// }, 1000)
+}
 
-
+// Conexão do socket
 let socket = socketConn()
 function socketConn() {
 	const ws = new WebSocket('ws://' + ip);

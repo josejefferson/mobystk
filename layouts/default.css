@@ -184,7 +184,8 @@
 
 /* Load and save */
 .load,
-.save {
+.save,
+.drive {
 	top: 100px;
 	width: 52px;
 	height: 52px;
@@ -200,4 +201,10 @@
 /* Save button */
 .save {
 	right: 30px;
+}
+
+/* Drive button */
+.drive {
+	left: 50%;
+	transform: translateX(-50%);
 }

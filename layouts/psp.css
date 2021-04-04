@@ -38,7 +38,8 @@
 .l,
 .r,
 .select,
-.start {
+.start,
+.drive {
 	display: flex;
 }
 
