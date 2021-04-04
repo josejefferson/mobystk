@@ -29,7 +29,7 @@ $drive.onclick = e => {
 		const orientation = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
 		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
 		$driveIcon.style.transform = `rotate(${driveY / 10 * 90 * orientation}deg)`
-		direction = y > SENSITIVITY ? 'right' : y < -SENSITIVITY ? 'left' : null
+		direction = driveY > SENSITIVITY ? 'right' : driveY < -SENSITIVITY ? 'left' : null
 		if (direction === driveDirection) return
 		driveDirection = direction
 
