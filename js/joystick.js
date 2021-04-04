@@ -14,10 +14,10 @@ window.addEventListener('devicemotion', e => {
 	document.getElementById('debug').innerText = 'Y: ' + y + ' | O: ' + o + ' | D: ' + (y > 0 ? 'RIGHT' : 'LEFT')
 })
 setInterval(() => {
-	sendCmd(y > 0 ? 'right' : 'left')
+	sendCmd(y > 0 ? 'joyright' : 'joyleft')
 	setTimeout(() => {
-		sendCmd('right', true)
-		sendCmd('left', true)
+		sendCmd('joyright', true)
+		sendCmd('joyleft', true)
 	}, y / 10 * 1000)
 }, 1000)
 
