@@ -24,6 +24,7 @@ def getKey(cmd):
 	elif cmd == 'JOYRIGHT': return 'd'     # Joystick right
 	elif cmd == 'LOAD': return 'o'         # Load state
 	elif cmd == 'SAVE': return 'p'         # Save state
+	elif cmd == 'PAUSE': return Key.esc    # Pause game
 	else: return cmd
 
 PORT = 5000

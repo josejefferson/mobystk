@@ -42,6 +42,7 @@
 .start,
 .load,
 .save,
+.pause,
 .drive {
 	display: flex;
 }
@@ -57,7 +58,7 @@
 
 .load {
 	left: auto;
-	right: 118px;
+	right: 128px;
 }
 
 .actdown i {
