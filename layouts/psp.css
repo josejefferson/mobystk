@@ -39,6 +39,8 @@
 .r,
 .select,
 .start,
+.load,
+.save,
 .drive {
 	display: flex;
 }
@@ -49,4 +51,13 @@
 .right {
 	width: 48px;
 	height: 48px;
+}
+
+.load {
+	left: auto;
+	right: 118px;
+}
+
+.actdown i {
+	font-size: 42px !important;
 }

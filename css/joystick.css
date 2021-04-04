@@ -30,12 +30,32 @@ body.preload * {
 	height: 50%;
 	position: absolute;
 	width: 50%;
+	/*border: var(--color) 1px solid;*/
 }
 
-.diag.dLT { left: 0; top: 0; }
-.diag.dRT { right: 0; top: 0; }
-.diag.dLB { left: 0; bottom: 0; }
-.diag.dRB { right: 0; bottom: 0; }
+.diag.dLT { 
+	left: 0;
+	top: 0;
+	border-radius: 75px 0 50px 0;
+}
+
+.diag.dRT { 
+	right: 0;
+	top: 0;
+	border-radius: 0 75px 0 50px;
+}
+
+.diag.dLB { 
+	left: 0;
+	bottom: 0;
+	border-radius: 0 50px 0 75px;
+}
+
+.diag.dRB { 
+	right: 0;
+	bottom: 0;
+	border-radius: 50px 0 75px 0;
+}
 
 /* Botões */
 button {
