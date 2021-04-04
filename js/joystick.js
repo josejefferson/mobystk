@@ -6,20 +6,30 @@ document.querySelector('.layout').href = 'layouts/' + layout + '.css'
 
 // Conexão do socket
 
-let y = 0
+let y = 0, d = null
 
 window.addEventListener('devicemotion', e => {
 	const o = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
 	y = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
-	document.getElementById('debug').innerText = 'Y: ' + y + ' | O: ' + o + ' | D: ' + (y > 0 ? 'RIGHT' : 'LEFT')
+	dir = y > 4 ? 'right' : y < 4 ? 'left' : null
+	if (dir != d) {
+		d = dir
+		if (d == null) {
+			sendCmd('joyleft', true)
+			sendCmd('joyright', true)
+		} else {
+			sendCmd('joy' + d)
+		}
+	}
+	document.getElementById('debug').innerText = 'Y: ' + y + ' | O: ' + o + ' | D: ' + (y > 4 ? 'RIGHT' : y < 4 ? 'LEFT' : 'NONE')
 })
-setInterval(() => {
-	sendCmd(y > 0 ? 'joyright' : 'joyleft')
-	setTimeout(() => {
-		sendCmd('joyright', true)
-		sendCmd('joyleft', true)
-	}, y / 10 * 1000)
-}, 1000)
+// setInterval(() => {
+// 	sendCmd(y > 0 ? 'joyright' : 'joyleft')
+// 	setTimeout(() => {
+// 		sendCmd('joyright', true)
+// 		sendCmd('joyleft', true)
+// 	}, y / 10 * 1000)
+// }, 1000)
 
 
 let socket = socketConn()

@@ -19,8 +19,8 @@ def getKey(cmd):
 	elif cmd == 'LEFT': return Key.left    # Arrow left
 	elif cmd == 'RIGHT': return Key.right  # Arrow right
 	elif cmd == 'JOYUP': return 'w'        # Joystick up
-	elif cmd == 'JOYDOWN': return 'a'      # Joystick down
-	elif cmd == 'JOYLEFT': return 's'      # Joystick left
+	elif cmd == 'JOYDOWN': return 's'      # Joystick down
+	elif cmd == 'JOYLEFT': return 'a'      # Joystick left
 	elif cmd == 'JOYRIGHT': return 'd'     # Joystick right
 	elif cmd == 'LOAD': return 'o'         # Load state
 	elif cmd == 'SAVE': return 'p'         # Save state
