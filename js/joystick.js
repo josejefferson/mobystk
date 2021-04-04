@@ -11,7 +11,7 @@ let y = 0, d = null
 window.addEventListener('devicemotion', e => {
 	const o = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
 	y = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
-	dir = y > 4 ? 'right' : y < 4 ? 'left' : null
+	dir = y > 4 ? 'right' : y < -4 ? 'left' : null
 	if (dir != d) {
 		d = dir
 		if (d == null) {
@@ -21,7 +21,7 @@ window.addEventListener('devicemotion', e => {
 			sendCmd('joy' + d)
 		}
 	}
-	document.getElementById('debug').innerText = 'Y: ' + y + ' | O: ' + o + ' | D: ' + (y > 4 ? 'RIGHT' : y < 4 ? 'LEFT' : 'NONE')
+	document.getElementById('debug').innerText = 'Y: ' + y + ' | O: ' + o + ' | D: ' + (y > 4 ? 'RIGHT' : y < -4 ? 'LEFT' : 'NONE')
 })
 // setInterval(() => {
 // 	sendCmd(y > 0 ? 'joyright' : 'joyleft')
