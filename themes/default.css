@@ -25,7 +25,7 @@ body.disconnected {
 }
 
 body.connecting {
-	--color: #f008;
+	--color: #ff08;
 	--border: var(--color);
 	--active: #ff03;
 }

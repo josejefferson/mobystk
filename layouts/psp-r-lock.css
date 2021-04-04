@@ -39,7 +39,8 @@
 .l,
 .rLock,
 .select,
-.start {
+.start,
+.drive {
 	display: flex;
 }
 

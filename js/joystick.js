@@ -48,6 +48,7 @@ function socketConn() {
 	const ws = new WebSocket('ws://' + ip);
 	ws.onopen = e => {
 		document.body.classList.remove('connecting', 'disconnected')
+		document.body.classList.add('connected')
 	}
 	ws.onclose = e => {
 		document.body.classList.remove('connecting')
