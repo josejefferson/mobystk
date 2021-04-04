@@ -15,9 +15,7 @@ window.addEventListener('devicemotion', e => {
 })
 setInterval(() => {
 	sendCmd(y > 0 ? 'right' : 'left')
-	document.getElementById('test').innerText = (y > 0 ? 'right' : 'left')
 	setTimeout(() => {
-		document.getElementById('test').innerText = '.'
 		sendCmd('right', true)
 		sendCmd('left', true)
 	}, y / 10 * 1000)
