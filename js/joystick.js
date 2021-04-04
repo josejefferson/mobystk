@@ -5,6 +5,25 @@ if (!layout) location.href = 'index.html'
 document.querySelector('.layout').href = 'layouts/' + layout + '.css'
 
 // Conexão do socket
+
+let y = 0
+
+window.addEventListener('devicemotion', e => {
+	const o = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
+	y = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
+	document.getElementById('debug').innerText = 'Y: ' + y + ' | O: ' + o + ' | D: ' + (y > 0 ? 'RIGHT' : 'LEFT')
+})
+setInterval(() => {
+	sendCmd(y > 0 ? 'right' : 'left')
+	document.getElementById('test').innerText = (y > 0 ? 'right' : 'left')
+	setTimeout(() => {
+		document.getElementById('test').innerText = '.'
+		sendCmd('right', true)
+		sendCmd('left', true)
+	}, y / 10 * 1000)
+}, 1000)
+
+
 let socket = socketConn()
 function socketConn() {
 	const ws = new WebSocket('ws://' + ip);
