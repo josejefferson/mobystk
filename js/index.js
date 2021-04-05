@@ -1,4 +1,4 @@
-document.forms[0].elements.code.value = localStorage.getItem('webJoy.code')
+document.forms[0].elements.code.value = localStorage.getItem('webJoy.code') || window.location.hostname + ':5000'
 document.forms[0].elements.layout.value = localStorage.getItem('webJoy.layout')
 
 document.forms[0].onsubmit = function(e) {

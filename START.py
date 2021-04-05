@@ -2,16 +2,16 @@ import socket
 import asyncio
 import websockets
 from pynput.keyboard import Key, Controller
-
 keyboard = Controller()
 
 PORT = 5000
+
 async def server(websocket, path):
 	print('[WEBSOCKET] Connected user')
+
 	async for msg in websocket:
 		try:
-			msg = msg.lower()
-			msg = msg.split(' ')
+			msg = msg.lower().split(' ')
 			msg[1] = msg[1].split(',')
 
 			for keyName in msg[1]:
