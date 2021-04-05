@@ -33,6 +33,8 @@
 .select,
 .start,
 .load,
-.save {
+.save,
+.volumeUp,
+.volumeDown {
 	display: flex;
 }

@@ -70,6 +70,7 @@ button .mdi {
 
 button svg {
 	fill: var(--color);
+	transition: fill 1s ease;
 }
 
 /* "Edit" button */

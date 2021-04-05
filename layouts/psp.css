@@ -42,7 +42,9 @@
 .load,
 .save,
 .pause,
-.drive {
+.drive,
+.volumeUp,
+.volumeDown {
 	display: flex;
 }
 

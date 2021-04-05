@@ -34,10 +34,10 @@ $drive.onclick = e => {
 		driveDirection = direction
 
 		if (direction === null) {
-			sendCmd('a', true)
-			sendCmd('d', true)
+			// sendCmd('a', true)
+			// sendCmd('d', true)
 		} else {
-			sendCmd(direction)
+			// sendCmd(direction)
 		}
 	}
 }
