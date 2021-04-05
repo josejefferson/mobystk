@@ -34,8 +34,8 @@ $drive.onclick = e => {
 		driveDirection = direction
 
 		if (direction === null) {
-			sendCmd('joyleft', true)
-			sendCmd('joyright', true)
+			sendCmd('a', true)
+			sendCmd('d', true)
 		} else {
 			sendCmd('joy' + direction)
 		}
@@ -186,6 +186,12 @@ function updateJoystick(angle, direction) {
 
 	// Atualiza a direção do joystick
 	function update(dir, value) {
+		switch (dir) {
+			case 'joyup': dir = 'w'; break;
+			case 'joyleft': dir = 'a'; break;
+			case 'joydown': dir = 's'; break;
+			case 'joyright': dir = 'd'; break;
+		}
 		if (joystick[dir] === value) return
 		joystick[dir] = value
 		sendCmd(dir, !value)
