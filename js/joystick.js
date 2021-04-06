@@ -4,11 +4,28 @@ const layout = localStorage.getItem('webJoy.layout')
 if (!layout) location.href = 'index.html'
 document.querySelector('.layout').href = 'layouts/' + layout + '.css'
 
-const $drive = document.querySelector('.drive')
-const $driveIcon = document.querySelector('.drive svg')
+function updateSize() {
+	const width = window.innerWidth
+	const height = window.innerHeight
+	
+	const scale = Math.min(
+		width / 640,
+		height / 360
+	)
+	
+	const $container = document.querySelector('.container')
+	$container.style.transform = `scale(${scale})`
+}
+
+window.addEventListener('load', updateSize)
+window.addEventListener('resize', updateSize)
+
+
+//const $drive = document.querySelector('.drive')
+//const $driveIcon = document.querySelector('.drive svg')
 
 // Drive sensor mode
-$drive.onclick = e => {
+/*$drive.onclick = e => {
 	// Change sensitivity of sensor
 	const SENSITIVITY = 4
 
@@ -40,7 +57,7 @@ $drive.onclick = e => {
 			// sendCmd(direction)
 		}
 	}
-}
+}*/
 
 // Conexão do socket
 let socket = socketConn()

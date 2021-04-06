@@ -15,118 +15,114 @@
 </head>
 
 <body class="connecting preload">
-	<!-- Joystick -->
-	<div id="joystick" class="joystick group touch"></div>
-
-	<!-- Arrow buttons -->
-	<div class="arrows group">
-		<!-- Up arrow -->
-		<button class="up touch" data-key="UP">
-			<i class="mdi mdi-menu-up-outline"></i>
+	<div class="container">
+		<!-- Joystick -->
+		<div id="joystick" class="joystick group touch"></div>
+	
+		<!-- Arrow buttons -->
+		<div class="arrows group">
+			<!-- Up arrow -->
+			<button class="up touch" data-key="UP">
+				<i class="mdi mdi-menu-up-outline"></i>
+			</button>
+	
+			<!-- Down arrow -->
+			<button class="down touch" data-key="DOWN">
+				<i class="mdi mdi-menu-down-outline"></i>
+			</button>
+	
+			<!-- Left arrow -->
+			<button class="left touch" data-key="LEFT">
+				<i class="mdi mdi-menu-left-outline"></i>
+			</button>
+	
+			<!-- Right arrow -->
+			<button class="right touch" data-key="RIGHT">
+				<i class="mdi mdi-menu-right-outline"></i>
+			</button>
+	
+			<!-- Diagonal arrows -->
+			<div class="diag dLT touch" data-key="LEFT,UP"></div>
+			<div class="diag dRT touch" data-key="RIGHT,UP"></div>
+			<div class="diag dLB touch" data-key="LEFT,DOWN"></div>
+			<div class="diag dRB touch" data-key="RIGHT,DOWN"></div>
+		</div>
+	
+		<!-- Action buttons -->
+		<div class="actions group">
+			<!-- PSP buttons -->
+	
+			<!-- Triangle -->
+			<button class="actup touch" data-key="I">
+				<i class="mdi mdi-triangle-outline"></i>
+			</button>
+	
+			<!-- Cross -->
+			<button class="actdown touch" data-key="K">
+					<i class="mdi mdi-close"></i>
+			</button>
+	
+			<!-- Square -->
+			<button class="actleft touch" data-key="J">
+				<i class="mdi mdi-square-outline"></i>
+			</button>
+	
+			<!-- Circle -->
+			<button class="actright touch" data-key="L">
+				<i class="mdi mdi-circle-outline"></i>
+			</button>
+	
+			<!-- SNES buttons -->
+			<!-- X --><button class="snesactup touch" data-key="I">X</button>
+			<!-- B --><button class="snesactdown touch" data-key="K">B</button>
+			<!-- Y --><button class="snesactleft touch" data-key="J">Y</button>
+			<!-- A --><button class="snesactright touch" data-key="L">A</button>
+	
+			<!-- Diagonal actions -->
+			<div class="diag dLT touch" data-key="J,I"></div>
+			<div class="diag dRT touch" data-key="L,I"></div>
+			<div class="diag dLB touch" data-key="J,K"></div>
+			<div class="diag dRB touch" data-key="L,K"></div>
+		</div>
+	
+		<!-- Other buttons -->
+		<button class="l touch" data-key="Q">L</button>
+		<button class="r touch" data-key="E">R</button>
+	
+		<button class="select touch" data-key="ENTER">SELECT</button>
+		<button class="pause touch" data-key="ESC">
+			<i class="mdi mdi-pause"></i>
 		</button>
-
-		<!-- Down arrow -->
-		<button class="down touch" data-key="DOWN">
-			<i class="mdi mdi-menu-down-outline"></i>
+		<button class="start touch" data-key="SPACE">START</button>
+	
+		<button class="load touch" data-key="O">
+			<i class="mdi mdi-file-download"></i>
 		</button>
-
-		<!-- Left arrow -->
-		<button class="left touch" data-key="LEFT">
-			<i class="mdi mdi-menu-left-outline"></i>
+		<button class="save touch" data-key="P">
+			<i class="mdi mdi-content-save"></i>
 		</button>
-
-		<!-- Right arrow -->
-		<button class="right touch" data-key="RIGHT">
-			<i class="mdi mdi-menu-right-outline"></i>
+	
+		<button class="volumeUp touch" data-key="media_volume_up">
+			<i class="mdi mdi-volume-plus"></i>
 		</button>
-
-		<!-- Diagonal arrows -->
-		<div class="diag dLT touch" data-key="LEFT,UP"></div>
-		<div class="diag dRT touch" data-key="RIGHT,UP"></div>
-		<div class="diag dLB touch" data-key="LEFT,DOWN"></div>
-		<div class="diag dRB touch" data-key="RIGHT,DOWN"></div>
+		<button class="volumeDown touch" data-key="media_volume_down">
+			<i class="mdi mdi-volume-minus"></i>
+		</button>
+	
+		<!--<button class="drive touch">
+			<svg viewBox="0 0 32 32">
+				<path d="M16 0a16 16 0 100 32 16 16 0 000-32zm0 4a12 12 0 0111.3 8H4.7c1.7-4.6 6-8 11.3-8zm0 14a2 2 0 110-4 2 2 0 010 4zM4 16c5.5 0 9.9 5.3 10 11.8A12 12 0 014 16zm14 11.8c.1-6.5 4.5-11.8 10-11.8a12 12 0 01-10 11.8z">
+			</svg>
+		</button>-->
+	
+		<!-- Locked buttons -->
+		<button class="rLock touch lock" data-key="E">R</button>
+	
+		<!-- Edit button -->
+		<a href="index.html"><button class="edit touch">
+			<i class="mdi mdi-home"></i>
+		</button></a>
 	</div>
-
-	<!-- Action buttons -->
-	<div class="actions group">
-		<!-- PSP buttons -->
-
-		<!-- Triangle -->
-		<button class="actup touch" data-key="I">
-			<i class="mdi mdi-triangle-outline"></i>
-		</button>
-
-		<!-- Cross -->
-		<button class="actdown touch" data-key="K">
-				<i class="mdi mdi-close"></i>
-		</button>
-
-		<!-- Square -->
-		<button class="actleft touch" data-key="J">
-			<i class="mdi mdi-square-outline"></i>
-		</button>
-
-		<!-- Circle -->
-		<button class="actright touch" data-key="L">
-			<i class="mdi mdi-circle-outline"></i>
-		</button>
-
-		<!-- SNES buttons -->
-		<!-- X --><button class="snesactup touch" data-key="I">X</button>
-		<!-- B --><button class="snesactdown touch" data-key="K">B</button>
-		<!-- Y --><button class="snesactleft touch" data-key="J">Y</button>
-		<!-- A --><button class="snesactright touch" data-key="L">A</button>
-
-		<!-- Diagonal actions -->
-		<div class="diag dLT touch" data-key="J,I"></div>
-		<div class="diag dRT touch" data-key="L,I"></div>
-		<div class="diag dLB touch" data-key="J,K"></div>
-		<div class="diag dRB touch" data-key="L,K"></div>
-	</div>
-
-	<!-- Other buttons -->
-	<button class="l touch" data-key="Q">L</button>
-	<button class="r touch" data-key="E">R</button>
-
-	<button class="select touch" data-key="ENTER">SELECT</button>
-	<button class="pause touch" data-key="ESC">
-		<i class="mdi mdi-pause"></i>
-	</button>
-	<button class="start touch" data-key="SPACE">START</button>
-
-	<button class="load touch" data-key="O">
-		<i class="mdi mdi-file-download"></i>
-	</button>
-	<button class="save touch" data-key="P">
-		<i class="mdi mdi-content-save"></i>
-	</button>
-
-	<button class="volumeUp touch" data-key="media_volume_up">
-		<i class="mdi mdi-volume-plus"></i>
-	</button>
-	<button class="volumeDown touch" data-key="media_volume_down">
-		<i class="mdi mdi-volume-minus"></i>
-	</button>
-
-	<button class="drive touch">
-		<svg viewBox="0 0 32 32">
-			<path d="M16 0a16 16 0 100 32 16 16 0 000-32zm0 4a12 12 0 0111.3 8H4.7c1.7-4.6 6-8 11.3-8zm0 14a2 2 0 110-4 2 2 0 010 4zM4 16c5.5 0 9.9 5.3 10 11.8A12 12 0 014 16zm14 11.8c.1-6.5 4.5-11.8 10-11.8a12 12 0 01-10 11.8z">
-		</svg>
-	</button>
-
-	<!-- Locked buttons -->
-	<button class="rLock touch lock" data-key="E">R</button>
-
-	<!-- Edit button -->
-	<a href="index.html"><button class="edit touch">
-		<i class="mdi mdi-home"></i>
-	</button></a>
-
-	<!-- <a href="" style="left:50%;top:10%;position:absolute;"><button
-			style="display:block;position:relative;left:-50%">Atualizar</button></a>
- -->
-	<!-- Custom buttons (coming soon) -->
-	<span class="customButtons"></span>
 
 	<script src="lib/js/nipplejs.min.js"></script>
 	<script src="js/joystick.js"></script>

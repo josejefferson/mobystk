@@ -8,6 +8,18 @@ body {
 	height: 100vh;
 	margin: 0;
 	overscroll-behavior: contain;
+	overflow: hidden;
+}
+
+.container {
+	width: 640px;
+	height: 360px;
+	position: relative;
+	transform-origin: 0 0;
+	transition:
+		transform .2s ease,
+		outline 1s ease;
+	outline: var(--color) 2.5px solid;
 }
 
 /* Desativa as transições enquanto carrega a página */
