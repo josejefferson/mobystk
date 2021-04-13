@@ -1,0 +1,88 @@
+/**
+ * WebJoy - Layout
+ *
+ * @name: PS2
+ * @description: Layout for PS2 games
+ * @author: Jefferson Dantas
+ * @override: Default
+ */
+
+/* ==========================================================================
+   BUTTON GROUPS
+   ========================================================================== */
+
+.arrows,
+.actions,
+.joystick,
+.joystick2 {
+	display: block;
+}
+
+.arrows,
+.actions {
+	bottom: 120px;
+}
+
+.joystick {
+	left: 140px;
+}
+
+.joystick#joystick2 {
+	right: 140px;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.up,
+.down,
+.left,
+.right,
+.actup,
+.actright,
+.actleft,
+.actdown,
+.l1,
+.l2,
+.l3,
+.r1,
+.r2,
+.r3,
+.select,
+.start,
+.lload,
+.ssave,
+.ppause,
+.drive,
+.vvolumeUp,
+.vvolumeDown {
+	display: flex;
+}
+
+.load {
+	left: auto;
+	right: 128px;
+}
+
+.actdown i {
+	font-size: 42px !important;
+}
+
+.select,
+.start {
+	border-radius: 1000px;
+	border-bottom: 2.5px solid !important;
+	font-size: 12px;
+	width: 56px;
+	height: 30px;
+	bottom: 180px;
+}
+
+.select {
+	left: 260px;
+}
+
+.start {
+	right: 260px;
+}
