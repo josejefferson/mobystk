@@ -62,7 +62,7 @@ window.addEventListener('resize', updateSize)
 // Conexão do socket
 let socket = socketConn()
 function socketConn() {
-	const ws = new WebSocket('ws://' + ip);
+	const ws = new WebSocket('ws://' + ip)
 	ws.onopen = e => {
 		document.body.classList.remove('connecting', 'disconnected')
 		document.body.classList.add('connected')

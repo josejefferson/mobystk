@@ -1,10 +1,35 @@
+HTTP_PORT = 8877
+WS_PORT = 5000
+
+import threading
+import http.server
+import socketserver
 import socket
 import asyncio
 import websockets
 from pynput.keyboard import Key, Controller
-keyboard = Controller()
 
-PORT = 5000
+keyboard = Controller()
+handler = http.server.SimpleHTTPRequestHandler
+ip = socket.gethostbyname_ex(socket.gethostname())[-1][-1]
+httpIp = '{}:{}'.format(ip, HTTP_PORT).ljust(21)
+wsIp = '{}:{}'.format(ip, WS_PORT).ljust(21)
+
+class NoCacheHandler(handler):
+	def end_headers(self):
+		self.send_my_headers()
+		handler.end_headers(self)
+
+	def send_my_headers(self):
+		self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+		self.send_header('Pragma', 'no-cache')
+		self.send_header('Expires', '0')
+
+def httpServer():
+	with socketserver.TCPServer(('', HTTP_PORT), NoCacheHandler) as httpd:
+		print('# Enter this address in your browser: http://' + wsIp + '\n')
+		httpd.serve_forever()
+
 
 async def server(websocket, path):
 	print('[WEBSOCKET] Connected user')
@@ -21,26 +46,23 @@ async def server(websocket, path):
 
 				if msg[0] == 'r':
 					keyboard.release(key)
-					print('[RELEASE] ' + keyName)
+					# print('[RELEASE] ' + keyName)
 				else:
 					keyboard.press(key)
-					print('[ PRESS ] ' + keyName)
+					# print('[ PRESS ] ' + keyName)
 		except:
-			print('[ ERROR ] Invalid data!')
+			# print('[ ERROR ] Invalid data!')
 			pass
 
-start_server = websockets.serve(server, port=PORT)
-ip = socket.gethostbyname_ex(socket.gethostname())[-1][-1] + ':' + str(PORT)
-
-print('\n[WEBSOCKET] Server started')
 print('\n# Enter this code on the website:')
 print('┏━━━━━━━━━━━━━━━━━━━━━━━┓')
-print('┃ ' + ip.ljust(21) +  ' ┃')
+print('┃ ' +    httpIp     + ' ┃')
 print('┗━━━━━━━━━━━━━━━━━━━━━━━┛\n')
 
+start_server = websockets.serve(server, port=WS_PORT)
 asyncio.get_event_loop().run_until_complete(start_server)
-try:
+
+if __name__ == "__main__":
+	httpThread = threading.Thread(target=httpServer)
+	httpThread.start()
 	asyncio.get_event_loop().run_forever()
-except KeyboardInterrupt:
-	print('[WEBSOCKET] Server closed')
-	pass
