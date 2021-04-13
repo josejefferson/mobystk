@@ -3,6 +3,7 @@ const ip = localStorage.getItem('webJoy.code') || '127.0.0.1:5000'
 const layout = localStorage.getItem('webJoy.layout')
 if (!layout) location.href = 'index.html'
 document.querySelector('.layout').href = 'layouts/' + layout + '.css'
+const joysticks = []
 
 function updateSize() {
 	const width = window.innerWidth
@@ -15,6 +16,20 @@ function updateSize() {
 	
 	const $container = document.querySelector('.container')
 	$container.style.transform = `scale(${scale})`
+	
+	console.log('update')
+	joysticks.forEach(j => j.destroy());
+	(['joystick', 'joystick2']).forEach((j, i) => joysticks[i] = nipplejs.create({
+		zone: document.getElementById(j),
+		size: 90,
+		mode: 'static',
+		position: {
+			left: '50%',
+			top: '50%'
+		}
+	}).on('move end', (e, d) => {
+		updateJoystick(d?.angle?.degree, d?.direction)
+	}))
 }
 
 window.addEventListener('load', updateSize)
@@ -77,9 +92,9 @@ function socketConn() {
 
 // Carregamento da página
 document.oncontextmenu = () => false
-window.onload = () => {
+window.onload = () => {eruda.init()
 	// Joystick
-	nipplejs.create({
+	/*joysticks[0] = nipplejs.create({
 		zone: document.getElementById('joystick'),
 		size: 90,
 		mode: 'static',
@@ -90,8 +105,20 @@ window.onload = () => {
 	}).on('move end', (e, d) => {
 		updateJoystick(d?.angle?.degree, d?.direction)
 	})
+	
+	joysticks[1] = nipplejs.create({
+		zone: document.getElementById('joystick2'),
+		size: 90,
+		mode: 'static',
+		position: {
+			left: '50%',
+			top: '50%'
+		}
+	}).on('move end', (e, d) => {
+		updateJoystick(d?.angle?.degree, d?.direction)
+	})*/
 
-	document.querySelector('#joystick .nipple .front').classList.add('joystick', 'touch')
+	document.querySelectorAll('.joystick .nipple .front').forEach(e => e.classList.add('joystick', 'touch'))
 	document.body.classList.remove('preload')
 }
 

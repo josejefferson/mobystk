@@ -34,6 +34,11 @@
 	height: 110px;
 }
 
+.joystick#joystick2 {
+	left: auto;
+	right: 30px;
+}
+
 /* ==========================================================================
    ARROW BUTTONS
    ========================================================================== */
@@ -131,7 +136,9 @@
    ========================================================================== */
 
 /* L button */
-.l {
+.l,
+.l1,
+.l2 {
 	top: 0px;
 	left: 0px;
 	width: 250px;
@@ -145,7 +152,10 @@
 }
 
 /* R button */
-.r, .rLock {
+.r,
+.r1,
+.r2,
+.rLock {
 	top: 0px;
 	right: 0px;
 	width: 250px;
@@ -156,6 +166,49 @@
 	border-right: none;
 	border-top-style: hidden !important;
 	border-right-style: hidden !important;
+}
+
+.l3,
+.r3 {
+	top: 60px;
+	width: 60px;
+	height: 30px;
+	font-size: 20px;
+	border-top: none;
+	border-top-style: hidden !important;
+	
+}
+
+.l1 {
+	width: 170px;
+}
+
+.l2 {
+	justify-content: flex-end;
+	padding-right: 30px;
+}
+
+.l3 {
+	border-left: none;
+	border-left-style: hidden !important;
+	border-radius: 0 0 50px 0;
+	left: 0;
+}
+
+.r1 {
+	width: 170px;
+}
+
+.r2 {
+	justify-content: flex-start;
+	padding-left: 30px;
+}
+
+.r3 {
+	border-right: none;
+	border-right-style: hidden !important;
+	border-radius: 0 0 0 50px;
+	right: 0;
 }
 
 /* Select button */
