@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
 	<link rel="manifest" href="manifest.json">
-	<title>WebJoy Settings</title>
+	<title>Joystick</title>
 	<link rel="stylesheet" href="css/index.css">
 </head>
 
@@ -28,21 +28,28 @@
 		</label>
 
 		<label class="select">
+			<input type="radio" name="layout" value="ps2">
+			<div class="selLabel">PS2</div>
+		</label>
+
+		<label class="select">
+			<input type="radio" name="layout" value="ps2-r1-lock">
+			<div class="selLabel">PS2 R1 LOCK</div>
+		</label>
+
+		<label class="select">
 			<input type="radio" name="layout" value="snes">
 			<div class="selLabel">SNES</div>
 		</label>
 		
-		<label class="select">
-			<input type="radio" name="layout" value="ps2">
-			<div class="selLabel">PS2</div>
-		</label>
 
 		<div class="start">
 			<button type="submit">Iniciar</button>
 		</div>
 	</form>
 	
-	<a href="editLayout.html">Layout editor</a>
+	<a href="editLayout.html">Layout editor</a><br>
+	<a href="screenTest.html">Screen test</a><br>
 
 	<script src="js/index.js"></script>
 </body>

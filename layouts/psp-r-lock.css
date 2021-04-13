@@ -13,11 +13,10 @@
 
 .arrows,
 .actions,
-.joystick {
+#joystickL {
 	display: block;
 }
 
-/* Change position and size of arrow group */
 .arrows {
 	bottom: 150px;
 	width: 128px;
@@ -49,7 +48,6 @@
 	display: flex;
 }
 
-/* Change size of arrow buttons */
 .up,
 .down,
 .left,
@@ -61,8 +59,4 @@
 .load {
 	left: auto;
 	right: 128px;
-}
-
-.actdown i {
-	font-size: 42px !important;
 }

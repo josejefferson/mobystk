@@ -13,8 +13,8 @@
 
 .arrows,
 .actions,
-.joystick,
-.joystick2 {
+#joystickL,
+#joystickR {
 	display: block;
 }
 
@@ -23,11 +23,11 @@
 	bottom: 120px;
 }
 
-.joystick {
+.joystick#joystickL {
 	left: 140px;
 }
 
-.joystick#joystick2 {
+.joystick#joystickR {
 	right: 140px;
 }
 
@@ -51,22 +51,9 @@
 .r3,
 .select,
 .start,
-.lload,
-.ssave,
-.ppause,
-.drive,
-.vvolumeUp,
-.vvolumeDown {
+.volumeUp,
+.volumeDown {
 	display: flex;
-}
-
-.load {
-	left: auto;
-	right: 128px;
-}
-
-.actdown i {
-	font-size: 42px !important;
 }
 
 .select,
@@ -76,7 +63,7 @@
 	font-size: 12px;
 	width: 56px;
 	height: 30px;
-	bottom: 180px;
+	bottom: 150px;
 }
 
 .select {

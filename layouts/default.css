@@ -29,13 +29,15 @@
 /* Joystick */
 .joystick {
 	bottom: 20px;
-	left: 40px;
 	width: 110px;
 	height: 110px;
 }
 
-.joystick#joystick2 {
-	left: auto;
+.joystick#joystickL {
+	left: 30px;
+}
+
+.joystick#joystickR {
 	right: 30px;
 }
 
@@ -115,6 +117,10 @@
 	transform: translateX(-50%);
 }
 
+.actdown i {
+	font-size: 42px !important;
+}
+
 /* Left action button */
 .actleft,
 .snesactleft {
@@ -155,7 +161,8 @@
 .r,
 .r1,
 .r2,
-.rLock {
+.rLock,
+.r1Lock {
 	top: 0px;
 	right: 0px;
 	width: 250px;
@@ -195,7 +202,8 @@
 	left: 0;
 }
 
-.r1 {
+.r1,
+.r1Lock {
 	width: 170px;
 }
 

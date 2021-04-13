@@ -88,12 +88,12 @@ button.edit {
 .nipple .back {
 	background-color: var(--btn-background) !important;
 	border: var(--border) var(--border-size) var(--border-style);
-	transition: border-color 1s ease;
+	transition: border-color 1s ease !important;
 }
 
 /* Joystick front */
 .nipple .front {
 	background-color: var(--color) !important;
 	border: var(--border) var(--border-size) var(--border-style);
-	transition: border-color 1s ease, background-color 1s ease;
+	transition: border-color 1s ease, background-color 1s ease !important;
 }

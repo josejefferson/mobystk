@@ -1,0 +1,27 @@
+<meta name="viewport" content="width=device-width">
+<link rel="manifest" href="manifest.json">
+
+<div id="sizes"></div>
+<script>
+	function showScreenSizes() {
+		w = window.innerWidth
+		h = window.innerHeight
+		document.getElementById('sizes').innerText = w + 'x' + h
+	}
+
+	window.onload = showScreenSizes
+	window.onresize = showScreenSizes
+</script>
+
+<style>
+	body {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	#sizes {
+		text-align: center;
+		font-size: 36px;
+	}
+</style>

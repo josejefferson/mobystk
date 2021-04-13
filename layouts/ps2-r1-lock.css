@@ -1,8 +1,8 @@
 /**
  * WebJoy - Layout
  *
- * @name: PSP
- * @description: Layout for PSP games
+ * @name: PS2
+ * @description: Layout for PS2 games with lockable R1 button
  * @author: Jefferson Dantas
  * @override: Default
  */
@@ -13,14 +13,22 @@
 
 .arrows,
 .actions,
-#joystickL {
+#joystickL,
+#joystickR {
 	display: block;
 }
 
-.arrows {
-	bottom: 150px;
-	width: 128px;
-	height: 128px;
+.arrows,
+.actions {
+	bottom: 120px;
+}
+
+.joystick#joystickL {
+	left: 140px;
+}
+
+.joystick#joystickR {
+	right: 140px;
 }
 
 /* ==========================================================================
@@ -35,28 +43,33 @@
 .actright,
 .actleft,
 .actdown,
-.l,
-.r,
+.l1,
+.l2,
+.l3,
+.r1Lock,
+.r2,
+.r3,
 .select,
 .start,
-.load,
-.save,
-.pause,
-.drive,
 .volumeUp,
 .volumeDown {
 	display: flex;
 }
 
-.up,
-.down,
-.left,
-.right {
-	width: 48px;
-	height: 48px;
+.select,
+.start {
+	border-radius: 1000px;
+	border-bottom: 2.5px solid !important;
+	font-size: 12px;
+	width: 56px;
+	height: 30px;
+	bottom: 150px;
 }
 
-.load {
-	left: auto;
-	right: 128px;
+.select {
+	left: 260px;
+}
+
+.start {
+	right: 260px;
 }

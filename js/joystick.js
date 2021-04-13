@@ -1,78 +1,23 @@
-// Configuração do IP e do Layout
-const ip = localStorage.getItem('webJoy.code') || '127.0.0.1:5000'
-const layout = localStorage.getItem('webJoy.layout')
+const $layoutCSS = document.querySelector('.layout')
+const $viewport = document.querySelector('meta[name="viewport"]')
+
+const ip = localStorage.getItem('joystick.code') || '127.0.0.1:5000'
+const layout = localStorage.getItem('joystick.layout')
+const player2 = localStorage.getItem('joystick.player2') === 'true' ? true : false
 if (!layout) location.href = 'index.html'
-document.querySelector('.layout').href = 'layouts/' + layout + '.css'
+
+$layoutCSS.href = 'layouts/' + layout + '.css'
+
+const currentTouches = []
 const joysticks = []
 
-function updateSize() {
-	const width = window.innerWidth
-	const height = window.innerHeight
-	
-	const scale = Math.min(
-		width / 640,
-		height / 360
-	)
-	
-	const $container = document.querySelector('.container')
-	$container.style.transform = `scale(${scale})`
-	
-	console.log('update')
-	joysticks.forEach(j => j.destroy());
-	(['joystick', 'joystick2']).forEach((j, i) => joysticks[i] = nipplejs.create({
-		zone: document.getElementById(j),
-		size: 90,
-		mode: 'static',
-		position: {
-			left: '50%',
-			top: '50%'
-		}
-	}).on('move end', (e, d) => {
-		updateJoystick(d?.angle?.degree, d?.direction)
-	}))
-}
 
-window.addEventListener('load', updateSize)
-window.addEventListener('resize', updateSize)
+// Carregamento da página
+document.addEventListener('contextmenu', () => false)
+window.addEventListener('load', () => {
+	document.body.classList.remove('preload')
+})
 
-
-//const $drive = document.querySelector('.drive')
-//const $driveIcon = document.querySelector('.drive svg')
-
-// Drive sensor mode
-/*$drive.onclick = e => {
-	// Change sensitivity of sensor
-	const SENSITIVITY = 4
-
-	// Turn off drive mode
-	if (e.target.classList.contains('active')) {
-		e.target.classList.remove('active')
-		$driveIcon.style.transform = 'rotate(0deg)'
-		window.ondevicemotion = null
-		return
-	}
-
-	// Turn on drive mode
-	e.target.classList.add('active')
-	let driveY = 0, driveDirection = null
-
-	// Detect movement
-	window.ondevicemotion = e => {
-		const orientation = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
-		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
-		$driveIcon.style.transform = `rotate(${driveY / 10 * 90 * orientation}deg)`
-		direction = driveY > SENSITIVITY * orientation ? 'd' : driveY < -SENSITIVITY * orientation ? 'a' : null
-		if (direction === driveDirection) return
-		driveDirection = direction
-
-		if (direction === null) {
-			// sendCmd('a', true)
-			// sendCmd('d', true)
-		} else {
-			// sendCmd(direction)
-		}
-	}
-}*/
 
 // Conexão do socket
 let socket = socketConn()
@@ -90,40 +35,6 @@ function socketConn() {
 	return ws
 }
 
-// Carregamento da página
-document.oncontextmenu = () => false
-window.onload = () => {eruda.init()
-	// Joystick
-	/*joysticks[0] = nipplejs.create({
-		zone: document.getElementById('joystick'),
-		size: 90,
-		mode: 'static',
-		position: {
-			left: '50%',
-			top: '50%'
-		}
-	}).on('move end', (e, d) => {
-		updateJoystick(d?.angle?.degree, d?.direction)
-	})
-	
-	joysticks[1] = nipplejs.create({
-		zone: document.getElementById('joystick2'),
-		size: 90,
-		mode: 'static',
-		position: {
-			left: '50%',
-			top: '50%'
-		}
-	}).on('move end', (e, d) => {
-		updateJoystick(d?.angle?.degree, d?.direction)
-	})*/
-
-	document.querySelectorAll('.joystick .nipple .front').forEach(e => e.classList.add('joystick', 'touch'))
-	document.body.classList.remove('preload')
-}
-
-// Toques
-const currentTouches = []
 
 // Início do toque
 document.ontouchstart = e => {
@@ -137,9 +48,10 @@ document.ontouchstart = e => {
 		const joystick = target?.classList.contains('joystick') ? true : false
 		currentTouches.push({ target, touch, joystick })
 		if (!target) continue
-		target.classList.add('active')
-		sendCmd(target.dataset.key)
 		navigator.vibrate(15)
+		if (joystick) continue
+		target.classList.add('active')
+		sendCmd(target.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key)
 	}
 }
 
@@ -161,7 +73,7 @@ document.ontouchmove = e => {
 
 		if (oldtouch.target === target) continue
 		oldtouch.target?.classList.remove('active')
-		sendCmd(oldtouch.target?.dataset.key, true)
+		sendCmd(oldtouch.target?.dataset[player2 ? 'secKey' : 'key'] || oldtouch.target?.dataset.key, true)
 
 		if (target && (!target.classList.contains('touch') ||
 			target.classList.contains('active') ||
@@ -169,7 +81,7 @@ document.ontouchmove = e => {
 		oldtouch.target = target
 		if (!target) continue
 		target.classList.add('active')
-		sendCmd(target.dataset.key)
+		sendCmd(target.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key)
 		navigator.vibrate(15)
 	}
 }
@@ -181,73 +93,94 @@ document.ontouchend = e => {
 			return t.touch.identifier === touch.identifier
 		})
 		if (i < 0) continue
-		if (currentTouches[i].target) {
+		if (!currentTouches[i].joystick && currentTouches[i].target) {
 			currentTouches[i].target.classList.remove('active')
-			sendCmd(currentTouches[i].target.dataset.key, true)
+			sendCmd(currentTouches[i].target.dataset[player2 ? 'secKey' : 'key'] || currentTouches[i].target.dataset.key, true)
 		}
 		currentTouches.splice(i, 1)
 	}
 }
 
-// Botões bloqueáveis
-document.querySelectorAll('.lock').forEach(el => el.ontouchstart = () => {
-	navigator.vibrate(15)
-	if (el.classList.contains('active')) {
-		// Ativa o botão
-		el.classList.remove('active')
-		sendCmd(el.dataset.key, true)
-	} else {
-		// Desativa o botão
-		el.classList.add('active')
-		sendCmd(el.dataset.key)
+// Clique do mouse
+document.onmousedown = (e) => {
+	if ('ontouchstart' in document.documentElement) return
+	let target = e.target
+	if (!target.classList.contains('joystick') &&
+		(!target.classList.contains('touch') ||
+			target.classList.contains('active') ||
+			target.classList.contains('lock'))) target = null
+	if (!target) return
+	target.classList.add('active')
+	if (target.dataset.key) sendCmd(target.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key)
+
+	// Fim do clique
+	document.onmouseup = (e) => {
+		target.classList.remove('active')
+		if (target.dataset.key) sendCmd(target.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key, true)
+		document.onmouseup = null
 	}
+}
+
+// Botões bloqueáveis
+document.querySelectorAll('.lock').forEach(el => {
+		el.ontouchstart = event
+		el.onmousedown = event
+		function event(e) {
+			if ('ontouchstart' in document.documentElement && e.type === 'mousedown') return
+			navigator.vibrate(15)
+			if (el.classList.contains('active')) {
+				// Ativa o botão
+				el.classList.remove('active')
+				sendCmd(el.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key, true)
+			} else {
+				// Desativa o botão
+				el.classList.add('active')
+				sendCmd(el.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key)
+			}
+		}
 })
 
-// Joystick
-const joystick = {
-	up: false,
-	down: false,
-	left: false,
-	right: false
-}
 
-function updateJoystick(angle, direction) {
+// Atualiza os joysticks
+function updateJoystick(joystick, angle, direction) {
+	const keys = (joystick.dataset[player2 ? 'secKeys' : 'keys'] || joystick.dataset.keys).split(' ')
 	if (!direction) {
-		update('joyup', false)
-		update('joyleft', false)
-		update('joydown', false)
-		update('joyright', false)
+		update('up', false)
+		update('left', false)
+		update('down', false)
+		update('right', false)
 		return
 	}
-	if (angle > 22.5 && angle < 157.5) update('joyup', true)
-	else update('joyup', false)
-	if (angle > 112.5 && angle < 247.5) update('joyleft', true)
-	else update('joyleft', false)
-	if (angle > 202.5 && angle < 337.5) update('joydown', true)
-	else update('joydown', false)
-	if (angle > 292.5 || angle < 67.5) update('joyright', true)
-	else update('joyright', false)
+	if (angle > 22.5 && angle < 157.5) update('up', true)
+	else update('up', false)
+	if (angle > 112.5 && angle < 247.5) update('left', true)
+	else update('left', false)
+	if (angle > 202.5 && angle < 337.5) update('down', true)
+	else update('down', false)
+	if (angle > 292.5 || angle < 67.5) update('right', true)
+	else update('right', false)
 
 	// Atualiza a direção do joystick
-	function update(dir, value) {
+	function update(dir, value, key) {
 		switch (dir) {
-			case 'joyup': dir = 'w'; break;
-			case 'joyleft': dir = 'a'; break;
-			case 'joydown': dir = 's'; break;
-			case 'joyright': dir = 'd'; break;
+			case 'up': key = keys[0] /**/; break;
+			case 'left': key = keys[1]; break;
+			case 'down': key = keys[2]; break;
+			case 'right': key = keys[3]; break;
 		}
+
 		if (joystick[dir] === value) return
 		joystick[dir] = value
-		sendCmd(dir, !value)
+		sendCmd(key, !value)
 	}
 }
 
-// Função de enviar comandos para o computador
-function sendCmd(key, release = false) {
+// Função de enviar comandos para o servidor
+function sendCmd(key, release = false) {console.log((release ? 'RELEASE' : '  PRESS'), key)
 	// Trata o comando
 	if (!key) return
 	key = key.toUpperCase()
-	key = key.split(',')
+	key = key.split(' ')
 	key.forEach(c => {
 		// Diagonais
 		if (key.length > 1) document.querySelectorAll(`[data-key="${c}"]`)
@@ -259,3 +192,44 @@ function sendCmd(key, release = false) {
 	// Envia o comando
 	socket.send((release ? 'R' : 'P') + ' ' + key)
 }
+
+
+// Sistema antibug do joystick
+function resizeJoystick() {
+	function inadequateHeight(){
+		if (window.outerWidth >= 640) return window.outerHeight < 360 ? true : false
+		else return window.outerWidth / window.outerHeight > 1.7777777777777778 ? true : false
+	}
+
+	function width() {
+		if (inadequateHeight()) return window.outerWidth*(360/window.outerHeight)
+		else if (window.outerWidth <= 640) return 640
+		else return 'device-width'
+	}
+
+	$viewport.setAttribute('content', `width=${width()}, user-scalable=0`)
+
+	for (j in joysticks) joysticks[j].instance.destroy();
+	(['joystickL', 'joystickR']).forEach(id => {
+		const $el = document.getElementById(id)
+		joysticks[id] = { up: false, down: false, left: false, right: false }
+		joysticks[id].instance = nipplejs.create({
+			zone: $el,
+			size: 90,
+			mode: 'static',
+			position: {
+				left: '50%',
+				top: '50%'
+			}
+		}).on('move end', (e, d) => {
+			updateJoystick($el, d?.angle?.degree, d?.direction)
+		})
+
+		document.querySelectorAll('.joystick .nipple .front')
+			.forEach(e => e.classList.add('joystick', 'touch'))
+	})
+}
+
+resizeJoystick()
+window.addEventListener('load', resizeJoystick)
+window.addEventListener('resize', resizeJoystick)

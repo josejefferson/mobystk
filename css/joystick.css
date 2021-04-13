@@ -5,7 +5,7 @@
 
 body {
 	background-color: #000;
-	height: 100vh;
+	height: 100%;
 	margin: 0;
 	overscroll-behavior: contain;
 	overflow: hidden;
@@ -16,9 +16,7 @@ body {
 	height: 360px;
 	position: relative;
 	transform-origin: 0 0;
-	transition:
-		transform .2s ease,
-		outline 1s ease;
+	transition: outline 1s ease;
 	outline: var(--color) 2.5px solid;
 }
 
@@ -76,6 +74,7 @@ button {
 	justify-content: center;
 	outline: none;
 	position: absolute;
+	cursor: pointer;
 }
 
 /* Ícones dos botões */
@@ -99,6 +98,7 @@ button.edit {
 .nipple .back,
 .nipple .front {
 	opacity: 1 !important;
+	cursor: move;
 }
 
 /* Oculta os botões enquanto não carregar o layout */
