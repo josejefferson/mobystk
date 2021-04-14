@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" class="notranslate" translate="no">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=0">
 	<link rel="manifest" href="manifest.json">
 	<title>Joystick</title>
-	<link rel="stylesheet" href="lib/css/materialdesignicons.min.css"></script>
+	<link rel="stylesheet" href="lib/css/materialdesignicons.min.css">
 	<link rel="stylesheet" href="css/joystick.css">
 	<link rel="stylesheet" href="themes/default.css">
 	<link rel="stylesheet" class="theme">
@@ -15,9 +15,9 @@
 </head>
 
 <body class="connecting preload">
-	<!-- Joystick -->
+	<!-- Joysticks -->
 	<div id="joystickL" class="joystick group touch" data-keys="W A S D" data-sec-keys="H B N M"></div>
-	<div id="joystickR" class="joystick group touch" data-keys="Y U O P" data-sec-keys="´ [ ~ ]"></div>
+	<div id="joystickR" class="joystick group touch" data-keys="Y U O P" data-sec-keys="+ [ / ]"></div>
 
 	<!-- Arrow buttons -->
 	<div class="arrows group">
@@ -66,10 +66,10 @@
 		<button class="actright touch" data-key="K" data-sec-key="C">
 			<i class="mdi mdi-circle-outline"></i>
 		</button>
-		
+
 		<!-- Cross -->
 		<button class="actdown touch" data-key="L" data-sec-key="V">
-				<i class="mdi mdi-close"></i>
+			<i class="mdi mdi-close"></i>
 		</button>
 
 		<!-- SNES buttons -->
@@ -90,6 +90,7 @@
 	<button class="l2 touch" data-key="2" data-sec-key="8">L2</button>
 	<button class="l1 touch" data-key="1" data-sec-key="7">L1</button>
 	<button class="l3 touch" data-key="3" data-sec-key="9">L3</button>
+
 	<button class="r touch" data-key="E">R</button>
 	<button class="r2 touch" data-key="5" data-sec-key="-">R2</button>
 	<button class="r1 touch" data-key="4" data-sec-key="0">R1</button>
@@ -120,9 +121,11 @@
 	<button class="r1Lock touch lock" data-key="4" data-sec-key="0">R1</button>
 
 	<!-- Edit button -->
-	<a href="index.html"><button class="edit touch">
-		<i class="mdi mdi-home"></i>
-	</button></a>
+	<a href="index.html">
+		<button class="edit touch">
+			<i class="mdi mdi-home"></i>
+		</button>
+	</a>
 
 	<script src="lib/js/nipplejs.min.js"></script>
 	<script src="js/joystick.js"></script>

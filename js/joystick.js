@@ -3,20 +3,24 @@ const $viewport = document.querySelector('meta[name="viewport"]')
 
 const ip = localStorage.getItem('joystick.code') || '127.0.0.1:5000'
 const layout = localStorage.getItem('joystick.layout')
-const player2 = localStorage.getItem('joystick.player2') === 'true' ? true : false
+const player2 = localStorage.getItem('joystick.player') === '2' ? true : false
 if (!layout) location.href = 'index.html'
 
+// Carrega o layout
 $layoutCSS.href = 'layouts/' + layout + '.css'
 
 const currentTouches = []
 const joysticks = []
 
 
-// Carregamento da página
+// Eventos da página
 document.addEventListener('contextmenu', () => false)
+window.addEventListener('resize', resizeJoystick)
 window.addEventListener('load', () => {
 	document.body.classList.remove('preload')
+	resizeJoystick()
 })
+resizeJoystick()
 
 
 // Conexão do socket
@@ -55,6 +59,7 @@ document.ontouchstart = e => {
 	}
 }
 
+
 // Movimento do toque
 document.ontouchmove = e => {
 	for (const touch of e.changedTouches) {
@@ -86,6 +91,7 @@ document.ontouchmove = e => {
 	}
 }
 
+
 // Fim do toque
 document.ontouchend = e => {
 	for (const touch of e.changedTouches) {
@@ -100,6 +106,7 @@ document.ontouchend = e => {
 		currentTouches.splice(i, 1)
 	}
 }
+
 
 // Clique do mouse
 document.onmousedown = (e) => {
@@ -121,27 +128,28 @@ document.onmousedown = (e) => {
 	}
 }
 
+
 // Botões bloqueáveis
 document.querySelectorAll('.lock').forEach(el => {
-		el.ontouchstart = event
-		el.onmousedown = event
-		function event(e) {
-			if ('ontouchstart' in document.documentElement && e.type === 'mousedown') return
-			navigator.vibrate(15)
-			if (el.classList.contains('active')) {
-				// Ativa o botão
-				el.classList.remove('active')
-				sendCmd(el.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key, true)
-			} else {
-				// Desativa o botão
-				el.classList.add('active')
-				sendCmd(el.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key)
-			}
+	el.ontouchstart = event
+	el.onmousedown = event
+	function event(e) {
+		if ('ontouchstart' in document.documentElement && e.type === 'mousedown') return
+		navigator.vibrate(15)
+		if (el.classList.contains('active')) {
+			// Ativa o botão
+			el.classList.remove('active')
+			sendCmd(el.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key, true)
+		} else {
+			// Desativa o botão
+			el.classList.add('active')
+			sendCmd(el.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key)
 		}
+	}
 })
 
 
-// Atualiza os joysticks
+// Atualiza os dados dos joysticks
 function updateJoystick(joystick, angle, direction) {
 	const keys = (joystick.dataset[player2 ? 'secKeys' : 'keys'] || joystick.dataset.keys).split(' ')
 	if (!direction) {
@@ -175,8 +183,9 @@ function updateJoystick(joystick, angle, direction) {
 	}
 }
 
-// Função de enviar comandos para o servidor
-function sendCmd(key, release = false) {console.log((release ? 'RELEASE' : '  PRESS'), key)
+
+// Envia comandos para o servidor
+function sendCmd(key, release = false) {
 	// Trata o comando
 	if (!key) return
 	key = key.toUpperCase()
@@ -194,19 +203,8 @@ function sendCmd(key, release = false) {console.log((release ? 'RELEASE' : '  PR
 }
 
 
-// Sistema antibug do joystick
+// Corrige bugs do joystick e ajusta à tela
 function resizeJoystick() {
-	function inadequateHeight(){
-		if (window.outerWidth >= 640) return window.outerHeight < 360 ? true : false
-		else return window.outerWidth / window.outerHeight > 1.7777777777777778 ? true : false
-	}
-
-	function width() {
-		if (inadequateHeight()) return window.outerWidth*(360/window.outerHeight)
-		else if (window.outerWidth <= 640) return 640
-		else return 'device-width'
-	}
-
 	$viewport.setAttribute('content', `width=${width()}, user-scalable=0`)
 
 	for (j in joysticks) joysticks[j].instance.destroy();
@@ -228,8 +226,15 @@ function resizeJoystick() {
 		document.querySelectorAll('.joystick .nipple .front')
 			.forEach(e => e.classList.add('joystick', 'touch'))
 	})
-}
 
-resizeJoystick()
-window.addEventListener('load', resizeJoystick)
-window.addEventListener('resize', resizeJoystick)
+	function inadequateHeight() {
+		if (window.outerWidth >= 640) return window.outerHeight < 360 ? true : false
+		else return window.outerWidth / window.outerHeight > 1.7777777777777778 ? true : false
+	}
+
+	function width() {
+		if (inadequateHeight()) return window.outerWidth * (360 / window.outerHeight)
+		else if (window.outerWidth <= 640) return 640
+		else return 'device-width'
+	}
+}

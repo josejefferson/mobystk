@@ -44,11 +44,21 @@ input[type=text]:focus {
 	display: inline-block;
 	border: #fff8 2px solid;
 	color: #fff8;
+	margin-top: 5px;
 	transition: .15s ease;
+}
+
+.select.player .selLabel {
+	padding: 5px 10px;
 }
 
 .select input:checked + .selLabel {
 	background: #00f8;
+	color: white;
+}
+
+.select.player input:checked + .selLabel {
+	background: #f008;
 	color: white;
 }
 
