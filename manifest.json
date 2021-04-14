@@ -7,6 +7,12 @@
 			"src": "img/icon.png",
 			"type": "image/png",
 			"sizes": "256x256"
+		},
+		{
+			"src": "img/icon_maskable.png",
+			"type": "image/png",
+			"sizes": "256x256",
+			"purpose": "maskable"
 		}
 	],
 	"start_url": "joystick.html",
