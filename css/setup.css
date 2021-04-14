@@ -8,7 +8,6 @@ body {
 	color: white;
 	overscroll-behavior: contain;
 	font-family: sans-serif;
-	/*text-align: center;*/
 	margin: 40px;
 }
 
@@ -63,7 +62,7 @@ button {
 	height: 100%;
 	z-index: -1;
 	transition:
-		width .1s ease,
+		width 1s linear,
 		background-color .3s ease;
 }
 
