@@ -199,7 +199,7 @@ function sendCmd(key, release = false) {
 	if (socket.readyState !== 1) return
 
 	// Envia o comando
-	socket.send((release ? 'R' : 'P') + ' ' + key)
+	socket.send((release ? 'R ' : 'P ') + key)
 }
 
 

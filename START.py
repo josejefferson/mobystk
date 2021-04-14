@@ -27,7 +27,7 @@ class NoCacheHandler(handler):
 
 def httpServer():
 	with socketserver.TCPServer(('', HTTP_PORT), NoCacheHandler) as httpd:
-		print('# Enter this address in your browser: http://' + wsIp + '\n')
+		print('# Enter this address in your browser: http://' + httpIp + '\n')
 		httpd.serve_forever()
 
 
@@ -41,22 +41,18 @@ async def server(websocket, path):
 
 			for keyName in msg[1]:
 				key = keyName
-				if len(keyName) > 1:
-					key = Key[keyName]
+				if len(keyName) > 1: key = Key[keyName]
 
-				if msg[0] == 'r':
-					keyboard.release(key)
-					# print('[RELEASE] ' + keyName)
-				else:
-					keyboard.press(key)
-					# print('[ PRESS ] ' + keyName)
+				if msg[0] == 'r': keyboard.release(key)
+				elif msg[0] == 'p': keyboard.press(key)
+				elif msg[0] == 't': keyboard.tap(key)
 		except:
-			# print('[ ERROR ] Invalid data!')
+			print('[ ERROR ] Invalid data!')
 			pass
 
 print('\n# Enter this code on the website:')
 print('┏━━━━━━━━━━━━━━━━━━━━━━━┓')
-print('┃ ' +    httpIp     + ' ┃')
+print('┃ ' +     wsIp      + ' ┃')
 print('┗━━━━━━━━━━━━━━━━━━━━━━━┛\n')
 
 start_server = websockets.serve(server, port=WS_PORT)
