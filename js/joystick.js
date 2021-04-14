@@ -192,7 +192,7 @@ function sendCmd(key, release = false) {
 	key = key.split(' ')
 	key.forEach(c => {
 		// Diagonais
-		if (key.length > 1) document.querySelectorAll(`[data-key="${c}"]`)
+		if (key.length > 1) document.querySelectorAll(`[data-${player2 ? 'sec-key' : 'key'}="${c}"]`)
 			.forEach(e => e.classList[release ? 'remove' : 'add']('dActive'))
 	})
 	// Não envia o comando se o websocket não estiver conectado
