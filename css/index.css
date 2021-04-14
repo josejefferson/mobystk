@@ -82,3 +82,23 @@ input[type=text]:focus {
 .start button:active {
 	background: #ff05;
 }
+
+.setup {
+	display: inline-block;
+	text-decoration: none;
+	border: #0f08 2px solid;
+	border-radius: 200px 70px 200px 70px;
+	background: none;
+	color: white;
+	font-size: 10px;
+	padding: 5px;
+	margin-top: 10px;
+	outline: none;
+	transition: .15s ease;
+	cursor: pointer;
+}
+
+.setup:hover,
+.setup:active {
+	background: #0f05;
+}

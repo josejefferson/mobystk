@@ -1,6 +1,7 @@
 HTTP_PORT = 8877
 WS_PORT = 5000
 
+import time
 import threading
 import http.server
 import socketserver
@@ -45,7 +46,10 @@ async def server(websocket, path):
 
 				if msg[0] == 'r': keyboard.release(key)
 				elif msg[0] == 'p': keyboard.press(key)
-				elif msg[0] == 't': keyboard.tap(key)
+				elif msg[0] == 't':
+					keyboard.press(key)
+					time.sleep(0.05)
+					keyboard.release(key)
 		except:
 			print('[ ERROR ] Invalid data!')
 			pass

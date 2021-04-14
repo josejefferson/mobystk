@@ -8,8 +8,27 @@ body {
 	color: white;
 	overscroll-behavior: contain;
 	font-family: sans-serif;
-	text-align: center;
+	/*text-align: center;*/
 	margin: 40px;
+}
+
+.return {
+	display: inline-block;
+	text-decoration: none;
+	border: #0f08 2px solid;
+	border-radius: 20px 50px 20px 50px;
+	background: none;
+	color: white;
+	font-size: 16px;
+	padding: 5px 15px;
+	outline: none;
+	transition: .15s ease;
+	cursor: pointer;
+}
+
+.return:hover,
+.return:active {
+	background: #0f05;
 }
 
 button {
@@ -20,6 +39,7 @@ button {
 	border: #fff8 2px solid;
 	color: #fff8;
 	transition: .15s ease;
+	outline: none;
 }
 
 .progressContainer {
@@ -32,6 +52,7 @@ button {
 	justify-content: center;
 	color: #999;
 	position: relative;
+	margin-top: 10px;
 }
 
 .progress {

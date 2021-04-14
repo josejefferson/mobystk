@@ -7,13 +7,21 @@
 	<link rel="stylesheet" href="css/setup.css">
 </head>
 <body>
-	<button onclick="start('snesPlayer1')">SNES (Player 1)</button>
-	<button onclick="start('snesPlayer2')">SNES (Player 2)</button>
-	<button onclick="start('ps2Player1')">PS2 (Player 1)</button>
-	<button onclick="start('ps2Player2')">PS2 (Player 2)</button>
+	<a class="return" href="index.html">Voltar</a>
+	<h2>Configurar emuladores</h2>
+
+	<h3>Snes9x</h3>
+	<button onclick="start('snesPlayer1')">Joypad #1</button>
+	<button onclick="start('snesPlayer2')">Joypad #2</button>
+	<button onclick="start('snesSave')">Save 0</button>
+	<button onclick="start('snesLoad')">Load 0</button>
+
+	<h3>PCSX2</h3>
+	<button onclick="start('ps2Player1')">Pad 1</button>
+	<button onclick="start('ps2Player2')">Pad 2</button>
 
 	<div class="progressContainer">
-		PROGRESSO
+		<span>PROGRESSO</span>
 		<div class="progress"></div>
 	</div>
 	<script src="js/setup.js"></script>
