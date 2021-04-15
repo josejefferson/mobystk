@@ -11,6 +11,11 @@ body {
 	overflow: hidden;
 }
 
+body.debug .joystick.group,
+body.debug .diag {
+	border: var(--color) 1px solid;
+}
+
 .container {
 	width: 640px;
 	height: 360px;
@@ -94,9 +99,14 @@ button.edit {
 }
 
 /* Joystick */
+.joystick {
+	border-radius: 50%;
+}
+
 .nipple,
 .nipple .back,
 .nipple .front {
+	box-sizing: border-box;
 	opacity: 1 !important;
 	cursor: move;
 }

@@ -4,6 +4,8 @@ const $viewport = document.querySelector('meta[name="viewport"]')
 const ip = localStorage.getItem('joystick.code') || '127.0.0.1:5000'
 const layout = localStorage.getItem('joystick.layout')
 const player2 = localStorage.getItem('joystick.player') === '2' ? true : false
+const debug = localStorage.getItem('joystick.debug') === 'true' ? true : false
+if (debug) document.body.classList.add('debug')
 if (!layout) location.href = 'index.html'
 
 // Carrega o layout
@@ -150,7 +152,7 @@ document.querySelectorAll('.lock').forEach(el => {
 
 
 // Atualiza os dados dos joysticks
-function updateJoystick(joystick, angle, direction) {
+function updateJoystick(joystick, id, angle, direction) {
 	const keys = (joystick.dataset[player2 ? 'secKeys' : 'keys'] || joystick.dataset.keys).split(' ')
 	if (!direction) {
 		update('up', false)
@@ -171,14 +173,14 @@ function updateJoystick(joystick, angle, direction) {
 	// Atualiza a direção do joystick
 	function update(dir, value, key) {
 		switch (dir) {
-			case 'up': key = keys[0] /**/; break;
-			case 'left': key = keys[1]; break;
-			case 'down': key = keys[2]; break;
-			case 'right': key = keys[3]; break;
+			case 'up': key = keys[0]; break
+			case 'left': key = keys[1]; break
+			case 'down': key = keys[2]; break
+			case 'right': key = keys[3]; break
 		}
 
-		if (joystick[dir] === value) return
-		joystick[dir] = value
+		if (joysticks[id][dir] === value) return
+		joysticks[id][dir] = value
 		sendCmd(key, !value)
 	}
 }
@@ -220,11 +222,12 @@ function resizeJoystick() {
 				top: '50%'
 			}
 		}).on('move end', (e, d) => {
-			updateJoystick($el, d?.angle?.degree, d?.direction)
+			updateJoystick($el, id, d?.angle?.degree, d?.direction)
 		})
+	})
 
-		document.querySelectorAll('.joystick .nipple .front')
-			.forEach(e => e.classList.add('joystick', 'touch'))
+	document.querySelectorAll('.joystick .nipple .front').forEach(e => {
+		e.classList.add('joystick', 'touch')
 	})
 
 	function inadequateHeight() {

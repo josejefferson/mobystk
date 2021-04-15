@@ -28,17 +28,17 @@
 
 /* Joystick */
 .joystick {
-	bottom: 20px;
-	width: 110px;
-	height: 110px;
+	bottom: 0px;
+	width: 150px;
+	height: 150px;
 }
 
 .joystick#joystickL {
-	left: 30px;
+	left: 10px;
 }
 
 .joystick#joystickR {
-	right: 30px;
+	right: 10px;
 }
 
 /* ==========================================================================
