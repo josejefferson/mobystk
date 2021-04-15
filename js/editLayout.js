@@ -152,10 +152,10 @@ angular.module('joystick', ['ngRightClick']).controller('editLayoutCtrl', ['$sco
 
 	$scope.move = (obj, dir) => {
 		switch (dir) {
-			case 'up': obj.anchorY === 'top' ? obj.y[0] -= 2 : obj.y[0] += 2
-			case 'down': obj.anchorY === 'top' ? obj.y[0] += 2 : obj.y[0] -= 2
-			case 'left': obj.anchorX === 'left' ? obj.x[0] -= 2 : obj.x[0] += 2
-			case 'right': obj.anchorX === 'left' ? obj.x[0] += 2 : obj.x[0] -= 2
+			case 'up': obj.anchorY === 'top' ? obj.y[0] -= 2 : obj.y[0] += 2; break
+			case 'down': obj.anchorY === 'top' ? obj.y[0] += 2 : obj.y[0] -= 2; break
+			case 'left': obj.anchorX === 'left' ? obj.x[0] -= 2 : obj.x[0] += 2; break
+			case 'right': obj.anchorX === 'left' ? obj.x[0] += 2 : obj.x[0] -= 2; break
 		}
 	}
 
