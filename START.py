@@ -1,29 +1,41 @@
-HTTP_PORT = 8877
-WS_PORT = 5000
+# Instale estes pacotes antes da primeira execução
+# pip install pyqrcode
+# pip install pynput
+# pip install colorama
 
-import time
-import threading
-import http.server
-import socketserver
-import socket
+HTTP_PORT = 8877 # Porta do servidor HTTP
+WS_PORT = 5000 # Porta do servidor WebSocket
+DEBUG = False # Se True, mostrará logs
+
 import asyncio
-import websockets
+from colorama import init as coloramaInit, Fore, Style
+import http.server
 import pyqrcode
+import socket
+import socketserver
+import threading
+import time
+import websockets
 from pynput.keyboard import Key, Controller
 
+coloramaInit()
 keyboard = Controller()
 handler = http.server.SimpleHTTPRequestHandler
+
+# Retorna o IP local do computador
 ip = socket.gethostbyname_ex(socket.gethostname())[-1][-1]
 httpIp = '{}:{}'.format(ip, HTTP_PORT)
 wsIp = '{}:{}'.format(ip, WS_PORT)
 
-# QR Code (https://gist.github.com/eduardomazolini/2466eda91ff8cff379ad83031c334e58)
+# ========================================
+# QR Code (bit.ly/3dpXMa9)
+# ========================================
 def half_char(u, d):
 	half_matrix = {
-		('0', '0'):'\U00002588',
-		('1', '1'):' ',
-		('1', '0'):'\U00002584',
-		('0', '1'):'\U00002580'
+		('0', '0'): '█',
+		('1', '1'): ' ',
+		('1', '0'): '▄',
+		('0', '1'): '▀'
 	}
 	return half_matrix[(u,d)]
 
@@ -35,57 +47,78 @@ def qr_half(txt):
 		l1 = a[i]
 		i += 1
 		l2 = a[i]
-		if (l2 < l1):
-			l2 += '1'*len(l1)
+		if (l2 < l1): l2 += '1' * len(l1)
 		i += 1
-		r += ''.join(map(half_char,list(l1),list(l2)))+'\n'
-	print(r)
+		r += '  ' + ''.join(map(half_char, list(l1), list(l2))) + '\n'
+	return r
 
+# ========================================
 # HTTP Server
+# ========================================
 class NoCacheHandler(handler):
 	def end_headers(self):
 		self.send_my_headers()
 		handler.end_headers(self)
 
+	# Desativa o cache
 	def send_my_headers(self):
 		self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
 		self.send_header('Pragma', 'no-cache')
 		self.send_header('Expires', '0')
 
+	# Desativa o log de requisições
+	def log_message(self, format, *args):
+		return
+
 def httpServer():
 	with socketserver.TCPServer(('', HTTP_PORT), NoCacheHandler) as httpd:
-		print('# Enter this address in your browser: http://' + httpIp + '\n')
-		qrcode = pyqrcode.create('http://' + httpIp)
-		qr_half(qrcode.text())
 		httpd.serve_forever()
 
-# WS Server
+# ========================================
+# WebSocket Server
+# ========================================
 async def server(websocket, path):
-	print('[WEBSOCKET] Connected user')
+	try:
+		if DEBUG: print(Fore.YELLOW + '[WEBSOCKET]' + Style.RESET_ALL + ' Usuário conectado')
+		async for msg in websocket:
+			# Mensagem do WebSocket
+			try:
+				msg = msg.lower().split(' ')
+				msg[1] = msg[1].split(',')
 
-	async for msg in websocket:
-		try:
-			msg = msg.lower().split(' ')
-			msg[1] = msg[1].split(',')
+				# Itera sobre as teclas
+				for keyName in msg[1]:
+					key = keyName
+					if len(keyName) > 1: key = Key[keyName]
 
-			for keyName in msg[1]:
-				key = keyName
-				if len(keyName) > 1: key = Key[keyName]
+					# 'r': release (soltar tecla)
+					# 'p': press (pressionar tecla)
+					# 't': tap (apertar e soltar tecla)
+					if msg[0] == 'r': keyboard.release(key)
+					elif msg[0] == 'p': keyboard.press(key)
+					elif msg[0] == 't':
+						keyboard.press(key)
+						time.sleep(0.05)
+						keyboard.release(key)
 
-				if msg[0] == 'r': keyboard.release(key)
-				elif msg[0] == 'p': keyboard.press(key)
-				elif msg[0] == 't':
-					keyboard.press(key)
-					time.sleep(0.05)
-					keyboard.release(key)
-		except:
-			print('[ ERROR ] Invalid data!')
-			pass
+			except Exception as e:
+				if DEBUG: print(Fore.RED + '[WEBSOCKET]' + Style.RESET_ALL + ' Erro: dados inválidos')
+				if DEBUG: print(e)
+				pass
+	except Exception as e:
+		if DEBUG: print(Fore.RED + '[WEBSOCKET]' + Style.RESET_ALL + ' Erro desconhecido')
+		if DEBUG: print(e)
+		pass
 
-print('\n# Enter this code on the website:')
-print('┏━━━━━━━━━━━━━━━━━━━━━━━┓')
-print('┃ ' +wsIp.ljust(21) + ' ┃')
-print('┗━━━━━━━━━━━━━━━━━━━━━━━┛\n')
+print('\n  Acesse: ' + Style.BRIGHT + Fore.GREEN + 'http://' + httpIp + Style.RESET_ALL)
+print('  Digite este código no site:')
+print('  ┏━━━━━━━━━━━━━━━━━━━━━━━┓')
+print('  ┃ ' + Style.BRIGHT + wsIp.ljust(21) + Style.RESET_ALL + ' ┃')
+print('  ┗━━━━━━━━━━━━━━━━━━━━━━━┛\n')
+print(Style.BRIGHT, end='')
+qrcode = pyqrcode.create('http://' + httpIp).text()
+print(qr_half(qrcode), end='')
+print(Style.RESET_ALL, end='')
 
 start_server = websockets.serve(server, port=WS_PORT)
 asyncio.get_event_loop().run_until_complete(start_server)
