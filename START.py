@@ -1,4 +1,4 @@
-# Instale estes pacotes antes da primeira execução
+# INSTALE ESTES PACOTES ANTES DA PRIMEIRA EXECUÇÃO
 # pip install pyqrcode
 # pip install pynput
 # pip install colorama
@@ -94,22 +94,33 @@ async def server(websocket, path):
 					# 'r': release (soltar tecla)
 					# 'p': press (pressionar tecla)
 					# 't': tap (apertar e soltar tecla)
-					if msg[0] == 'r': keyboard.release(key)
-					elif msg[0] == 'p': keyboard.press(key)
+					if msg[0] == 'r':
+						if DEBUG: print(Fore.CYAN + '[RELEASE KEY] ' + Style.RESET_ALL + str(key))
+						keyboard.release(key)
+
+					elif msg[0] == 'p':
+						if DEBUG: print(Fore.CYAN + '[PRESS KEY] ' + Style.RESET_ALL + str(key))
+						keyboard.press(key)
+
 					elif msg[0] == 't':
+						if DEBUG: print(Fore.CYAN + '[TAP KEY] ' + Style.RESET_ALL + str(key))
 						keyboard.press(key)
 						time.sleep(0.05)
 						keyboard.release(key)
 
 			except Exception as e:
-				if DEBUG: print(Fore.RED + '[WEBSOCKET]' + Style.RESET_ALL + ' Erro: dados inválidos')
-				if DEBUG: print(e)
+				if DEBUG: print(Fore.MAGENTA + '[WEBSOCKET]' + Style.RESET_ALL + ' Erro: dados inválidos')
+				if DEBUG: print(Fore.RED + str(e) + Style.RESET_ALL)
 				pass
+
 	except Exception as e:
-		if DEBUG: print(Fore.RED + '[WEBSOCKET]' + Style.RESET_ALL + ' Erro desconhecido')
-		if DEBUG: print(e)
+		if DEBUG: print(Fore.MAGENTA + '[WEBSOCKET]' + Style.RESET_ALL + ' Erro desconhecido')
+		if DEBUG: print(Fore.RED + str(e) + Style.RESET_ALL)
 		pass
 
+# ========================================
+# Textos exibidos na tela
+# ========================================
 print('\n  Acesse: ' + Style.BRIGHT + Fore.GREEN + 'http://' + httpIp + Style.RESET_ALL)
 print('  Digite este código no site:')
 print('  ┏━━━━━━━━━━━━━━━━━━━━━━━┓')
@@ -120,10 +131,12 @@ qrcode = pyqrcode.create('http://' + httpIp).text()
 print(qr_half(qrcode), end='')
 print(Style.RESET_ALL, end='')
 
-start_server = websockets.serve(server, port=WS_PORT)
-asyncio.get_event_loop().run_until_complete(start_server)
-
+# ========================================
+# Inicia os servidores
+# ========================================
 if __name__ == "__main__":
+	start_server = websockets.serve(server, port=WS_PORT)
+	asyncio.get_event_loop().run_until_complete(start_server)
 	httpThread = threading.Thread(target=httpServer)
 	httpThread.start()
 	asyncio.get_event_loop().run_forever()
