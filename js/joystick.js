@@ -5,8 +5,14 @@ const ip = localStorage.getItem('joystick.code') || '127.0.0.1:5000'
 const layout = localStorage.getItem('joystick.layout')
 const player2 = localStorage.getItem('joystick.player') === '2' ? true : false
 const debug = localStorage.getItem('joystick.debug') === 'true' ? true : false
+
 if (debug) document.body.classList.add('debug')
 if (!layout) location.href = 'index.html'
+localStorage.getItem('joystick.locked')?.split(',')?.forEach(key => {
+	if (key) document.querySelector('.' + key)?.classList.add('lock')
+})
+if (localStorage.getItem('joystick.invert') === 'true')
+	document.body.classList.add('invert')
 
 // Carrega o layout
 $layoutCSS.href = 'layouts/' + layout + '.css'

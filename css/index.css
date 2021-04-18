@@ -12,11 +12,13 @@ body {
 	margin: 40px 0;
 }
 
+
 .label {
 	margin-top: 20px;
 	margin-bottom: 10px;
 	font-size: 20px;
 }
+
 
 input[type="text"] {
 	background: none;
@@ -30,16 +32,17 @@ input[type="text"] {
 	outline: none;
 }
 
-input[type=text]:focus {
+input[type="text"]:focus {
 	border-color: white;
 }
+
 
 .select input {
 	display: none;
 }
 
 .select .selLabel {
-	padding: 10px 15px;
+	padding: 5px 10px;
 	display: inline-block;
 	border: #fff8 2px solid;
 	color: #fff8;
@@ -47,41 +50,27 @@ input[type=text]:focus {
 	transition: .15s ease;
 }
 
-.select.player .selLabel {
-	padding: 5px 10px;
-}
-
 .select input:checked + .selLabel {
 	background: #00f8;
 	color: white;
 }
 
+.select.layout .selLabel {
+	padding: 10px 15px;
+}
+
 .select.player input:checked + .selLabel {
 	background: #f008;
-	color: white;
 }
 
-.start {
-	text-align: center;
-	margin-top: 40px;
+.select.lock input:checked + .selLabel {
+	background: #0f08;
 }
 
-.start button {
-	border: #ff08 2px solid;
-	border-radius: 200px 70px 200px 70px;
-	background: none;
-	color: white;
-	font-size: 30px;
-	padding: 10px 40px;
-	outline: none;
-	transition: .15s ease;
-	cursor: pointer;
+.select.option input:checked + .selLabel {
+	background: #f0f8;
 }
 
-.start button:hover,
-.start button:active {
-	background: #ff05;
-}
 
 .setup {
 	display: inline-block;
@@ -101,4 +90,39 @@ input[type=text]:focus {
 .setup:hover,
 .setup:active {
 	background: #0f05;
+}
+
+
+.start {
+	background-color: #220;
+	position: fixed;
+	bottom: 15px;
+	right: 15px;
+	border: #ff08 2px solid;
+	border-radius: 170px 80px 170px 80px;
+	color: white;
+	font-size: 16px;
+	padding: 10px 20px;
+	outline: none;
+	transition: .15s ease;
+	cursor: pointer;
+	animation: pulse 2s infinite;
+}
+
+.start:hover,
+.start:active {
+	background-color: #ff05;
+}
+
+
+@keyframes pulse {
+	0% {
+		box-shadow: 0 0 0 0 rgba(255, 255, 0, 0.4);
+	}
+	70% {
+		box-shadow: 0 0 0 10px rgba(255, 255, 0, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(255, 255, 0, 0);
+	}
 }

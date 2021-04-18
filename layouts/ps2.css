@@ -18,17 +18,24 @@
 	display: block;
 }
 
-.arrows,
-.actions {
-	bottom: 120px;
-}
-
-.joystick#joystickL {
-	left: 120px;
+.arrows {
+	bottom: 150px;
+	width: 128px;
+	height: 128px;
 }
 
 .joystick#joystickR {
-	right: 120px;
+	bottom: 160px;
+}
+
+body.invert .arrows {
+	bottom: 20px;
+	width: 150px;
+	height: 150px;
+}
+
+body.invert .joystick#joystickL {
+	bottom: 160px;
 }
 
 /* ==========================================================================
@@ -56,20 +63,23 @@
 	display: flex;
 }
 
+.up,
+.down,
+.left,
+.right {
+	width: 48px;
+	height: 48px;
+}
+
+body.invert .up,
+body.invert .down,
+body.invert .left,
+body.invert .right {
+	width: 52px;
+	height: 52px;
+}
+
 .select,
 .start {
-	border-radius: 1000px;
-	border-bottom: 2.5px solid !important;
-	font-size: 12px;
-	width: 56px;
-	height: 30px;
-	bottom: 150px;
-}
-
-.select {
-	left: 260px;
-}
-
-.start {
-	right: 260px;
+	width: 130px;
 }

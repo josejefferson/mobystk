@@ -23,6 +23,16 @@
 	height: 128px;
 }
 
+body.invert .arrows {
+	bottom: 20px;
+	width: 150px;
+	height: 150px;
+}
+
+body.invert .joystick#joystickL {
+	bottom: 160px;
+}
+
 /* ==========================================================================
    BUTTONS
    ========================================================================== */
@@ -54,6 +64,14 @@
 .right {
 	width: 48px;
 	height: 48px;
+}
+
+body.invert .up,
+body.invert .down,
+body.invert .left,
+body.invert .right {
+	width: 52px;
+	height: 52px;
 }
 
 .load {

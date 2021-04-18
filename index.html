@@ -12,40 +12,33 @@
 
 <body>
 	<form action="joystick.html" method="GET" name="settings">
+		<!-- Código -->
 		<label>
 			<div class="label">Digite o código que aparece no seu computador</div>
 			<input type="text" name="code" autocomplete="off" required>
 		</label>
 
+
 		<!-- Layouts -->
 		<div class="label">Selecione o layout</div>
-		<label class="select">
+		<label class="select layout">
 			<input type="radio" name="layout" value="psp" checked>
 			<div class="selLabel">PSP</div>
 		</label>
 
-		<label class="select">
-			<input type="radio" name="layout" value="psp-r-lock">
-			<div class="selLabel">PSP R LOCK</div>
-		</label>
-
-		<label class="select">
+		<label class="select layout">
 			<input type="radio" name="layout" value="ps2">
 			<div class="selLabel">PS2</div>
 		</label>
 
-		<label class="select">
-			<input type="radio" name="layout" value="ps2-r1-lock">
-			<div class="selLabel">PS2 R1 LOCK</div>
-		</label>
-
-		<label class="select">
+		<label class="select layout">
 			<input type="radio" name="layout" value="snes">
 			<div class="selLabel">SNES</div>
 		</label>
 
-		<br>
 
+		<!-- Jogador -->
+		<div class="label">Selecione o jogador</div>
 		<label class="select player">
 			<input type="radio" name="player" value="1" checked>
 			<div class="selLabel">Jogador 1</div>
@@ -56,14 +49,49 @@
 			<div class="selLabel">Jogador 2</div>
 		</label>
 
-		<!-- Start -->
-		<div class="start" oncontextmenu="document.querySelector('.links').style.display = 'block'">
-			<button type="submit">Iniciar</button>
+
+		<!-- Teclas traváveis -->
+		<div class="label">Selecione as teclas traváveis</div>
+		<label class="select lock">
+			<input type="checkbox" name="lock" value="l">
+			<div class="selLabel">L</div>
+		</label>
+
+		<label class="select lock">
+			<input type="checkbox" name="lock" value="r">
+			<div class="selLabel">R</div>
+		</label>
+
+		<label class="select lock">
+			<input type="checkbox" name="lock" value="l1">
+			<div class="selLabel">L1</div>
+		</label>
+
+		<label class="select lock">
+			<input type="checkbox" name="lock" value="r1">
+			<div class="selLabel">R1</div>
+		</label>
+
+
+		<!-- Opções -->
+		<div class="label">Opções</div>
+		<label class="select option">
+			<input type="checkbox" name="invert">
+			<div class="selLabel">Inverter joystick/setas</div>
+		</label>
+
+
+		<!-- Configurar emuladores -->
+		<div>
+			<a class="setup" href="setup.html">Configurar emuladores</a>
 		</div>
 
-		<a class="setup" href="setup.html">Configurar emuladores</a>
 
-		<!-- Temp -->
+		<!-- Iniciar -->
+		<button type="submit" class="start">Jogar!</button>
+
+
+		<!-- Temporário -->
 		<div class="links" style="display: none;">
 			<label>Debug: <input type="checkbox" name="debug" value="true"></label>
 			<br><a href="editLayout.html">Layout editor</a>
