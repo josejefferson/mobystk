@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # INSTALE ESTES PACOTES ANTES DA PRIMEIRA EXECUÇÃO
 # pip install pyqrcode
 # pip install pynput
