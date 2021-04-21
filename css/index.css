@@ -36,8 +36,25 @@ input[type="text"]:focus {
 	border-color: white;
 }
 
+input[type="color"] {
+	-webkit-appearance: none;
+	padding: 0;
+	border: none;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+}
 
-.select input {
+input[type="color"]::-webkit-color-swatch {
+	border: white 1px solid;
+	border-radius: 50%;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+.select > input {
 	display: none;
 }
 
@@ -49,6 +66,13 @@ input[type="text"]:focus {
 	color: #fff8;
 	margin-top: 5px;
 	transition: .15s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.select .selLabel input {
+	margin-left: 5px;
 }
 
 .select input:checked + .selLabel {
@@ -73,6 +97,19 @@ input[type="text"]:focus {
 }
 
 
+.resetColors {
+	background-color: transparent;
+	border: #00f8 2px solid;
+	border-radius: 170px 80px 170px 80px;
+	color: white;
+	font-size: 12px;
+	padding: 5px 10px;
+	outline: none;
+	transition: .15s ease;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
 .setup {
 	display: inline-block;
 	text-decoration: none;
@@ -82,7 +119,6 @@ input[type="text"]:focus {
 	color: white;
 	font-size: 10px;
 	padding: 5px;
-	margin-top: 10px;
 	outline: none;
 	transition: .15s ease;
 	cursor: pointer;

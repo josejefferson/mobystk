@@ -161,9 +161,7 @@
 /* R button */
 .r,
 .r1,
-.r2,
-.rLock,
-.r1Lock {
+.r2 {
 	top: 0px;
 	right: 0px;
 	width: 250px;
@@ -187,6 +185,7 @@
 }
 
 .l1 {
+	background-color: var(--background);
 	width: 170px;
 }
 
@@ -202,8 +201,8 @@
 	left: 0;
 }
 
-.r1,
-.r1Lock {
+.r1 {
+	background-color: var(--background);
 	width: 170px;
 }
 

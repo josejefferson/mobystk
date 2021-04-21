@@ -10,24 +10,35 @@
    COLORS
    ========================================================================== */
 :root {
-	--color: #fff8;
-	--border: var(--color);
-	--active: #fff3;
-	--border-size: 2.5px;
+	--background: #000000;
 	--btn-background: transparent;
+	--color: #ffffff88;
+	--active: #ffffff33;
+	--border: var(--color);
+	--connecting-color: #ffff4488;
+	--connecting-active: #ffff4433;
+	--connecting-border: var(--connecting-color);
+	--disconnected-color: #ff444488;
+	--disconnected-active: #ff444433;
+	--disconnected-border: var(--disconnected-color);
+	--border-size: 2.5px;
 	--border-style: solid;
 }
 
+body {
+	background-color: var(--background);
+}
+
 body.disconnected {
-	--color: #f448;
-	--border: var(--color);
-	--active: #f443;
+	--color: var(--disconnected-color);
+	--active: var(--disconnected-active);
+	--border: var(--disconnected-border);
 }
 
 body.connecting {
-	--color: #ff48;
-	--border: var(--color);
-	--active: #ff43;
+	--color: var(--connecting-color);
+	--active: var(--connecting-active);
+	--border: var(--connecting-border);
 }
 
 /* ==========================================================================

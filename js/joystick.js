@@ -14,6 +14,22 @@ localStorage.getItem('joystick.locked')?.split(',')?.forEach(key => {
 if (localStorage.getItem('joystick.invert') === 'true')
 	document.body.classList.add('invert')
 
+const colors = {
+	background: localStorage.getItem('joystick.background'),
+	color: localStorage.getItem('joystick.color'),
+	border: localStorage.getItem('joystick.border'),
+	active: localStorage.getItem('joystick.active'),
+	colorT: localStorage.getItem('joystick.colorT'),
+	borderT: localStorage.getItem('joystick.borderT'),
+	activeT: localStorage.getItem('joystick.activeT')
+}
+
+document.documentElement.style.setProperty('--background', colors.background)
+document.documentElement.style.setProperty('--color', colors.color + parseInt(colors.colorT).toString(16))
+document.documentElement.style.setProperty('--border', colors.border + parseInt(colors.borderT).toString(16))
+document.documentElement.style.setProperty('--active', colors.active + parseInt(colors.activeT).toString(16))
+
+
 // Carrega o layout
 $layoutCSS.href = 'layouts/' + layout + '.css'
 
