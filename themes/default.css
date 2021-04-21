@@ -29,13 +29,13 @@ body {
 	background-color: var(--background);
 }
 
-body.disconnected {
+body.disconnected:not(.debug) {
 	--color: var(--disconnected-color);
 	--active: var(--disconnected-active);
 	--border: var(--disconnected-border);
 }
 
-body.connecting {
+body.connecting:not(.debug) {
 	--color: var(--connecting-color);
 	--active: var(--connecting-active);
 	--border: var(--connecting-border);
