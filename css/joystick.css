@@ -4,7 +4,7 @@
 }
 
 body {
-	height: 100%;
+	height: 100vh;
 	margin: 0;
 	overscroll-behavior: contain;
 	overflow: hidden;
@@ -13,6 +13,14 @@ body {
 body.debug .joystick.group,
 body.debug .diag {
 	border: var(--color) 1px solid;
+}
+
+.backgroundImage {
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
+	background-position: center center;
+	background-size: cover;
 }
 
 .container {

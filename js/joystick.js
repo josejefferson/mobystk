@@ -1,31 +1,35 @@
 const $root = document.documentElement
+const $bgImage = document.querySelector('.backgroundImage')
 const $layoutCSS = document.querySelector('.layout')
 const $viewport = document.querySelector('meta[name="viewport"]')
 
 const ip = localStorage.getItem('joystick.code') || '127.0.0.1:5000'
 const layout = localStorage.getItem('joystick.layout')
-const player2 = localStorage.getItem('joystick.player') === '2' ? true : false
-const debug = localStorage.getItem('joystick.debug') === 'true' ? true : false
+const player2 = localStorage.getItem('joystick.player') === '2'
+const debug = localStorage.getItem('joystick.debug') === 'true'
+const locked = localStorage.getItem('joystick.locked')
+const invert = localStorage.getItem('joystick.invert') === 'true'
+const bgImage = localStorage.getItem('joystick.bgImage')
+const bgOpacity = localStorage.getItem('joystick.bgOpacity')
+const colorsBackground = localStorage.getItem('joystick.background')
+const colorsColor = localStorage.getItem('joystick.color')
+const colorsBorder = localStorage.getItem('joystick.border')
+const colorsActive = localStorage.getItem('joystick.active')
 
 if (debug) document.body.classList.add('debug')
 if (!layout) location.href = 'index.html'
-localStorage.getItem('joystick.locked')?.split(',')?.forEach(key => {
+if (invert) document.body.classList.add('invert')
+if (bgImage) $bgImage.style.backgroundImage = `url('backgrounds/${bgImage}')`
+if (bgOpacity) $bgImage.style.opacity = bgOpacity
+locked?.split(',')?.forEach(key => {
 	if (key) document.querySelector('.' + key)?.classList.add('lock')
 })
-if (localStorage.getItem('joystick.invert') === 'true')
-	document.body.classList.add('invert')
 
-const colors = {
-	background: localStorage.getItem('joystick.background'),
-	color: localStorage.getItem('joystick.color'),
-	border: localStorage.getItem('joystick.border'),
-	active: localStorage.getItem('joystick.active')
-}
 
-if (colors.background) $root.style.setProperty('--background', colors.background)
-if (colors.color) $root.style.setProperty('--color', colors.color)
-if (colors.border) $root.style.setProperty('--border', colors.border)
-if (colors.active) $root.style.setProperty('--active', colors.active)
+if (colorsBackground) $root.style.setProperty('--background', colorsBackground)
+if (colorsColor) $root.style.setProperty('--color', colorsColor)
+if (colorsBorder) $root.style.setProperty('--border', colorsBorder)
+if (colorsActive) $root.style.setProperty('--active', colorsActive)
 
 
 // Carrega o layout

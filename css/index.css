@@ -19,6 +19,12 @@ body {
 	font-size: 20px;
 }
 
+.sublabel {
+	display: block;
+	margin-top: -5px;
+	margin-bottom: 5px;
+}
+
 .pickr {
 	display: flex;
 	margin-left: 5px;

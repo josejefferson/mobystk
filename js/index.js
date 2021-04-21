@@ -7,6 +7,8 @@ document.forms[0].elements.background.value = localStorage.getItem('joystick.bac
 document.forms[0].elements.color.value = localStorage.getItem('joystick.color') || '#FFFFFF88'
 document.forms[0].elements.border.value = localStorage.getItem('joystick.border') || '#FFFFFF88'
 document.forms[0].elements.active.value = localStorage.getItem('joystick.active') || '#FFFFFF33'
+document.forms[0].elements.bgImage.value = localStorage.getItem('joystick.bgImage')
+document.forms[0].elements.bgOpacity.value = localStorage.getItem('joystick.bgOpacity') || '0.5'
 
 localStorage.getItem('joystick.locked')?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true
@@ -23,6 +25,8 @@ document.forms[0].onsubmit = function (e) {
 	localStorage.setItem('joystick.color', this.elements.color.value)
 	localStorage.setItem('joystick.border', this.elements.border.value)
 	localStorage.setItem('joystick.active', this.elements.active.value)
+	localStorage.setItem('joystick.bgImage', this.elements.bgImage.value)
+	localStorage.setItem('joystick.bgOpacity', this.elements.bgOpacity.value)
 
 	const lockedBtns = []
 	this.elements.lock.forEach(e => {
