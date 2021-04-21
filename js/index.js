@@ -4,12 +4,9 @@ document.forms[0].elements.layout.value = localStorage.getItem('joystick.layout'
 document.forms[0].elements.player.value = localStorage.getItem('joystick.player')
 document.forms[0].elements.invert.checked = localStorage.getItem('joystick.invert') === 'true' ? true : false
 document.forms[0].elements.background.value = localStorage.getItem('joystick.background') || '#000000'
-document.forms[0].elements.color.value = localStorage.getItem('joystick.color') || '#FFFFFF'
-document.forms[0].elements.border.value = localStorage.getItem('joystick.border') || '#FFFFFF'
-document.forms[0].elements.active.value = localStorage.getItem('joystick.active') || '#FFFFFF'
-document.forms[0].elements.colorT.value = localStorage.getItem('joystick.colorT') || '136'
-document.forms[0].elements.borderT.value = localStorage.getItem('joystick.borderT') || '136'
-document.forms[0].elements.activeT.value = localStorage.getItem('joystick.activeT') || '51'
+document.forms[0].elements.color.value = localStorage.getItem('joystick.color') || '#FFFFFF88'
+document.forms[0].elements.border.value = localStorage.getItem('joystick.border') || '#FFFFFF88'
+document.forms[0].elements.active.value = localStorage.getItem('joystick.active') || '#FFFFFF33'
 
 localStorage.getItem('joystick.locked')?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true
@@ -26,9 +23,6 @@ document.forms[0].onsubmit = function (e) {
 	localStorage.setItem('joystick.color', this.elements.color.value)
 	localStorage.setItem('joystick.border', this.elements.border.value)
 	localStorage.setItem('joystick.active', this.elements.active.value)
-	localStorage.setItem('joystick.colorT', this.elements.colorT.value)
-	localStorage.setItem('joystick.borderT', this.elements.borderT.value)
-	localStorage.setItem('joystick.activeT', this.elements.activeT.value)
 
 	const lockedBtns = []
 	this.elements.lock.forEach(e => {
@@ -39,16 +33,62 @@ document.forms[0].onsubmit = function (e) {
 	this.submit()
 }
 
+const colors = {
+	background: createPickr('background', '#000'),
+	color: createPickr('color', '#FFF8', '88'),
+	border: createPickr('border', '#FFF8', '88'),
+	active: createPickr('active', '#FFF3', '33')
+}
+
 document.querySelector('.start').oncontextmenu = () => {
 	document.querySelector('.links').style.display = 'block'
 }
 
 document.querySelector('.resetColors').onclick = () => {
-	document.forms[0].elements.background.value = document.forms[0].elements.background.defaultValue
-	document.forms[0].elements.color.value = document.forms[0].elements.color.defaultValue
-	document.forms[0].elements.border.value = document.forms[0].elements.border.defaultValue
-	document.forms[0].elements.active.value = document.forms[0].elements.active.defaultValue
-	document.forms[0].elements.colorT.value = document.forms[0].elements.colorT.defaultValue
-	document.forms[0].elements.borderT.value = document.forms[0].elements.borderT.defaultValue
-	document.forms[0].elements.activeT.value = document.forms[0].elements.activeT.defaultValue
+	colors.background.setColor('#000')
+	colors.color.setColor('#FFF8')
+	colors.border.setColor('#FFF8')
+	colors.active.setColor('#FFF3')
+}
+
+function createPickr(el, defaultColor, opacity) {
+	return Pickr.create({
+		el: `.pickr-${el}`,
+		theme: 'nano',
+		default: localStorage.getItem('joystick.' + el) || defaultColor,
+		defaultRepresentation: 'HEXA',
+		comparison: false,
+		autoReposition: true,
+		components: {
+			preview: true,
+			opacity: true,
+			hue: true,
+			interaction: {
+				input: true
+			}
+		},
+		swatches: [
+			'#F44336' + opacity || '',
+			'#E91E63' + opacity || '',
+			'#9C27B0' + opacity || '',
+			'#673AB7' + opacity || '',
+			'#3F51B5' + opacity || '',
+			'#2196F3' + opacity || '',
+			'#03A9F4' + opacity || '',
+			'#00BCD4' + opacity || '',
+			'#009688' + opacity || '',
+			'#4CAF50' + opacity || '',
+			'#8BC34A' + opacity || '',
+			'#CDDC39' + opacity || '',
+			'#FFEB3B' + opacity || '',
+			'#FFC107' + opacity || '',
+			'#FF9800' + opacity || '',
+			'#FF5722' + opacity || '',
+			'#795548' + opacity || '',
+			'#9E9E9E' + opacity || '',
+			'#607D8B' + opacity || '',
+			'#FFFFFF' + opacity || '',
+			'#000000' + opacity || ''
+		]
+	}).on('change', color => document.forms[0].elements[el].value = color.toHEXA().toString())
 }

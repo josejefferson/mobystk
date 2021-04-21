@@ -19,6 +19,16 @@ body {
 	font-size: 20px;
 }
 
+.pickr {
+	display: flex;
+	margin-left: 5px;
+}
+
+.pcr-button {
+	border: white 2px solid;
+	width: 14px !important;
+	height: 14px !important;
+}
 
 input[type="text"] {
 	background: none;
@@ -109,6 +119,12 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 	cursor: pointer;
 	margin-top: 5px;
 }
+
+.resetColors:hover,
+.resetColors:active {
+	background: #00f5;
+}
+
 
 .setup {
 	display: inline-block;

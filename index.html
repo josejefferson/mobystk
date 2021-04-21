@@ -7,6 +7,7 @@
 	<link rel="shortcut icon" href="favicon.png" type="image/png">
 	<link rel="manifest" href="manifest.json">
 	<title>Joystick</title>
+	<link rel="stylesheet" href="lib/css/pickr.nano.min.css">
 	<link rel="stylesheet" href="css/index.css">
 </head>
 
@@ -84,30 +85,34 @@
 		<!-- Cores -->
 		<div class="label">Cores</div>
 		<label class="select color">
+			<input type="hidden" name="background" value="#000">
 			<div class="selLabel">
-				Fundo <input type="color" name="background" value="#000000">
+				Fundo <div class="pickr-background"></div>
 			</div>
 		</label>
 
 		<label class="select color">
+			<input type="hidden" name="color" value="#FFF8">
 			<div class="selLabel">
-				Cor do botão <input type="color" name="color" value="#FFFFFF">
+				Cor do botão <div class="pickr-color"></div>
 			</div>
 		</label>
 
 		<label class="select color">
+			<input type="hidden" name="border" value="#FFF8">
 			<div class="selLabel">
-				Borda do botão <input type="color" name="border" value="#FFFFFF">
+				Borda do botão <div class="pickr-border"></div>
 			</div>
 		</label>
 
 		<label class="select color">
+			<input type="hidden" name="active" value="#FFF3">
 			<div class="selLabel">
-				Fundo ativo <input type="color" name="active" value="#FFFFFF">
+				Fundo ativo <div class="pickr-active"></div>
 			</div>
 		</label>
 
-		<label class="select color">
+		<!-- <label class="select color">
 			<div class="selLabel">
 				Transparência da cor <input type="range" name="colorT" min="0" max="255" value="136">
 			</div>
@@ -123,7 +128,7 @@
 			<div class="selLabel">
 				Transparência do fundo ativo <input type="range" name="activeT" min="0" max="255" value="51">
 			</div>
-		</label>
+		</label> -->
 
 		<br>
 
@@ -149,6 +154,7 @@
 		</div>
 	</form>
 
+	<script src="lib/js/pickr.es5.min.js"></script>
 	<script src="js/index.js"></script>
 </body>
 

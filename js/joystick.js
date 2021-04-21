@@ -1,3 +1,4 @@
+const $root = document.documentElement
 const $layoutCSS = document.querySelector('.layout')
 const $viewport = document.querySelector('meta[name="viewport"]')
 
@@ -18,16 +19,13 @@ const colors = {
 	background: localStorage.getItem('joystick.background'),
 	color: localStorage.getItem('joystick.color'),
 	border: localStorage.getItem('joystick.border'),
-	active: localStorage.getItem('joystick.active'),
-	colorT: localStorage.getItem('joystick.colorT'),
-	borderT: localStorage.getItem('joystick.borderT'),
-	activeT: localStorage.getItem('joystick.activeT')
+	active: localStorage.getItem('joystick.active')
 }
 
-document.documentElement.style.setProperty('--background', colors.background)
-document.documentElement.style.setProperty('--color', colors.color + parseInt(colors.colorT).toString(16))
-document.documentElement.style.setProperty('--border', colors.border + parseInt(colors.borderT).toString(16))
-document.documentElement.style.setProperty('--active', colors.active + parseInt(colors.activeT).toString(16))
+if (colors.background) $root.style.setProperty('--background', colors.background)
+if (colors.color) $root.style.setProperty('--color', colors.color)
+if (colors.border) $root.style.setProperty('--border', colors.border)
+if (colors.active) $root.style.setProperty('--active', colors.active)
 
 
 // Carrega o layout
