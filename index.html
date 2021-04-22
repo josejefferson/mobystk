@@ -12,140 +12,162 @@
 </head>
 
 <body>
-	<form action="joystick.html" method="GET" name="settings">
+	<form class="container" action="joystick.html" method="GET">
 		<!-- Código -->
 		<label>
-			<div class="label">Digite o código que aparece no seu computador</div>
-			<input type="text" name="code" autocomplete="off" required>
+			<div class="optionTitle">Digite o código que aparece no seu computador</div>
+			<input type="text" name="code" class="code" autocomplete="off" required>
 		</label>
 
+		<hr>
 
 		<!-- Layouts -->
-		<div class="label">Selecione o layout</div>
-		<label class="select layout">
-			<input type="radio" name="layout" value="psp" checked>
-			<div class="selLabel">PSP</div>
-		</label>
+		<div class="optionTitle">Selecione o layout</div>
+		<div class="optionsGroup">
+			<label class="option layout">
+				<input type="radio" name="layout" value="psp" checked>
+				<div class="optionLabel">PSP</div>
+			</label>
 
-		<label class="select layout">
-			<input type="radio" name="layout" value="ps2">
-			<div class="selLabel">PS2</div>
-		</label>
+			<label class="option layout">
+				<input type="radio" name="layout" value="ps2">
+				<div class="optionLabel">PS2</div>
+			</label>
 
-		<label class="select layout">
-			<input type="radio" name="layout" value="snes">
-			<div class="selLabel">SNES</div>
-		</label>
+			<label class="option layout">
+				<input type="radio" name="layout" value="snes">
+				<div class="optionLabel">SNES</div>
+			</label>
+		</div>
 
+		<hr>
 
 		<!-- Jogador -->
-		<div class="label">Selecione o jogador</div>
-		<label class="select player">
-			<input type="radio" name="player" value="1" checked>
-			<div class="selLabel">Jogador 1</div>
-		</label>
+		<div class="optionTitle">Selecione o jogador</div>
+		<div class="optionsGroup">
+			<label class="option player">
+				<input type="radio" name="player" value="1" checked>
+				<div class="optionLabel">Jogador 1</div>
+			</label>
 
-		<label class="select player">
-			<input type="radio" name="player" value="2">
-			<div class="selLabel">Jogador 2</div>
-		</label>
+			<label class="option player">
+				<input type="radio" name="player" value="2">
+				<div class="optionLabel">Jogador 2</div>
+			</label>
+		</div>
 
+		<hr>
 
 		<!-- Teclas traváveis -->
-		<div class="label">Selecione as teclas traváveis</div>
-		<label class="select lock">
-			<input type="checkbox" name="lock" value="l">
-			<div class="selLabel">L</div>
-		</label>
+		<div class="optionTitle">Selecione as teclas traváveis</div>
+		<div class="optionsGroup">
+			<label class="option lock">
+				<input type="checkbox" name="lock" value="l">
+				<div class="optionLabel">L</div>
+			</label>
 
-		<label class="select lock">
-			<input type="checkbox" name="lock" value="r">
-			<div class="selLabel">R</div>
-		</label>
+			<label class="option lock">
+				<input type="checkbox" name="lock" value="r">
+				<div class="optionLabel">R</div>
+			</label>
 
-		<label class="select lock">
-			<input type="checkbox" name="lock" value="l1">
-			<div class="selLabel">L1</div>
-		</label>
+			<label class="option lock">
+				<input type="checkbox" name="lock" value="l1">
+				<div class="optionLabel">L1</div>
+			</label>
 
-		<label class="select lock">
-			<input type="checkbox" name="lock" value="r1">
-			<div class="selLabel">R1</div>
-		</label>
+			<label class="option lock">
+				<input type="checkbox" name="lock" value="r1">
+				<div class="optionLabel">R1</div>
+			</label>
+		</div>
 
+		<hr>
 
 		<!-- Opções -->
-		<div class="label">Opções</div>
-		<label class="select option">
-			<input type="checkbox" name="invert">
-			<div class="selLabel">Inverter joystick/setas</div>
-		</label>
+		<div class="optionTitle">Opções</div>
+		<div class="optionsGroup">
+			<label class="option settings">
+				<input type="checkbox" name="invert">
+				<div class="optionLabel">Inverter joystick/setas</div>
+			</label>
+		</div>
 
+		<hr>
 
 		<!-- Cores -->
-		<div class="label">Cores</div>
-		<label class="select color">
-			<input type="hidden" name="background" value="#000">
-			<div class="selLabel">
-				Fundo <div class="pickr-background"></div>
-			</div>
-		</label>
+		<div class="optionTitle">Cores</div>
+		<div class="optionsGroup">
+			<label class="option color">
+				<div class="optionLabel">
+					<div class="text">Fundo</div>
+					<div class="pickr-background"></div>
+				</div>
+				<input type="hidden" name="background" value="#000">
+			</label>
 
-		<label class="select color">
-			<input type="hidden" name="color" value="#FFF8">
-			<div class="selLabel">
-				Cor do botão <div class="pickr-color"></div>
-			</div>
-		</label>
+			<label class="option color">
+				<div class="optionLabel">
+					<div class="text">Cor do botão</div>
+					<div class="pickr-color"></div>
+				</div>
+				<input type="hidden" name="color" value="#FFF8">
+			</label>
 
-		<label class="select color">
-			<input type="hidden" name="border" value="#FFF8">
-			<div class="selLabel">
-				Borda do botão <div class="pickr-border"></div>
-			</div>
-		</label>
+			<label class="option color">
+				<div class="optionLabel">
+					<div class="text">Borda do botão</div>
+					<div class="pickr-border"></div>
+				</div>
+				<input type="hidden" name="border" value="#FFF8">
+			</label>
 
-		<label class="select color">
-			<input type="hidden" name="active" value="#FFF3">
-			<div class="selLabel">
-				Fundo ativo <div class="pickr-active"></div>
-			</div>
-		</label>
-		<br>
+			<label class="option color">
+				<div class="optionLabel">
+					<div class="text">Fundo ativo</div>
+					<div class="pickr-active"></div>
+				</div>
+				<input type="hidden" name="active" value="#FFF3">
+			</label>
+		</div>
 
 		<button type="button" class="resetColors">Redefinir cores</button>
 
+		<hr>
 
 		<!-- Fundo personalizado -->
-		<div class="label">Fundo personalizado</div>
-		<small class="sublabel">Coloque as imagens na pasta "backgrounds" e digite o nome e extensão da imagem</small>
+		<div class="optionTitle">Fundo personalizado</div>
+		<small class="optionSubTitle">Coloque as imagens na pasta "backgrounds" e digite o nome e extensão da imagem</small>
 		<label>
 			<input type="text" name="bgImage" autocomplete="off" placeholder="Nome do arquivo + extensão">
 		</label>
 		<br>
 
-		<label class="select">
-			<div class="selLabel">
-				Opacidade <input type="range" name="bgOpacity" min="0" max="1" step="0.1" value="0.5">
+		<label class="option customBG">
+			<div class="optionLabel">
+				<div class="text">Opacidade</div>
+				<input type="range" name="bgOpacity" min="0" max="1" step="0.1" value="0.5">
 			</div>
 		</label>
 
-		<label class="select">
-			<div class="selLabel">
-				Borrado <input type="range" name="bgBlur" min="0" max="10" step="1" value="0">
+		<label class="option customBG">
+			<div class="optionLabel">
+				<div class="text">Borrado</div>
+				<input type="range" name="bgBlur" min="0" max="10" step="1" value="0">
 			</div>
 		</label>
 
+		<hr>
 
 		<!-- Configurar emuladores -->
-		<div class="label">Configurações</div>
+		<div class="optionTitle">Configurações</div>
 		<div>
-			<a class="setup" href="setup.html">Configurar emuladores</a>
+			<a class="button setup" href="setup.html">Configurar emuladores</a>
 		</div>
 
 
 		<!-- Iniciar -->
-		<button type="submit" class="start">Jogar!</button>
+		<button type="submit" class="start">Jogar</button>
 
 
 		<!-- Temporário -->

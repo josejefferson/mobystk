@@ -1,64 +1,87 @@
 * {
 	-webkit-tap-highlight-color: transparent;
+	box-sizing: border-box;
 	user-select: none;
 }
 
 body {
 	background-color: black;
-	color: white;
-	overscroll-behavior: contain;
+	color: #F8F9FA;
 	font-family: sans-serif;
-	text-align: center;
 	margin: 40px 0;
+	text-align: center;
 }
 
-
-.label {
-	margin-top: 20px;
-	margin-bottom: 10px;
-	font-size: 20px;
+/* Bootstrap container */
+.container {
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 15px;
+	padding-right: 15px;
+	width: 100%;
 }
 
-.sublabel {
-	display: block;
-	margin-top: -5px;
-	margin-bottom: 5px;
+@media (min-width: 576px) {
+	.container {
+		max-width: 540px;
+	}
 }
 
-.pickr {
-	display: flex;
-	margin-left: 5px;
+@media (min-width: 768px) {
+	.container {
+		max-width: 720px;
+	}
 }
 
-.pcr-button {
-	border: white 2px solid;
-	width: 14px !important;
-	height: 14px !important;
+@media (min-width: 992px) {
+	.container {
+		max-width: 960px;
+	}
 }
 
+@media (min-width: 1200px) {
+	.container {
+		max-width: 1140px;
+	}
+}
+
+/* ==========================================================================
+   INPUTS
+   ========================================================================== */
+
+/* Input text */
 input[type="text"] {
 	background: none;
-	font-family: monospace;
+	border-radius: 1000px;
+	border: #fff8 2px solid;
+	color: inherit; 
 	font-size: 16px;
 	height: 30px;
-	width: 200px;
-	color: white; 
-	border: #fff8 2px solid;
-	transition: border-color .15s ease;
+	height: 40px;
+	margin: 3px;
 	outline: none;
+	text-align: center;
+	transition: border-color .15s ease;
+	width: 100%;
 }
 
 input[type="text"]:focus {
-	border-color: white;
+	border-color: #F8F9FA;
 }
 
+/* Code specific input */
+input[type="text"].code {
+	font-size: 18px !important;
+}
+
+/* Input color */
 input[type="color"] {
 	-webkit-appearance: none;
-	padding: 0;
-	border: none;
-	width: 14px;
-	height: 14px;
 	border-radius: 50%;
+	border: none;
+	height: 14px;
+	padding: 0;
+	width: 14px;
 }
 
 input[type="color"]::-webkit-color-swatch {
@@ -70,109 +93,201 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 	padding: 0;
 }
 
-.select > input {
+/* Input range (Bootstrap) */
+input[type="range"] {
+	-webkit-appearance: none;
+	background-color: transparent;
+	box-sizing: border-box;
+	height: 1.5rem;
+	outline: none;
+	padding: 0;
+	width: 100%;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	background-color: #fff;
+	border-radius: 1rem;
+	border: none;
+	height: 1rem;
+	margin-top: -0.25rem;
+	width: 1rem;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+	background-color: #fff8;
+	border-color: transparent;
+	border-radius: 1000px;
+	cursor: pointer;
+	height: 0.5rem;
+	width: 100%;
+}
+
+/* ==========================================================================
+   LABELS
+   ========================================================================== */
+
+hr {
+	border: #333 .5px solid;
+	margin: 20px 15px;
+}
+
+/* Option title */
+.optionTitle {
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+
+/* Option subtitle */
+.optionSubTitle {
+	display: block;
+	margin-bottom: 5px;
+	margin-top: -5px;
+}
+
+/* Group of options */
+.optionsGroup {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+/* Option */
+.option {
+	display: flex;
+	flex: 1;
+}
+
+/* Option input */
+.option > input {
 	display: none;
 }
 
-.select .selLabel {
-	cursor: pointer;
-	padding: 5px 10px;
-	display: inline-block;
-	border: #fff8 2px solid;
-	color: #fff8;
-	margin-top: 5px;
-	transition: .15s ease;
-	display: inline-flex;
+/* Option label */
+.option .optionLabel {
+	font-size: 16px;
+	margin: 3px;
+	width: 100%;
+}
+
+/* Unchecked option */
+.option > input:not(:checked) + .optionLabel {
+	color: #888;
+}
+
+/* Checked option */
+.option > input:checked + .optionLabel {
+	background: #555;
+	border-color: #F8F9FA;
+}
+
+/* Layout option */
+.option.layout > input:checked + .optionLabel {
+	background-color: #008;
+}
+
+/* Player */
+.option.player > input:checked + .optionLabel {
+	background-color: #800;
+}
+
+/* Locked keys */
+.option.lock > input:checked + .optionLabel {
+	background-color: #080;
+}
+
+/* Options */
+.option.settings > input:checked + .optionLabel {
+	background-color: #808;
+}
+
+/* Colors */
+.option.color .optionLabel .text {
+	display: flex;
+	flex: 1;
+	text-align: left;
+}
+
+/* Custom background */
+.option.customBG .optionLabel input {
+	display: flex;
+	flex: 1;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+button,
+a.button,
+.optionLabel {
 	align-items: center;
-	justify-content: center;
-}
-
-.select .selLabel input {
-	margin-left: 5px;
-}
-
-.select input:checked + .selLabel {
-	background: #00f8;
-	color: white;
-}
-
-.select.layout .selLabel {
-	padding: 10px 15px;
-}
-
-.select.player input:checked + .selLabel {
-	background: #f008;
-}
-
-.select.lock input:checked + .selLabel {
-	background: #0f08;
-}
-
-.select.option input:checked + .selLabel {
-	background: #f0f8;
-}
-
-
-.resetColors {
-	background-color: transparent;
-	border: #00f8 2px solid;
-	border-radius: 170px 80px 170px 80px;
-	color: white;
-	font-size: 12px;
-	padding: 5px 10px;
-	outline: none;
-	transition: .15s ease;
+	background: none;
+	border-radius: 1000px;
+	border: #888 2px solid;
+	color: inherit;
 	cursor: pointer;
+	display: inline-flex;
+	font-size: 12px;
+	justify-content: center;
+	outline: none;
+	padding: 5px 10px;
+	text-decoration: none;
+	transition: .15s ease;
+}
+
+/* "Reset colors" button */
+.resetColors {
+	border-color: #008;
 	margin-top: 5px;
 }
 
 .resetColors:hover,
 .resetColors:active {
-	background: #00f5;
+	background-color: #005;
 }
 
-
+/* "Setup emulators" button */
 .setup {
-	display: inline-block;
-	text-decoration: none;
-	border: #0f08 2px solid;
-	border-radius: 200px 70px 200px 70px;
-	background: none;
-	color: white;
-	font-size: 10px;
-	padding: 5px;
-	outline: none;
-	transition: .15s ease;
-	cursor: pointer;
+	border-color: #080 !important;
 }
 
 .setup:hover,
 .setup:active {
-	background: #0f05;
+	background-color: #050;
 }
 
-
+/* "Play" button */
 .start {
-	background-color: #220;
-	position: fixed;
-	bottom: 15px;
-	right: 15px;
-	border: #ff08 2px solid;
-	border-radius: 170px 80px 170px 80px;
-	color: white;
-	font-size: 16px;
-	padding: 10px 20px;
-	outline: none;
-	transition: .15s ease;
-	cursor: pointer;
 	animation: pulse 2s infinite;
+	background-color: #220;
+	border-color: #880;
+	bottom: 20px;
+	font-size: 16px;
+	padding: 10px 30px;
+	position: fixed;
+	right: 20px;
 }
 
 .start:hover,
 .start:active {
-	background-color: #ff05;
+	background-color: #550;
 }
 
+/* Pickr adjust */
+.pickr {
+	display: flex;
+	margin-left: 5px;
+}
+
+.pcr-button {
+	border: white 2px solid;
+	height: 14px !important;
+	width: 14px !important;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
 
 @keyframes pulse {
 	0% {

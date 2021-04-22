@@ -96,5 +96,7 @@ function createPickr(el, defaultColor, opacity) {
 			'#FFFFFF' + (opacity || ''),
 			'#000000' + (opacity || '')
 		]
-	}).on('change', color => document.forms[0].elements[el].value = color.toHEXA().toString())
+	}).on('change', color => {
+		document.forms[0].elements[el].value = color.toHEXA().toString()
+	})
 }
