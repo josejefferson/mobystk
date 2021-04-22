@@ -11,6 +11,7 @@ const locked = localStorage.getItem('joystick.locked')
 const invert = localStorage.getItem('joystick.invert') === 'true'
 const bgImage = localStorage.getItem('joystick.bgImage')
 const bgOpacity = localStorage.getItem('joystick.bgOpacity')
+const bgBlur = localStorage.getItem('joystick.bgBlur')
 const colorsBackground = localStorage.getItem('joystick.background')
 const colorsColor = localStorage.getItem('joystick.color')
 const colorsBorder = localStorage.getItem('joystick.border')
@@ -21,6 +22,7 @@ if (!layout) location.href = 'index.html'
 if (invert) document.body.classList.add('invert')
 if (bgImage) $bgImage.style.backgroundImage = `url('backgrounds/${bgImage}')`
 if (bgOpacity) $bgImage.style.opacity = bgOpacity
+if (bgBlur) $bgImage.style.filter = `blur(${bgBlur}px)`
 locked?.split(',')?.forEach(key => {
 	if (key) document.querySelector('.' + key)?.classList.add('lock')
 })
