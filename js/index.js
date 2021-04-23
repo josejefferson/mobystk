@@ -1,3 +1,7 @@
+window.addEventListener('load', () => {
+	document.body.classList.remove('preload')
+})
+
 document.oncontextmenu = () => false
 document.forms[0].elements.code.value = localStorage.getItem('joystick.code') || window.location.hostname + ':5000'
 document.forms[0].elements.layout.value = localStorage.getItem('joystick.layout')

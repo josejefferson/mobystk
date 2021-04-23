@@ -2,8 +2,9 @@ const $root = document.documentElement
 const $bgImage = document.querySelector('.backgroundImage')
 const $layoutCSS = document.querySelector('.layout')
 const $viewport = document.querySelector('meta[name="viewport"]')
+const $clock = document.querySelector('.clock')
 
-const ip = localStorage.getItem('joystick.code') || '127.0.0.1:5000'
+const ip = localStorage.getItem('joystick.code') || 'localhost:5000'
 const layout = localStorage.getItem('joystick.layout')
 const player2 = localStorage.getItem('joystick.player') === '2'
 const debug = localStorage.getItem('joystick.debug') === 'true'
@@ -27,7 +28,6 @@ locked?.split(',')?.forEach(key => {
 	if (key) document.querySelector('.' + key)?.classList.add('lock')
 })
 
-
 if (colorsBackground) $root.style.setProperty('--background', colorsBackground)
 if (colorsColor) $root.style.setProperty('--color', colorsColor)
 if (colorsBorder) $root.style.setProperty('--border', colorsBorder)
@@ -39,6 +39,14 @@ $layoutCSS.href = 'layouts/' + layout + '.css'
 
 const currentTouches = []
 const joysticks = []
+
+
+// Atualiza o relógio
+window.setInterval(() => {
+	const hours = new Date().getHours().toString().padStart(2, '0')
+	const minutes = new Date().getMinutes().toString().padStart(2, '0')
+	$clock.innerText = hours + ':' + minutes
+}, 1000)
 
 
 // Eventos da página

@@ -11,11 +11,11 @@
 	<link rel="stylesheet" href="css/index.css">
 </head>
 
-<body>
+<body class="preload">
 	<form class="container" action="joystick.html" method="GET">
 		<!-- Código -->
-		<label>
-			<div class="optionTitle">Digite o código que aparece no seu computador</div>
+		<div class="optionTitle">Digite o código que aparece no seu computador</div>
+		<label class="textOption">
 			<input type="text" name="code" class="code" autocomplete="off" required>
 		</label>
 
@@ -91,6 +91,16 @@
 				<input type="checkbox" name="invert">
 				<div class="optionLabel">Inverter joystick/setas</div>
 			</label>
+
+			<label class="option settings">
+				<input type="checkbox" name="vibrate" checked>
+				<div class="optionLabel">Vibração</div>
+			</label>
+
+			<label class="option settings">
+				<input type="checkbox" name="clock" checked>
+				<div class="optionLabel">Mostrar relógio</div>
+			</label>
 		</div>
 
 		<hr>
@@ -138,10 +148,9 @@
 		<!-- Fundo personalizado -->
 		<div class="optionTitle">Fundo personalizado</div>
 		<small class="optionSubTitle">Coloque as imagens na pasta "backgrounds" e digite o nome e extensão da imagem</small>
-		<label>
+		<label class="textOption">
 			<input type="text" name="bgImage" autocomplete="off" placeholder="Nome do arquivo + extensão">
 		</label>
-		<br>
 
 		<label class="option customBG">
 			<div class="optionLabel">
@@ -165,12 +174,10 @@
 			<a class="button setup" href="setup.html">Configurar emuladores</a>
 		</div>
 
-
 		<!-- Iniciar -->
 		<button type="submit" class="start">Jogar</button>
 
-
-		<!-- Temporário -->
+		<!-- Debug -->
 		<div class="links" style="display: none;">
 			<label>Debug: <input type="checkbox" name="debug" value="true"></label>
 			<br><button type="button" onclick="localStorage.clear();location.reload()">RESET ALL</button>

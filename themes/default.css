@@ -84,13 +84,6 @@ button svg {
 	transition: fill 1s ease;
 }
 
-/* "Edit" button */
-button.edit {
-	border-radius: 0 0 30px 30px;
-	border-top: none;
-	font-size: 16px;
-}
-
 /* ==========================================================================
    JOYSTICK
    ========================================================================== */

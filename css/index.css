@@ -12,6 +12,11 @@ body {
 	text-align: center;
 }
 
+/* Desativa as transições enquanto carrega a página */
+body.preload * {
+	transition: none !important;
+}
+
 /* Bootstrap container */
 .container {
 	margin-left: auto;
@@ -33,18 +38,6 @@ body {
 	}
 }
 
-@media (min-width: 992px) {
-	.container {
-		max-width: 960px;
-	}
-}
-
-@media (min-width: 1200px) {
-	.container {
-		max-width: 1140px;
-	}
-}
-
 /* ==========================================================================
    INPUTS
    ========================================================================== */
@@ -58,15 +51,15 @@ input[type="text"] {
 	font-size: 16px;
 	height: 30px;
 	height: 40px;
-	margin: 3px;
 	outline: none;
 	text-align: center;
-	transition: border-color .15s ease;
+	transition: .15s ease;
 	width: 100%;
 }
 
 input[type="text"]:focus {
 	border-color: #F8F9FA;
+	box-shadow: 0 0 0 4px #444;
 }
 
 /* Code specific input */
@@ -99,6 +92,7 @@ input[type="range"] {
 	background-color: transparent;
 	box-sizing: border-box;
 	height: 1.5rem;
+	margin-left: 10px;
 	outline: none;
 	padding: 0;
 	width: 100%;
@@ -157,6 +151,12 @@ hr {
 	flex: 1;
 }
 
+/* Text input option */
+.textOption {
+	display: block;
+	margin: 5px;
+}
+
 /* Option input */
 .option > input {
 	display: none;
@@ -165,7 +165,8 @@ hr {
 /* Option label */
 .option .optionLabel {
 	font-size: 16px;
-	margin: 3px;
+	min-height: 40px;
+	margin: 5px;
 	width: 100%;
 }
 
@@ -183,21 +184,25 @@ hr {
 /* Layout option */
 .option.layout > input:checked + .optionLabel {
 	background-color: #008;
+	box-shadow: 0 0 0 4px #004;
 }
 
 /* Player */
 .option.player > input:checked + .optionLabel {
 	background-color: #800;
+	box-shadow: 0 0 0 4px #400;
 }
 
 /* Locked keys */
 .option.lock > input:checked + .optionLabel {
 	background-color: #080;
+	box-shadow: 0 0 0 4px #040;
 }
 
 /* Options */
 .option.settings > input:checked + .optionLabel {
-	background-color: #808;
+	background-color: #088;
+	box-shadow: 0 0 0 4px #044;
 }
 
 /* Colors */
