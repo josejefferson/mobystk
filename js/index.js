@@ -9,7 +9,7 @@ document.forms[0].elements.border.value = localStorage.getItem('joystick.border'
 document.forms[0].elements.active.value = localStorage.getItem('joystick.active') || '#FFFFFF33'
 document.forms[0].elements.bgImage.value = localStorage.getItem('joystick.bgImage')
 document.forms[0].elements.bgOpacity.value = localStorage.getItem('joystick.bgOpacity') || '0.5'
-document.forms[0].elements.bgBlur.value = localStorage.getItem('joystick.bgBlur') || '0.5'
+document.forms[0].elements.bgBlur.value = localStorage.getItem('joystick.bgBlur') || '0'
 
 localStorage.getItem('joystick.locked')?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true
