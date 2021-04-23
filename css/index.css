@@ -241,7 +241,6 @@ a.button,
 	margin-top: 5px;
 }
 
-.resetColors:hover,
 .resetColors:active {
 	background-color: #005;
 }
@@ -251,7 +250,6 @@ a.button,
 	border-color: #080 !important;
 }
 
-.setup:hover,
 .setup:active {
 	background-color: #050;
 }
@@ -268,7 +266,6 @@ a.button,
 	right: 20px;
 }
 
-.start:hover,
 .start:active {
 	background-color: #550;
 }

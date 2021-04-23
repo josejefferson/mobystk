@@ -28,7 +28,6 @@ a.button {
 	transition: .15s ease;
 }
 
-button:hover,
 button:active {
 	background-color: #555;
 }
@@ -37,7 +36,6 @@ button:active {
 	border-color: #080 !important;
 }
 
-.return:hover,
 .return:active {
 	background: #0f05;
 }
