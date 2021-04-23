@@ -10,6 +10,8 @@ const player2 = localStorage.getItem('joystick.player') === '2'
 const debug = localStorage.getItem('joystick.debug') === 'true'
 const locked = localStorage.getItem('joystick.locked')
 const invert = localStorage.getItem('joystick.invert') === 'true'
+const vibrate = !(localStorage.getItem('joystick.vibrate') === 'false')
+const clock = !(localStorage.getItem('joystick.clock') === 'false')
 const bgImage = localStorage.getItem('joystick.bgImage')
 const bgOpacity = localStorage.getItem('joystick.bgOpacity')
 const bgBlur = localStorage.getItem('joystick.bgBlur')
@@ -42,11 +44,14 @@ const joysticks = []
 
 
 // Atualiza o relógio
-window.setInterval(() => {
-	const hours = new Date().getHours().toString().padStart(2, '0')
-	const minutes = new Date().getMinutes().toString().padStart(2, '0')
-	$clock.innerText = hours + ':' + minutes
-}, 1000)
+if (!clock) $clock.remove()
+else {
+	window.setInterval(() => {
+		const hours = new Date().getHours().toString().padStart(2, '0')
+		const minutes = new Date().getMinutes().toString().padStart(2, '0')
+		$clock.innerText = hours + ':' + minutes
+	}, 1000)
+}
 
 
 // Eventos da página
@@ -88,7 +93,7 @@ document.ontouchstart = e => {
 		const joystick = target?.classList.contains('joystick') ? true : false
 		currentTouches.push({ target, touch, joystick })
 		if (!target) continue
-		navigator.vibrate(15)
+		if (vibrate) navigator.vibrate(15)
 		if (joystick) continue
 		target.classList.add('active')
 		sendCmd(target.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key)
@@ -123,7 +128,7 @@ document.ontouchmove = e => {
 		if (!target) continue
 		target.classList.add('active')
 		sendCmd(target.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key)
-		navigator.vibrate(15)
+		if (vibrate) navigator.vibrate(15)
 	}
 }
 
@@ -171,7 +176,7 @@ document.querySelectorAll('.lock').forEach(el => {
 	el.onmousedown = event
 	function event(e) {
 		if ('ontouchstart' in document.documentElement && e.type === 'mousedown') return
-		navigator.vibrate(15)
+		if (vibrate) navigator.vibrate(15)
 		if (el.classList.contains('active')) {
 			// Ativa o botão
 			el.classList.remove('active')

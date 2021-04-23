@@ -6,7 +6,9 @@ document.oncontextmenu = () => false
 document.forms[0].elements.code.value = localStorage.getItem('joystick.code') || window.location.hostname + ':5000'
 document.forms[0].elements.layout.value = localStorage.getItem('joystick.layout')
 document.forms[0].elements.player.value = localStorage.getItem('joystick.player')
-document.forms[0].elements.invert.checked = localStorage.getItem('joystick.invert') === 'true' ? true : false
+document.forms[0].elements.invert.checked = localStorage.getItem('joystick.invert') === 'true'
+document.forms[0].elements.vibrate.checked = !(localStorage.getItem('joystick.vibrate') === 'false')
+document.forms[0].elements.clock.checked = !(localStorage.getItem('joystick.clock') === 'false')
 document.forms[0].elements.background.value = localStorage.getItem('joystick.background') || '#000000'
 document.forms[0].elements.color.value = localStorage.getItem('joystick.color') || '#FFFFFF88'
 document.forms[0].elements.border.value = localStorage.getItem('joystick.border') || '#FFFFFF88'
@@ -26,6 +28,8 @@ document.forms[0].onsubmit = function (e) {
 	localStorage.setItem('joystick.player', this.elements.player.value)
 	localStorage.setItem('joystick.debug', this.elements.debug.checked)
 	localStorage.setItem('joystick.invert', this.elements.invert.checked)
+	localStorage.setItem('joystick.vibrate', this.elements.vibrate.checked)
+	localStorage.setItem('joystick.clock', this.elements.clock.checked)
 	localStorage.setItem('joystick.background', this.elements.background.value)
 	localStorage.setItem('joystick.color', this.elements.color.value)
 	localStorage.setItem('joystick.border', this.elements.border.value)
