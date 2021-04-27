@@ -1,5 +1,6 @@
 * {
 	-webkit-tap-highlight-color: transparent;
+	box-sizing: border-box;
 	user-select: none;
 }
 
@@ -8,7 +9,13 @@ body {
 	color: white;
 	font-family: sans-serif;
 	margin: 40px;
-	overscroll-behavior: contain;
+	margin-bottom: 80px;
+}
+
+small {
+	display: block;
+	margin-top: -1em;
+	margin-bottom: 1em;
 }
 
 button,
@@ -42,15 +49,20 @@ button:active {
 
 .progressContainer {
 	align-items: center;
+	background-color: inherit;
 	border-radius: 1000px;
 	border: #1a237e 2px solid;
+	bottom: 0;
 	color: #999;
 	display: flex;
 	height: 30px;
 	justify-content: center;
+	left: 0;
 	margin-top: 10px;
+	margin: 5px 40px;
 	overflow: hidden;
-	position: relative;
+	position: fixed;
+	width: calc(100% - 80px);
 }
 
 .progress {
