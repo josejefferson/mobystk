@@ -226,7 +226,7 @@ function updateJoystick(joystick, id, angle, direction) {
 
 
 // Envia comandos para o servidor
-function sendCmd(key, release = false) {
+function sendCmd(key, release = false) {console.log(key, !release)
 	// Trata o comando
 	if (!key) return
 	key = key.toUpperCase()
@@ -278,5 +278,48 @@ function resizeJoystick() {
 		if (inadequateHeight()) return window.outerWidth * (360 / window.outerHeight)
 		else if (window.outerWidth <= 640) return 640
 		else return 'device-width'
+	}
+}
+
+
+const $drive = document.querySelector('.drive')
+const driveHTML = $drive.innerHTML
+const $driveIcon = document.querySelector('.drive svg')
+
+// Drive sensor mode
+$drive.onclick = e => {
+	// Change sensitivity of sensor
+	const SENSITIVITY = 2
+	// Turn off drive mode
+	if (e.target.classList.contains('active')) {
+		e.target.classList.remove('active')
+		$driveIcon.style.transform = 'rotate(0deg)'
+		window.ondevicemotion = null
+		return
+	}
+	// Turn on drive mode
+	e.target.classList.add('active')
+	let driveY = 0, driveDirection = null
+	// Detect movement
+	window.ondevicemotion = e => {
+		const orientation = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
+		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
+		$driveIcon.style.transform = `rotate(${driveY / 10 * 90 * orientation}deg)`
+		direction = driveY > SENSITIVITY * orientation ? 'd' : driveY < -SENSITIVITY * orientation ? 'a' : null
+		if (direction === driveDirection) return
+		switch (direction) {
+			case 'a': $drive.innerHTML = '<i class="mdi mdi-undo"></i>'; break
+			case 'd': $drive.innerHTML = '<i class="mdi mdi-redo"></i>'; break
+			default: $drive.innerHTML = driveHTML
+		}
+
+
+		driveDirection = direction
+		if (direction === null) {
+			sendCmd('a', true)
+			sendCmd('d', true)
+		} else {
+			sendCmd(direction)
+		}
 	}
 }

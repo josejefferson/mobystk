@@ -287,7 +287,8 @@
 /* Drive button */
 .drive {
 	left: 50%;
-	top: 200px;
+	top: auto;
+	bottom: 100px;
 	transform: translateX(-50%);
 }
 
