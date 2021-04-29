@@ -300,6 +300,7 @@ $drive.onclick = e => {
 	}
 	// Turn on drive mode
 	e.target.classList.add('active')
+	e.target.innerHTML = '<i class="mdi mdi-arrow-up"></i>'
 	let driveY = 0, driveDirection = null
 	// Detect movement
 	window.ondevicemotion = e => {
