@@ -58,6 +58,7 @@ body.invert .joystick#joystickL {
 .r3,
 .select,
 .start,
+.drive,
 .volumeUp,
 .volumeDown {
 	display: flex;

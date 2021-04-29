@@ -190,6 +190,53 @@ document.querySelectorAll('.lock').forEach(el => {
 })
 
 
+// Controle por acelerômetro
+const $drive = document.querySelector('.drive')
+const driveHTML = $drive.innerHTML
+
+if (!(location.protocol === 'https:' ||
+	location.hostname === 'localhost' ||
+	location.hostname === '127.0.0.1'))
+	$drive.style.display = 'none'
+
+// Ligar/desligar sensor
+$drive.onclick = e => {
+	const SENSITIVITY = 2 // Sensibilidade do sensor
+
+	if (e.target.classList.contains('active')) {
+		e.target.classList.remove('active')
+		e.target.innerHTML = driveHTML
+		window.ondevicemotion = null
+		return
+	}
+
+	e.target.classList.add('active')
+	e.target.innerHTML = '<i class="mdi mdi-arrow-up"></i>'
+	let driveY = 0, driveDirection = null
+
+	// Detecta os movimentos
+	window.ondevicemotion = e => {
+		const orientation = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
+		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
+		direction = driveY > SENSITIVITY * orientation ? 'd' : driveY < -SENSITIVITY * orientation ? 'a' : null
+		if (direction === driveDirection) return
+		switch (direction) {
+			case 'a': $drive.innerHTML = '<i class="mdi mdi-undo"></i>'; break
+			case 'd': $drive.innerHTML = '<i class="mdi mdi-redo"></i>'; break
+			default: $drive.innerHTML = '<i class="mdi mdi-arrow-up"></i>'
+		}
+
+		driveDirection = direction
+		if (direction === null) {
+			sendCmd('a', true)
+			sendCmd('d', true)
+		} else {
+			sendCmd(direction)
+		}
+	}
+}
+
+
 // Atualiza os dados dos joysticks
 function updateJoystick(joystick, id, angle, direction) {
 	const keys = (joystick.dataset[player2 ? 'secKeys' : 'keys'] || joystick.dataset.keys).split(' ')
@@ -278,50 +325,5 @@ function resizeJoystick() {
 		if (inadequateHeight()) return window.outerWidth * (360 / window.outerHeight)
 		else if (window.outerWidth <= 640) return 640
 		else return 'device-width'
-	}
-}
-
-
-const $drive = document.querySelector('.drive')
-const driveHTML = $drive.innerHTML
-// const $driveIcon = document.querySelector('.drive svg')
-
-// Drive sensor mode
-$drive.onclick = e => {
-	// Change sensitivity of sensor
-	const SENSITIVITY = 2
-	// Turn off drive mode
-	if (e.target.classList.contains('active')) {
-		e.target.classList.remove('active')
-		e.target.innerHTML = driveHTML
-		// $driveIcon.style.transform = 'rotate(0deg)'
-		window.ondevicemotion = null
-		return
-	}
-	// Turn on drive mode
-	e.target.classList.add('active')
-	e.target.innerHTML = '<i class="mdi mdi-arrow-up"></i>'
-	let driveY = 0, driveDirection = null
-	// Detect movement
-	window.ondevicemotion = e => {
-		const orientation = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
-		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
-		// $driveIcon.style.transform = `rotate(${driveY / 10 * 90 * orientation}deg)`
-		direction = driveY > SENSITIVITY * orientation ? 'd' : driveY < -SENSITIVITY * orientation ? 'a' : null
-		if (direction === driveDirection) return
-		switch (direction) {
-			case 'a': $drive.innerHTML = '<i class="mdi mdi-undo"></i>'; break
-			case 'd': $drive.innerHTML = '<i class="mdi mdi-redo"></i>'; break
-			default: $drive.innerHTML = '<i class="mdi mdi-arrow-up"></i>'
-		}
-
-
-		driveDirection = direction
-		if (direction === null) {
-			sendCmd('a', true)
-			sendCmd('d', true)
-		} else {
-			sendCmd(direction)
-		}
 	}
 }
