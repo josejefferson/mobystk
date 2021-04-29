@@ -284,7 +284,7 @@ function resizeJoystick() {
 
 const $drive = document.querySelector('.drive')
 const driveHTML = $drive.innerHTML
-const $driveIcon = document.querySelector('.drive svg')
+// const $driveIcon = document.querySelector('.drive svg')
 
 // Drive sensor mode
 $drive.onclick = e => {
@@ -293,7 +293,8 @@ $drive.onclick = e => {
 	// Turn off drive mode
 	if (e.target.classList.contains('active')) {
 		e.target.classList.remove('active')
-		$driveIcon.style.transform = 'rotate(0deg)'
+		e.target.innerHTML = driveHTML
+		// $driveIcon.style.transform = 'rotate(0deg)'
 		window.ondevicemotion = null
 		return
 	}
@@ -304,13 +305,13 @@ $drive.onclick = e => {
 	window.ondevicemotion = e => {
 		const orientation = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
 		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
-		$driveIcon.style.transform = `rotate(${driveY / 10 * 90 * orientation}deg)`
+		// $driveIcon.style.transform = `rotate(${driveY / 10 * 90 * orientation}deg)`
 		direction = driveY > SENSITIVITY * orientation ? 'd' : driveY < -SENSITIVITY * orientation ? 'a' : null
 		if (direction === driveDirection) return
 		switch (direction) {
 			case 'a': $drive.innerHTML = '<i class="mdi mdi-undo"></i>'; break
 			case 'd': $drive.innerHTML = '<i class="mdi mdi-redo"></i>'; break
-			default: $drive.innerHTML = driveHTML
+			default: $drive.innerHTML = '<i class="mdi mdi-arrow-up"></i>'
 		}
 
 
