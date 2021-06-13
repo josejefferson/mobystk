@@ -325,6 +325,30 @@
 	border-right: none;
 }
 
+/* Macro buttons */
+.recordMacro,
+.playMacro {
+	width: 48px;
+	height: 32px;
+	top: 68px;
+	font-size: 16px !important;
+	border-bottom: none;
+}
+
+.recordMacro {
+	display: flex;
+	right: 50%;
+	border-radius: 1000px 0 0 0;
+	border-right: none;
+}
+
+.playMacro {
+	display: flex;
+	left: 50%;
+	border-radius: 0 1000px 0 0;
+	border-left: none;
+}
+
 /* "Edit" button */
 .edit {
 	border-radius: 0 0 30px 30px;

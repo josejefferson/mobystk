@@ -236,6 +236,28 @@ $drive.onclick = e => {
 	}
 }
 
+// Macros
+const $recordMacro = document.querySelector('.recordMacro')
+const $playMacro = document.querySelector('.playMacro')
+let recordingMacro = false
+let lastMacro = []
+
+$recordMacro.onclick = function () {
+	this.classList.toggle('active')
+	if (!recordingMacro) lastMacro = []
+	recordingMacro = !recordingMacro
+}
+
+$playMacro.onclick = async function () {
+	$playMacro.classList.add('active')
+	for (command of lastMacro) {
+		if (socket.readyState !== 1) break
+		socket.send((release ? 'R ' : 'P ') + key)
+		await new Promise(r => setTimeout(r, 50))
+	}
+	$playMacro.classList.remove('active')
+}
+
 
 // Atualiza os dados dos joysticks
 function updateJoystick(joystick, id, angle, direction) {
@@ -273,7 +295,7 @@ function updateJoystick(joystick, id, angle, direction) {
 
 
 // Envia comandos para o servidor
-function sendCmd(key, release = false) {console.log(key, !release)
+function sendCmd(key, release = false) {
 	// Trata o comando
 	if (!key) return
 	key = key.toUpperCase()
@@ -283,6 +305,9 @@ function sendCmd(key, release = false) {console.log(key, !release)
 		if (key.length > 1) document.querySelectorAll(`[data-${player2 ? 'sec-key' : 'key'}="${c}"]`)
 			.forEach(e => e.classList[release ? 'remove' : 'add']('dActive'))
 	})
+
+	if (recordingMacro) return lastMacro.push((release ? 'R ' : 'P ') + key)
+
 	// Não envia o comando se o websocket não estiver conectado
 	if (socket.readyState !== 1) return
 
