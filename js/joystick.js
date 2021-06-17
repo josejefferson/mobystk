@@ -2,10 +2,11 @@ const $root = document.documentElement
 const $bgImage = document.querySelector('.backgroundImage')
 const $layoutCSS = document.querySelector('.layout')
 const $viewport = document.querySelector('meta[name="viewport"]')
-const $battery = document.querySelector('.battery')
+const $deviceInfo = document.querySelector('.deviceInfo')
+const $battery = $deviceInfo.querySelector('.battery')
 const $batteryIcon = $battery.querySelector('.battery-icon')
 const $batteryLevel = $battery.querySelector('.battery-level')
-const $clock = document.querySelector('.clock')
+const $clock = $deviceInfo.querySelector('.clock')
 
 const ip = localStorage.getItem('joystick.code') || 'localhost:5000'
 const layout = localStorage.getItem('joystick.layout')
@@ -14,7 +15,7 @@ const debug = localStorage.getItem('joystick.debug') === 'true'
 const locked = localStorage.getItem('joystick.locked')
 const invert = localStorage.getItem('joystick.invert') === 'true'
 const vibrate = !(localStorage.getItem('joystick.vibrate') === 'false')
-const clock = !(localStorage.getItem('joystick.clock') === 'false')
+const deviceInfo = !(localStorage.getItem('joystick.deviceInfo') === 'false')
 const bgImage = localStorage.getItem('joystick.bgImage')
 const bgOpacity = localStorage.getItem('joystick.bgOpacity')
 const bgBlur = localStorage.getItem('joystick.bgBlur')
@@ -69,8 +70,9 @@ function updateBattery(b) {
 	}
 }
 
+
 // Atualiza o relógio
-if (!clock) $clock.remove()
+if (!deviceInfo) $deviceInfo.remove()
 else window.setInterval(updateClock, 1000)
 updateClock()
 
