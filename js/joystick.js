@@ -252,7 +252,7 @@ $playMacro.onclick = async function () {
 	$playMacro.classList.add('active')
 	for (command of lastMacro) {
 		if (socket.readyState !== 1) break
-		socket.send((release ? 'R ' : 'P ') + key)
+		socket.send(command)
 		await new Promise(r => setTimeout(r, 50))
 	}
 	$playMacro.classList.remove('active')

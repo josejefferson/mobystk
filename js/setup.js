@@ -37,7 +37,9 @@ const KEY_SEQUENCE = {
 		'DOWN', // SKIP
 		'SPACE', '[', 'DOWN',
 		'SPACE', 'F1', 'ESC', // ESC = SAIR
-	] }
+	] },
+	code1: {pause: 50, sequence: ['UP', 'Q', 'DOWN', 'E', 'LEFT', 'Q', 'RIGHT', 'E']},
+	code2: {pause: 100, sequence: ['UP', 'RIGHT', 'J', 'J', 'DOWN', 'LEFT', 'L', 'L']}
 }
 
 const ip = localStorage.getItem('joystick.code') || window.location.hostname + ':5000'
