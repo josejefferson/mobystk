@@ -11,7 +11,7 @@ const $drive = document.querySelector('.drive')
 
 const ip = localStorage.getItem('joystick.code') || 'localhost:5000'
 const layout = localStorage.getItem('joystick.layout')
-const player2 = localStorage.getItem('joystick.player') === '2'
+const player = localStorage.getItem('joystick.player')
 const debug = localStorage.getItem('joystick.debug') === 'true'
 const locked = localStorage.getItem('joystick.locked')
 const invert = localStorage.getItem('joystick.invert') === 'true'
@@ -24,6 +24,15 @@ const colorsBackground = localStorage.getItem('joystick.background')
 const colorsColor = localStorage.getItem('joystick.color')
 const colorsBorder = localStorage.getItem('joystick.border')
 const colorsActive = localStorage.getItem('joystick.active')
+
+const playersDataKeys = {
+	"1": 'key',
+	"2": 'secKey',
+	"3": 'thirdKey',
+	"4": 'fourthKey'
+}
+const playerDataKey = playersDataKeys[player]
+
 
 if (debug) document.body.classList.add('debug')
 if (!layout) location.href = 'index.html'
@@ -126,7 +135,7 @@ document.ontouchstart = e => {
 		if (vibrate) navigator.vibrate(15)
 		if (joystick) continue
 		target.classList.add('active')
-		sendCmd(target.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key)
+		sendCmd(target.dataset[playerDataKey] || target.dataset.key)
 	}
 }
 
@@ -149,7 +158,7 @@ document.ontouchmove = e => {
 
 		if (oldtouch.target === target) continue
 		oldtouch.target?.classList.remove('active')
-		sendCmd(oldtouch.target?.dataset[player2 ? 'secKey' : 'key'] || oldtouch.target?.dataset.key, true)
+		sendCmd(oldtouch.target?.dataset[playerDataKey] || oldtouch.target?.dataset.key, true)
 
 		if (target && (!target.classList.contains('touch') ||
 			target.classList.contains('active') ||
@@ -157,7 +166,7 @@ document.ontouchmove = e => {
 		oldtouch.target = target
 		if (!target) continue
 		target.classList.add('active')
-		sendCmd(target.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key)
+		sendCmd(target.dataset[playerDataKey] || target.dataset.key)
 		if (vibrate) navigator.vibrate(15)
 	}
 }
@@ -172,7 +181,7 @@ document.ontouchend = e => {
 		if (i < 0) continue
 		if (!currentTouches[i].joystick && currentTouches[i].target) {
 			currentTouches[i].target.classList.remove('active')
-			sendCmd(currentTouches[i].target.dataset[player2 ? 'secKey' : 'key'] || currentTouches[i].target.dataset.key, true)
+			sendCmd(currentTouches[i].target.dataset[playerDataKey] || currentTouches[i].target.dataset.key, true)
 		}
 		currentTouches.splice(i, 1)
 	}
@@ -189,12 +198,12 @@ document.onmousedown = (e) => {
 			target.classList.contains('lock'))) target = null
 	if (!target) return
 	target.classList.add('active')
-	if (target.dataset.key) sendCmd(target.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key)
+	if (target.dataset.key) sendCmd(target.dataset[playerDataKey] || target.dataset.key)
 
 	// Fim do clique
 	document.onmouseup = (e) => {
 		target.classList.remove('active')
-		if (target.dataset.key) sendCmd(target.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key, true)
+		if (target.dataset.key) sendCmd(target.dataset[playerDataKey] || target.dataset.key, true)
 		document.onmouseup = null
 	}
 }
@@ -210,11 +219,11 @@ document.querySelectorAll('.lock').forEach(el => {
 		if (el.classList.contains('active')) {
 			// Ativa o botão
 			el.classList.remove('active')
-			sendCmd(el.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key, true)
+			sendCmd(el.dataset[playerDataKey] || target.dataset.key, true)
 		} else {
 			// Desativa o botão
 			el.classList.add('active')
-			sendCmd(el.dataset[player2 ? 'secKey' : 'key'] || target.dataset.key)
+			sendCmd(el.dataset[playerDataKey] || target.dataset.key)
 		}
 	}
 })
@@ -298,7 +307,7 @@ $playMacro.onclick = async function () {
 
 // Atualiza os dados dos joysticks
 function updateJoystick(joystick, id, angle, direction) {
-	const keys = (joystick.dataset[player2 ? 'secKeys' : 'keys'] || joystick.dataset.keys).split(' ')
+	const keys = (joystick.dataset[playerDataKey] || joystick.dataset.keys).split(' ')
 	if (!direction) {
 		update('up', false)
 		update('left', false)
@@ -339,7 +348,7 @@ function sendCmd(key, release = false) {
 	key = key.split(' ')
 	key.forEach(c => {
 		// Diagonais
-		if (key.length > 1) document.querySelectorAll(`[data-${player2 ? 'sec-key' : 'key'}="${c}"]`)
+		if (key.length > 1) document.querySelectorAll(`[data-${playerDataKey}="${c}"]`)
 			.forEach(e => e.classList[release ? 'remove' : 'add']('dActive'))
 	})
 

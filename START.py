@@ -19,7 +19,7 @@ import socketserver
 import threading
 import time
 import websockets
-from pynput.keyboard import Key, Controller
+from pynput.keyboard import Key, KeyCode, Controller
 
 coloramaInit()
 keyboard = Controller()
@@ -92,7 +92,9 @@ async def server(websocket, path):
 				# Itera sobre as teclas
 				for keyName in msg[1]:
 					key = keyName
-					if len(keyName) > 1: key = Key[keyName]
+					if len(keyName) > 1:
+						if keyName.isdigit(): key = KeyCode(int(keyName))
+						else: key = Key[keyName]
 
 					# 'r': release (soltar tecla)
 					# 'p': press (pressionar tecla)
