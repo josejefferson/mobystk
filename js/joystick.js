@@ -7,6 +7,7 @@ const $battery = $deviceInfo.querySelector('.battery')
 const $batteryIcon = $battery.querySelector('.battery-icon')
 const $batteryLevel = $battery.querySelector('.battery-level')
 const $clock = $deviceInfo.querySelector('.clock')
+const $drive = document.querySelector('.drive')
 
 const ip = localStorage.getItem('joystick.code') || 'localhost:5000'
 const layout = localStorage.getItem('joystick.layout')
@@ -220,7 +221,6 @@ document.querySelectorAll('.lock').forEach(el => {
 
 
 // Controle por acelerômetro
-const $drive = document.querySelector('.drive')
 const driveHTML = $drive.innerHTML
 
 if (!(location.protocol === 'https:' ||
@@ -245,9 +245,17 @@ $drive.onclick = e => {
 
 	// Detecta os movimentos
 	window.ondevicemotion = e => {
-		const orientation = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
+		const orientation = e.accelerationIncludingGravity.x >= 0 ? true : false
 		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
-		direction = driveY > SENSITIVITY * orientation ? 'd' : driveY < -SENSITIVITY * orientation ? 'a' : null
+
+		if (driveY > SENSITIVITY) {
+			direction = orientation ? 'd' : 'a'
+		} else if (driveY < -SENSITIVITY) {
+			direction = orientation ? 'a' : 'd'
+		} else {
+			direction = null
+		}
+
 		if (direction === driveDirection) return
 		switch (direction) {
 			case 'a': $drive.innerHTML = '<i class="mdi mdi-undo"></i>'; break
