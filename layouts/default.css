@@ -10,8 +10,8 @@
    GROUPS
    ========================================================================== */
 
-/* Clock */
-.clock {
+/* Battery and Clock */
+.deviceInfo {
 	display: block;
 	position: absolute;
 	top: 50%;

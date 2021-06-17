@@ -2,6 +2,9 @@ const $root = document.documentElement
 const $bgImage = document.querySelector('.backgroundImage')
 const $layoutCSS = document.querySelector('.layout')
 const $viewport = document.querySelector('meta[name="viewport"]')
+const $battery = document.querySelector('.battery')
+const $batteryIcon = $battery.querySelector('.battery-icon')
+const $batteryLevel = $battery.querySelector('.battery-level')
 const $clock = document.querySelector('.clock')
 
 const ip = localStorage.getItem('joystick.code') || 'localhost:5000'
@@ -43,14 +46,38 @@ const currentTouches = []
 const joysticks = []
 
 
+// Atualiza a bateria
+navigator.getBattery().then(b => {
+	updateBattery(b)
+	b.addEventListener('chargingchange', e => updateBattery(e.target))
+	b.addEventListener('levelchange', e => updateBattery(e.target))
+}).catch(console.error)
+
+function updateBattery(b) {
+	$batteryIcon.classList.remove(...$batteryIcon.classList)
+	$batteryIcon.classList.add('mdi')
+	const charging = b.charging
+	const level = b.level * 100
+	const roundLevel = Math.round(level / 10) * 10
+	$batteryLevel.innerText = level + '%'
+	if (roundLevel === 0) {
+		$batteryIcon.classList.add('mdi-battery-outline')
+	} else if (roundLevel === 100) {
+		$batteryIcon.classList.add('mdi-battery' + (charging ? '-charging-100' : ''))
+	} else {
+		$batteryIcon.classList.add('mdi-battery-' + (charging ? 'charging-' : '') + roundLevel)
+	}
+}
+
 // Atualiza o relógio
 if (!clock) $clock.remove()
-else {
-	window.setInterval(() => {
-		const hours = new Date().getHours().toString().padStart(2, '0')
-		const minutes = new Date().getMinutes().toString().padStart(2, '0')
-		$clock.innerText = hours + ':' + minutes
-	}, 1000)
+else window.setInterval(updateClock, 1000)
+updateClock()
+
+function updateClock() {
+	const hours = new Date().getHours().toString().padStart(2, '0')
+	const minutes = new Date().getMinutes().toString().padStart(2, '0')
+	$clock.innerText = hours + ':' + minutes
 }
 
 
