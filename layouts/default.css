@@ -10,7 +10,7 @@
    GROUPS
    ========================================================================== */
 
-/* Battery and Clock */
+/* Device info */
 .deviceInfo {
 	display: block;
 	position: absolute;
@@ -21,6 +21,7 @@
 	font-family: sans-serif;
 	font-size: 20px;
 	transition: 1s ease;
+	text-align: center;
 }
 
 /* Arrows (up, down, left, right) */
@@ -288,7 +289,7 @@
 .drive {
 	left: 50%;
 	top: auto;
-	bottom: 100px;
+	bottom: 80px;
 	transform: translateX(-50%);
 }
 
@@ -309,7 +310,7 @@
 .volumeDown {
 	width: 72px;
 	height: 52px;
-	top: 100px;
+	top: 90px;
 	font-size: 28px !important;
 }
 
@@ -330,7 +331,7 @@
 .playMacro {
 	width: 48px;
 	height: 32px;
-	top: 68px;
+	top: 58px;
 	font-size: 16px !important;
 	border-bottom: none;
 }

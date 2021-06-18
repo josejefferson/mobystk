@@ -16,27 +16,25 @@
 
 	<h3>PPSSPP</h3>
 	<small>Entre em <u>Configurações > Controles > Mapear controles</u></small>
-	<button onclick="start('psp')">Controle principal</button>
+	<button onclick="start('psp', 1)">Controle principal</button>
 
 	<h3>Snes9x</h3>
 	<small>Entre em <u>Input > Input Configuration... > (Selecione a opção Up)</u></small>
-	<button onclick="start('snesPlayer1')">Joypad #1</button>
-	<button onclick="start('snesPlayer2')">Joypad #2</button>
-	<button onclick="start('snesSave')">Save 0</button>
-	<button onclick="start('snesLoad')">Load 0</button>
+	<button onclick="start('snes', 1)">Joypad #1</button>
+	<button onclick="start('snes', 2)">Joypad #2</button>
+	<button onclick="start('snesSave', 1)">Save 0</button>
+	<button onclick="start('snesLoad', 1)">Load 0</button>
 
 	<h3>PCSX2</h3>
 	<small>Entre em <u>Configuração > Comandos (PAD) > Configurações do plug-in... > Pad (1 ou 2) > Quick setup</u></small>
-	<button onclick="start('ps2', 1)">Pad 1</button>
+	<button onclick="start('ps2', 1)">Pad 1A</button>
+	<button onclick="start('ps2', 2)">Pad 1B</button>
+	<button onclick="start('ps2', 3)">Pad 1C</button>
+	<button onclick="start('ps2', 4)">Pad 1D</button>
 	<button onclick="start('ps2', 2)">Pad 2</button>
-	<button onclick="start('ps2', 3)">Pad 3</button>
-	<button onclick="start('ps2', 4)">Pad 4</button>
 
-	<input type="text" id="code" value="code1">
-	<button onclick="start(document.getElementById('code').value)">Rodar código</button>
-
-	<div class="progressContainer">
-		<span>PROGRESSO</span>
+	<div class="progressContainer" onclick="setup = false">
+		<span>PROGRESSO ❌</span>
 		<div class="progress"></div>
 	</div>
 

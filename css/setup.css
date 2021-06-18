@@ -9,7 +9,6 @@ body {
 	color: white;
 	font-family: sans-serif;
 	margin: 40px;
-	margin-bottom: 80px;
 }
 
 small {
@@ -49,20 +48,17 @@ button:active {
 
 .progressContainer {
 	align-items: center;
-	background-color: inherit;
+	background-color: transparent;
 	border-radius: 1000px;
 	border: #1a237e 2px solid;
-	bottom: 0;
 	color: #999;
 	display: flex;
 	height: 30px;
 	justify-content: center;
-	left: 0;
-	margin-top: 10px;
-	margin: 5px 40px;
+	margin-top: 30px;
 	overflow: hidden;
-	position: fixed;
-	width: calc(100% - 80px);
+	position: relative;
+	width: 100%;
 }
 
 .progress {

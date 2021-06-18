@@ -1,6 +1,5 @@
 const KEY_SEQUENCE = {
-	snesPlayer1: { pause: 100, sequence: ['UP', 'LEFT', 'DOWN', 'RIGHT', 'K', 'L', 'J', 'I', 'SPACE', 'ENTER', 'Q', 'E'] },
-	snesPlayer2: { pause: 100, sequence: ['Z', 'X', 'C', 'V', 'M', 'Ç', 'N', 'B', 'O', 'P', 'Y', 'U'] },
+	snes: { pause: 100, sequence: ['padUp', 'padLeft', 'padDown', 'padRight', 'actDown', 'actRight', 'actLeft', 'actUp', 'start', 'select', 'left1', 'right1'] },
 	snesSave: { pause: 100, sequence: ['['] },
 	snesLoad: { pause: 100, sequence: ['F1'] },
 	ps2: { pause: 1000, sequence: ['select', 'left3', 'right3', 'start', 'padUp', 'padRight', 'padDown', 'padLeft', 'left2', 'right2', 'left1', 'right1', 'actUp', 'actRight', 'actDown', 'actLeft', 'joyLUp', 'joyLRight', 'joyLDown', 'joyLLeft', 'joyRUp', 'joyRRight', 'joyRDown', 'joyRLeft'] },
@@ -8,37 +7,35 @@ const KEY_SEQUENCE = {
 		'UP', // ADJUST FOCUS
 		'LEFT', // ADJUST FOCUS
 		'RIGHT', // ADJUST FOCUS
-		'SPACE', 'UP', 'DOWN',
-		'SPACE', 'DOWN', 'DOWN',
-		'SPACE', 'LEFT', 'DOWN',
-		'SPACE', 'RIGHT', 'DOWN',
-		'SPACE', 'L', 'DOWN',
-		'SPACE', 'K', 'DOWN',
-		'SPACE', 'J', 'DOWN',
-		'SPACE', 'I', 'DOWN',
-		'SPACE', 'SPACE', 'DOWN',
-		'SPACE', 'ENTER', 'DOWN',
-		'SPACE', 'Q', 'DOWN',
-		'SPACE', 'E', 'DOWN',
-		'SPACE', 'W', 'DOWN',
-		'SPACE', 'S', 'DOWN',
-		'SPACE', 'A', 'DOWN',
-		'SPACE', 'D', 'DOWN',
+		'SPACE', 'padUp', 'DOWN',
+		'SPACE', 'padDown', 'DOWN',
+		'SPACE', 'padLeft', 'DOWN',
+		'SPACE', 'padRight', 'DOWN',
+		'SPACE', 'actRight', 'DOWN',
+		'SPACE', 'actDown', 'DOWN',
+		'SPACE', 'actLeft', 'DOWN',
+		'SPACE', 'actUp', 'DOWN',
+		'SPACE', 'start', 'DOWN',
+		'SPACE', 'select', 'DOWN',
+		'SPACE', 'left1', 'DOWN',
+		'SPACE', 'right1', 'DOWN',
+		'SPACE', 'joyLUp', 'DOWN',
+		'SPACE', 'joyLDown', 'DOWN',
+		'SPACE', 'joyLLeft', 'DOWN',
+		'SPACE', 'joyLRight', 'DOWN',
 		'DOWN', // SKIP
 		'DOWN', // SKIP
 		'DOWN', // SKIP
 		'DOWN', // SKIP
 		'DOWN', // SKIP
 		'DOWN', // SKIP
-		'SPACE', 'ESC', 'DOWN',
+		'SPACE', 'pause', 'DOWN',
 		'DOWN', // SKIP
 		'DOWN', // SKIP
 		'DOWN', // SKIP
-		'SPACE', '[', 'DOWN',
-		'SPACE', 'F1', 'ESC', // ESC = SAIR
+		'SPACE', 'save', 'DOWN',
+		'SPACE', 'load', 'ESC', // ESC = SAIR
 	] },
-	code1: {pause: 50, sequence: ['UP', 'Q', 'DOWN', 'E', 'LEFT', 'Q', 'RIGHT', 'E']},
-	code2: {pause: 100, sequence: ['UP', 'RIGHT', 'J', 'J', 'DOWN', 'LEFT', 'L', 'L']}
 }
 
 const ip = localStorage.getItem('joystick.code') || window.location.hostname + ':5000'
@@ -65,8 +62,10 @@ async function start(control, player) {
 	if (!KEY_SEQUENCE[control]) return alert('Este emulador não está cadastrado!')
 	if (!confirm('Verifique se o seu emulador está preparado para a configuração.\nAperte OK para iniciar!')) return
 	$progress.style.transition = `width ${KEY_SEQUENCE[control].pause}ms linear, background-color .3s ease`
+	setTimeout(() => scrollBottom(), 0)
 	setup = true
 	for (i in KEY_SEQUENCE[control].sequence) {
+		if (!setup) return setProgress(true)
 		if (socket.readyState !== 1) {
 			setup = false
 			setProgress(true)
@@ -101,4 +100,28 @@ async function wait(sec) {
 	return new Promise((resolve) => {
 		setTimeout(resolve, sec)
 	})
+}
+
+
+
+function scrollToY(y, duration = 0, element = document.scrollingElement) {
+	if (element.scrollTop === y) return
+
+	const cosParameter = (element.scrollTop - y) / 2
+	let scrollCount = 0, oldTimestamp = null
+
+	function step(newTimestamp) {
+		if (oldTimestamp !== null) {
+			scrollCount += Math.PI * (newTimestamp - oldTimestamp) / duration
+			if (scrollCount >= Math.PI) return element.scrollTop = y
+			element.scrollTop = cosParameter + y + cosParameter * Math.cos(scrollCount)
+		}
+		oldTimestamp = newTimestamp
+		window.requestAnimationFrame(step)
+	}
+	window.requestAnimationFrame(step)
+}
+
+function scrollBottom() {
+	scrollToY(document.body.scrollHeight, 400)
 }

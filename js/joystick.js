@@ -7,6 +7,8 @@ const $battery = $deviceInfo.querySelector('.battery')
 const $batteryIcon = $battery.querySelector('.battery-icon')
 const $batteryLevel = $battery.querySelector('.battery-level')
 const $clock = $deviceInfo.querySelector('.clock')
+const $playerNumber = $deviceInfo.querySelector('.player .player-number')
+const $layout = $deviceInfo.querySelector('.layout')
 const $drive = document.querySelector('.drive')
 
 const ip = localStorage.getItem('joystick.code') || 'localhost:5000'
@@ -82,6 +84,9 @@ function updateClock() {
 	const minutes = new Date().getMinutes().toString().padStart(2, '0')
 	$clock.innerText = hours + ':' + minutes
 }
+
+$playerNumber.innerText = player + 1
+$layout.innerText = layout.toUpperCase()
 
 
 // Eventos da página
