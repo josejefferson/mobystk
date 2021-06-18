@@ -11,7 +11,7 @@ const $drive = document.querySelector('.drive')
 
 const ip = localStorage.getItem('joystick.code') || 'localhost:5000'
 const layout = localStorage.getItem('joystick.layout')
-const player = localStorage.getItem('joystick.player')
+const player = parseInt(localStorage.getItem('joystick.player')) - 1
 const debug = localStorage.getItem('joystick.debug') === 'true'
 const locked = localStorage.getItem('joystick.locked')
 const invert = localStorage.getItem('joystick.invert') === 'true'
@@ -126,7 +126,15 @@ document.ontouchstart = e => {
 		if (vibrate) navigator.vibrate(15)
 		if (joystick) continue
 		target.classList.add('active')
-		sendCmd(keybindings[target.dataset.key][player])
+
+		const keys = target.dataset.key.split(' ')
+		keys.forEach(key => {
+			// Diagonal
+			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
+				e.classList.add('dActive')
+			})
+			sendCmd(keymappings[key]?.[player])
+		})
 	}
 }
 
@@ -149,7 +157,16 @@ document.ontouchmove = e => {
 
 		if (oldtouch.target === target) continue
 		oldtouch.target?.classList.remove('active')
-		sendCmd(keybindings[oldtouch.target?.dataset.key][player], true)
+
+		let keys = oldtouch?.target?.dataset.key.split(' ')
+		keys?.forEach(key => {
+			// Diagonal
+			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
+				e.classList.remove('dActive')
+			})
+			sendCmd(keymappings[key]?.[player], true)
+		})
+		// sendCmd(keymappings[oldtouch.target?.dataset.key]?.[player], true)
 
 		if (target && (!target.classList.contains('touch') ||
 			target.classList.contains('active') ||
@@ -157,7 +174,16 @@ document.ontouchmove = e => {
 		oldtouch.target = target
 		if (!target) continue
 		target.classList.add('active')
-		sendCmd(keybindings[target.dataset.key][player])
+
+		keys = target.dataset.key.split(' ')
+		keys.forEach(key => {
+			// Diagonal
+			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
+				e.classList.add('dActive')
+			})
+			sendCmd(keymappings[key]?.[player])
+		})
+		// sendCmd(keymappings[target.dataset.key]?.[player])
 		if (vibrate) navigator.vibrate(15)
 	}
 }
@@ -172,7 +198,16 @@ document.ontouchend = e => {
 		if (i < 0) continue
 		if (!currentTouches[i].joystick && currentTouches[i].target) {
 			currentTouches[i].target.classList.remove('active')
-			sendCmd(keybindings[currentTouches[i].target.dataset.key][player], true)
+
+			const keys = currentTouches[i].target.dataset.key.split(' ')
+			keys.forEach(key => {
+				// Diagonal
+				if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
+					e.classList.remove('dActive')
+				})
+				sendCmd(keymappings[key]?.[player], true)
+			})
+			// sendCmd(keymappings[currentTouches[i].target.dataset.key]?.[player], true)
 		}
 		currentTouches.splice(i, 1)
 	}
@@ -189,12 +224,12 @@ document.onmousedown = (e) => {
 			target.classList.contains('lock'))) target = null
 	if (!target) return
 	target.classList.add('active')
-	if (target.dataset.key) sendCmd(keybindings[target.dataset.key][player])
+	if (target.dataset.key) sendCmd(keymappings[target.dataset.key]?.[player])
 
 	// Fim do clique
 	document.onmouseup = (e) => {
 		target.classList.remove('active')
-		if (target.dataset.key) sendCmd(keybindings[target.dataset.key][player], true)
+		if (target.dataset.key) sendCmd(keymappings[target.dataset.key]?.[player], true)
 		document.onmouseup = null
 	}
 }
@@ -210,11 +245,11 @@ document.querySelectorAll('.lock').forEach(el => {
 		if (el.classList.contains('active')) {
 			// Ativa o botão
 			el.classList.remove('active')
-			sendCmd(keybindings[el.dataset.key][player], true)
+			sendCmd(keymappings[el.dataset.key]?.[player], true)
 		} else {
 			// Desativa o botão
 			el.classList.add('active')
-			sendCmd(keybindings[el.dataset.key][player])
+			sendCmd(keymappings[el.dataset.key]?.[player])
 		}
 	}
 })
@@ -298,7 +333,7 @@ $playMacro.onclick = async function () {
 
 // Atualiza os dados dos joysticks
 function updateJoystick(joystick, id, angle, direction) {
-	const keys = (joystick.dataset[playerDataKey] || joystick.dataset.keys).split(' ')
+	const keys = (joystick.dataset.keys || joystick.dataset.keys).split(' ')
 	if (!direction) {
 		update('up', false)
 		update('left', false)
@@ -318,10 +353,10 @@ function updateJoystick(joystick, id, angle, direction) {
 	// Atualiza a direção do joystick
 	function update(dir, value, key) {
 		switch (dir) {
-			case 'up': key = keys[0]; break
-			case 'left': key = keys[1]; break
-			case 'down': key = keys[2]; break
-			case 'right': key = keys[3]; break
+			case 'up': key = keymappings[keys[0]]?.[player]; break
+			case 'left': key = keymappings[keys[1]]?.[player]; break
+			case 'down': key = keymappings[keys[2]]?.[player]; break
+			case 'right': key = keymappings[keys[3]]?.[player]; break
 		}
 
 		if (joysticks[id][dir] === value) return
@@ -332,15 +367,15 @@ function updateJoystick(joystick, id, angle, direction) {
 
 
 // Envia comandos para o servidor
-function sendCmd(key, release = false) {
+function sendCmd(key, release = false) {console.log(key, release)
 	// Trata o comando
 	if (!key) return
 	key = key.toUpperCase()
 	key = key.split(' ')
 	key.forEach(c => {
 		// Diagonais
-		if (key.length > 1) document.querySelectorAll(`[data-${playerDataKey}="${c}"]`)
-			.forEach(e => e.classList[release ? 'remove' : 'add']('dActive'))
+		// if (key.length > 1) document.querySelectorAll(`[data-key="${c}"]`)
+		// 	.forEach(e => e.classList[release ? 'remove' : 'add']('dActive'))
 	})
 
 	if (recordingMacro) return lastMacro.push((release ? 'R ' : 'P ') + key)

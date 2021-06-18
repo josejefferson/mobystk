@@ -19,103 +19,107 @@
 	<div class="backgroundImage"></div>
 
 	<!-- Joysticks -->
-	<div id="joystickL" class="joystick group touch" data-keys="W A S D" data-sec-keys="T F G H" data-third-keys="001 002 003 004" data-fourth-keys="1100 1101 1102 1103"></div>
-	<div id="joystickR" class="joystick group touch" data-keys="5 6 7 8" data-sec-keys="9 0 [ ]" data-third-keys="005 006 007 008" data-fourth-keys="1104 1105 1106 1107"></div>
-	<div id="joystickA" class="joystick group touch" data-keys="UP LEFT DOWN RIGHT" data-sec-keys="Z X C V" data-third-keys="1008 1009 1010 1011" data-fourth-keys="1108 1109 1110 1111"></div>
+	<div id="joystickL" class="joystick group touch" data-keys="joyLUp joyLLeft joyLDown joyLRight"></div>
+	<div id="joystickR" class="joystick group touch" data-keys="joyRUp joyRLeft joyRDown joyRRight"></div>
+	<div id="joystickA" class="joystick group touch" data-keys="arrowUp arrowLeft arrowDown arrowRight"></div>
 
 	<!-- Arrow buttons -->
 	<div class="arrows group">
 		<!-- Up arrow -->
-		<button class="up touch" data-key="UP" data-sec-key="Z" data-third-key="1008" data-fourth-key="1108">
+		<button class="up touch" data-key="arrowUp">
 			<i class="mdi mdi-menu-up-outline"></i>
 		</button>
 
 		<!-- Left arrow -->
-		<button class="left touch" data-key="LEFT" data-sec-key="X" data-third-key="1009" data-fourth-key="1109">
+		<button class="left touch" data-key="arrowLeft">
 			<i class="mdi mdi-menu-left-outline"></i>
 		</button>
 
 		<!-- Down arrow -->
-		<button class="down touch" data-key="DOWN" data-sec-key="C" data-third-key="1010" data-fourth-key="1110">
+		<button class="down touch" data-key="arrowDown">
 			<i class="mdi mdi-menu-down-outline"></i>
 		</button>
 
 		<!-- Right arrow -->
-		<button class="right touch" data-key="RIGHT" data-sec-key="V" data-third-key="1011" data-fourth-key="1111">
+		<button class="right touch" data-key="arrowRight">
 			<i class="mdi mdi-menu-right-outline"></i>
 		</button>
 
 		<!-- Diagonal arrows -->
-		<div class="diag dLT touch" data-key="LEFT UP" data-sec-key="X Z" data-third-key="1009 1008" data-fourth-key="1109 1108"></div>
-		<div class="diag dRT touch" data-key="RIGHT UP" data-sec-key="V Z" data-third-key="1011 1008" data-fourth-key="1111 1108"></div>
-		<div class="diag dLB touch" data-key="LEFT DOWN" data-sec-key="X C" data-third-key="1009 1010" data-fourth-key="1109 1110"></div>
-		<div class="diag dRB touch" data-key="RIGHT DOWN" data-sec-key="V C" data-third-key="1011 1010" data-fourth-key="1111 1110"></div>
+		<div class="diag dLT touch" data-key="arrowLeft arrowUp"></div>
+		<div class="diag dRT touch" data-key="arrowRight arrowUp"></div>
+		<div class="diag dLB touch" data-key="arrowLeft arrowDown"></div>
+		<div class="diag dRB touch" data-key="arrowRight arrowDown"></div>
 	</div>
 
 	<!-- Action buttons -->
 	<div class="actions group">
 		<!-- PlayStation buttons -->
 		<!-- Triangle -->
-		<button class="actup touch" data-key="I" data-sec-key="B" data-third-key="1012" data-fourth-key="1112">
+		<button class="actup touch" data-key="actUp">
 			<i class="mdi mdi-triangle-outline"></i>
 		</button>
 
 		<!-- Square -->
-		<button class="actleft touch" data-key="J" data-sec-key="N" data-third-key="1013" data-fourth-key="1113">
+		<button class="actleft touch" data-key="actLeft">
 			<i class="mdi mdi-square-outline"></i>
 		</button>
 
 		<!-- Cross -->
-		<button class="actdown touch" data-key="K" data-sec-key="M" data-third-key="1014" data-fourth-key="1114">
+		<button class="actdown touch" data-key="actDown">
 			<i class="mdi mdi-close"></i>
 		</button>
 
 		<!-- Circle -->
-		<button class="actright touch" data-key="L" data-sec-key="Ç" data-third-key="1015" data-fourth-key="1115">
+		<button class="actright touch" data-key="actRight">
 			<i class="mdi mdi-circle-outline"></i>
 		</button>
 
 		<!-- SNES buttons -->
-		<!-- X --><button class="snesactup touch" data-key="I" data-sec-key="B" data-third-key="1012" data-fourth-key="1112">X</button>
-		<!-- Y --><button class="snesactleft touch" data-key="J" data-sec-key="N" data-third-key="1013" data-fourth-key="1113">Y</button>
-		<!-- B --><button class="snesactdown touch" data-key="K" data-sec-key="M" data-third-key="1014" data-fourth-key="1114">B</button>
-		<!-- A --><button class="snesactright touch" data-key="L" data-sec-key="Ç" data-third-key="1015" data-fourth-key="1115">A</button>
+		<!-- X -->
+		<button class="snesactup touch" data-key="actUp">X</button>
+		<!-- Y -->
+		<button class="snesactleft touch" data-key="actLeft">Y</button>
+		<!-- B -->
+		<button class="snesactdown touch" data-key="actDown">B</button>
+		<!-- A -->
+		<button class="snesactright touch" data-key="actRight">A</button>
 
 		<!-- Diagonal actions -->
-		<div class="diag dLT touch" data-key="J I" data-sec-key="N B" data-third-key="1013 1012" data-fourth-key="1113 1112"></div>
-		<div class="diag dRT touch" data-key="L I" data-sec-key="Ç B" data-third-key="1015 1012" data-fourth-key="1115 1112"></div>
-		<div class="diag dLB touch" data-key="J K" data-sec-key="N M" data-third-key="1013 1014" data-fourth-key="1113 1114"></div>
-		<div class="diag dRB touch" data-key="L K" data-sec-key="Ç M" data-third-key="1015 1014" data-fourth-key="1115 1114"></div>
+		<div class="diag dLT touch" data-key="actLeft actUp"></div>
+		<div class="diag dRT touch" data-key="actRight actUp"></div>
+		<div class="diag dLB touch" data-key="actLeft actDown"></div>
+		<div class="diag dRB touch" data-key="actRight actDown"></div>
 	</div>
 
 	<!-- Other buttons -->
-	<button class="l touch" data-key="Q" data-sec-key="Y" data-third-key="1016" data-fourth-key="1116">L</button>
-	<button class="l2 touch" data-key="1" data-sec-key="3" data-third-key="1017" data-fourth-key="1117">L2</button>
-	<button class="l1 touch" data-key="Q" data-sec-key="Y" data-third-key="1016" data-fourth-key="1116">L1</button>
-	<button class="l3 touch" data-key=";" data-sec-key="´" data-third-key="1018" data-fourth-key="1118">L3</button>
+	<button class="l touch" data-key="left1">L</button>
+	<button class="l1 touch" data-key="left1">L1</button>
+	<button class="l2 touch" data-key="left2">L2</button>
+	<button class="l3 touch" data-key="left3">L3</button>
 
-	<button class="r touch" data-key="E" data-sec-key="U" data-third-key="1019" data-fourth-key="1119">R</button>
-	<button class="r2 touch" data-key="2" data-sec-key="4" data-third-key="1020" data-fourth-key="1120">R2</button>
-	<button class="r1 touch" data-key="E" data-sec-key="U" data-third-key="1019" data-fourth-key="1119">R1</button>
-	<button class="r3 touch" data-key="." data-sec-key="~" data-third-key="1021" data-fourth-key="1121">R3</button>
+	<button class="r touch" data-key="right1">R</button>
+	<button class="r1 touch" data-key="right1">R1</button>
+	<button class="r2 touch" data-key="right2">R2</button>
+	<button class="r3 touch" data-key="right3">R3</button>
 
-	<button class="select touch" data-key="ENTER" data-sec-key="P" data-third-key="1022" data-fourth-key="1122">SELECT</button>
-	<button class="start touch" data-key="SPACE" data-sec-key="O" data-third-key="1023" data-fourth-key="1123">START</button>
-	<button class="pause touch" data-key="ESC">
+	<button class="select touch" data-key="select">SELECT</button>
+	<button class="start touch" data-key="start">START</button>
+	<button class="pause touch" data-key="pause">
 		<i class="mdi mdi-pause"></i>
 	</button>
 
-	<button class="load touch" data-key="F1">
+	<button class="load touch" data-key="load">
 		<i class="mdi mdi-file-download"></i>
 	</button>
-	<button class="save touch" data-key="[">
+	<button class="save touch" data-key="save">
 		<i class="mdi mdi-content-save"></i>
 	</button>
 
-	<button class="volumeUp touch" data-key="MEDIA_VOLUME_UP">
+	<button class="volumeUp touch" data-key="volUp">
 		<i class="mdi mdi-volume-plus"></i>
 	</button>
-	<button class="volumeDown touch" data-key="MEDIA_VOLUME_DOWN">
+	<button class="volumeDown touch" data-key="volDown">
 		<i class="mdi mdi-volume-minus"></i>
 	</button>
 
