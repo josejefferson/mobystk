@@ -127,13 +127,12 @@ document.ontouchstart = e => {
 		if (joystick) continue
 		target.classList.add('active')
 
-		const keys = target.dataset.key.split(' ')
-		keys.forEach(key => {
+		const keys = target.dataset.key?.split(' ')
+		keys?.forEach(key => {
 			// Diagonal
 			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
 				e.classList.add('dActive')
 			})
-			// sendCmd(keymappings[key]?.[player])
 		})
 		sendCmd(keys)
 	}
@@ -165,10 +164,8 @@ document.ontouchmove = e => {
 			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
 				e.classList.remove('dActive')
 			})
-			// sendCmd(keymappings[key]?.[player], true)
 		})
 		sendCmd(keys, true)
-		// sendCmd(keymappings[oldtouch.target?.dataset.key]?.[player], true)
 
 		if (target && (!target.classList.contains('touch') ||
 			target.classList.contains('active') ||
@@ -177,16 +174,15 @@ document.ontouchmove = e => {
 		if (!target) continue
 		target.classList.add('active')
 
-		keys = target.dataset.key.split(' ')
-		keys.forEach(key => {
+		keys = target.dataset.key?.split(' ')
+		keys?.forEach(key => {
 			// Diagonal
 			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
 				e.classList.add('dActive')
 			})
-			// sendCmd(keymappings[key]?.[player])
 		})
 		sendCmd(keys)
-		// sendCmd(keymappings[target.dataset.key]?.[player])
+
 		if (vibrate) navigator.vibrate(15)
 	}
 }
@@ -202,16 +198,14 @@ document.ontouchend = e => {
 		if (!currentTouches[i].joystick && currentTouches[i].target) {
 			currentTouches[i].target.classList.remove('active')
 
-			const keys = currentTouches[i].target.dataset.key.split(' ')
-			keys.forEach(key => {
+			const keys = currentTouches[i].target.dataset.key?.split(' ')
+			keys?.forEach(key => {
 				// Diagonal
 				if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
 					e.classList.remove('dActive')
 				})
-				// sendCmd(keymappings[key]?.[player], true)
 			})
 			sendCmd(keys, true)
-			// sendCmd(keymappings[currentTouches[i].target.dataset.key]?.[player], true)
 		}
 		currentTouches.splice(i, 1)
 	}
@@ -228,12 +222,26 @@ document.onmousedown = (e) => {
 			target.classList.contains('lock'))) target = null
 	if (!target) return
 	target.classList.add('active')
-	if (target.dataset.key) sendCmd(keymappings[target.dataset.key]?.[player])
+
+	const keys = target.dataset.key?.split(' ')
+	keys?.forEach(key => {
+		if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
+			e.classList.add('dActive')
+		})
+	})
+	sendCmd(keys)
 
 	// Fim do clique
 	document.onmouseup = (e) => {
 		target.classList.remove('active')
-		if (target.dataset.key) sendCmd(keymappings[target.dataset.key]?.[player], true)
+
+		const keys = target.dataset.key?.split(' ')
+		keys?.forEach(key => {
+			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
+				e.classList.remove('dActive')
+			})
+		})
+		sendCmd(keys, true)
 		document.onmouseup = null
 	}
 }
@@ -288,26 +296,26 @@ $drive.onclick = e => {
 		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
 
 		if (driveY > SENSITIVITY) {
-			direction = orientation ? 'd' : 'a'
+			direction = orientation ? 'joyLRight' : 'joyLLeft'
 		} else if (driveY < -SENSITIVITY) {
-			direction = orientation ? 'a' : 'd'
+			direction = orientation ? 'joyLLeft' : 'joyLRight'
 		} else {
 			direction = null
 		}
 
 		if (direction === driveDirection) return
 		switch (direction) {
-			case 'a': $drive.innerHTML = '<i class="mdi mdi-undo"></i>'; break
-			case 'd': $drive.innerHTML = '<i class="mdi mdi-redo"></i>'; break
+			case 'joyLLeft': $drive.innerHTML = '<i class="mdi mdi-undo"></i>'; break
+			case 'joyLRight': $drive.innerHTML = '<i class="mdi mdi-redo"></i>'; break
 			default: $drive.innerHTML = '<i class="mdi mdi-arrow-up"></i>'
 		}
 
 		driveDirection = direction
 		if (direction === null) {
-			sendCmd('a', true)
-			sendCmd('d', true)
+			sendCmd(['joyLLeft'], true)
+			sendCmd(['joyLRight'], true)
 		} else {
-			sendCmd(direction)
+			sendCmd([direction])
 		}
 	}
 }
@@ -372,10 +380,7 @@ function updateJoystick(joystick, id, angle, direction) {
 
 // Envia comandos para o servidor
 function sendCmd(keys, release = false) {
-	// Trata o comando
 	if (!keys || !keys.length) return
-	// key = key.toUpperCase()
-	// key = key.split(' ')
 	keys = keys.map(key => {
 		key = keymappings[key]?.[player]
 		return key
@@ -386,9 +391,8 @@ function sendCmd(keys, release = false) {
 	// Não envia o comando se o websocket não estiver conectado
 	if (socket.readyState !== 1) return
 
-	console.log((release ? 'R ' : 'P ') + keys)
 	// Envia o comando
-	// socket.send((release ? 'R ' : 'P ') + keys)
+	socket.send((release ? 'R ' : 'P ') + keys)
 }
 
 
