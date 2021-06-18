@@ -61,7 +61,7 @@ function updateBattery(b) {
 	const charging = b.charging
 	const level = b.level * 100
 	const roundLevel = Math.round(level / 10) * 10
-	$batteryLevel.innerText = level + '%'
+	$batteryLevel.innerText = Math.round(level) + '%'
 	if (roundLevel === 0) {
 		$batteryIcon.classList.add('mdi-battery-outline')
 	} else if (roundLevel === 100) {
@@ -133,8 +133,9 @@ document.ontouchstart = e => {
 			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
 				e.classList.add('dActive')
 			})
-			sendCmd(keymappings[key]?.[player])
+			// sendCmd(keymappings[key]?.[player])
 		})
+		sendCmd(keys)
 	}
 }
 
@@ -164,8 +165,9 @@ document.ontouchmove = e => {
 			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
 				e.classList.remove('dActive')
 			})
-			sendCmd(keymappings[key]?.[player], true)
+			// sendCmd(keymappings[key]?.[player], true)
 		})
+		sendCmd(keys, true)
 		// sendCmd(keymappings[oldtouch.target?.dataset.key]?.[player], true)
 
 		if (target && (!target.classList.contains('touch') ||
@@ -181,8 +183,9 @@ document.ontouchmove = e => {
 			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
 				e.classList.add('dActive')
 			})
-			sendCmd(keymappings[key]?.[player])
+			// sendCmd(keymappings[key]?.[player])
 		})
+		sendCmd(keys)
 		// sendCmd(keymappings[target.dataset.key]?.[player])
 		if (vibrate) navigator.vibrate(15)
 	}
@@ -205,8 +208,9 @@ document.ontouchend = e => {
 				if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
 					e.classList.remove('dActive')
 				})
-				sendCmd(keymappings[key]?.[player], true)
+				// sendCmd(keymappings[key]?.[player], true)
 			})
+			sendCmd(keys, true)
 			// sendCmd(keymappings[currentTouches[i].target.dataset.key]?.[player], true)
 		}
 		currentTouches.splice(i, 1)
@@ -353,38 +357,38 @@ function updateJoystick(joystick, id, angle, direction) {
 	// Atualiza a direção do joystick
 	function update(dir, value, key) {
 		switch (dir) {
-			case 'up': key = keymappings[keys[0]]?.[player]; break
-			case 'left': key = keymappings[keys[1]]?.[player]; break
-			case 'down': key = keymappings[keys[2]]?.[player]; break
-			case 'right': key = keymappings[keys[3]]?.[player]; break
+			case 'up': key = keys[0]; break
+			case 'left': key = keys[1]; break
+			case 'down': key = keys[2]; break
+			case 'right': key = keys[3]; break
 		}
 
 		if (joysticks[id][dir] === value) return
 		joysticks[id][dir] = value
-		sendCmd(key, !value)
+		sendCmd([key], !value)
 	}
 }
 
 
 // Envia comandos para o servidor
-function sendCmd(key, release = false) {console.log(key, release)
+function sendCmd(keys, release = false) {
 	// Trata o comando
-	if (!key) return
-	key = key.toUpperCase()
-	key = key.split(' ')
-	key.forEach(c => {
-		// Diagonais
-		// if (key.length > 1) document.querySelectorAll(`[data-key="${c}"]`)
-		// 	.forEach(e => e.classList[release ? 'remove' : 'add']('dActive'))
+	if (!keys || !keys.length) return
+	// key = key.toUpperCase()
+	// key = key.split(' ')
+	keys = keys.map(key => {
+		key = keymappings[key]?.[player]
+		return key
 	})
 
-	if (recordingMacro) return lastMacro.push((release ? 'R ' : 'P ') + key)
+	if (recordingMacro) return lastMacro.push((release ? 'R ' : 'P ') + keys)
 
 	// Não envia o comando se o websocket não estiver conectado
 	if (socket.readyState !== 1) return
 
+	console.log((release ? 'R ' : 'P ') + keys)
 	// Envia o comando
-	socket.send((release ? 'R ' : 'P ') + key)
+	// socket.send((release ? 'R ' : 'P ') + keys)
 }
 
 
