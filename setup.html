@@ -27,8 +27,10 @@
 
 	<h3>PCSX2</h3>
 	<small>Entre em <u>Configuração > Comandos (PAD) > Configurações do plug-in... > Pad (1 ou 2) > Quick setup</u></small>
-	<button onclick="start('ps2Player1')">Pad 1</button>
-	<button onclick="start('ps2Player2')">Pad 2</button>
+	<button onclick="start('ps2', 1)">Pad 1</button>
+	<button onclick="start('ps2', 2)">Pad 2</button>
+	<button onclick="start('ps2', 3)">Pad 3</button>
+	<button onclick="start('ps2', 4)">Pad 4</button>
 
 	<input type="text" id="code" value="code1">
 	<button onclick="start(document.getElementById('code').value)">Rodar código</button>
@@ -37,6 +39,8 @@
 		<span>PROGRESSO</span>
 		<div class="progress"></div>
 	</div>
+
+	<script src="js/keymappings.js"></script>
 	<script src="js/setup.js"></script>
 </body>
 

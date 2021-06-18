@@ -3,8 +3,7 @@ const KEY_SEQUENCE = {
 	snesPlayer2: { pause: 100, sequence: ['Z', 'X', 'C', 'V', 'M', 'Ç', 'N', 'B', 'O', 'P', 'Y', 'U'] },
 	snesSave: { pause: 100, sequence: ['['] },
 	snesLoad: { pause: 100, sequence: ['F1'] },
-	ps2Player1: { pause: 1000, sequence: ['ENTER', ';', '.', 'SPACE', 'UP', 'RIGHT', 'DOWN', 'LEFT', '1', '2', 'Q', 'E', 'I', 'L', 'K', 'J', 'W', 'D', 'S', 'A', '5', '8', '7', '6'] },
-	ps2Player2: { pause: 1000, sequence: ['P', '´', '~', 'O', 'Z', 'V', 'C', 'X', '3', '4', 'Y', 'U', 'B', 'Ç', 'M', 'N', 'T', 'H', 'G', 'F', '9', ']', '[', '0'] },
+	ps2: { pause: 1000, sequence: ['select', 'left3', 'right3', 'start', 'padUp', 'padRight', 'padDown', 'padLeft', 'left2', 'right2', 'left1', 'right1', 'actUp', 'actRight', 'actDown', 'actLeft', 'joyLUp', 'joyLRight', 'joyLDown', 'joyLLeft', 'joyRUp', 'joyRRight', 'joyRDown', 'joyRLeft'] },
 	psp: { pause: 150, sequence: [
 		'UP', // ADJUST FOCUS
 		'LEFT', // ADJUST FOCUS
@@ -61,7 +60,7 @@ function socketConn() {
 	return ws
 }
 
-async function start(control) {
+async function start(control, player) {
 	if (setup) return alert('Outra configuração está em andamento!')
 	if (!KEY_SEQUENCE[control]) return alert('Este emulador não está cadastrado!')
 	if (!confirm('Verifique se o seu emulador está preparado para a configuração.\nAperte OK para iniciar!')) return
@@ -74,7 +73,7 @@ async function start(control) {
 			return setTimeout(() => alert('Conexão perdida, tente novamente!'), 100)
 		}
 		setProgress(false, i, KEY_SEQUENCE[control].sequence.length)
-		sendKey(KEY_SEQUENCE[control].sequence[i])
+		sendKey(KEY_SEQUENCE[control].sequence[i], player)
 		await wait(KEY_SEQUENCE[control].pause)
 	}
 	setup = false
@@ -91,8 +90,8 @@ function setProgress(error, pos, max) {
 	}
 }
 
-function sendKey(key) {
-	key = key.toUpperCase()
+function sendKey(key, player) {
+	key = keymappings[key]?.[player - 1] || key
 	console.log(key)
 	if (socket.readyState !== 1) return
 	socket.send('T ' + key)
