@@ -25,15 +25,6 @@ const colorsColor = localStorage.getItem('joystick.color')
 const colorsBorder = localStorage.getItem('joystick.border')
 const colorsActive = localStorage.getItem('joystick.active')
 
-const playersDataKeys = {
-	"1": 'key',
-	"2": 'secKey',
-	"3": 'thirdKey',
-	"4": 'fourthKey'
-}
-const playerDataKey = playersDataKeys[player]
-
-
 if (debug) document.body.classList.add('debug')
 if (!layout) location.href = 'index.html'
 if (invert) document.body.classList.add('invert')
@@ -135,7 +126,7 @@ document.ontouchstart = e => {
 		if (vibrate) navigator.vibrate(15)
 		if (joystick) continue
 		target.classList.add('active')
-		sendCmd(target.dataset[playerDataKey] || target.dataset.key)
+		sendCmd(keybindings[target.dataset.key][player])
 	}
 }
 
@@ -158,7 +149,7 @@ document.ontouchmove = e => {
 
 		if (oldtouch.target === target) continue
 		oldtouch.target?.classList.remove('active')
-		sendCmd(oldtouch.target?.dataset[playerDataKey] || oldtouch.target?.dataset.key, true)
+		sendCmd(keybindings[oldtouch.target?.dataset.key][player], true)
 
 		if (target && (!target.classList.contains('touch') ||
 			target.classList.contains('active') ||
@@ -166,7 +157,7 @@ document.ontouchmove = e => {
 		oldtouch.target = target
 		if (!target) continue
 		target.classList.add('active')
-		sendCmd(target.dataset[playerDataKey] || target.dataset.key)
+		sendCmd(keybindings[target.dataset.key][player])
 		if (vibrate) navigator.vibrate(15)
 	}
 }
@@ -181,7 +172,7 @@ document.ontouchend = e => {
 		if (i < 0) continue
 		if (!currentTouches[i].joystick && currentTouches[i].target) {
 			currentTouches[i].target.classList.remove('active')
-			sendCmd(currentTouches[i].target.dataset[playerDataKey] || currentTouches[i].target.dataset.key, true)
+			sendCmd(keybindings[currentTouches[i].target.dataset.key][player], true)
 		}
 		currentTouches.splice(i, 1)
 	}
@@ -198,12 +189,12 @@ document.onmousedown = (e) => {
 			target.classList.contains('lock'))) target = null
 	if (!target) return
 	target.classList.add('active')
-	if (target.dataset.key) sendCmd(target.dataset[playerDataKey] || target.dataset.key)
+	if (target.dataset.key) sendCmd(keybindings[target.dataset.key][player])
 
 	// Fim do clique
 	document.onmouseup = (e) => {
 		target.classList.remove('active')
-		if (target.dataset.key) sendCmd(target.dataset[playerDataKey] || target.dataset.key, true)
+		if (target.dataset.key) sendCmd(keybindings[target.dataset.key][player], true)
 		document.onmouseup = null
 	}
 }
@@ -219,11 +210,11 @@ document.querySelectorAll('.lock').forEach(el => {
 		if (el.classList.contains('active')) {
 			// Ativa o botão
 			el.classList.remove('active')
-			sendCmd(el.dataset[playerDataKey] || target.dataset.key, true)
+			sendCmd(keybindings[el.dataset.key][player], true)
 		} else {
 			// Desativa o botão
 			el.classList.add('active')
-			sendCmd(el.dataset[playerDataKey] || target.dataset.key)
+			sendCmd(keybindings[el.dataset.key][player])
 		}
 	}
 })
