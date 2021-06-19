@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=0">
+	<link rel="shortcut icon" href="favicon.png" type="image/png">
+	<link rel="manifest" href="manifest.json">
+	<title>Configurar emuladores</title>
+	<link rel="stylesheet" href="css/setup.css">
+</head>
+
+<body>
+	<a class="button return" href="index.html">Voltar</a>
+	<h2>Configurar emuladores</h2>
+
+	<h3>PPSSPP</h3>
+	<small>Entre em <u>Configurações > Controles > Mapear controles</u></small>
+	<button onclick="start('psp', 1)">Controle principal</button>
+
+	<h3>Snes9x</h3>
+	<small>Entre em <u>Input > Input Configuration... > (Selecione a opção Up)</u></small>
+	<button onclick="start('snes', 1)">Joypad #1</button>
+	<button onclick="start('snes', 2)">Joypad #2</button>
+	<button onclick="start('snesSave', 1)">Save 0</button>
+	<button onclick="start('snesLoad', 1)">Load 0</button>
+
+	<h3>PCSX2</h3>
+	<small>Entre em <u>Configuração > Comandos (PAD) > Configurações do plug-in... > Pad (1 ou 2) > Quick setup</u></small>
+	<button onclick="start('ps2', 1)">Pad 1A</button>
+	<button onclick="start('ps2', 2)">Pad 1B</button>
+	<button onclick="start('ps2', 3)">Pad 1C</button>
+	<button onclick="start('ps2', 4)">Pad 1D</button>
+	<button onclick="start('ps2', 2)">Pad 2</button>
+
+	<div class="progressContainer" onclick="setup = false">
+		<span>PROGRESSO ❌</span>
+		<div class="progress"></div>
+	</div>
+
+	<script src="js/keymappings.js"></script>
+	<script src="js/setup.js"></script>
+</body>
+
+</html>

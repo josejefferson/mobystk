@@ -1,0 +1,129 @@
+* {
+	-webkit-tap-highlight-color: transparent;
+	user-select: none;
+}
+
+body {
+	height: 100vh;
+	margin: 0;
+	overscroll-behavior: contain;
+	overflow: hidden;
+}
+
+body.debug .joystick.group,
+body.debug .diag {
+	border: var(--color) 1px solid;
+}
+
+.backgroundImage {
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
+	background-position: center center;
+	background-size: cover;
+}
+
+.container {
+	width: 640px;
+	height: 360px;
+	position: relative;
+	transform-origin: 0 0;
+	transition: outline 1s ease;
+	outline: var(--color) 2.5px solid;
+}
+
+/* Desativa as transições enquanto carrega a página */
+body.preload * {
+	transition: none !important;
+}
+
+/* Grupos */
+.group {
+	position: absolute;
+}
+
+/* Botões do grupo */
+.group button {
+	z-index: 2;
+}
+
+/* Diagonais do grupo */
+.group .diag {
+	height: 50%;
+	position: absolute;
+	width: 50%;
+	/*border: var(--color) 1px solid;*/
+}
+
+.diag.dLT { 
+	left: 0;
+	top: 0;
+	border-radius: 75px 0 50px 0;
+}
+
+.diag.dRT { 
+	right: 0;
+	top: 0;
+	border-radius: 0 75px 0 50px;
+}
+
+.diag.dLB { 
+	left: 0;
+	bottom: 0;
+	border-radius: 0 50px 0 75px;
+}
+
+.diag.dRB { 
+	right: 0;
+	bottom: 0;
+	border-radius: 50px 0 75px 0;
+}
+
+/* Botões */
+button {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	outline: none;
+	position: absolute;
+	cursor: pointer;
+}
+
+/* Ícones dos botões */
+button svg {
+	pointer-events: none;
+	z-index: -1;
+}
+
+/* Botão de editar */
+button.edit {
+	display: flex;
+	height: 30px;
+	left: 50%;
+	top: 0;
+	transform: translateX(-50%);
+	width: 60px;
+}
+
+/* Joystick */
+.joystick {
+	border-radius: 50%;
+}
+
+.nipple,
+.nipple .back,
+.nipple .front {
+	box-sizing: border-box;
+	opacity: 1 !important;
+	cursor: move;
+}
+
+/* Oculta os botões enquanto não carregar o layout */
+button, .group, .joystick {
+	display: none;
+}
+
+svg {
+	width: 32px;
+	height: 32px;
+}

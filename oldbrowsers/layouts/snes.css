@@ -1,0 +1,48 @@
+/**
+ * WebJoy - Layout
+ *
+ * @name: SNES
+ * @description: Layout for SNES games
+ * @author: Jefferson Dantas
+ * @override: Default
+ */
+
+/* ==========================================================================
+   BUTTON GROUPS
+   ========================================================================== */
+
+.arrows,
+.actions {
+	display: block;
+}
+
+body.invert #joystickA {
+	display: block;
+}
+
+body.invert .arrows {
+	display: none;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.up,
+.down,
+.left,
+.right,
+.snesactup,
+.snesactright,
+.snesactleft,
+.snesactdown,
+.l,
+.r,
+.select,
+.start,
+.load,
+.save,
+.volumeUp,
+.volumeDown {
+	display: flex;
+}

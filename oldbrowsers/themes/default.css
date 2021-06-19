@@ -1,0 +1,103 @@
+/**
+ * WebJoy - Theme
+ *
+ * @name: Default
+ * @description: Default WebJoy theme
+ * @author: Jefferson Dantas
+ */
+
+/* ==========================================================================
+   COLORS
+   ========================================================================== */
+:root {
+	--background: #000000;
+	--btn-background: transparent;
+	--color: rgba(255,255,255,0.53);
+	--active: rgba(255,255,255,0.2);
+	--border: var(--color);
+	--connecting-color: rgba(255,255,68,0.53);
+	--connecting-active: rgba(255,255,68,0.2);
+	--connecting-border: var(--connecting-color);
+	--disconnected-color: rgba(255,68,68,0.53);
+	--disconnected-active: rgba(255,68,68,0.2);
+	--disconnected-border: var(--disconnected-color);
+	--border-size: 2.5px;
+	--border-style: solid;
+}
+
+body {
+	background-color: var(--background);
+}
+
+body.disconnected:not(.debug) {
+	--color: var(--disconnected-color);
+	--active: var(--disconnected-active);
+	--border: var(--disconnected-border);
+}
+
+body.connecting:not(.debug) {
+	--color: var(--connecting-color);
+	--active: var(--connecting-active);
+	--border: var(--connecting-border);
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+button {
+	background-color: var(--btn-background);
+	border: var(--border) var(--border-size) var(--border-style);
+	color: var(--color);
+	font-size: 12.5px;
+	transition:
+		border-color 1s ease,
+		color 1s ease;
+}
+
+/* Grouped buttons */
+.group button {
+	border-radius: 50%;
+	font-size: 20px;
+}
+
+/* Lockable buttons */
+button.lock {
+	border-style: dashed;
+}
+
+/* Active button state */
+button.active,
+button.dActive {
+	background-color: var(--active);
+}
+
+/* Button icons */
+button .mdi {
+	color: var(--color);
+	font-size: inherit !important;
+	transition: color 1s ease;
+	pointer-events: none;
+}
+
+button svg {
+	fill: var(--color);
+	transition: fill 1s ease;
+}
+
+/* ==========================================================================
+   JOYSTICK
+   ========================================================================== */
+
+/* Joystick back */
+.nipple .back {
+	background-color: var(--btn-background) !important;
+	border: var(--border) var(--border-size) var(--border-style);
+	transition: border-color 1s ease !important;
+}
+
+/* Joystick front */
+.nipple .front {
+	background-color: var(--color) !important;
+	border: var(--border) var(--border-size) var(--border-style);
+	transition: border-color 1s ease, background-color 1s ease !important;
+}
