@@ -44,7 +44,7 @@ document.forms[0].onsubmit = function (e) {
 	})
 	localStorage.setItem('joystick.locked', lockedBtns.join(','))
 
-	this.submit()
+	location.href = 'joystick.html'
 }
 
 const colors = {
