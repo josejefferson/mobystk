@@ -26,6 +26,12 @@ const colorsBackground = localStorage.getItem('joystick.background')
 const colorsColor = localStorage.getItem('joystick.color')
 const colorsBorder = localStorage.getItem('joystick.border')
 const colorsActive = localStorage.getItem('joystick.active')
+const customCSS = localStorage.getItem('joystick.customCSS')
+
+// CSS personalizado
+const $customCSS = document.createElement('style')
+$customCSS.textContent = customCSS
+document.body.append($customCSS)
 
 if (debug) document.body.classList.add('debug')
 if (!layout) location.href = 'index.html'
@@ -51,7 +57,7 @@ const joysticks = []
 
 
 // Atualiza a bateria
-navigator.getBattery().then(b => {
+navigator.getBattery()?.then(b => {
 	updateBattery(b)
 	b.addEventListener('chargingchange', e => updateBattery(e.target))
 	b.addEventListener('levelchange', e => updateBattery(e.target))

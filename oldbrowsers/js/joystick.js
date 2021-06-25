@@ -63,11 +63,13 @@ $layoutCSS.href = 'layouts/' + layout + '.css';
 const currentTouches = [];
 const joysticks = []; // Atualiza a bateria
 
-navigator.getBattery().then(b => {
-  updateBattery(b);
-  b.addEventListener('chargingchange', e => updateBattery(e.target));
-  b.addEventListener('levelchange', e => updateBattery(e.target));
-}).catch(console.error);
+if (navigator.getBattery) {
+  navigator.getBattery().then(b => {
+    updateBattery(b);
+    b.addEventListener('chargingchange', e => updateBattery(e.target));
+    b.addEventListener('levelchange', e => updateBattery(e.target));
+  }).catch(console.error);
+}
 
 function updateBattery(b) {
   $batteryIcon.classList.remove(...$batteryIcon.classList);

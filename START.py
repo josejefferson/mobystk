@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # INSTALE ESTES PACOTES ANTES DA PRIMEIRA EXECUÇÃO
+# pip install websockets
 # pip install pyqrcode
 # pip install pynput
 # pip install colorama
@@ -69,7 +70,7 @@ class NoCacheHandler(handler):
 		self.send_header('Pragma', 'no-cache')
 		self.send_header('Expires', '0')
 
-	# Desativa o log de requisições
+	Desativa o log de requisições
 	def log_message(self, format, *args):
 		return
 

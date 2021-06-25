@@ -43,7 +43,8 @@ body.preload * {
    ========================================================================== */
 
 /* Input text */
-input[type="text"] {
+input[type="text"],
+textarea {
 	background: none;
 	border-radius: 1000px;
 	border: #fff8 2px solid;
@@ -57,7 +58,8 @@ input[type="text"] {
 	width: 100%;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,
+textarea:focus {
 	border-color: #F8F9FA;
 	box-shadow: 0 0 0 4px #444;
 }
@@ -115,6 +117,13 @@ input[type="range"]::-webkit-slider-runnable-track {
 	cursor: pointer;
 	height: 0.5rem;
 	width: 100%;
+}
+
+textarea {
+	border-radius: 10px;
+	height: 100px;
+	text-align: left;
+	padding: 5px;
 }
 
 /* ==========================================================================
