@@ -70,7 +70,7 @@ class NoCacheHandler(handler):
 		self.send_header('Pragma', 'no-cache')
 		self.send_header('Expires', '0')
 
-	Desativa o log de requisições
+	# Desativa o log de requisições
 	def log_message(self, format, *args):
 		return
 
