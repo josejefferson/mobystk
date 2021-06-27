@@ -1,3 +1,7 @@
+window.onerror = function(err) {
+  document.getElementById('errors').innerText += err + '\n'
+}
+
 var _localStorage$getItem, _localStorage$getItem2;
 
 window.addEventListener('load', () => {
