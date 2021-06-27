@@ -1,0 +1,239 @@
+<div class="controls" ng-switch="nowEditingKey">
+	<table ng-switch-when="layoutInfo">
+		<tbody>
+			<tr>
+				<th>Name:</th>
+				<td><input type="text" ng-model="nowEditing.name"></td>
+			</tr>
+
+			<tr>
+				<th>CSS:</th>
+				<td><textarea ng-model="nowEditing.css" placeholder="Custom CSS"></textarea></td>
+			</tr>
+
+			<tr>
+				<th>ID:</th>
+				<td><code>{{::nowEditing.id}}</code></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table ng-switch-when="joystick">
+		<tbody>
+			<tr>
+				<th>Active:</th>
+				<td>
+					<input type="checkbox" ng-model="nowEditing.active">
+				</td>
+			</tr>
+			<tr>
+				<th>Size:</th>
+				<td>
+					<i class="fas fa-fw fa-minus" ng-click="nowEditing.size=nowEditing.size-2"></i>
+					<input type="number" ng-model="nowEditing.size">
+					<i class="fas fa-fw fa-plus" ng-click="nowEditing.size=nowEditing.size+2"></i>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table ng-switch-when="btnDetails">
+		<tbody>
+			<tr>
+				<th>Name:</th>
+				<td><input type="text" ng-model="nowEditing.name"></td>
+			</tr>
+
+			<tr>
+				<th>Keymap:</th>
+				<td>
+					<span ng-repeat="key in nowEditing.key track by $index">
+						<select ng-model="key">
+							<option value="" disabled></option>
+							<!--  -->
+							<option value="ctrl">ctrl</option>
+							<option value="alt">alt</option>
+							<option value="shift">shift</option>
+						</select>
+						<i class="fas fa-times" ng-click="nowEditing.key.splice($index,1)" style="margin-right:10px"></i>
+					</span>
+					<i class="fas fa-fw fa-plus-circle" ng-click="nowEditing.key.push('')"></i>
+				</td>
+			</tr>
+
+			<tr>
+				<th>Actions:</th>
+				<td><i class="fas fa-fw fa-lock{{nowEditing.lock?'':'-open'}}" ng-click="nowEditing.lock=!nowEditing.lock"></i>
+					<i class="fas fa-fw fa-eye{{nowEditing.visible?'':'-slash'}}"
+						ng-click="nowEditing.visible=!nowEditing.visible"></i>
+				</td>
+			</tr>
+
+			<tr>
+				<th>ID:</th>
+				<td><code>{{::nowEditing.id}}</code></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table ng-switch-when="grpDetails">
+		<tbody>
+			<tr>
+				<th>Name:</th>
+				<td><input type="text" ng-model="nowEditing.name"></td>
+			</tr>
+
+			<tr>
+				<th>ID:</th>
+				<td><code>{{::nowEditing.id}}</code></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div ng-switch-when="content">
+		<textarea class="content" ng-model="nowEditing.content" placeholder="Text or HTML content"></textarea>
+	</div>
+
+	<table ng-switch-when="position">
+		<tbody>
+			<tr>
+				<th>AnchorX:</th>
+				<td>
+					<select ng-model="nowEditing.anchorX" style="width:100px">
+						<option ng-value="'left'">Left</option>
+						<option ng-value="'center'">Center</option>
+						<option ng-value="'right'">Right</option>
+					</select>
+				</td>
+				<th>X:</th>
+				<td>
+					<input type="number" ng-model="nowEditing.x[0]" ng-disabled="nowEditing.anchorX === 'center'">
+					<select ng-model="nowEditing.x[1]" ng-disabled="nowEditing.anchorX === 'center'">
+						<option ng-value="'px'">px</option>
+						<option ng-value="'%'">%</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>AnchorY:</th>
+				<td>
+					<select ng-model="nowEditing.anchorY" style="width:100px">
+						<option ng-value="'top'">Top</option>
+						<option ng-value="'center'">Center</option>
+						<option ng-value="'bottom'">Bottom</option>
+					</select>
+				</td>
+				<th>Y:</th>
+				<td>
+					<input type="number" ng-model="nowEditing.y[0]" ng-disabled="nowEditing.anchorY === 'center'">
+					<select ng-model="nowEditing.y[1]" ng-disabled="nowEditing.anchorY === 'center'">
+						<option ng-value="'px'">px</option>
+						<option ng-value="'%'">%</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td colspan="2">
+					<i ng-class="{disabled:nowEditing.anchorY==='center'}" class="fas fa-fw fa-arrow-up"
+						ng-click="move(nowEditing, 'up')"></i>
+					<i ng-class="{disabled:nowEditing.anchorX==='center'}" class="fas fa-fw fa-arrow-left"
+						ng-click="move(nowEditing, 'left')"></i>
+					<i ng-class="{disabled:nowEditing.anchorX==='center'}" class="fas fa-fw fa-arrow-right"
+						ng-click="move(nowEditing, 'right')"></i>
+					<i ng-class="{disabled:nowEditing.anchorY==='center'}" class="fas fa-fw fa-arrow-down"
+						ng-click="move(nowEditing, 'down')"></i>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table ng-switch-when="size">
+		<tbody>
+			<tr>
+				<th>Width:</th>
+				<td>
+					<i class="fas fa-fw fa-minus" ng-click="nowEditing.width[0]=nowEditing.width[0]-2"></i>
+					<input type="number" ng-model="nowEditing.width[0]">
+					<i class="fas fa-fw fa-plus" ng-click="nowEditing.width[0]=nowEditing.width[0]+2"></i>
+					<select ng-model="nowEditing.width[1]">
+						<option ng-value="'px'">px</option>
+						<option ng-value="'%'">%</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>Height:</th>
+				<td>
+					<i class="fas fa-fw fa-minus" ng-click="nowEditing.height[0]=nowEditing.height[0]-2"></i>
+					<input type="number" ng-model="nowEditing.height[0]">
+					<i class="fas fa-fw fa-plus" ng-click="nowEditing.height[0]=nowEditing.height[0]+2"></i>
+					<select ng-model="nowEditing.height[1]">
+						<option ng-value="'px'">px</option>
+						<option ng-value="'%'">%</option>
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table ng-switch-when="round">
+		<tbody>
+			<tr>
+				<th>Circle:</th>
+				<td>
+					<input type="checkbox" ng-model="nowEditing.rounded">
+				</td>
+			</tr>
+			<tr ng-repeat="round in nowEditing.borderRadius track by $index">
+				<th ng-switch="$index" ng-class="{disabled: nowEditing.rounded}">
+					<span ng-switch-when="0">Top left:</span>
+					<span ng-switch-when="1">Top right:</span>
+					<span ng-switch-when="2">Bottom right:</span>
+					<span ng-switch-when="3">Bottom left:</span>
+				</th>
+				<td ng-class="{disabled: nowEditing.rounded}">
+					<i class="fas fa-fw fa-minus" ng-click="round[0]=round[0]-1"></i>
+					<input type="number" ng-model="round[0]" ng-disabled="nowEditing.rounded">
+					<i class="fas fa-fw fa-plus" ng-click="round[0]=round[0]+1"></i>
+					<select ng-model="round[1]" ng-disabled="nowEditing.rounded">
+						<option ng-value="'px'">px</option>
+						<option ng-value="'%'">%</option>
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table ng-switch-when="style">
+		<tbody>
+			<tr>
+				<th>Show borders:</th>
+				<td>
+					<button ng-click="nowEditing.hiddenBorders.top = !nowEditing.hiddenBorders.top"
+						ng-class="{transparent: nowEditing.hiddenBorders.top}">Top</button>
+					<button ng-click="nowEditing.hiddenBorders.bottom = !nowEditing.hiddenBorders.bottom"
+						ng-class="{transparent: nowEditing.hiddenBorders.bottom}">Bottom</button>
+					<button ng-click="nowEditing.hiddenBorders.left = !nowEditing.hiddenBorders.left"
+						ng-class="{transparent: nowEditing.hiddenBorders.left}">Left</button>
+					<button ng-click="nowEditing.hiddenBorders.right = !nowEditing.hiddenBorders.right"
+						ng-class="{transparent: nowEditing.hiddenBorders.right}">Right</button>
+				</td>
+			</tr>
+
+			<tr>
+				<th>Font size:</th>
+				<td colspan="7">
+					<i class="fas fa-fw fa-minus" ng-click="nowEditing.fontSize[0]=nowEditing.fontSize[0]-1"></i>
+					<input type="number" ng-model="nowEditing.fontSize[0]">
+					<i class="fas fa-fw fa-plus" ng-click="nowEditing.fontSize[0]=nowEditing.fontSize[0]+1"></i>
+					<select ng-model="nowEditing.fontSize[1]">
+						<option ng-value="'px'">px</option>
+						<option ng-value="'%'">%</option>
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

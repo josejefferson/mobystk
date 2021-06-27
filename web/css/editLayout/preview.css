@@ -1,0 +1,70 @@
+.preview {
+	border: #fff 1px solid;
+	width: 70%;
+	height: 70%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-color: #000;
+	z-index: 1;
+	transition: all .2s ease;
+	overflow: hidden;
+}
+
+.preview.fullscreen {
+	width: 100%;
+	height: 100%;
+	border-width: 0;
+}
+
+.preview .group {
+	position: absolute;
+}
+
+.preview button {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	outline: none;
+	position: absolute;
+	background-color: var(--btn-background);
+	border: var(--border) var(--border-size) var(--border-style);
+	color: var(--color);
+	font-size: 12.5px;
+	transition: border-color 1s ease,
+		color 1s ease;
+}
+
+.preview .nowEditing {
+	outline: red 1px dashed;
+}
+
+.preview .group button {
+	border-radius: 50%;
+	font-size: 20px;
+}
+
+.preview button.lock {
+	border-style: dashed;
+}
+
+.preview button.active,
+.preview button.dActive {
+	background-color: var(--active);
+}
+
+.preview .joystick {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	border: var(--border) var(--border-size) var(--border-style);
+}
+
+.preview .joystick .front {
+	display: block;
+	border-radius: 50%;
+	border: var(--border) var(--border-size) var(--border-style);
+	background-color: var(--color);
+}

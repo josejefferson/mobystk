@@ -1,0 +1,23 @@
+:root {
+	--color: #fff8;
+	--border: var(--color);
+	--active: #fff3;
+	--border-size: 2.5px;
+	--btn-background: transparent;
+	--border-style: solid;
+}
+
+* {
+	-webkit-tap-highlight-color: transparent;
+	user-select: none;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #000;
+	color: #fff;
+	height: 100vh;
+	margin: 0;
+	overscroll-behavior: contain;
+	font-family: sans-serif;
+}
