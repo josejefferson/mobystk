@@ -287,9 +287,9 @@ if (!(location.protocol === 'https:' ||
 	$drive.style.display = 'none'
 
 // Ligar/desligar sensor
-$drive.onclick = e => {
+function toggleDriveMode() {
 	const SENSITIVITY = 2 // Sensibilidade do sensor
-
+	
 	if (e.target.classList.contains('active')) {
 		e.target.classList.remove('active')
 		e.target.innerHTML = driveHTML
@@ -298,16 +298,16 @@ $drive.onclick = e => {
 		sendCmd(['joyLRight'], true)
 		return
 	}
-
+	
 	e.target.classList.add('active')
 	e.target.innerHTML = '<i class="mdi mdi-arrow-up"></i>'
 	let driveY = 0, driveDirection = null
-
+	
 	// Detecta os movimentos
 	window.ondevicemotion = e => {
 		const orientation = e.accelerationIncludingGravity.x >= 0 ? true : false
 		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
-
+	
 		if (driveY > SENSITIVITY) {
 			direction = orientation ? 'joyLRight' : 'joyLLeft'
 		} else if (driveY < -SENSITIVITY) {
@@ -315,14 +315,14 @@ $drive.onclick = e => {
 		} else {
 			direction = null
 		}
-
+	
 		if (direction === driveDirection) return
 		switch (direction) {
 			case 'joyLLeft': $drive.innerHTML = '<i class="mdi mdi-undo"></i>'; break
 			case 'joyLRight': $drive.innerHTML = '<i class="mdi mdi-redo"></i>'; break
 			default: $drive.innerHTML = '<i class="mdi mdi-arrow-up"></i>'
 		}
-
+	
 		driveDirection = direction
 		if (direction === null) {
 			sendCmd(['joyLLeft'], true)
@@ -332,6 +332,9 @@ $drive.onclick = e => {
 		}
 	}
 }
+
+$drive.onclick = toggleDriveMode
+$drive.ontouchstart = toggleDriveMode
 
 // Macros
 const $recordMacro = document.querySelector('.recordMacro')
