@@ -287,7 +287,7 @@ if (!(location.protocol === 'https:' ||
 	$drive.style.display = 'none'
 
 // Ligar/desligar sensor
-function toggleDriveMode() {
+function toggleDriveMode(e) {
 	const SENSITIVITY = 2 // Sensibilidade do sensor
 	
 	if (e.target.classList.contains('active')) {
@@ -333,7 +333,8 @@ function toggleDriveMode() {
 	}
 }
 
-$drive.onclick = toggleDriveMode
+$drive.onmousedown = toggleDriveMode
+$drive.onmouseup = toggleDriveMode
 $drive.ontouchstart = toggleDriveMode
 
 // Macros
