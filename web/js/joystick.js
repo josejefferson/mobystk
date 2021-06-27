@@ -15,10 +15,10 @@ const ip = localStorage.getItem('joystick.code') || 'localhost:5000'
 const layout = localStorage.getItem('joystick.layout')
 const player = parseInt(localStorage.getItem('joystick.player')) - 1
 const debug = localStorage.getItem('joystick.debug') === 'true'
-const locked = localStorage.getItem('joystick.locked')
+const locked = localStorage.getItem('joystick.locked')?.split(',')
+const hidden = localStorage.getItem('joystick.hidden')?.split(',')
 const invert = localStorage.getItem('joystick.invert') === 'true'
 const vibrate = !(localStorage.getItem('joystick.vibrate') === 'false')
-const deviceInfo = !(localStorage.getItem('joystick.deviceInfo') === 'false')
 const bgImage = localStorage.getItem('joystick.bgImage')
 const bgOpacity = localStorage.getItem('joystick.bgOpacity')
 const bgBlur = localStorage.getItem('joystick.bgBlur')
@@ -33,14 +33,26 @@ const $customCSS = document.createElement('style')
 $customCSS.textContent = customCSS
 document.body.append($customCSS)
 
-if (debug) document.body.classList.add('debug')
 if (!layout) location.href = 'index.html'
+if (debug) document.body.classList.add('debug')
 if (invert) document.body.classList.add('invert')
 if (bgImage) $bgImage.style.backgroundImage = `url('backgrounds/${bgImage}')`
 if (bgOpacity) $bgImage.style.opacity = bgOpacity
 if (bgBlur) $bgImage.style.filter = `blur(${bgBlur}px)`
-locked?.split(',')?.forEach(key => {
-	if (key) document.querySelector('.' + key)?.classList.add('lock')
+
+locked?.forEach(key => {
+	if (key) key.split(' ').forEach(key => {
+		document.querySelectorAll('.' + key).forEach(el => {
+			el.classList.add('lock')
+		})
+	})
+})
+hidden?.forEach(item => {
+	if (item) item.split(' ').forEach(item => {
+		document.querySelectorAll('.' + item).forEach(el => {
+			el.style.display = 'none'
+		})
+	})
 })
 
 if (colorsBackground) $root.style.setProperty('--background', colorsBackground)
@@ -81,8 +93,7 @@ function updateBattery(b) {
 
 
 // Atualiza o relógio
-if (!deviceInfo) $deviceInfo.remove()
-else window.setInterval(updateClock, 1000)
+window.setInterval(updateClock, 1000)
 updateClock()
 
 function updateClock() {

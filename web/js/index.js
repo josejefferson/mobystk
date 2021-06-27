@@ -8,7 +8,6 @@ document.forms[0].elements.layout.value = localStorage.getItem('joystick.layout'
 document.forms[0].elements.player.value = localStorage.getItem('joystick.player')
 document.forms[0].elements.invert.checked = localStorage.getItem('joystick.invert') === 'true'
 document.forms[0].elements.vibrate.checked = !(localStorage.getItem('joystick.vibrate') === 'false')
-document.forms[0].elements.deviceInfo.checked = !(localStorage.getItem('joystick.deviceInfo') === 'false')
 document.forms[0].elements.background.value = localStorage.getItem('joystick.background') || '#000000'
 document.forms[0].elements.color.value = localStorage.getItem('joystick.color') || '#FFFFFF88'
 document.forms[0].elements.border.value = localStorage.getItem('joystick.border') || '#FFFFFF88'
@@ -21,6 +20,9 @@ document.forms[0].elements.customCSS.value = localStorage.getItem('joystick.cust
 localStorage.getItem('joystick.locked')?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true
 })
+localStorage.getItem('joystick.hidden')?.split(',')?.forEach(e => {
+	if (e) document.querySelector(`[name=hide][value="${e}"]`).checked = true
+})
 
 document.forms[0].onsubmit = function (e) {
 	e.preventDefault()
@@ -30,7 +32,6 @@ document.forms[0].onsubmit = function (e) {
 	localStorage.setItem('joystick.debug', this.elements.debug.checked)
 	localStorage.setItem('joystick.invert', this.elements.invert.checked)
 	localStorage.setItem('joystick.vibrate', this.elements.vibrate.checked)
-	localStorage.setItem('joystick.deviceInfo', this.elements.deviceInfo.checked)
 	localStorage.setItem('joystick.background', this.elements.background.value)
 	localStorage.setItem('joystick.color', this.elements.color.value)
 	localStorage.setItem('joystick.border', this.elements.border.value)
@@ -41,11 +42,17 @@ document.forms[0].onsubmit = function (e) {
 	localStorage.setItem('joystick.customCSS', this.elements.customCSS.value)
 
 	const lockedBtns = []
+	const hiddenItems = []
 	this.elements.lock.forEach(e => {
 		if (e.checked) lockedBtns.push(e.value)
 	})
+	this.elements.hide.forEach(e => {
+		if (e.checked) hiddenItems.push(e.value)
+	})
+	
 	localStorage.setItem('joystick.locked', lockedBtns.join(','))
-
+	localStorage.setItem('joystick.hidden', hiddenItems.join(','))
+	
 	location.href = 'joystick.html'
 }
 
