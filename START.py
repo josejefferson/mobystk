@@ -13,15 +13,21 @@ DEBUG = False # Se True, mostrará logs
 
 import asyncio
 from colorama import init as coloramaInit, Fore, Style
+from pynput.keyboard import Key, KeyCode, Controller
+from time import sleep
 import http.server
+import os
 import pyqrcode
 import socket
 import socketserver
 import threading
-import time
 import websockets
-from pynput.keyboard import Key, KeyCode, Controller
 
+# Define o caminho para a pasta "web"
+web_dir = os.path.join(os.path.dirname(__file__), 'web')
+os.chdir(web_dir)
+
+# Inicializa os pacotes
 coloramaInit()
 keyboard = Controller()
 handler = http.server.SimpleHTTPRequestHandler
@@ -111,7 +117,7 @@ async def server(websocket, path):
 					elif msg[0] == 't':
 						if DEBUG: print(Fore.CYAN + '[TAP KEY] ' + Style.RESET_ALL + str(key))
 						keyboard.press(key)
-						time.sleep(0.05)
+						sleep(0.05)
 						keyboard.release(key)
 
 			except Exception as e:
