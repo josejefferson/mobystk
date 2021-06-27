@@ -294,6 +294,8 @@ $drive.onclick = e => {
 		e.target.classList.remove('active')
 		e.target.innerHTML = driveHTML
 		window.ondevicemotion = null
+		sendCmd(['joyLLeft'], true)
+		sendCmd(['joyLRight'], true)
 		return
 	}
 
