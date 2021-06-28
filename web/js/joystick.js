@@ -10,6 +10,7 @@ const $clock = $deviceInfo.querySelector('.clock')
 const $playerNumber = $deviceInfo.querySelector('.player .player-number')
 const $layout = $deviceInfo.querySelector('.layout')
 const $drive = document.querySelector('.drive')
+const $invert = document.querySelector('.toggleInvert')
 
 const ip = localStorage.getItem('joystick.code') || 'localhost:5000'
 const layout = localStorage.getItem('joystick.layout')
@@ -27,11 +28,6 @@ const colorsColor = localStorage.getItem('joystick.color')
 const colorsBorder = localStorage.getItem('joystick.border')
 const colorsActive = localStorage.getItem('joystick.active')
 const customCSS = localStorage.getItem('joystick.customCSS')
-
-// CSS personalizado
-const $customCSS = document.createElement('style')
-$customCSS.textContent = customCSS
-document.body.append($customCSS)
 
 if (!layout) location.href = 'index.html'
 if (debug) document.body.classList.add('debug')
@@ -60,6 +56,10 @@ if (colorsColor) $root.style.setProperty('--color', colorsColor)
 if (colorsBorder) $root.style.setProperty('--border', colorsBorder)
 if (colorsActive) $root.style.setProperty('--active', colorsActive)
 
+// CSS personalizado
+const $customCSS = document.createElement('style')
+$customCSS.textContent = customCSS
+document.body.append($customCSS)
 
 // Carrega o layout
 $layoutCSS.href = 'layouts/' + layout + '.css'
@@ -105,6 +105,14 @@ function updateClock() {
 $playerNumber.innerText = player + 1
 $layout.innerText = layout.toUpperCase()
 
+// Botão de inverter Joystick/Setas
+//$invert.onmousedown = toggleInvert
+$invert.ontouchstart = toggleInvert
+
+function toggleInvert() {
+	document.body.classList.toggle('invert')
+	resizeJoystick()
+}
 
 // Eventos da página
 document.addEventListener('contextmenu', () => false)
@@ -344,8 +352,8 @@ function toggleDriveMode(e) {
 	}
 }
 
-$drive.onmousedown = toggleDriveMode
-$drive.onmouseup = toggleDriveMode
+//$drive.onmousedown = toggleDriveMode
+//$drive.onmouseup = toggleDriveMode
 $drive.ontouchstart = toggleDriveMode
 
 // Macros
