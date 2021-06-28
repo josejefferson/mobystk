@@ -32,7 +32,7 @@ const customCSS = localStorage.getItem('joystick.customCSS')
 if (!layout) location.href = 'index.html'
 if (debug) document.body.classList.add('debug')
 if (invert) document.body.classList.add('invert')
-if (bgImage) $bgImage.style.backgroundImage = `url('backgrounds/${bgImage}')`
+if (bgImage) $bgImage.style.backgroundImage = `url('${bgImage}')`
 if (bgOpacity) $bgImage.style.opacity = bgOpacity
 if (bgBlur) $bgImage.style.filter = `blur(${bgBlur}px)`
 
