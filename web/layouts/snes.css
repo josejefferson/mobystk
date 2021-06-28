@@ -16,7 +16,7 @@
 	display: block;
 }
 
-body.invert #joystickA {
+body.invert .joystickA {
 	display: block;
 }
 

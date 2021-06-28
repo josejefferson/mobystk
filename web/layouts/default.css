@@ -47,12 +47,12 @@
 	height: 150px;
 }
 
-.joystick#joystickL,
-.joystick#joystickA {
+.joystick.joystickL,
+.joystick.joystickA {
 	left: 10px;
 }
 
-.joystick#joystickR {
+.joystick.joystickR {
 	right: 10px;
 }
 

@@ -13,8 +13,8 @@
 
 .arrows,
 .actions,
-#joystickL,
-#joystickR {
+.joystickL,
+.joystickR {
 	display: block;
 }
 
@@ -24,7 +24,7 @@
 	height: 128px;
 }
 
-.joystick#joystickR {
+.joystick.joystickR {
 	bottom: 160px;
 }
 
@@ -34,7 +34,7 @@ body.invert .arrows {
 	height: 150px;
 }
 
-body.invert .joystick#joystickL {
+body.invert .joystick.joystickL {
 	bottom: 160px;
 }
 

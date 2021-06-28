@@ -8,10 +8,10 @@ document.forms[0].elements.layout.value = localStorage.getItem('joystick.layout'
 document.forms[0].elements.player.value = localStorage.getItem('joystick.player')
 document.forms[0].elements.invert.checked = localStorage.getItem('joystick.invert') === 'true'
 document.forms[0].elements.vibrate.checked = !(localStorage.getItem('joystick.vibrate') === 'false')
-document.forms[0].elements.background.value = localStorage.getItem('joystick.background') || '#000000'
-document.forms[0].elements.color.value = localStorage.getItem('joystick.color') || '#FFFFFF88'
-document.forms[0].elements.border.value = localStorage.getItem('joystick.border') || '#FFFFFF88'
-document.forms[0].elements.active.value = localStorage.getItem('joystick.active') || '#FFFFFF33'
+document.forms[0].elements.background.value = localStorage.getItem('joystick.background') || 'rgba(0, 0, 0, 1)'
+document.forms[0].elements.color.value = localStorage.getItem('joystick.color') || 'rgba(255, 255, 255, 0.53)'
+document.forms[0].elements.border.value = localStorage.getItem('joystick.border') || 'rgba(255, 255, 255, 0.53)'
+document.forms[0].elements.active.value = localStorage.getItem('joystick.active') || 'rgba(255, 255, 255, 0.2)'
 document.forms[0].elements.bgImage.value = localStorage.getItem('joystick.bgImage')
 document.forms[0].elements.bgOpacity.value = localStorage.getItem('joystick.bgOpacity') || '0.5'
 document.forms[0].elements.bgBlur.value = localStorage.getItem('joystick.bgBlur') || '0'
@@ -114,6 +114,6 @@ function createPickr(el, defaultColor, opacity) {
 			'#000000' + (opacity || '')
 		]
 	}).on('change', color => {
-		document.forms[0].elements[el].value = color.toHEXA().toString()
+		document.forms[0].elements[el].value = color.toRGBA().toString()
 	})
 }

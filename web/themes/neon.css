@@ -31,7 +31,7 @@ button svg {
 .front {
 	box-shadow: #f40 0 0 8px, inset #f40 0 0 8px;
 	border-color: #fff !important;
-	background: #f405 !important;
+	background: rgba(255, 68, 0, 0.33) !important;
 }
 
 .joystick:active .back {

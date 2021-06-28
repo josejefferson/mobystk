@@ -13,7 +13,7 @@
 
 .arrows,
 .actions,
-#joystickL {
+.joystickL {
 	display: block;
 }
 
@@ -29,7 +29,7 @@ body.invert .arrows {
 	height: 150px;
 }
 
-body.invert .joystick#joystickL {
+body.invert .joystick.joystickL {
 	bottom: 160px;
 }
 

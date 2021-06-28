@@ -47,7 +47,7 @@ input[type="text"],
 textarea {
 	background: none;
 	border-radius: 1000px;
-	border: #fff8 2px solid;
+	border: rgba(255, 255, 255, 0.53) 2px solid;
 	color: inherit; 
 	font-size: 16px;
 	height: 30px;
@@ -111,7 +111,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
-	background-color: #fff8;
+	background-color: rgba(255, 255, 255, 0.53);
 	border-color: transparent;
 	border-radius: 1000px;
 	cursor: pointer;

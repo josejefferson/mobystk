@@ -438,7 +438,7 @@ function resizeJoystick() {
 
 	for (j in joysticks) joysticks[j].instance.destroy();
 	(['joystickL', 'joystickR', 'joystickA']).forEach(id => {
-		const $el = document.getElementById(id)
+		const $el = document.querySelector('.' + id)
 		joysticks[id] = { up: false, down: false, left: false, right: false }
 		joysticks[id].instance = nipplejs.create({
 			zone: $el,
