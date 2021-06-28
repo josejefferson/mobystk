@@ -19,9 +19,9 @@
 	<div class="backgroundImage"></div>
 
 	<!-- Joysticks -->
-	<div id="joystickL" class="joystick group touch" data-keys="joyLUp joyLLeft joyLDown joyLRight"></div>
-	<div id="joystickR" class="joystick group touch" data-keys="joyRUp joyRLeft joyRDown joyRRight"></div>
-	<div id="joystickA" class="joystick group touch" data-keys="padUp padLeft padDown padRight"></div>
+	<div class="joystick joystickL group touch" data-keys="joyLUp joyLLeft joyLDown joyLRight"></div>
+	<div class="joystick joystickR group touch" data-keys="joyRUp joyRLeft joyRDown joyRRight"></div>
+	<div class="joystick joystickA group touch" data-keys="padUp padLeft padDown padRight"></div>
 
 	<!-- Arrow buttons -->
 	<div class="arrows group">
@@ -56,34 +56,34 @@
 	<div class="actions group">
 		<!-- PlayStation buttons -->
 		<!-- Triangle -->
-		<button class="actup touch" data-key="actUp">
+		<button class="actUp touch" data-key="actUp">
 			<i class="mdi mdi-triangle-outline"></i>
 		</button>
 
 		<!-- Square -->
-		<button class="actleft touch" data-key="actLeft">
+		<button class="actLeft touch" data-key="actLeft">
 			<i class="mdi mdi-square-outline"></i>
 		</button>
 
 		<!-- Cross -->
-		<button class="actdown touch" data-key="actDown">
+		<button class="actDown touch" data-key="actDown">
 			<i class="mdi mdi-close"></i>
 		</button>
 
 		<!-- Circle -->
-		<button class="actright touch" data-key="actRight">
+		<button class="actRight touch" data-key="actRight">
 			<i class="mdi mdi-circle-outline"></i>
 		</button>
 
 		<!-- SNES buttons -->
 		<!-- X -->
-		<button class="snesactup touch" data-key="actUp">X</button>
+		<button class="snesActUp touch" data-key="actUp">X</button>
 		<!-- Y -->
-		<button class="snesactleft touch" data-key="actLeft">Y</button>
+		<button class="snesActLeft touch" data-key="actLeft">Y</button>
 		<!-- B -->
-		<button class="snesactdown touch" data-key="actDown">B</button>
+		<button class="snesActDown touch" data-key="actDown">B</button>
 		<!-- A -->
-		<button class="snesactright touch" data-key="actRight">A</button>
+		<button class="snesActRight touch" data-key="actRight">A</button>
 
 		<!-- Diagonal actions -->
 		<div class="diag dLT touch" data-key="actLeft actUp"></div>
@@ -128,6 +128,10 @@
 	</button>
 	<button class="playMacro touch">
 		<i class="mdi mdi-play"></i>
+	</button>
+
+	<button class="toggleInvert touch">
+		<i class="mdi mdi-swap-vertical"></i>
 	</button>
 
 	<!-- Drive -->

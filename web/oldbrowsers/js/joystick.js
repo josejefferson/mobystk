@@ -14,7 +14,7 @@ if (!String.prototype.padStart) {
     };
 }
 
-var _locked$split;
+var _localStorage$getItem, _localStorage$getItem2, _navigator$getBattery;
 
 const $root = document.documentElement;
 const $bgImage = document.querySelector('.backgroundImage');
@@ -28,14 +28,15 @@ const $clock = $deviceInfo.querySelector('.clock');
 const $playerNumber = $deviceInfo.querySelector('.player .player-number');
 const $layout = $deviceInfo.querySelector('.layout');
 const $drive = document.querySelector('.drive');
+const $invert = document.querySelector('.toggleInvert');
 const ip = localStorage.getItem('joystick.code') || 'localhost:5000';
 const layout = localStorage.getItem('joystick.layout');
 const player = parseInt(localStorage.getItem('joystick.player')) - 1;
 const debug = localStorage.getItem('joystick.debug') === 'true';
-const locked = localStorage.getItem('joystick.locked');
+const locked = (_localStorage$getItem = localStorage.getItem('joystick.locked')) === null || _localStorage$getItem === void 0 ? void 0 : _localStorage$getItem.split(',');
+const hidden = (_localStorage$getItem2 = localStorage.getItem('joystick.hidden')) === null || _localStorage$getItem2 === void 0 ? void 0 : _localStorage$getItem2.split(',');
 const invert = localStorage.getItem('joystick.invert') === 'true';
 const vibrate = !(localStorage.getItem('joystick.vibrate') === 'false');
-const deviceInfo = !(localStorage.getItem('joystick.deviceInfo') === 'false');
 const bgImage = localStorage.getItem('joystick.bgImage');
 const bgOpacity = localStorage.getItem('joystick.bgOpacity');
 const bgBlur = localStorage.getItem('joystick.bgBlur');
@@ -43,33 +44,45 @@ const colorsBackground = localStorage.getItem('joystick.background');
 const colorsColor = localStorage.getItem('joystick.color');
 const colorsBorder = localStorage.getItem('joystick.border');
 const colorsActive = localStorage.getItem('joystick.active');
-if (debug) document.body.classList.add('debug');
+const customCSS = localStorage.getItem('joystick.customCSS');
 if (!layout) location.href = 'index.html';
+if (debug) document.body.classList.add('debug');
 if (invert) document.body.classList.add('invert');
 if (bgImage) $bgImage.style.backgroundImage = `url('backgrounds/${bgImage}')`;
 if (bgOpacity) $bgImage.style.opacity = bgOpacity;
 if (bgBlur) $bgImage.style.filter = `blur(${bgBlur}px)`;
-locked === null || locked === void 0 ? void 0 : (_locked$split = locked.split(',')) === null || _locked$split === void 0 ? void 0 : _locked$split.forEach(key => {
-  var _document$querySelect;
-
-  if (key) (_document$querySelect = document.querySelector('.' + key)) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.classList.add('lock');
+locked === null || locked === void 0 ? void 0 : locked.forEach(key => {
+  if (key) key.split(' ').forEach(key => {
+    document.querySelectorAll('.' + key).forEach(el => {
+      el.classList.add('lock');
+    });
+  });
+});
+hidden === null || hidden === void 0 ? void 0 : hidden.forEach(item => {
+  if (item) item.split(' ').forEach(item => {
+    document.querySelectorAll('.' + item).forEach(el => {
+      el.style.display = 'none';
+    });
+  });
 });
 if (colorsBackground) $root.style.setProperty('--background', colorsBackground);
 if (colorsColor) $root.style.setProperty('--color', colorsColor);
 if (colorsBorder) $root.style.setProperty('--border', colorsBorder);
-if (colorsActive) $root.style.setProperty('--active', colorsActive); // Carrega o layout
+if (colorsActive) $root.style.setProperty('--active', colorsActive); // CSS personalizado
+
+const $customCSS = document.createElement('style');
+$customCSS.textContent = customCSS;
+document.body.append($customCSS); // Carrega o layout
 
 $layoutCSS.href = 'layouts/' + layout + '.css';
 const currentTouches = [];
 const joysticks = []; // Atualiza a bateria
 
-if (navigator.getBattery) {
-  navigator.getBattery().then(b => {
-    updateBattery(b);
-    b.addEventListener('chargingchange', e => updateBattery(e.target));
-    b.addEventListener('levelchange', e => updateBattery(e.target));
-  }).catch(console.error);
-}
+(_navigator$getBattery = navigator.getBattery()) === null || _navigator$getBattery === void 0 ? void 0 : _navigator$getBattery.then(b => {
+  updateBattery(b);
+  b.addEventListener('chargingchange', e => updateBattery(e.target));
+  b.addEventListener('levelchange', e => updateBattery(e.target));
+}).catch(console.error);
 
 function updateBattery(b) {
   $batteryIcon.classList.remove(...$batteryIcon.classList);
@@ -89,7 +102,7 @@ function updateBattery(b) {
 } // Atualiza o relógio
 
 
-if (!deviceInfo) $deviceInfo.remove();else window.setInterval(updateClock, 1000);
+window.setInterval(updateClock, 1000);
 updateClock();
 
 function updateClock() {
@@ -99,7 +112,16 @@ function updateClock() {
 }
 
 $playerNumber.innerText = player + 1;
-$layout.innerText = layout.toUpperCase(); // Eventos da página
+$layout.innerText = layout.toUpperCase(); // Botão de inverter Joystick/Setas
+//$invert.onmousedown = toggleInvert
+
+$invert.ontouchstart = toggleInvert;
+
+function toggleInvert() {
+  document.body.classList.toggle('invert');
+  resizeJoystick();
+} // Eventos da página
+
 
 document.addEventListener('contextmenu', () => false);
 window.addEventListener('resize', resizeJoystick);
@@ -282,13 +304,15 @@ document.querySelectorAll('.lock').forEach(el => {
 const driveHTML = $drive.innerHTML;
 if (!(location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) $drive.style.display = 'none'; // Ligar/desligar sensor
 
-$drive.onclick = e => {
+function toggleDriveMode(e) {
   const SENSITIVITY = 2; // Sensibilidade do sensor
 
   if (e.target.classList.contains('active')) {
     e.target.classList.remove('active');
     e.target.innerHTML = driveHTML;
     window.ondevicemotion = null;
+    sendCmd(['joyLLeft'], true);
+    sendCmd(['joyLRight'], true);
     return;
   }
 
@@ -333,8 +357,11 @@ $drive.onclick = e => {
       sendCmd([direction]);
     }
   };
-}; // Macros
+} //$drive.onmousedown = toggleDriveMode
+//$drive.onmouseup = toggleDriveMode
 
+
+$drive.ontouchstart = toggleDriveMode; // Macros
 
 const $recordMacro = document.querySelector('.recordMacro');
 const $playMacro = document.querySelector('.playMacro');
@@ -424,7 +451,7 @@ function resizeJoystick() {
   for (j in joysticks) joysticks[j].instance.destroy();
 
   ['joystickL', 'joystickR', 'joystickA'].forEach(id => {
-    const $el = document.getElementById(id);
+    const $el = document.querySelector('.' + id);
     joysticks[id] = {
       up: false,
       down: false,

@@ -47,12 +47,12 @@
 	height: 150px;
 }
 
-.joystick#joystickL,
-.joystick#joystickA {
+.joystick.joystickL,
+.joystick.joystickA {
 	left: 10px;
 }
 
-.joystick#joystickR {
+.joystick.joystickR {
 	right: 10px;
 }
 
@@ -103,50 +103,50 @@
    ========================================================================== */
 
 /* General action buttons */
-.actup,
-.actright,
-.actleft,
-.actdown,
-.snesactup,
-.snesactright,
-.snesactleft,
-.snesactdown {
+.actUp,
+.actRight,
+.actLeft,
+.actDown,
+.snesActUp,
+.snesActRight,
+.snesActLeft,
+.snesActDown {
 	font-size: 32px !important;
 	width: 52px;
 	height: 52px;
 }
 
 /* Up action button */
-.actup,
-.snesactup {
+.actUp,
+.snesActUp {
 	left: 50%;
 	top: 0;
 	transform: translateX(-50%);
 }
 
 /* Down action button */
-.actdown,
-.snesactdown {
+.actDown,
+.snesActDown {
 	left: 50%;
 	bottom: 0;
 	transform: translateX(-50%);
 }
 
-.actdown i {
+.actDown i {
 	font-size: 42px !important;
 }
 
 /* Left action button */
-.actleft,
-.snesactleft {
+.actLeft,
+.snesActLeft {
 	top: 50%;
 	left: 0;
 	transform: translateY(-50%);
 }
 
 /* Right action button */
-.actright,
-.snesactright {
+.actRight,
+.snesActRight {
 	top: 50%;
 	right: 0;
 	transform: translateY(-50%);
@@ -207,6 +207,7 @@
 	border-top: none;
 	border-top-style: none;
 	border-radius: 0 0 40px 40px;
+	border-top-style: hidden !important;
 	top: 0;
 	left: 180px;
 }
@@ -229,6 +230,7 @@
 	border-top: none;
 	border-top-style: none;
 	border-radius: 0 0 40px 40px;
+	border-top-style: hidden !important;
 	top: 0;
 	right: 180px;
 }
@@ -348,6 +350,19 @@
 	left: 50%;
 	border-radius: 0 1000px 0 0;
 	border-left: none;
+}
+
+/* "Invert" button */
+.toggleInvert {
+	display: flex;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	border-radius: 30px 0 0 30px;
+	font-size: 16px;
+	border-right: none;
+	height: 40px;
+	width: 20px;
 }
 
 /* "Edit" button */

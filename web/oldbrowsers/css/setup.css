@@ -43,7 +43,7 @@ button:active {
 }
 
 .return:active {
-	background: #0f05;
+	background: rgba(0, 255, 0, 0.33);
 }
 
 .progressContainer {
