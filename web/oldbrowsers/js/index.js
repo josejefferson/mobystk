@@ -1,12 +1,10 @@
 var _localStorage$getItem, _localStorage$getItem2, _localStorage$getItem3, _localStorage$getItem4;
 
-window.addEventListener('load', function () {
+window.addEventListener('load', () => {
   document.body.classList.remove('preload');
 });
 
-document.oncontextmenu = function () {
-  return false;
-};
+document.oncontextmenu = () => false;
 
 document.forms[0].elements.code.value = localStorage.getItem('joystick.code') || window.location.hostname + ':5000';
 document.forms[0].elements.layout.value = localStorage.getItem('joystick.layout');
@@ -21,11 +19,11 @@ document.forms[0].elements.bgImage.value = localStorage.getItem('joystick.bgImag
 document.forms[0].elements.bgOpacity.value = localStorage.getItem('joystick.bgOpacity') || '0.5';
 document.forms[0].elements.bgBlur.value = localStorage.getItem('joystick.bgBlur') || '0';
 document.forms[0].elements.customCSS.value = localStorage.getItem('joystick.customCSS');
-(_localStorage$getItem = localStorage.getItem('joystick.locked')) === null || _localStorage$getItem === void 0 ? void 0 : (_localStorage$getItem2 = _localStorage$getItem.split(',')) === null || _localStorage$getItem2 === void 0 ? void 0 : _localStorage$getItem2.forEach(function (e) {
-  if (e) document.querySelector("[name=lock][value=\"".concat(e, "\"]")).checked = true;
+(_localStorage$getItem = localStorage.getItem('joystick.locked')) === null || _localStorage$getItem === void 0 ? void 0 : (_localStorage$getItem2 = _localStorage$getItem.split(',')) === null || _localStorage$getItem2 === void 0 ? void 0 : _localStorage$getItem2.forEach(e => {
+  if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true;
 });
-(_localStorage$getItem3 = localStorage.getItem('joystick.hidden')) === null || _localStorage$getItem3 === void 0 ? void 0 : (_localStorage$getItem4 = _localStorage$getItem3.split(',')) === null || _localStorage$getItem4 === void 0 ? void 0 : _localStorage$getItem4.forEach(function (e) {
-  if (e) document.querySelector("[name=hide][value=\"".concat(e, "\"]")).checked = true;
+(_localStorage$getItem3 = localStorage.getItem('joystick.hidden')) === null || _localStorage$getItem3 === void 0 ? void 0 : (_localStorage$getItem4 = _localStorage$getItem3.split(',')) === null || _localStorage$getItem4 === void 0 ? void 0 : _localStorage$getItem4.forEach(e => {
+  if (e) document.querySelector(`[name=hide][value="${e}"]`).checked = true;
 });
 
 document.forms[0].onsubmit = function (e) {
@@ -44,12 +42,12 @@ document.forms[0].onsubmit = function (e) {
   localStorage.setItem('joystick.bgOpacity', this.elements.bgOpacity.value);
   localStorage.setItem('joystick.bgBlur', this.elements.bgBlur.value);
   localStorage.setItem('joystick.customCSS', this.elements.customCSS.value);
-  var lockedBtns = [];
-  var hiddenItems = [];
-  this.elements.lock.forEach(function (e) {
+  const lockedBtns = [];
+  const hiddenItems = [];
+  this.elements.lock.forEach(e => {
     if (e.checked) lockedBtns.push(e.value);
   });
-  this.elements.hide.forEach(function (e) {
+  this.elements.hide.forEach(e => {
     if (e.checked) hiddenItems.push(e.value);
   });
   localStorage.setItem('joystick.locked', lockedBtns.join(','));
@@ -57,18 +55,18 @@ document.forms[0].onsubmit = function (e) {
   location.href = 'joystick.html';
 };
 
-var colors = {
+const colors = {
   background: createPickr('background', '#000'),
   color: createPickr('color', '#FFF8', '88'),
   border: createPickr('border', '#FFF8', '88'),
   active: createPickr('active', '#FFF3', '33')
 };
 
-document.querySelector('.start').oncontextmenu = function () {
+document.querySelector('.start').oncontextmenu = () => {
   document.querySelector('.links').style.display = 'block';
 };
 
-document.querySelector('.resetColors').onclick = function () {
+document.querySelector('.resetColors').onclick = () => {
   colors.background.setColor('#000');
   colors.color.setColor('#FFF8');
   colors.border.setColor('#FFF8');
@@ -77,9 +75,9 @@ document.querySelector('.resetColors').onclick = function () {
 
 function createPickr(el, defaultColor, opacity) {
   return Pickr.create({
-    el: ".pickr-".concat(el),
+    el: `.pickr-${el}`,
     theme: 'nano',
-    "default": localStorage.getItem('joystick.' + el) || defaultColor,
+    default: localStorage.getItem('joystick.' + el) || defaultColor,
     defaultRepresentation: 'HEXA',
     comparison: false,
     autoReposition: true,
@@ -92,7 +90,7 @@ function createPickr(el, defaultColor, opacity) {
       }
     },
     swatches: ['#F44336' + (opacity || ''), '#E91E63' + (opacity || ''), '#9C27B0' + (opacity || ''), '#673AB7' + (opacity || ''), '#3F51B5' + (opacity || ''), '#2196F3' + (opacity || ''), '#03A9F4' + (opacity || ''), '#00BCD4' + (opacity || ''), '#009688' + (opacity || ''), '#4CAF50' + (opacity || ''), '#8BC34A' + (opacity || ''), '#CDDC39' + (opacity || ''), '#FFEB3B' + (opacity || ''), '#FFC107' + (opacity || ''), '#FF9800' + (opacity || ''), '#FF5722' + (opacity || ''), '#795548' + (opacity || ''), '#9E9E9E' + (opacity || ''), '#607D8B' + (opacity || ''), '#FFFFFF' + (opacity || ''), '#000000' + (opacity || '')]
-  }).on('change', function (color) {
+  }).on('change', color => {
     document.forms[0].elements[el].value = color.toRGBA().toString();
   });
 }

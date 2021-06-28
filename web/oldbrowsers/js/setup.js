@@ -1,8 +1,4 @@
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-var KEY_SEQUENCE = {
+const KEY_SEQUENCE = {
   snes: {
     pause: 100,
     sequence: ['padUp', 'padLeft', 'padDown', 'padRight', 'actDown', 'actRight', 'actLeft', 'actUp', 'start', 'select', 'left1', 'right1']
@@ -37,122 +33,52 @@ var KEY_SEQUENCE = {
     ]
   }
 };
-var ip = localStorage.getItem('joystick.code') || window.location.hostname + ':5000';
-var $progress = document.querySelector('.progress');
-var setup = false;
-var socket = socketConn();
+const ip = localStorage.getItem('joystick.code') || window.location.hostname + ':5000';
+const $progress = document.querySelector('.progress');
+let setup = false;
+let socket = socketConn();
 
 function socketConn() {
-  var ws = new WebSocket('ws://' + ip);
+  const ws = new WebSocket('ws://' + ip);
 
-  ws.onopen = function (e) {
+  ws.onopen = e => {
     document.body.classList.remove('connecting', 'disconnected');
     document.body.classList.add('connected');
   };
 
-  ws.onclose = function (e) {
+  ws.onclose = e => {
     document.body.classList.remove('connecting');
     document.body.classList.add('disconnected');
-    setTimeout(function () {
-      return socket = socketConn();
-    }, 3000);
+    setTimeout(() => socket = socketConn(), 3000);
   };
 
   return ws;
 }
 
-function start(_x, _x2) {
-  return _start.apply(this, arguments);
-}
+async function start(control, player) {
+  if (setup) return alert('Outra configuração está em andamento!');
+  if (!KEY_SEQUENCE[control]) return alert('Este emulador não está cadastrado!');
+  if (!confirm('Verifique se o seu emulador está preparado para a configuração.\nAperte OK para iniciar!')) return;
+  $progress.style.transition = `width ${KEY_SEQUENCE[control].pause}ms linear, background-color .3s ease`;
+  setTimeout(() => scrollBottom(), 0);
+  setup = true;
 
-function _start() {
-  _start = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(control, player) {
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            if (!setup) {
-              _context.next = 2;
-              break;
-            }
+  for (i in KEY_SEQUENCE[control].sequence) {
+    if (!setup) return setProgress(true);
 
-            return _context.abrupt("return", alert('Outra configuração está em andamento!'));
+    if (socket.readyState !== 1) {
+      setup = false;
+      setProgress(true);
+      return setTimeout(() => alert('Conexão perdida, tente novamente!'), 100);
+    }
 
-          case 2:
-            if (KEY_SEQUENCE[control]) {
-              _context.next = 4;
-              break;
-            }
+    setProgress(false, i, KEY_SEQUENCE[control].sequence.length);
+    sendKey(KEY_SEQUENCE[control].sequence[i], player);
+    await wait(KEY_SEQUENCE[control].pause);
+  }
 
-            return _context.abrupt("return", alert('Este emulador não está cadastrado!'));
-
-          case 4:
-            if (confirm('Verifique se o seu emulador está preparado para a configuração.\nAperte OK para iniciar!')) {
-              _context.next = 6;
-              break;
-            }
-
-            return _context.abrupt("return");
-
-          case 6:
-            $progress.style.transition = "width ".concat(KEY_SEQUENCE[control].pause, "ms linear, background-color .3s ease");
-            setTimeout(function () {
-              return scrollBottom();
-            }, 0);
-            setup = true;
-            _context.t0 = regeneratorRuntime.keys(KEY_SEQUENCE[control].sequence);
-
-          case 10:
-            if ((_context.t1 = _context.t0()).done) {
-              _context.next = 24;
-              break;
-            }
-
-            i = _context.t1.value;
-
-            if (setup) {
-              _context.next = 14;
-              break;
-            }
-
-            return _context.abrupt("return", setProgress(true));
-
-          case 14:
-            if (!(socket.readyState !== 1)) {
-              _context.next = 18;
-              break;
-            }
-
-            setup = false;
-            setProgress(true);
-            return _context.abrupt("return", setTimeout(function () {
-              return alert('Conexão perdida, tente novamente!');
-            }, 100));
-
-          case 18:
-            setProgress(false, i, KEY_SEQUENCE[control].sequence.length);
-            sendKey(KEY_SEQUENCE[control].sequence[i], player);
-            _context.next = 22;
-            return wait(KEY_SEQUENCE[control].pause);
-
-          case 22:
-            _context.next = 10;
-            break;
-
-          case 24:
-            setup = false;
-            setTimeout(function () {
-              return alert('Concluído');
-            }, 100);
-
-          case 26:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return _start.apply(this, arguments);
+  setup = false;
+  setTimeout(() => alert('Concluído'), 100);
 }
 
 function setProgress(error, pos, max) {
@@ -160,7 +86,7 @@ function setProgress(error, pos, max) {
     $progress.classList.add('error');
   } else {
     $progress.classList.remove('error');
-    var p = 1 / (max - 1) * pos;
+    const p = 1 / (max - 1) * pos;
     $progress.style.width = p * 100 + '%';
   }
 }
@@ -174,36 +100,16 @@ function sendKey(key, player) {
   socket.send('T ' + key);
 }
 
-function wait(_x3) {
-  return _wait.apply(this, arguments);
+async function wait(sec) {
+  return new Promise(resolve => {
+    setTimeout(resolve, sec);
+  });
 }
 
-function _wait() {
-  _wait = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(sec) {
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            return _context2.abrupt("return", new Promise(function (resolve) {
-              setTimeout(resolve, sec);
-            }));
-
-          case 1:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  }));
-  return _wait.apply(this, arguments);
-}
-
-function scrollToY(y) {
-  var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  var element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : document.scrollingElement;
+function scrollToY(y, duration = 0, element = document.scrollingElement) {
   if (element.scrollTop === y) return;
-  var cosParameter = (element.scrollTop - y) / 2;
-  var scrollCount = 0,
+  const cosParameter = (element.scrollTop - y) / 2;
+  let scrollCount = 0,
       oldTimestamp = null;
 
   function step(newTimestamp) {
