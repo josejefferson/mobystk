@@ -64,7 +64,7 @@ document.body.append($customCSS)
 // Carrega o layout
 $layoutCSS.href = 'layouts/' + layout + '.css'
 
-const currentTouches = []
+let currentTouches = []
 const joysticks = []
 
 
@@ -456,6 +456,8 @@ function resizeJoystick() {
 	document.querySelectorAll('.joystick .nipple .front').forEach(e => {
 		e.classList.add('joystick', 'touch')
 	})
+
+	currentTouches = currentTouches.filter(el => !el.joystick)
 
 	function inadequateHeight() {
 		if (window.outerWidth >= 640) return window.outerHeight < 360 ? true : false
