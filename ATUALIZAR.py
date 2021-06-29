@@ -6,6 +6,7 @@ import datetime
 import os
 import requests
 import shutil
+import zipfile
 
 coloramaInit(autoreset=True)
 
@@ -103,6 +104,7 @@ def backup():
 	try:
 		now = datetime.datetime.now().isoformat()
 		backupFolder = internalFolder + '/backup-' + now
+		backupFolder = backupFolder.replace(':', '_')
 		ignore = shutil.ignore_patterns(internalFolder, downloadedZIPName)
 		shutil.copytree('.', backupFolder, ignore=ignore)
 		return backupFolder
@@ -116,7 +118,6 @@ def backup():
 def extractUpdatesFile():
 	print(F.YELLOW + 'Extraindo...')
 	try:
-		import zipfile
 		with zipfile.ZipFile(downloadedZIPName, 'r') as file:
 			file.extractall(internalFolder)
 		dirList = os.listdir(internalFolder)
