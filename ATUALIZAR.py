@@ -1,12 +1,27 @@
-# pip install requests
-# pip install colorama
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-from colorama import init as coloramaInit, Back as B, Fore as F, Style as S
-import datetime
-import os
-import requests
-import shutil
-import zipfile
+try:
+	from colorama import init as coloramaInit, Back as B, Fore as F, Style as S
+	import datetime
+	import os
+	import requests
+	import shutil
+	import zipfile
+except ModuleNotFoundError:
+	print('[ERRO] Alguns módulos estão faltando para o funcionamento desta aplicação.')
+	print('Você precisa executar os seguintes comandos no terminal para instalá-los:\n')
+	commands = [
+		'python -m pip install requests',
+		'python -m pip install colorama'
+	]
+	for c in commands: print(c)
+	input('\nPressione Enter para instalar os módulos inexistentes...')
+	import os, sys
+	for c in commands: os.system(c.replace('python', sys.executable))
+	os.system('{} {}'.format(sys.executable, os.path.basename(__file__)))
+	quit()
+
 
 coloramaInit(autoreset=True)
 
@@ -20,6 +35,7 @@ downloadedZIPName = 'update.zip'
 updateFolderName = '{}-{}-'.format(user, repository)
 internalFolder = '.update'
 lastUpdateFile = internalFolder + '/lastUpdate.txt'
+
 
 class BadStatusCode(Exception):
 	def __init__(self, response):
@@ -47,8 +63,7 @@ def checkForUpdates(since):
 	except Exception as err:
 		print(B.RED + F.WHITE + 'Ocorreu um erro ao consultar atualizações. ' + \
 			'Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err))
-		input()
+		input(F.RED + str(err))
 		quit()
 
 def getUpdateMessages(response):
@@ -64,17 +79,15 @@ def getUpdateMessages(response):
 		print(B.RED + F.WHITE + 'Ocorreu um erro ao carregar as mensagens de atualização. ' + \
 			'Veja detalhes sobre o erro abaixo:')
 		print(F.RED + str(err))
-		print(F.CYAN + 'Deseja atualizar mesmo assim? ' + F.MAGENTA + 'Pressione Enter. ' + \
+		input(F.CYAN + 'Deseja atualizar mesmo assim? ' + F.MAGENTA + 'Pressione Enter. ' + \
 			'Caso contrário, feche esta janela.')
-		input()
 		return None
 
 def askForUpdates(messages, since):
 	if messages == None: return
 	if len(messages) == 0:
-		print(F.GREEN + 'O Web Joystick já está atualizado. ' + F.MAGENTA + \
+		input(F.GREEN + 'O Web Joystick já está atualizado. ' + F.MAGENTA + \
 			'Pressione Enter para atualizar mesmo assim, ou feche esta janela para cancelar.')
-		input()
 		return
 
 	if since == None: print(F.GREEN + 'Esta é a primeira atualização! Veja as últimas novidades:')
@@ -82,8 +95,7 @@ def askForUpdates(messages, since):
 	for message in messages:
 		print(F.BLUE + '• ' + F.WHITE + message)
 
-	print(F.MAGENTA + '\nPressione Enter para atualizar.')
-	input()
+	input(F.MAGENTA + '\nPressione Enter para atualizar...')
 
 def downloadUpdates():
 	print(F.YELLOW + 'Baixando atualizações...')
@@ -95,8 +107,7 @@ def downloadUpdates():
 	except Exception as err:
 		print(B.RED + F.WHITE + 'Ocorreu um erro ao baixar atualizações. ' + \
 			'Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err))
-		input()
+		input(F.RED + str(err))
 		quit()
 
 def backup():
@@ -111,8 +122,7 @@ def backup():
 	except Exception as err:
 		print(B.RED + F.WHITE + 'Ocorreu um erro ao realizar o backup. ' + \
 			'Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err))
-		input()
+		input(F.RED + str(err))
 		quit()
 
 def extractUpdatesFile():
@@ -126,8 +136,7 @@ def extractUpdatesFile():
 	except Exception as err:
 		print(B.RED + F.WHITE + 'Ocorreu um erro ao extrair os arquivos. ' + \
 			'Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err))
-		input()
+		input(F.RED + str(err))
 		quit()
 
 def removeOldVersion(backupFolder):
@@ -145,8 +154,7 @@ def removeOldVersion(backupFolder):
 			'A aplicação pode ter sido danificada.' + S.NORMAL + \
 			'\nRecomenda-se restaurar o backup em "' + S.BRIGHT + backupFolder + S.NORMAL + \
 			'". Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err))
-		input()
+		input(F.RED + str(err))
 		quit()
 
 def copyNewFiles(extractFolderName, backupFolder):
@@ -165,8 +173,7 @@ def copyNewFiles(extractFolderName, backupFolder):
 			'A aplicação pode ter sido danificada.' + S.NORMAL + \
 			'\nRecomenda-se restaurar o backup em "' + S.BRIGHT + backupFolder + S.NORMAL + \
 			'". Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err))
-		input()
+		input(F.RED + str(err))
 		quit()
 
 def cleanAndFinalize(extractFolderName):
@@ -179,8 +186,7 @@ def cleanAndFinalize(extractFolderName):
 		print(B.RED + F.WHITE + 'Ocorreu um erro ao finalizar. ' + S.BRIGHT + \
 			'Podem ocorrer problemas em uma futura atualização. ' + S.NORMAL + \
 			'Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err))
-		input()
+		input(F.RED + str(err))
 		quit()
 
 
@@ -201,5 +207,4 @@ cleanAndFinalize(extractFolderName)
 
 print(S.BRIGHT + '\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
 print(S.BRIGHT + F.GREEN + ' O Web Joystick foi atualizado com sucesso!')
-print(S.BRIGHT + F.MAGENTA + ' Você pode fechar esta janela agora!')
-input()
+input(S.BRIGHT + F.MAGENTA + ' Você pode fechar esta janela agora!')
