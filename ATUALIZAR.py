@@ -19,7 +19,7 @@ except ModuleNotFoundError:
 	input('\nPressione Enter para instalar os módulos inexistentes...')
 	import os, sys
 	for c in commands: os.system(c.replace('python', sys.executable))
-	os.system('{} {}'.format(sys.executable, os.path.basename(__file__)))
+	os.system(f'{sys.executable} {os.path.basename(__file__)}')
 	quit()
 
 
@@ -28,11 +28,11 @@ coloramaInit(autoreset=True)
 token = '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'
 user = 'josejefferson'
 repository = 'joystick'
-commitsURL = 'https://api.github.com/repos/{}/{}/commits'.format(user, repository)
-zipURL = 'https://api.github.com/repos/{}/{}/zipball/master'.format(user, repository)
+commitsURL = f'https://api.github.com/repos/{user}/{repository}/commits'
+zipURL = f'https://api.github.com/repos/{user}/{repository}/zipball/master'
 headers = {'Authorization': 'token ' + token}
 downloadedZIPName = 'update.zip'
-updateFolderName = '{}-{}-'.format(user, repository)
+updateFolderName = f'{user}-{repository}-'
 internalFolder = '.update'
 lastUpdateFile = internalFolder + '/lastUpdate.txt'
 
@@ -63,7 +63,8 @@ def checkForUpdates(since):
 	except Exception as err:
 		print(B.RED + F.WHITE + 'Ocorreu um erro ao consultar atualizações. ' + \
 			'Veja detalhes sobre o erro abaixo:')
-		input(F.RED + str(err))
+		print(F.RED + str(err), end='')
+		input()
 		quit()
 
 def getUpdateMessages(response):
@@ -79,15 +80,17 @@ def getUpdateMessages(response):
 		print(B.RED + F.WHITE + 'Ocorreu um erro ao carregar as mensagens de atualização. ' + \
 			'Veja detalhes sobre o erro abaixo:')
 		print(F.RED + str(err))
-		input(F.CYAN + 'Deseja atualizar mesmo assim? ' + F.MAGENTA + 'Pressione Enter. ' + \
-			'Caso contrário, feche esta janela.')
+		print(F.CYAN + 'Deseja atualizar mesmo assim? ' + F.MAGENTA + 'Pressione Enter. ' + \
+			'Caso contrário, feche esta janela.', end='')
+		input()
 		return None
 
 def askForUpdates(messages, since):
 	if messages == None: return
 	if len(messages) == 0:
-		input(F.GREEN + 'O Web Joystick já está atualizado. ' + F.MAGENTA + \
-			'Pressione Enter para atualizar mesmo assim, ou feche esta janela para cancelar.')
+		print(F.GREEN + 'O Web Joystick já está atualizado. ' + F.MAGENTA + \
+			'Pressione Enter para atualizar mesmo assim, ou feche esta janela para cancelar.', end='')
+		input()
 		return
 
 	if since == None: print(F.GREEN + 'Esta é a primeira atualização! Veja as últimas novidades:')
@@ -95,7 +98,8 @@ def askForUpdates(messages, since):
 	for message in messages:
 		print(F.BLUE + '• ' + F.WHITE + message)
 
-	input(F.MAGENTA + '\nPressione Enter para atualizar...')
+	print(F.MAGENTA + '\nPressione Enter para atualizar...', end='')
+	input()
 
 def downloadUpdates():
 	print(F.YELLOW + 'Baixando atualizações...')
@@ -107,7 +111,8 @@ def downloadUpdates():
 	except Exception as err:
 		print(B.RED + F.WHITE + 'Ocorreu um erro ao baixar atualizações. ' + \
 			'Veja detalhes sobre o erro abaixo:')
-		input(F.RED + str(err))
+		print(F.RED + str(err), end='')
+		input()
 		quit()
 
 def backup():
@@ -122,7 +127,8 @@ def backup():
 	except Exception as err:
 		print(B.RED + F.WHITE + 'Ocorreu um erro ao realizar o backup. ' + \
 			'Veja detalhes sobre o erro abaixo:')
-		input(F.RED + str(err))
+		print(F.RED + str(err), end='')
+		input()
 		quit()
 
 def extractUpdatesFile():
@@ -136,7 +142,8 @@ def extractUpdatesFile():
 	except Exception as err:
 		print(B.RED + F.WHITE + 'Ocorreu um erro ao extrair os arquivos. ' + \
 			'Veja detalhes sobre o erro abaixo:')
-		input(F.RED + str(err))
+		print(F.RED + str(err), end='')
+		input()
 		quit()
 
 def removeOldVersion(backupFolder):
@@ -154,13 +161,14 @@ def removeOldVersion(backupFolder):
 			'A aplicação pode ter sido danificada.' + S.NORMAL + \
 			'\nRecomenda-se restaurar o backup em "' + S.BRIGHT + backupFolder + S.NORMAL + \
 			'". Veja detalhes sobre o erro abaixo:')
-		input(F.RED + str(err))
+		print(F.RED + str(err), end='')
+		input()
 		quit()
 
 def copyNewFiles(extractFolderName, backupFolder):
 	print(F.YELLOW + 'Copiando novos arquivos...')
 	try:
-		src = '{}/{}'.format(internalFolder, extractFolderName)
+		src = f'{internalFolder}/{extractFolderName}'
 		for item in os.listdir(src):
 			srcPath = os.path.join(src, item)
 			destPath = os.path.join('.', item)
@@ -173,26 +181,28 @@ def copyNewFiles(extractFolderName, backupFolder):
 			'A aplicação pode ter sido danificada.' + S.NORMAL + \
 			'\nRecomenda-se restaurar o backup em "' + S.BRIGHT + backupFolder + S.NORMAL + \
 			'". Veja detalhes sobre o erro abaixo:')
-		input(F.RED + str(err))
+		print(F.RED + str(err), end='')
+		input()
 		quit()
 
 def cleanAndFinalize(extractFolderName):
 	print(F.YELLOW + 'Finalizando...')
 	try:
-		shutil.rmtree('{}/{}'.format(internalFolder, extractFolderName))
+		shutil.rmtree(f'{internalFolder}/{extractFolderName}')
 		with open(lastUpdateFile, 'w') as file:
 			file.write(datetime.datetime.now().isoformat())
 	except Exception as err:
 		print(B.RED + F.WHITE + 'Ocorreu um erro ao finalizar. ' + S.BRIGHT + \
 			'Podem ocorrer problemas em uma futura atualização. ' + S.NORMAL + \
 			'Veja detalhes sobre o erro abaixo:')
-		input(F.RED + str(err))
+		print(F.RED + str(err), end='')
+		input()
 		quit()
 
 
-print(F.CYAN + S.BRIGHT + '┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
-print(F.CYAN + S.BRIGHT + '┃' + F.YELLOW + ' Ferramenta de atualização do Web Joystick ' + F.CYAN + '┃')
-print(F.CYAN + S.BRIGHT + '┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n')
+print(f'{F.CYAN}{S.BRIGHT}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
+print(f'{F.CYAN}{S.BRIGHT}┃{F.YELLOW} Ferramenta de atualização do Web Joystick {F.CYAN}┃')
+print(f'{F.CYAN}{S.BRIGHT}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n')
 
 since = getLastUpdateDate(lastUpdateFile)
 response = checkForUpdates(since)
@@ -205,6 +215,7 @@ removeOldVersion(backupFolder)
 copyNewFiles(extractFolderName, backupFolder)
 cleanAndFinalize(extractFolderName)
 
-print(S.BRIGHT + '\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-print(S.BRIGHT + F.GREEN + ' O Web Joystick foi atualizado com sucesso!')
-input(S.BRIGHT + F.MAGENTA + ' Você pode fechar esta janela agora!')
+print(f'{S.BRIGHT}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+print(f'{S.BRIGHT}{F.GREEN} O Web Joystick foi atualizado com sucesso!')
+print(f'{S.BRIGHT}{F.MAGENTA} Você pode fechar esta janela agora!', end='')
+input()

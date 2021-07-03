@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-DEBUG = False # Se True, mostrará logs
+DEBUG = True # Se True, mostrará logs
 HTTP_PORT = 8877 # Porta do servidor HTTP
 WS_PORT = 5000 # Porta do servidor WebSocket
 
@@ -79,7 +79,7 @@ async def server(websocket, path):
 			'p': 'PRESS',
 			't': 'TAP'
 		}
-		if DEBUG: print('{}[{} KEY] {}{} '.format(F.CYAN, commands[cmd], S.RESET_ALL, str(key)))
+		if DEBUG: print(f'{F.CYAN}[{commands[cmd]} KEY] {S.RESET_ALL}{key} ')
 		try:
 			if cmd == 'r': keyboard.release(key)
 			elif cmd == 'p': keyboard.press(key)
@@ -88,7 +88,7 @@ async def server(websocket, path):
 				sleep(0.05)
 				keyboard.release(key)
 		except Exception as err:
-			if DEBUG: print('{}[WEBSOCKET]{} Erro: dados inválidos'.format(F.MAGENTA, S.RESET_ALL))
+			if DEBUG: print(f'{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro: dados inválidos')
 			if DEBUG: print(F.RED + str(e))
 
 	def message(msg):
@@ -99,11 +99,11 @@ async def server(websocket, path):
 			keyCommand(key, msg[0])			
 
 	try:
-		if DEBUG: print('{}[WEBSOCKET]{} Usuário conectado'.format(F.YELLOW, S.RESET_ALL))
+		if DEBUG: print(f'{F.YELLOW}[WEBSOCKET]{S.RESET_ALL} Usuário conectado')
 		async for msg in websocket:
 			message(msg)
 	except Exception as e:
-		if DEBUG: print('{}[WEBSOCKET]{} Erro desconhecido'.format(F.MAGENTA, S.RESET_ALL))
+		if DEBUG: print(f'{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro desconhecido')
 		if DEBUG: print(F.RED + str(e))
 
 
@@ -132,15 +132,17 @@ def qrCode(url):
 	return result.strip('\n')
 
 
-print('\n  Acesse:{}{} http://{}'.format(S.BRIGHT, F.GREEN, httpIp))
-print('  Digite este código no site:')
-print('  ┏━━━━━━━━━━━━━━━━━━━━━━━┓')
-print('  ┃ {}{}{} ┃'.format(S.BRIGHT, wsIp.ljust(21), S.RESET_ALL))
-print('  ┗━━━━━━━━━━━━━━━━━━━━━━━┛\n')
+print(f'\n  Acesse:{S.BRIGHT}{F.GREEN} http://{httpIp}')
+print(f'  Digite este código no site:')
+print(f'  ┏━━━━━━━━━━━━━━━━━━━━━━━┓')
+print(f'  ┃ {S.BRIGHT}{wsIp.ljust(21)}{S.RESET_ALL} ┃')
+print(f'  ┗━━━━━━━━━━━━━━━━━━━━━━━┛\n')
 print(S.BRIGHT + qrCode('http://' + httpIp))
 if len(ips) > 1:
-	print('  Caso não funcione, tente: ')
-	print('  ' + ' ou '.join([F.CYAN + ip + S.RESET_ALL for ip in ips[:-1]]))
+	coloredIPs = [f'{F.CYAN}{ip}{S.RESET_ALL}' for ip in ips[:-1]]
+	print(f'  Caso não funcione, tente: ')
+	print(f'  {" ou ".join(coloredIPs)}')
+
 
 if __name__ == "__main__":
 	start_server = websockets.serve(server, port=WS_PORT)
