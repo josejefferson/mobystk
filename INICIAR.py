@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-DEBUG = True # Se True, mostrará logs
+DEBUG = False # Se True, mostrará logs
 HTTP_PORT = 8877 # Porta do servidor HTTP
 WS_PORT = 5000 # Porta do servidor WebSocket
 

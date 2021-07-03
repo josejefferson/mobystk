@@ -34,12 +34,12 @@ headers = {'Authorization': 'token ' + token}
 downloadedZIPName = 'update.zip'
 updateFolderName = f'{user}-{repository}-'
 internalFolder = '.update'
-lastUpdateFile = internalFolder + '/lastUpdate.txt'
+lastUpdateFile = f'{internalFolder}/lastUpdate.txt'
 
 
 class BadStatusCode(Exception):
 	def __init__(self, response):
-		message = 'Erro ' + str(response.status_code) + ': '
+		message = f'Erro {response.status_code}: '
 		try:
 			message += response.json()['message']
 		except Exception:
@@ -55,15 +55,15 @@ def getLastUpdateDate(lastUpdateFile):
 		return None
 
 def checkForUpdates(since):
-	print(F.YELLOW + 'Verificando por atualizações...')
+	print(f'{F.YELLOW}Verificando por atualizações...')
 	try:
 		response = requests.get(commitsURL, headers=headers, params={'since': since})
 		if response.status_code != 200: raise BadStatusCode(response)
 		return response
 	except Exception as err:
-		print(B.RED + F.WHITE + 'Ocorreu um erro ao consultar atualizações. ' + \
+		print(f'{B.RED}{F.WHITE}Ocorreu um erro ao consultar atualizações. ' + \
 			'Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err), end='')
+		print(f'{F.RED}{err}', end='')
 		input()
 		quit()
 
@@ -77,10 +77,10 @@ def getUpdateMessages(response):
 		messages.reverse()
 		return messages
 	except Exception as err:
-		print(B.RED + F.WHITE + 'Ocorreu um erro ao carregar as mensagens de atualização. ' + \
+		print(f'{B.RED}{F.WHITE}Ocorreu um erro ao carregar as mensagens de atualização. ' + \
 			'Veja detalhes sobre o erro abaixo:')
 		print(F.RED + str(err))
-		print(F.CYAN + 'Deseja atualizar mesmo assim? ' + F.MAGENTA + 'Pressione Enter. ' + \
+		print(f'{F.CYAN}Deseja atualizar mesmo assim? {F.MAGENTA}Pressione Enter. ' + \
 			'Caso contrário, feche esta janela.', end='')
 		input()
 		return None
@@ -88,51 +88,51 @@ def getUpdateMessages(response):
 def askForUpdates(messages, since):
 	if messages == None: return
 	if len(messages) == 0:
-		print(F.GREEN + 'O Web Joystick já está atualizado. ' + F.MAGENTA + \
+		print(f'{F.GREEN}O Web Joystick já está atualizado. {F.MAGENTA}' + \
 			'Pressione Enter para atualizar mesmo assim, ou feche esta janela para cancelar.', end='')
 		input()
 		return
 
-	if since == None: print(F.GREEN + 'Esta é a primeira atualização! Veja as últimas novidades:')
-	else: print(F.GREEN + 'Atualização disponível! Veja as novidades:')
+	if since == None: print(f'{F.GREEN}Esta é a primeira atualização! Veja as últimas novidades:')
+	else: print(f'{F.GREEN}Atualização disponível! Veja as novidades:')
 	for message in messages:
-		print(F.BLUE + '• ' + F.WHITE + message)
+		print(f'{F.BLUE}• {F.WHITE}{message}')
 
-	print(F.MAGENTA + '\nPressione Enter para atualizar...', end='')
+	print(f'\n{F.MAGENTA}Pressione Enter para atualizar...', end='')
 	input()
 
 def downloadUpdates():
-	print(F.YELLOW + 'Baixando atualizações...')
+	print(f'{F.YELLOW}Baixando atualizações...')
 	try:
 		response = requests.get(zipURL, headers=headers)
 		if response.status_code != 200: raise BadStatusCode(response)
 		with open(downloadedZIPName, 'wb') as file:
 			file.write(response.content)
 	except Exception as err:
-		print(B.RED + F.WHITE + 'Ocorreu um erro ao baixar atualizações. ' + \
+		print(f'{B.RED}{F.WHITE}Ocorreu um erro ao baixar atualizações. ' + \
 			'Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err), end='')
+		print(f'{F.RED}{err}', end='')
 		input()
 		quit()
 
 def backup():
-	print(F.YELLOW + 'Fazendo backup...')
+	print(f'{F.YELLOW}Fazendo backup...')
 	try:
 		now = datetime.datetime.now().isoformat()
-		backupFolder = internalFolder + '/backup-' + now
+		backupFolder = f'{internalFolder}/backup-{now}'
 		backupFolder = backupFolder.replace(':', '_')
 		ignore = shutil.ignore_patterns(internalFolder, downloadedZIPName)
 		shutil.copytree('.', backupFolder, ignore=ignore)
 		return backupFolder
 	except Exception as err:
-		print(B.RED + F.WHITE + 'Ocorreu um erro ao realizar o backup. ' + \
+		print(f'{B.RED}{F.WHITE}Ocorreu um erro ao realizar o backup. ' + \
 			'Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err), end='')
+		print(f'{F.RED}{err}', end='')
 		input()
 		quit()
 
 def extractUpdatesFile():
-	print(F.YELLOW + 'Extraindo...')
+	print(f'{F.YELLOW}Extraindo...')
 	try:
 		with zipfile.ZipFile(downloadedZIPName, 'r') as file:
 			file.extractall(internalFolder)
@@ -140,14 +140,14 @@ def extractUpdatesFile():
 		extractFolderName = [d for d in dirList if d.startswith(updateFolderName)][0]
 		return extractFolderName
 	except Exception as err:
-		print(B.RED + F.WHITE + 'Ocorreu um erro ao extrair os arquivos. ' + \
+		print(f'{B.RED}{F.WHITE}Ocorreu um erro ao extrair os arquivos. ' + \
 			'Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err), end='')
+		print(f'{F.RED}{err}', end='')
 		input()
 		quit()
 
 def removeOldVersion(backupFolder):
-	print(F.YELLOW + 'Removendo versão antiga...')
+	print(f'{F.YELLOW}Removendo versão antiga...')
 	try:
 		directories = [d for d in os.listdir('.') if os.path.isdir(d) and not d == internalFolder]
 		files = [d for d in os.listdir('.') if not os.path.isdir(d)]
@@ -157,16 +157,16 @@ def removeOldVersion(backupFolder):
 		for file in files:
 			os.remove(file)
 	except Exception as err:
-		print(B.RED + F.WHITE + 'Ocorreu um erro ao remover a versão antiga. ' + S.BRIGHT + \
-			'A aplicação pode ter sido danificada.' + S.NORMAL + \
-			'\nRecomenda-se restaurar o backup em "' + S.BRIGHT + backupFolder + S.NORMAL + \
-			'". Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err), end='')
+		print(f'{B.RED}{F.WHITE}Ocorreu um erro ao remover a versão antiga. {S.BRIGHT}' + \
+			f'A aplicação pode ter sido danificada.{S.NORMAL}'
+			f'\nRecomenda-se restaurar o backup em "{S.BRIGHT}{backupFolder}{S.NORMAL}".' + \
+			'Veja detalhes sobre o erro abaixo:')
+		print(f'{F.RED}{err}', end='')
 		input()
 		quit()
 
 def copyNewFiles(extractFolderName, backupFolder):
-	print(F.YELLOW + 'Copiando novos arquivos...')
+	print(f'{F.YELLOW}Copiando novos arquivos...')
 	try:
 		src = f'{internalFolder}/{extractFolderName}'
 		for item in os.listdir(src):
@@ -177,25 +177,25 @@ def copyNewFiles(extractFolderName, backupFolder):
 			else:
 				shutil.copy2(srcPath, destPath)
 	except Exception as err:
-		print(B.RED + F.WHITE + 'Ocorreu um erro ao copiar os novos arquivos. ' + S.BRIGHT + \
-			'A aplicação pode ter sido danificada.' + S.NORMAL + \
-			'\nRecomenda-se restaurar o backup em "' + S.BRIGHT + backupFolder + S.NORMAL + \
-			'". Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err), end='')
+		print(f'{B.RED}{F.WHITE}Ocorreu um erro ao copiar os novos arquivos. {S.BRIGHT}' + \
+			f'A aplicação pode ter sido danificada.{S.NORMAL}' + \
+			f'\nRecomenda-se restaurar o backup em "{S.BRIGHT}{backupFolder}{S.NORMAL}".' + \
+			'Veja detalhes sobre o erro abaixo:')
+		print(f'{F.RED}{err}', end='')
 		input()
 		quit()
 
 def cleanAndFinalize(extractFolderName):
-	print(F.YELLOW + 'Finalizando...')
+	print(f'{F.YELLOW}Finalizando...')
 	try:
 		shutil.rmtree(f'{internalFolder}/{extractFolderName}')
 		with open(lastUpdateFile, 'w') as file:
 			file.write(datetime.datetime.now().isoformat())
 	except Exception as err:
-		print(B.RED + F.WHITE + 'Ocorreu um erro ao finalizar. ' + S.BRIGHT + \
-			'Podem ocorrer problemas em uma futura atualização. ' + S.NORMAL + \
+		print(f'{B.RED}{F.WHITE}Ocorreu um erro ao finalizar. {S.BRIGHT}' + \
+			f'Podem ocorrer problemas em uma futura atualização. {S.NORMAL}' + \
 			'Veja detalhes sobre o erro abaixo:')
-		print(F.RED + str(err), end='')
+		print(f'{F.RED}{err}', end='')
 		input()
 		quit()
 
@@ -217,5 +217,5 @@ cleanAndFinalize(extractFolderName)
 
 print(f'{S.BRIGHT}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
 print(f'{S.BRIGHT}{F.GREEN} O Web Joystick foi atualizado com sucesso!')
-print(f'{S.BRIGHT}{F.MAGENTA} Você pode fechar esta janela agora!', end='')
+print(f'{S.BRIGHT}{F.MAGENTA} Você pode fechar esta janela agora!')
 input()
