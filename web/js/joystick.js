@@ -287,11 +287,11 @@ document.querySelectorAll('.lock').forEach(el => {
 		if (el.classList.contains('active')) {
 			// Ativa o botão
 			el.classList.remove('active')
-			sendCmd(keymappings[el.dataset.key]?.[player], true)
+			sendCmd(el.dataset.key, true)
 		} else {
 			// Desativa o botão
 			el.classList.add('active')
-			sendCmd(keymappings[el.dataset.key]?.[player])
+			sendCmd(el.dataset.key)
 		}
 	}
 })
@@ -313,8 +313,8 @@ function toggleDriveMode(e) {
 		e.target.classList.remove('active')
 		e.target.innerHTML = driveHTML
 		window.ondevicemotion = null
-		sendCmd(['joyLLeft'], true)
-		sendCmd(['joyLRight'], true)
+		sendCmd('joyLLeft', true)
+		sendCmd('joyLRight', true)
 		return
 	}
 	
@@ -344,10 +344,10 @@ function toggleDriveMode(e) {
 	
 		driveDirection = direction
 		if (direction === null) {
-			sendCmd(['joyLLeft'], true)
-			sendCmd(['joyLRight'], true)
+			sendCmd('joyLLeft', true)
+			sendCmd('joyLRight', true)
 		} else {
-			sendCmd([direction])
+			sendCmd(direction)
 		}
 	}
 }
@@ -416,11 +416,15 @@ function updateJoystick(joystick, id, angle, direction) {
 
 // Envia comandos para o servidor
 function sendCmd(keys, release = false) {
+	console.log(keys)
 	if (!keys || !keys.length) return
+	if (typeof keys === 'string') keys = [keys]
+	console.log(keys)
 	keys = keys.map(key => {
 		key = keymappings[key]?.[player]
 		return key
 	})
+	console.log(keys)
 
 	if (recordingMacro) return lastMacro.push((release ? 'R ' : 'P ') + keys)
 
