@@ -106,11 +106,11 @@ $playerNumber.innerText = player + 1
 $layout.innerText = layout.toUpperCase()
 
 // Botão de inverter Joystick/Setas
-//$invert.onmousedown = toggleInvert
 $invert.ontouchstart = toggleInvert
 
 function toggleInvert() {
 	document.body.classList.toggle('invert')
+	$invert.classList.toggle('active')
 	resizeJoystick()
 }
 
@@ -353,8 +353,6 @@ function toggleDriveMode(e) {
 	}
 }
 
-//$drive.onmousedown = toggleDriveMode
-//$drive.onmouseup = toggleDriveMode
 $drive.ontouchstart = toggleDriveMode
 
 // Macros

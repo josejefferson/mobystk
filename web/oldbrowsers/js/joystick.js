@@ -113,12 +113,12 @@ function updateClock() {
 
 $playerNumber.innerText = player + 1;
 $layout.innerText = layout.toUpperCase(); // Botão de inverter Joystick/Setas
-//$invert.onmousedown = toggleInvert
 
 $invert.ontouchstart = toggleInvert;
 
 function toggleInvert() {
   document.body.classList.toggle('invert');
+  $invert.classList.toggle('active');
   resizeJoystick();
 } // Eventos da página
 
@@ -354,9 +354,7 @@ function toggleDriveMode(e) {
       sendCmd(direction);
     }
   };
-} //$drive.onmousedown = toggleDriveMode
-//$drive.onmouseup = toggleDriveMode
-
+}
 
 $drive.ontouchstart = toggleDriveMode; // Macros
 
