@@ -79,11 +79,11 @@ async def server(websocket, path):
 			'p': 'PRESS',
 			't': 'TAP'
 		}
-		if DEBUG: print('{}[{} KEY]{}{} '.format(F.CYAN, commands[cmd], S.RESET_ALL, str(key)))
+		if DEBUG: print('{}[{} KEY] {}{} '.format(F.CYAN, commands[cmd], S.RESET_ALL, str(key)))
 		try:
-			if msg[0] == 'r': keyboard.release(key)
-			elif msg[0] == 'p': keyboard.press(key)
-			elif msg[0] == 't':
+			if cmd == 'r': keyboard.release(key)
+			elif cmd == 'p': keyboard.press(key)
+			elif cmd == 't':
 				keyboard.press(key)
 				sleep(0.05)
 				keyboard.release(key)
