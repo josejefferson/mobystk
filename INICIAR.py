@@ -41,9 +41,9 @@ handler = http.server.SimpleHTTPRequestHandler
 
 # Define o diretório atual e o IP
 os.chdir(os.path.join(os.path.dirname(__file__), 'web'))
-ip = socket.gethostbyname_ex(socket.gethostname())[-1][-1]
-httpIp = '{}:{}'.format(ip, HTTP_PORT)
-wsIp = '{}:{}'.format(ip, WS_PORT)
+ips = socket.gethostbyname_ex(socket.gethostname())[-1]
+httpIp = '{}:{}'.format(ips[-1], HTTP_PORT)
+wsIp = '{}:{}'.format(ips[-1], WS_PORT)
 
 
 # HTTP Server
@@ -103,7 +103,7 @@ async def server(websocket, path):
 		async for msg in websocket:
 			message(msg)
 	except Exception as e:
-		if DEBUG: print('{}[WEBSOCKET]{} Erro desconhecido'.format(F.MAGENTA ,S.RESET_ALL))
+		if DEBUG: print('{}[WEBSOCKET]{} Erro desconhecido'.format(F.MAGENTA, S.RESET_ALL))
 		if DEBUG: print(F.RED + str(e))
 
 
@@ -129,7 +129,7 @@ def qrCode(url):
 			line2 += '1' * len(line1)
 		i += 1
 		result += '  ' + ''.join(map(halfChar, list(line1), list(line2))) + '\n'
-	return result
+	return result.strip('\n')
 
 
 print('\n  Acesse:{}{} http://{}'.format(S.BRIGHT, F.GREEN, httpIp))
@@ -138,7 +138,9 @@ print('  ┏━━━━━━━━━━━━━━━━━━━━━━�
 print('  ┃ {}{}{} ┃'.format(S.BRIGHT, wsIp.ljust(21), S.RESET_ALL))
 print('  ┗━━━━━━━━━━━━━━━━━━━━━━━┛\n')
 print(S.BRIGHT + qrCode('http://' + httpIp))
-
+if len(ips) > 1:
+	print('  Caso não funcione, tente: ')
+	print('  ' + ' ou '.join([F.CYAN + ip + S.RESET_ALL for ip in ips[:-1]]))
 
 if __name__ == "__main__":
 	start_server = websockets.serve(server, port=WS_PORT)
