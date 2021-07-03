@@ -343,6 +343,7 @@ function toggleDriveMode(e) {
 		}
 	
 		driveDirection = direction
+		if (vibrate) navigator.vibrate(15)
 		if (direction === null) {
 			sendCmd('joyLLeft', true)
 			sendCmd('joyLRight', true)
