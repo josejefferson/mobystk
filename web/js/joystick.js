@@ -417,15 +417,12 @@ function updateJoystick(joystick, id, angle, direction) {
 
 // Envia comandos para o servidor
 function sendCmd(keys, release = false) {
-	console.log(keys)
 	if (!keys || !keys.length) return
 	if (typeof keys === 'string') keys = [keys]
-	console.log(keys)
 	keys = keys.map(key => {
 		key = keymappings[key]?.[player]
 		return key
 	})
-	console.log(keys)
 
 	if (recordingMacro) return lastMacro.push((release ? 'R ' : 'P ') + keys)
 

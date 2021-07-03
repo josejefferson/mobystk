@@ -286,17 +286,13 @@ document.querySelectorAll('.lock').forEach(el => {
     if (vibrate) navigator.vibrate(15);
 
     if (el.classList.contains('active')) {
-      var _keymappings$el$datas;
-
       // Ativa o botão
       el.classList.remove('active');
-      sendCmd((_keymappings$el$datas = keymappings[el.dataset.key]) === null || _keymappings$el$datas === void 0 ? void 0 : _keymappings$el$datas[player], true);
+      sendCmd(el.dataset.key, true);
     } else {
-      var _keymappings$el$datas2;
-
       // Desativa o botão
       el.classList.add('active');
-      sendCmd((_keymappings$el$datas2 = keymappings[el.dataset.key]) === null || _keymappings$el$datas2 === void 0 ? void 0 : _keymappings$el$datas2[player]);
+      sendCmd(el.dataset.key);
     }
   }
 }); // Controle por acelerômetro
@@ -311,8 +307,8 @@ function toggleDriveMode(e) {
     e.target.classList.remove('active');
     e.target.innerHTML = driveHTML;
     window.ondevicemotion = null;
-    sendCmd(['joyLLeft'], true);
-    sendCmd(['joyLRight'], true);
+    sendCmd('joyLLeft', true);
+    sendCmd('joyLRight', true);
     return;
   }
 
@@ -349,12 +345,13 @@ function toggleDriveMode(e) {
     }
 
     driveDirection = direction;
+    if (vibrate) navigator.vibrate(15);
 
     if (direction === null) {
-      sendCmd(['joyLLeft'], true);
-      sendCmd(['joyLRight'], true);
+      sendCmd('joyLLeft', true);
+      sendCmd('joyLRight', true);
     } else {
-      sendCmd([direction]);
+      sendCmd(direction);
     }
   };
 } //$drive.onmousedown = toggleDriveMode
@@ -431,6 +428,7 @@ function updateJoystick(joystick, id, angle, direction) {
 
 function sendCmd(keys, release = false) {
   if (!keys || !keys.length) return;
+  if (typeof keys === 'string') keys = [keys];
   keys = keys.map(key => {
     var _keymappings$key;
 
