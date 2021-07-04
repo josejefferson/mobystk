@@ -315,41 +315,46 @@ function toggleDriveMode(e) {
 		window.ondevicemotion = null
 		sendCmd('joyLLeft', true)
 		sendCmd('joyLRight', true)
+		sendCmd('joyLUp', true)
 		return
 	}
 	
 	e.target.classList.add('active')
-	e.target.innerHTML = '<i class="mdi mdi-arrow-up"></i>'
-	let driveY = 0, driveDirection = null
+	e.target.innerHTML = '<i class="driveArrow mdi mdi-arrow-up"></i>'
+	let driveY = 0, driveAngle = 0, lastDirections = []
 	
 	// Detecta os movimentos
 	window.ondevicemotion = e => {
-		const orientation = e.accelerationIncludingGravity.x >= 0 ? true : false
+		const orientation = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
 		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
-	
-		if (driveY > SENSITIVITY) {
-			direction = orientation ? 'joyLRight' : 'joyLLeft'
-		} else if (driveY < -SENSITIVITY) {
-			direction = orientation ? 'joyLLeft' : 'joyLRight'
-		} else {
-			direction = null
+
+		angle = 0
+		if (driveY > SENSITIVITY) angle = 45
+		if (driveY < -SENSITIVITY) angle = -45	
+		if (driveY > SENSITIVITY * 2) angle *= 2
+		if (driveY < -SENSITIVITY * 2) angle *= 2
+		angle *= orientation
+
+		if (angle === driveAngle) return
+		$drive.children[0].style.transform = `rotate(${angle}deg)`
+
+		switch (angle) {
+			case -90: directions = ['joyLLeft']; break
+			case -45: directions = ['joyLUp', 'joyLLeft']; break
+			case 45: directions = ['joyLUp', 'joyLRight']; break
+			case 90: directions = ['joyLRight']; break
+			default: directions = ['joyLUp']
 		}
 	
-		if (direction === driveDirection) return
-		switch (direction) {
-			case 'joyLLeft': $drive.innerHTML = '<i class="mdi mdi-undo"></i>'; break
-			case 'joyLRight': $drive.innerHTML = '<i class="mdi mdi-redo"></i>'; break
-			default: $drive.innerHTML = '<i class="mdi mdi-arrow-up"></i>'
-		}
-	
-		driveDirection = direction
+		driveAngle = angle
 		if (vibrate) navigator.vibrate(15)
-		if (direction === null) {
-			sendCmd('joyLLeft', true)
-			sendCmd('joyLRight', true)
-		} else {
-			sendCmd(direction)
-		}
+
+		const pressKeys = directions.filter(e => !lastDirections.includes(e))
+		const unpressKeys = lastDirections.filter(e => !directions.includes(e))
+		sendCmd(pressKeys)
+		sendCmd(unpressKeys, true)
+
+		lastDirections = [...directions]
 	}
 }
 
@@ -414,7 +419,7 @@ function updateJoystick(joystick, id, angle, direction) {
 
 
 // Envia comandos para o servidor
-function sendCmd(keys, release = false) {
+function sendCmd(keys, release = false) {console.log(keys, release)
 	if (!keys || !keys.length) return
 	if (typeof keys === 'string') keys = [keys]
 	keys = keys.map(key => {
