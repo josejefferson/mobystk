@@ -1,0 +1,377 @@
+/**
+ * WebJoy - Layout
+ *
+ * @name: Default
+ * @description: Default layout for overwrite
+ * @author: Jefferson Dantas
+ */
+
+/* ==========================================================================
+   GROUPS
+   ========================================================================== */
+
+/* Device info */
+.deviceInfo {
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: var(--color);
+	font-family: sans-serif;
+	font-size: 20px;
+	transition: 1s ease;
+	text-align: center;
+}
+
+/* Arrows (up, down, left, right) */
+.arrows {
+	bottom: 20px;
+	left: 30px;
+	width: 150px;
+	height: 150px;
+}
+
+/* Actions */
+.actions {
+	bottom: 20px;
+	right: 30px;
+	width: 150px;
+	height: 150px;
+}
+
+/* Joystick */
+.joystick {
+	bottom: 0px;
+	width: 150px;
+	height: 150px;
+}
+
+.joystick.joystickL,
+.joystick.joystickA {
+	left: 10px;
+}
+
+.joystick.joystickR {
+	right: 10px;
+}
+
+/* ==========================================================================
+   ARROW BUTTONS
+   ========================================================================== */
+
+/* General arrow buttons */
+.up,
+.down,
+.left,
+.right {
+	font-size: 36px !important;
+	width: 52px;
+	height: 52px;
+}
+
+/* Up arrow button */
+.up {
+	left: 50%;
+	top: 0;
+	transform: translateX(-50%);
+}
+
+/* Down arrow button */
+.down {
+	left: 50%;
+	bottom: 0;
+	transform: translateX(-50%);
+}
+
+/* Left arrow button */
+.left {
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
+}
+
+/* Right arrow button */
+.right {
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+}
+
+/* ==========================================================================
+   ACTION BUTTONS
+   ========================================================================== */
+
+/* General action buttons */
+.actUp,
+.actRight,
+.actLeft,
+.actDown,
+.snesActUp,
+.snesActRight,
+.snesActLeft,
+.snesActDown {
+	font-size: 32px !important;
+	width: 52px;
+	height: 52px;
+}
+
+/* Up action button */
+.actUp,
+.snesActUp {
+	left: 50%;
+	top: 0;
+	transform: translateX(-50%);
+}
+
+/* Down action button */
+.actDown,
+.snesActDown {
+	left: 50%;
+	bottom: 0;
+	transform: translateX(-50%);
+}
+
+.actDown i {
+	font-size: 42px !important;
+}
+
+/* Left action button */
+.actLeft,
+.snesActLeft {
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
+}
+
+/* Right action button */
+.actRight,
+.snesActRight {
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+}
+
+/* ==========================================================================
+   OTHER BUTTONS
+   ========================================================================== */
+
+/* L button */
+.l,
+.l1 {
+	top: 0px;
+	left: 0px;
+	width: 250px;
+	height: 60px;
+	font-size: 20px;
+	border-radius: 0 0 50px 0;
+	border-top: none;
+	border-left: none;
+	border-top-style: hidden !important;
+	border-left-style: hidden !important;
+}
+
+/* R button */
+.r,
+.r1 {
+	top: 0px;
+	right: 0px;
+	width: 250px;
+	height: 60px;
+	font-size: 20px;
+	border-radius: 0 0 0 50px;
+	border-top: none;
+	border-right: none;
+	border-top-style: hidden !important;
+	border-right-style: hidden !important;
+}
+
+.l3,
+.r3 {
+	top: 60px;
+	width: 60px;
+	height: 30px;
+	font-size: 20px;
+	border-top: none;
+	border-top-style: hidden !important;
+}
+
+.l1 {
+	width: 170px;
+}
+
+.l2 {
+	width: 100px;
+	height: 50px;
+	font-size: 20px;
+	border-top: none;
+	border-top-style: none;
+	border-radius: 0 0 40px 40px;
+	border-top-style: hidden !important;
+	top: 0;
+	left: 180px;
+}
+
+.l3 {
+	border-left: none;
+	border-left-style: hidden !important;
+	border-radius: 0 0 50px 0;
+	left: 0;
+}
+
+.r1 {
+	width: 170px;
+}
+
+.r2 {
+	width: 100px;
+	height: 50px;
+	font-size: 20px;
+	border-top: none;
+	border-top-style: none;
+	border-radius: 0 0 40px 40px;
+	border-top-style: hidden !important;
+	top: 0;
+	right: 180px;
+}
+
+.r3 {
+	border-right: none;
+	border-right-style: hidden !important;
+	border-radius: 0 0 0 50px;
+	right: 0;
+}
+
+/* Select button */
+.select {
+	bottom: 0;
+	left: 180px;
+	width: 110px;
+	height: 52px;
+	border-radius: 20px 10px 0 0;
+	font-size: 18px;
+	border-bottom: none;
+	border-bottom-style: hidden !important;
+}
+
+/* Start button */
+.start {
+	bottom: 0;
+	right: 180px;
+	width: 110px;
+	height: 52px;
+	border-radius: 10px 20px 0 0;
+	font-size: 18px;
+	border-bottom: none;
+	border-bottom-style: hidden !important;
+}
+
+/* Load and save */
+.load,
+.save,
+.drive {
+	top: 100px;
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	font-size: 28px !important;
+}
+
+/* Load button */
+.load {
+	left: 30px;
+}
+
+/* Save button */
+.save {
+	right: 30px;
+}
+
+/* Drive button */
+.drive {
+	left: 50%;
+	top: auto;
+	bottom: 80px;
+	transform: translateX(-50%);
+}
+
+.drive .driveArrow {
+	transition: transform .2s ease;
+}
+
+/* Pause button */
+.pause {
+	left: 50%;
+	bottom: 0px;
+	top: auto;
+	transform: translateX(-50%);
+	border-radius: 10px 10px 0 0;
+	border-bottom: none;
+	width: 52px;
+	height: 52px;
+	font-size: 28px !important;
+}
+
+.volumeUp,
+.volumeDown {
+	width: 72px;
+	height: 52px;
+	top: 90px;
+	font-size: 28px !important;
+}
+
+.volumeUp {
+	left: 50%;
+	border-radius: 0 1000px 1000px 0;
+	border-left: none;
+}
+
+.volumeDown {
+	right: 50%;
+	border-radius: 1000px 0 0 1000px;
+	border-right: none;
+}
+
+/* Macro buttons */
+.recordMacro,
+.playMacro {
+	width: 48px;
+	height: 32px;
+	top: 58px;
+	font-size: 16px !important;
+	border-bottom: none;
+}
+
+.recordMacro {
+	display: flex;
+	right: 50%;
+	border-radius: 1000px 0 0 0;
+	border-right: none;
+}
+
+.playMacro {
+	display: flex;
+	left: 50%;
+	border-radius: 0 1000px 0 0;
+	border-left: none;
+}
+
+/* "Invert" button */
+.toggleInvert {
+	display: flex;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	border-radius: 30px 0 0 30px;
+	font-size: 16px;
+	border-right: none;
+	height: 40px;
+	width: 20px;
+}
+
+/* "Edit" button */
+.edit {
+	border-radius: 0 0 30px 30px;
+	border-top: none;
+	font-size: 16px;
+}

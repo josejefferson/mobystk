@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en-US" class="notranslate" translate="no">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=0">
+	<link rel="shortcut icon" href="favicon.png" type="image/png">
+	<link rel="manifest" href="manifest.json">
+	<title>Joystick</title>
+	<link rel="stylesheet" href="lib/css/materialdesignicons.min.css">
+	<link rel="stylesheet" href="css/joystick.css">
+	<link rel="stylesheet" href="themes/default.css">
+	<link rel="stylesheet" class="theme">
+	<link rel="stylesheet" href="layouts/default.css">
+	<link rel="stylesheet" class="layout">
+</head>
+
+<body class="connecting preload">
+	<div class="backgroundImage"></div>
+
+	<!-- Joysticks -->
+	<div class="joystick joystickL group touch" data-keys="joyLUp joyLLeft joyLDown joyLRight"></div>
+	<div class="joystick joystickR group touch" data-keys="joyRUp joyRLeft joyRDown joyRRight"></div>
+	<div class="joystick joystickA group touch" data-keys="padUp padLeft padDown padRight"></div>
+
+	<!-- Arrow buttons -->
+	<div class="arrows group">
+		<!-- Up arrow -->
+		<button class="up touch" data-key="padUp">
+			<i class="mdi mdi-menu-up-outline"></i>
+		</button>
+
+		<!-- Left arrow -->
+		<button class="left touch" data-key="padLeft">
+			<i class="mdi mdi-menu-left-outline"></i>
+		</button>
+
+		<!-- Down arrow -->
+		<button class="down touch" data-key="padDown">
+			<i class="mdi mdi-menu-down-outline"></i>
+		</button>
+
+		<!-- Right arrow -->
+		<button class="right touch" data-key="padRight">
+			<i class="mdi mdi-menu-right-outline"></i>
+		</button>
+
+		<!-- Diagonal arrows -->
+		<div class="diag dLT touch" data-key="padLeft padUp"></div>
+		<div class="diag dRT touch" data-key="padRight padUp"></div>
+		<div class="diag dLB touch" data-key="padLeft padDown"></div>
+		<div class="diag dRB touch" data-key="padRight padDown"></div>
+	</div>
+
+	<!-- Action buttons -->
+	<div class="actions group">
+		<!-- PlayStation buttons -->
+		<!-- Triangle -->
+		<button class="actUp touch" data-key="actUp">
+			<i class="mdi mdi-triangle-outline"></i>
+		</button>
+
+		<!-- Square -->
+		<button class="actLeft touch" data-key="actLeft">
+			<i class="mdi mdi-square-outline"></i>
+		</button>
+
+		<!-- Cross -->
+		<button class="actDown touch" data-key="actDown">
+			<i class="mdi mdi-close"></i>
+		</button>
+
+		<!-- Circle -->
+		<button class="actRight touch" data-key="actRight">
+			<i class="mdi mdi-circle-outline"></i>
+		</button>
+
+		<!-- SNES buttons -->
+		<!-- X -->
+		<button class="snesActUp touch" data-key="actUp">X</button>
+		<!-- Y -->
+		<button class="snesActLeft touch" data-key="actLeft">Y</button>
+		<!-- B -->
+		<button class="snesActDown touch" data-key="actDown">B</button>
+		<!-- A -->
+		<button class="snesActRight touch" data-key="actRight">A</button>
+
+		<!-- Diagonal actions -->
+		<div class="diag dLT touch" data-key="actLeft actUp"></div>
+		<div class="diag dRT touch" data-key="actRight actUp"></div>
+		<div class="diag dLB touch" data-key="actLeft actDown"></div>
+		<div class="diag dRB touch" data-key="actRight actDown"></div>
+	</div>
+
+	<!-- Other buttons -->
+	<button class="l touch" data-key="left1">L</button>
+	<button class="l1 touch" data-key="left1">L1</button>
+	<button class="l2 touch" data-key="left2">L2</button>
+	<button class="l3 touch" data-key="left3">L3</button>
+
+	<button class="r touch" data-key="right1">R</button>
+	<button class="r1 touch" data-key="right1">R1</button>
+	<button class="r2 touch" data-key="right2">R2</button>
+	<button class="r3 touch" data-key="right3">R3</button>
+
+	<button class="select touch" data-key="select">SELECT</button>
+	<button class="start touch" data-key="start">START</button>
+	<button class="pause touch" data-key="pause">
+		<i class="mdi mdi-pause"></i>
+	</button>
+
+	<button class="load touch" data-key="load">
+		<i class="mdi mdi-file-download"></i>
+	</button>
+	<button class="save touch" data-key="save">
+		<i class="mdi mdi-content-save"></i>
+	</button>
+
+	<button class="volumeUp touch" data-key="volUp">
+		<i class="mdi mdi-volume-plus"></i>
+	</button>
+	<button class="volumeDown touch" data-key="volDown">
+		<i class="mdi mdi-volume-minus"></i>
+	</button>
+
+	<button class="recordMacro touch">
+		<i class="mdi mdi-record"></i>
+	</button>
+	<button class="playMacro touch">
+		<i class="mdi mdi-play"></i>
+	</button>
+
+	<button class="toggleInvert touch">
+		<i class="mdi mdi-swap-vertical"></i>
+	</button>
+
+	<!-- Drive -->
+	<button class="drive touch">
+		<svg viewBox="0 0 32 32">
+			<path d="M16 0a16 16 0 100 32 16 16 0 000-32zm0 4a12 12 0 0111.3 8H4.7c1.7-4.6 6-8 11.3-8zm0 14a2 2 0 110-4 2 2 0 010 4zM4 16c5.5 0 9.9 5.3 10 11.8A12 12 0 014 16zm14 11.8c.1-6.5 4.5-11.8 10-11.8a12 12 0 01-10 11.8z">
+		</svg>
+	</button>
+
+	<!-- Battery and Clock -->
+	<div class="deviceInfo">
+		<span class="battery">
+			<span class="battery-icon"></span>
+			<span class="battery-level"></span> •
+		</span>
+		<span class="clock"></span><br>
+		<span class="player">
+			<i class="mdi mdi-google-controller"></i>
+			<span class="player-number"></span>
+		</span> •
+		<span class="layout"></span>
+	</div>
+
+	<!-- Edit button -->
+	<a href="index.html">
+		<button class="edit touch">
+			<i class="mdi mdi-cog"></i>
+		</button>
+	</a>
+
+	<script src="lib/js/nipplejs.min.js"></script>
+	<script src="js/keymappings.js"></script>
+	<script src="js/joystick.js"></script>
+</body>
+
+</html>
