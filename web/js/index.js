@@ -16,6 +16,7 @@ document.forms[0].elements.bgImage.value = localStorage.getItem('joystick.bgImag
 document.forms[0].elements.bgOpacity.value = localStorage.getItem('joystick.bgOpacity') || '0.5'
 document.forms[0].elements.bgBlur.value = localStorage.getItem('joystick.bgBlur') || '0'
 document.forms[0].elements.customCSS.value = localStorage.getItem('joystick.customCSS')
+document.forms[0].elements.driveSensitivity.value = localStorage.getItem('joystick.driveSensitivity') || '2'
 
 localStorage.getItem('joystick.locked')?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true
@@ -40,6 +41,7 @@ document.forms[0].onsubmit = function (e) {
 	localStorage.setItem('joystick.bgOpacity', this.elements.bgOpacity.value)
 	localStorage.setItem('joystick.bgBlur', this.elements.bgBlur.value)
 	localStorage.setItem('joystick.customCSS', this.elements.customCSS.value)
+	localStorage.setItem('joystick.driveSensitivity', this.elements.driveSensitivity.value)
 
 	const lockedBtns = []
 	const hiddenItems = []
@@ -64,7 +66,7 @@ const colors = {
 }
 
 document.querySelector('.start').oncontextmenu = () => {
-	document.querySelector('.links').style.display = 'block'
+	document.querySelector('.hiddenOptions').style.display = 'block'
 }
 
 document.querySelector('.resetColors').onclick = () => {

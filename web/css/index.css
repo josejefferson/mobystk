@@ -179,6 +179,11 @@ hr {
 	width: 100%;
 }
 
+/* Option label slider text */
+.option .optionLabel .text {
+	text-align: left;
+}
+
 /* Unchecked option */
 .option > input:not(:checked) + .optionLabel {
 	color: #888;
