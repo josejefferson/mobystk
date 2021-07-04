@@ -411,6 +411,11 @@ function updateJoystick(joystick, id, angle, direction) {
 			case 'right': key = keys[3]; break
 		}
 
+		a = dir
+		if (dir === 'up') a = 'top'
+		if (dir === 'down') a = 'bottom'
+		joystick.querySelector('.back').style['border' + (a.charAt(0).toUpperCase() + a.slice(1)) + 'Width'] = value ? '7px' : ''
+
 		if (joysticks[id][dir] === value) return
 		joysticks[id][dir] = value
 		sendCmd([key], !value)
