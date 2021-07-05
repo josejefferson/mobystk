@@ -329,6 +329,7 @@ function toggleDriveMode(e) {
 	window.ondevicemotion = e => {
 		const orientation = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
 		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
+		driveY *= orientation
 
 		angle = 0
 		if (driveAngle === -45) {
@@ -347,7 +348,6 @@ function toggleDriveMode(e) {
 			if (driveY > SENSITIVITY * 2) angle *= 2
 			if (driveY < -SENSITIVITY * 2) angle *= 2
 		}
-		angle *= orientation
 
 		if (angle === driveAngle) return
 		$drive.children[0].style.transform = `rotate(${angle}deg)`
