@@ -418,16 +418,13 @@ function updateJoystick(joystick, id, angle, direction) {
 	// Atualiza a direção do joystick
 	function update(dir, value, key) {
 		switch (dir) {
-			case 'up': key = keys[0]; break
-			case 'left': key = keys[1]; break
-			case 'down': key = keys[2]; break
-			case 'right': key = keys[3]; break
+			case 'up': key = keys[0]; border = 'Top'; break
+			case 'left': key = keys[1]; border = 'Left'; break
+			case 'down': key = keys[2]; border = 'Bottom'; break
+			case 'right': key = keys[3]; border = 'Right'; break
 		}
 
-		a = dir
-		if (dir === 'up') a = 'top'
-		if (dir === 'down') a = 'bottom'
-		joystick.querySelector('.back').style['border' + (a.charAt(0).toUpperCase() + a.slice(1)) + 'Width'] = value ? '7px' : ''
+		joystick.querySelector('.back').style[`border${border}Width`] = value ? '7px' : ''
 
 		if (joysticks[id][dir] === value) return
 		joysticks[id][dir] = value
