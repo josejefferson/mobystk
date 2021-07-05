@@ -361,6 +361,7 @@ function toggleDriveMode(e) {
 		}
 	
 		driveAngle = angle
+		if (vibrate) navigator.vibrate(30)
 
 		const pressKeys = directions.filter(e => !lastDirections.includes(e))
 		const unpressKeys = lastDirections.filter(e => !directions.includes(e))
