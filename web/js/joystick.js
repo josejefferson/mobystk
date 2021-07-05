@@ -309,6 +309,7 @@ if (!(location.protocol === 'https:' ||
 // Ligar/desligar sensor
 function toggleDriveMode(e) {
 	const SENSITIVITY = driveSensitivity || 2 // Sensibilidade do sensor
+	const PRECISION = 1
 	
 	if (e.target.classList.contains('active')) {
 		e.target.classList.remove('active')
@@ -330,10 +331,22 @@ function toggleDriveMode(e) {
 		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
 
 		angle = 0
-		if (driveY > SENSITIVITY) angle = 45
-		if (driveY < -SENSITIVITY) angle = -45	
-		if (driveY > SENSITIVITY * 2) angle *= 2
-		if (driveY < -SENSITIVITY * 2) angle *= 2
+		if (driveAngle === -45) {
+			if (driveY > SENSITIVITY) angle = 45
+			if (driveY < -SENSITIVITY + PRECISION) angle = -45
+			if (driveY > SENSITIVITY * 2) angle *= 2
+			if (driveY < -SENSITIVITY * 2 - PRECISION) angle *= 2
+		} else if (driveAngle === 45) {
+			if (driveY > SENSITIVITY - PRECISION) angle = 45
+			if (driveY < -SENSITIVITY) angle = -45
+			if (driveY > SENSITIVITY * 2 + PRECISION) angle *= 2
+			if (driveY < -SENSITIVITY * 2) angle *= 2
+		} else {
+			if (driveY > SENSITIVITY) angle = 45
+			if (driveY < -SENSITIVITY) angle = -45	
+			if (driveY > SENSITIVITY * 2) angle *= 2
+			if (driveY < -SENSITIVITY * 2) angle *= 2
+		}
 		angle *= orientation
 
 		if (angle === driveAngle) return
