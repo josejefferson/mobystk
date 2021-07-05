@@ -28,7 +28,6 @@ const colorsColor = localStorage.getItem('joystick.color')
 const colorsBorder = localStorage.getItem('joystick.border')
 const colorsActive = localStorage.getItem('joystick.active')
 const customCSS = localStorage.getItem('joystick.customCSS')
-const driveSensitivity = localStorage.getItem('joystick.driveSensitivity')
 
 if (!layout) location.href = 'index.html'
 if (debug) document.body.classList.add('debug')
@@ -308,8 +307,8 @@ if (!(location.protocol === 'https:' ||
 
 // Ligar/desligar sensor
 function toggleDriveMode(e) {
-	const SENSITIVITY = driveSensitivity || 2 // Sensibilidade do sensor
-	const PRECISION = 1
+	const SENSITIVITY = parseFloat(localStorage.getItem('joystick.driveSensitivity') || 2)
+	const PRECISION = parseFloat(localStorage.getItem('joystick.drivePrecision') || 1)
 	
 	if (e.target.classList.contains('active')) {
 		e.target.classList.remove('active')

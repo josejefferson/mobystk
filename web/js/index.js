@@ -17,6 +17,7 @@ document.forms[0].elements.bgOpacity.value = localStorage.getItem('joystick.bgOp
 document.forms[0].elements.bgBlur.value = localStorage.getItem('joystick.bgBlur') || '0'
 document.forms[0].elements.customCSS.value = localStorage.getItem('joystick.customCSS')
 document.forms[0].elements.driveSensitivity.value = localStorage.getItem('joystick.driveSensitivity') || '2'
+document.forms[0].elements.drivePrecision.value = localStorage.getItem('joystick.drivePrecision') || '1'
 
 localStorage.getItem('joystick.locked')?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true
@@ -42,6 +43,7 @@ document.forms[0].onsubmit = function (e) {
 	localStorage.setItem('joystick.bgBlur', this.elements.bgBlur.value)
 	localStorage.setItem('joystick.customCSS', this.elements.customCSS.value)
 	localStorage.setItem('joystick.driveSensitivity', this.elements.driveSensitivity.value)
+	localStorage.setItem('joystick.drivePrecision', this.elements.drivePrecision.value)
 
 	const lockedBtns = []
 	const hiddenItems = []
