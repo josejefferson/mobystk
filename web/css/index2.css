@@ -1,0 +1,362 @@
+@charset "UTF-8";
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+@media (max-width: 639px) {
+  section.main header nav ul li a span {
+    display: none;
+  }
+}
+body {
+  background-color: var(--gray-800);
+  color: #fff;
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0;
+}
+body.preload * {
+  transition: none !important;
+}
+
+.chipsGroup {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+.chipsGroup .title {
+  font-size: 12px;
+  width: 100%;
+}
+.chipsGroup .chip > input {
+  display: none;
+}
+.chipsGroup .chip .label {
+  padding: 5px 20px;
+  display: flex;
+  font-size: 18px;
+}
+.chipsGroup .chip > input:checked + .label {
+  border-color: inherit;
+  color: inherit;
+  background-color: #888;
+}
+
+/* Input range (Bootstrap) */
+input[type=range] {
+  -webkit-appearance: none;
+  background-color: transparent;
+  box-sizing: border-box;
+  height: 4px;
+  margin-left: 20px;
+  outline: none;
+  padding: 0;
+  width: 100%;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: var(--blue-300);
+  border-radius: 50%;
+  border: none;
+  margin-top: -5.5px;
+  height: 15px;
+  width: 15px;
+}
+
+input[type=range]:active::-webkit-slider-thumb {
+  height: 20px;
+  width: 20px;
+  margin-top: -8px;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  background-color: var(--gray-600);
+  border-radius: 1000px;
+  cursor: pointer;
+  height: 4px;
+  width: 100%;
+}
+
+input[type=text],
+textarea {
+  background: none;
+  border-radius: 1000px;
+  border: var(--purple-400) 2px solid;
+  color: inherit;
+  font-size: 18px;
+  height: 40px;
+  outline: none;
+  text-align: center;
+  transition: 0.15s ease;
+  width: auto;
+}
+input[type=text]:focus,
+textarea:focus {
+  border-color: var(--purple-300);
+  box-shadow: 0 0 0 4px #444;
+}
+input[type=text]:active,
+textarea:active {
+  transform: scale(1.2);
+}
+
+button, .chipsGroup .chip .label,
+a.button {
+  align-items: center;
+  background: none;
+  border-radius: 1000px;
+  border: #888 2px solid;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 18px;
+  justify-content: center;
+  outline: none;
+  padding: 8px 25px;
+  text-decoration: none;
+  transition: 0.15s ease;
+}
+button.square, .chipsGroup .chip .square.label,
+a.button.square {
+  border-radius: 5px;
+}
+button:active, .chipsGroup .chip .label:active,
+a.button:active {
+  transform: scale(1.2);
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+section.main {
+  min-height: 360px;
+  height: 100vh;
+}
+
+section.main header {
+  height: 56px;
+  background: var(--gray-900);
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+section.main header .logo {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  color: #fff;
+  padding-left: 5px;
+}
+section.main header .logo img {
+  height: 26px;
+  margin: 0 15px 5px 0;
+}
+section.main header nav {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+}
+section.main header nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+section.main header nav ul li {
+  margin-left: 20px;
+}
+section.main header nav ul li a {
+  display: flex;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+  transition: 0.15s ease;
+}
+section.main header nav ul li a .mdi {
+  font-size: 24px;
+  margin-right: 5px;
+}
+section.main header nav ul li a:active {
+  transform: scale(1.2);
+}
+
+section.main main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  flex-direction: column;
+}
+section.main main .explanation {
+  font-size: 20px;
+  margin: 20px 0 10px 0;
+}
+section.main main .code {
+  border-color: var(--purple-400);
+}
+section.main main .code:focus {
+  border-color: var(--purple-300);
+}
+section.main main .chipsGroup.selectLayout {
+  padding: 0 15px;
+  justify-content: center;
+}
+section.main main .chipsGroup.selectLayout .chip .label {
+  border-color: var(--red-400);
+  color: var(--red-400);
+}
+section.main main .chipsGroup.selectLayout .chip input:checked + .label {
+  background-color: var(--red-500);
+  border-color: inherit;
+  color: inherit;
+}
+
+section.main footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 20px;
+  align-items: flex-end;
+}
+section.main footer .chipsGroup.selectPlayer {
+  flex: 1;
+  gap: 5px;
+  justify-content: flex-start;
+}
+section.main footer .chipsGroup.selectPlayer .chip .label {
+  border-color: var(--blue-400);
+  color: var(--blue-400);
+  width: 40px;
+  height: 40px;
+  margin-bottom: 4px;
+  padding: 0;
+}
+section.main footer .chipsGroup.selectPlayer .chip input:checked + .label {
+  background: var(--blue-500);
+  color: inherit;
+  border-color: inherit;
+}
+section.main footer .advancedOptions {
+  flex: 1;
+  align-self: flex-end;
+  font-size: 12px;
+  text-align: center;
+}
+section.main footer .advancedOptions .mdi {
+  font-size: 20px;
+}
+section.main footer .start {
+  flex: 1;
+  text-align: right;
+}
+section.main footer .start button, section.main footer .start .chipsGroup .chip .label, .chipsGroup .chip section.main footer .start .label {
+  animation: pulse 2s infinite;
+  background-color: var(--orange-600);
+  border-color: var(--orange-300);
+  font-size: 18px;
+  padding: 5px 15px;
+  text-transform: uppercase;
+}
+section.main footer .start button .mdi, section.main footer .start .chipsGroup .chip .label .mdi, .chipsGroup .chip section.main footer .start .label .mdi {
+  font-size: 30px;
+  margin-right: 10px;
+}
+
+section.advanced {
+  min-height: 100vh;
+}
+
+section.advanced header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  font-size: 24px;
+}
+section.advanced header .subtitle {
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+section.advanced main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+section.advanced.lockedKeys main .chipsGroup,
+section.advanced.hiddenItems main .chipsGroup {
+  column-gap: 10px;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+section.advanced.lockedKeys main .chipsGroup .chip .label {
+  border-color: var(--pink-400);
+  color: var(--pink-400);
+}
+section.advanced.lockedKeys main .chipsGroup .chip input:checked + .label {
+  background-color: var(--pink-500);
+  border-color: inherit;
+  color: inherit;
+}
+
+section.advanced.hiddenItems main .chipsGroup .chip .label {
+  border-color: var(--cyan-500);
+  color: var(--cyan-500);
+}
+section.advanced.hiddenItems main .chipsGroup .chip input:checked + .label {
+  background-color: var(--cyan-600);
+  border-color: inherit;
+  color: inherit;
+}
+
+.option {
+  white-space: nowrap;
+}
+.option > input {
+  display: none;
+}
+.option .label {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  transition: 0.15s ease;
+}
+.option .label:active {
+  background-color: var(--gray-700);
+}
+.option:not(.range) .label::before {
+  content: "󰄱";
+  font-family: "Material Design Icons";
+  font-size: 24px;
+  text-rendering: auto;
+  line-height: inherit;
+  margin-right: 10px;
+}
+.option input:checked + .label::before {
+  content: "󰄲";
+  color: var(--blue-300);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--orange-400);
+  }
+  70% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+/*# sourceMappingURL=index2.css.map */

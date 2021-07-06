@@ -1,3 +1,11 @@
+const options = {
+	container: document.body,
+	panelSelector: '> form > section',
+	duration: 250
+}
+
+a=new PanelSnap(options);
+
 window.addEventListener('load', () => {
 	document.body.classList.remove('preload')
 })
