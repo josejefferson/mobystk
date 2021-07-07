@@ -1,4 +1,6 @@
 const $root = document.documentElement
+const $loading = document.querySelector('.loadingScreen')
+const $edit = document.querySelector('.edit')
 const $bgImage = document.querySelector('.backgroundImage')
 const $layoutCSS = document.querySelector('.layout')
 const $viewport = document.querySelector('meta[name="viewport"]')
@@ -35,6 +37,7 @@ if (invert) document.body.classList.add('invert')
 if (bgImage) $bgImage.style.backgroundImage = `url('${bgImage}')`
 if (bgOpacity) $bgImage.style.opacity = bgOpacity
 if (bgBlur) $bgImage.style.filter = `blur(${bgBlur}px)`
+$edit.onclick = loading
 
 locked?.forEach(key => {
 	if (key) key.split(' ').forEach(key => {
@@ -50,6 +53,7 @@ hidden?.forEach(item => {
 		})
 	})
 })
+
 
 if (colorsBackground) $root.style.setProperty('--background', colorsBackground)
 if (colorsColor) $root.style.setProperty('--color', colorsColor)
@@ -489,4 +493,8 @@ function resizeJoystick() {
 		else if (window.outerWidth <= 640) return 640
 		else return 'device-width'
 	}
+}
+
+function loading() {
+	$loading.classList.add('visible')
 }

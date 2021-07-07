@@ -1,14 +1,13 @@
-const options = {
-	container: document.body,
-	panelSelector: '> form > section',
-	directionThreshold: 100,
-	duration: 250
-}
-
-a=new PanelSnap(options);
-
 window.addEventListener('load', () => {
 	document.body.classList.remove('preload')
+})
+
+window.addEventListener('scroll', () => {
+	if (document.scrollingElement.scrollTop > window.innerHeight) {
+		document.querySelector('.start.floating').classList.remove('hidden')
+	} else {
+		document.querySelector('.start.floating').classList.add('hidden')
+	}
 })
 
 document.oncontextmenu = () => false
@@ -66,6 +65,7 @@ document.forms[0].onsubmit = function (e) {
 	localStorage.setItem('joystick.locked', lockedBtns.join(','))
 	localStorage.setItem('joystick.hidden', hiddenItems.join(','))
 	
+	loading()
 	location.href = 'joystick.html'
 }
 
@@ -76,9 +76,9 @@ const colors = {
 	active: createPickr('active', '#FFF3', '33')
 }
 
-document.querySelector('.start').oncontextmenu = () => {
+document.querySelectorAll('.start').forEach (e => e.oncontextmenu = () => {
 	document.querySelector('.hiddenOptions').style.display = 'block'
-}
+})
 
 document.querySelector('.resetColors').onclick = () => {
 	colors.background.setColor('#000')
@@ -90,7 +90,7 @@ document.querySelector('.resetColors').onclick = () => {
 function createPickr(el, defaultColor, opacity) {
 	return Pickr.create({
 		el: `.pickr-${el}`,
-		theme: 'nano',
+		theme: 'classic',
 		default: localStorage.getItem('joystick.' + el) || defaultColor,
 		defaultRepresentation: 'HEXA',
 		comparison: false,
@@ -100,7 +100,8 @@ function createPickr(el, defaultColor, opacity) {
 			opacity: true,
 			hue: true,
 			interaction: {
-				input: true
+				input: true,
+				save: true
 			}
 		},
 		swatches: [
@@ -125,8 +126,20 @@ function createPickr(el, defaultColor, opacity) {
 			'#607D8B' + (opacity || ''),
 			'#FFFFFF' + (opacity || ''),
 			'#000000' + (opacity || '')
-		]
-	}).on('change', color => {
-		document.forms[0].elements[el].value = color.toRGBA().toString()
+		],
+		i18n: {
+			'btn:save': 'Fechar',
+    }
+	}).on('change', (color) => {
+		color = color.toRGBA().toString()
+		const $input = document.forms[0].elements[el]
+		$input.parentElement.querySelector('.pickr button').style.setProperty('--pcr-color', color)
+	}).on('save', (color, instance) => {
+		instance.hide()
 	})
+}
+
+const $loading = document.querySelector('.loadingScreen')
+function loading() {
+	$loading.classList.add('visible')
 }
