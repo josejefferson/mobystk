@@ -41,6 +41,8 @@ body {
 		padding: 5px 20px;
 		display: flex;
 		font-size: 18px;
+		white-space: nowrap;
+		width: 100%;
 	}
 
 	.chip>input:checked+.label {
@@ -87,8 +89,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 	width: 100%;
 }
 
-input[type="text"],
-textarea {
+input[type="text"], %inputText {
 	background: none;
 	border-radius: 1000px;
 	border: var(--purple-400) 2px solid;
@@ -104,10 +105,13 @@ textarea {
 		border-color: var(--purple-300);
 		box-shadow: 0 0 0 4px #444;
 	}
+}
 
-	&:active {
-		transform: scale(1.2);
-	}
+textarea {
+	@extend %inputText;
+	border-radius: 5px;
+	height: 100%;
+	resize: none;
 }
 
 button,
@@ -211,6 +215,7 @@ section.main main {
 	.explanation {
 		font-size: 20px;
 		margin: 20px 0 10px 0;
+		text-align: center;
 	}
 
 	.code {
@@ -251,6 +256,7 @@ section.main footer {
 	}
 
 	.chipsGroup.selectPlayer .chip .label {
+		border-radius: 5px;
 		border-color: var(--blue-400);
 		color: var(--blue-400);
 		width: 40px;
@@ -329,7 +335,9 @@ section.advanced.hiddenItems main .chipsGroup {
 	padding: 20px;
 }
 section.advanced.lockedKeys main .chipsGroup .chip {
+	flex: 1;
 	.label {
+		border-radius: 5px;
 		border-color: var(--pink-400);
 		color: var(--pink-400);
 	}
@@ -341,7 +349,9 @@ section.advanced.lockedKeys main .chipsGroup .chip {
 	}
 }
 section.advanced.hiddenItems main .chipsGroup .chip {
+	flex: 1;
 	.label {
+		border-radius: 5px;
 		border-color: var(--cyan-500);
 		color: var(--cyan-500);
 	}
@@ -373,7 +383,7 @@ section.advanced.hiddenItems main .chipsGroup .chip {
 		}
 	}
 
-	&:not(.range) .label::before {
+	input[type="checkbox"] + .label::before {
 		content: "\F0131";
 		font-family: "Material Design Icons";
 		font-size: 24px;

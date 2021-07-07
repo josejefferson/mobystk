@@ -37,6 +37,8 @@ body.preload * {
   padding: 5px 20px;
   display: flex;
   font-size: 18px;
+  white-space: nowrap;
+  width: 100%;
 }
 .chipsGroup .chip > input:checked + .label {
   border-color: inherit;
@@ -80,8 +82,7 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
 }
 
-input[type=text],
-textarea {
+input[type=text], textarea {
   background: none;
   border-radius: 1000px;
   border: var(--purple-400) 2px solid;
@@ -93,14 +94,15 @@ textarea {
   transition: 0.15s ease;
   width: auto;
 }
-input[type=text]:focus,
-textarea:focus {
+input[type=text]:focus, textarea:focus {
   border-color: var(--purple-300);
   box-shadow: 0 0 0 4px #444;
 }
-input[type=text]:active,
-textarea:active {
-  transform: scale(1.2);
+
+textarea {
+  border-radius: 5px;
+  height: 100%;
+  resize: none;
 }
 
 button, .chipsGroup .chip .label,
@@ -196,6 +198,7 @@ section.main main {
 section.main main .explanation {
   font-size: 20px;
   margin: 20px 0 10px 0;
+  text-align: center;
 }
 section.main main .code {
   border-color: var(--purple-400);
@@ -229,6 +232,7 @@ section.main footer .chipsGroup.selectPlayer {
   justify-content: flex-start;
 }
 section.main footer .chipsGroup.selectPlayer .chip .label {
+  border-radius: 5px;
   border-color: var(--blue-400);
   color: var(--blue-400);
   width: 40px;
@@ -298,7 +302,11 @@ section.advanced.hiddenItems main .chipsGroup {
   padding: 20px;
 }
 
+section.advanced.lockedKeys main .chipsGroup .chip {
+  flex: 1;
+}
 section.advanced.lockedKeys main .chipsGroup .chip .label {
+  border-radius: 5px;
   border-color: var(--pink-400);
   color: var(--pink-400);
 }
@@ -308,7 +316,11 @@ section.advanced.lockedKeys main .chipsGroup .chip input:checked + .label {
   color: inherit;
 }
 
+section.advanced.hiddenItems main .chipsGroup .chip {
+  flex: 1;
+}
 section.advanced.hiddenItems main .chipsGroup .chip .label {
+  border-radius: 5px;
   border-color: var(--cyan-500);
   color: var(--cyan-500);
 }
@@ -334,7 +346,7 @@ section.advanced.hiddenItems main .chipsGroup .chip input:checked + .label {
 .option .label:active {
   background-color: var(--gray-700);
 }
-.option:not(.range) .label::before {
+.option input[type=checkbox] + .label::before {
   content: "󰄱";
   font-family: "Material Design Icons";
   font-size: 24px;

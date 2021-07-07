@@ -68,19 +68,19 @@
 					<div class="title">Controle nº:</div>
 					<label class="chip player">
 						<input type="radio" name="player" value="1" checked>
-						<div class="label square">1</div>
+						<div class="label">1</div>
 					</label>
 					<label class="chip player">
 						<input type="radio" name="player" value="2">
-						<div class="label square">2</div>
+						<div class="label">2</div>
 					</label>
 					<label class="chip player">
 						<input type="radio" name="player" value="3">
-						<div class="label square">3</div>
+						<div class="label">3</div>
 					</label>
 					<label class="chip player">
 						<input type="radio" name="player" value="4">
-						<div class="label square">4</div>
+						<div class="label">4</div>
 					</label>
 				</div>
 
@@ -354,29 +354,36 @@
 				<div class="subtitle">Coloque o link da imagem</div>
 			</header>
 
+			<main>
 			<input type="text" name="bgImage" autocomplete="off" placeholder="URL da imagem">
 
 			<div class="optionsGroup">
-				<label class="option customBG">
-					<div class="optionLabel">
+				<label class="option range">
+					<div class="label">
 						<div class="text">Opacidade</div>
 						<input type="range" name="bgOpacity" min="0" max="1" step="0.1" value="0.5">
 					</div>
 				</label>
 
-				<label class="option customBG">
-					<div class="optionLabel">
+				<label class="option range">
+					<div class="label">
 						<div class="text">Borrado</div>
 						<input type="range" name="bgBlur" min="0" max="10" step="1" value="0">
 					</div>
 				</label>
 			</div>
+			</main>
 		</section>
 
 		<!-- CSS personalizado -->
-		<section class="advanced">
-			<div class="optionTitle">CSS personalizado</div>
-			<textarea name="customCSS" placeholder="CSS personalizado"></textarea>
+		<section class="advanced customCSS">
+			<header>
+				<div class="title">CSS personalizado</div>
+			</header>
+
+			<main>
+				<textarea name="customCSS" placeholder="CSS personalizado"></textarea>
+			</main>
 		</section>
 
 		<!-- Debug -->

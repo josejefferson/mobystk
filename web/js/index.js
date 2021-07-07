@@ -1,6 +1,7 @@
 const options = {
 	container: document.body,
 	panelSelector: '> form > section',
+	directionThreshold: 100,
 	duration: 250
 }
 
