@@ -2,6 +2,7 @@ window.addEventListener('load', () => {
 	document.body.classList.remove('preload')
 })
 
+document.querySelectorAll('a').forEach(e => e.onclick = loading)
 const $progress = document.querySelector('.progress')
 const $bar = $progress.querySelector('.bar')
 const $cancel = $progress.querySelector('.cancel')
@@ -96,4 +97,9 @@ async function wait(sec) {
 	return new Promise((resolve) => {
 		setTimeout(resolve, sec)
 	})
+}
+
+const $loading = document.querySelector('.loadingScreen')
+function loading() {
+	$loading.classList.add('visible')
 }

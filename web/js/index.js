@@ -11,6 +11,7 @@ window.addEventListener('scroll', () => {
 })
 
 document.oncontextmenu = () => false
+document.querySelectorAll('a').forEach(e => e.onclick = loading)
 document.forms[0].elements.code.value = localStorage.getItem('joystick.code') || window.location.hostname + ':5000'
 document.forms[0].elements.layout.value = localStorage.getItem('joystick.layout')
 document.forms[0].elements.player.value = localStorage.getItem('joystick.player')
@@ -104,40 +105,39 @@ function createPickr(el, defaultColor, opacity) {
 				save: true
 			}
 		},
-		swatches: [
-			'#F44336' + (opacity || ''),
-			'#E91E63' + (opacity || ''),
-			'#9C27B0' + (opacity || ''),
-			'#673AB7' + (opacity || ''),
-			'#3F51B5' + (opacity || ''),
-			'#2196F3' + (opacity || ''),
-			'#03A9F4' + (opacity || ''),
-			'#00BCD4' + (opacity || ''),
-			'#009688' + (opacity || ''),
-			'#4CAF50' + (opacity || ''),
-			'#8BC34A' + (opacity || ''),
-			'#CDDC39' + (opacity || ''),
-			'#FFEB3B' + (opacity || ''),
-			'#FFC107' + (opacity || ''),
-			'#FF9800' + (opacity || ''),
-			'#FF5722' + (opacity || ''),
-			'#795548' + (opacity || ''),
-			'#9E9E9E' + (opacity || ''),
-			'#607D8B' + (opacity || ''),
-			'#FFFFFF' + (opacity || ''),
-			'#000000' + (opacity || '')
-		],
 		i18n: {
 			'btn:save': 'Fechar',
-    }
+		},
+		swatches: [
+			'#F44336',
+			'#E91E63',
+			'#9C27B0',
+			'#673AB7',
+			'#3F51B5',
+			'#2196F3',
+			'#03A9F4',
+			'#00BCD4',
+			'#009688',
+			'#4CAF50',
+			'#8BC34A',
+			'#CDDC39',
+			'#FFEB3B',
+			'#FFC107',
+			'#FF9800',
+			'#FF5722',
+			'#795548',
+			'#9E9E9E',
+			'#607D8B',
+			'#FFFFFF',
+			'#000000'
+		].map(e => e + (opacity || ''))
+
 	}).on('change', (color) => {
-		color = color.toRGBA().toString()
 		const $input = document.forms[0].elements[el]
+		color = color.toRGBA().toString()
 		$input.value = color
 		$input.parentElement.querySelector('.pickr button').style.setProperty('--pcr-color', color)
-	}).on('save', (color, instance) => {
-		instance.hide()
-	})
+	}).on('save', (color, instance) => instance.hide())
 }
 
 const $loading = document.querySelector('.loadingScreen')
