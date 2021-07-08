@@ -133,6 +133,7 @@ function createPickr(el, defaultColor, opacity) {
 	}).on('change', (color) => {
 		color = color.toRGBA().toString()
 		const $input = document.forms[0].elements[el]
+		$input.value = color
 		$input.parentElement.querySelector('.pickr button').style.setProperty('--pcr-color', color)
 	}).on('save', (color, instance) => {
 		instance.hide()
