@@ -29,25 +29,25 @@ function loading() {
 }
 
 // Carregar opções
-formEls.code.value = ls['joystick.code'] || window.location.hostname + ':5000'
-formEls.layout.value = ls['joystick.layout']
-formEls.player.value = ls['joystick.player']
-formEls.invert.checked = ls['joystick.invert'] === 'true'
-formEls.vibrate.checked = !(ls['joystick.vibrate'] === 'false')
-formEls.background.value = ls['joystick.background'] || 'rgba(0, 0, 0, 1)'
-formEls.color.value = ls['joystick.color'] || 'rgba(255, 255, 255, 0.53)'
-formEls.border.value = ls['joystick.border'] || 'rgba(255, 255, 255, 0.53)'
-formEls.active.value = ls['joystick.active'] || 'rgba(255, 255, 255, 0.2)'
-formEls.bgImage.value = ls['joystick.bgImage']
-formEls.bgOpacity.value = ls['joystick.bgOpacity'] || '0.5'
-formEls.bgBlur.value = ls['joystick.bgBlur'] || '0'
-formEls.customCSS.value = ls['joystick.customCSS']
-formEls.driveSensitivity.value = ls['joystick.driveSensitivity'] || '2'
-formEls.drivePrecision.value = ls['joystick.drivePrecision'] || '1'
-ls['joystick.locked']?.split(',')?.forEach(e => {
+formEls.code.value = ls.getItem('joystick.code') || window.location.hostname + ':5000'
+formEls.layout.value = ls.getItem('joystick.layout')
+formEls.player.value = ls.getItem('joystick.player')
+formEls.invert.checked = ls.getItem('joystick.invert') === 'true'
+formEls.vibrate.checked = !(ls.getItem('joystick.vibrate') === 'false')
+formEls.background.value = ls.getItem('joystick.background') || 'rgba(0, 0, 0, 1)'
+formEls.color.value = ls.getItem('joystick.color') || 'rgba(255, 255, 255, 0.53)'
+formEls.border.value = ls.getItem('joystick.border') || 'rgba(255, 255, 255, 0.53)'
+formEls.active.value = ls.getItem('joystick.active') || 'rgba(255, 255, 255, 0.2)'
+formEls.bgImage.value = ls.getItem('joystick.bgImage')
+formEls.bgOpacity.value = ls.getItem('joystick.bgOpacity') || '0.5'
+formEls.bgBlur.value = ls.getItem('joystick.bgBlur') || '0'
+formEls.customCSS.value = ls.getItem('joystick.customCSS')
+formEls.driveSensitivity.value = ls.getItem('joystick.driveSensitivity') || '2'
+formEls.drivePrecision.value = ls.getItem('joystick.drivePrecision') || '1'
+ls.getItem('joystick.locked')?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true
 })
-ls['joystick.hidden']?.split(',')?.forEach(e => {
+ls.getItem('joystick.hidden')?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=hide][value="${e}"]`).checked = true
 })
 
@@ -64,24 +64,24 @@ document.forms[0].addEventListener('submit', function (e) {
 		if (e.checked) hiddenItems.push(e.value)
 	})
 
-	ls['joystick.code'] = elems.code.value
-	ls['joystick.layout'] = elems.layout.value
-	ls['joystick.player'] = elems.player.value
-	ls['joystick.debug'] = elems.debug.checked
-	ls['joystick.invert'] = elems.invert.checked
-	ls['joystick.vibrate'] = elems.vibrate.checked
-	ls['joystick.background'] = elems.background.value
-	ls['joystick.color'] = elems.color.value
-	ls['joystick.border'] = elems.border.value
-	ls['joystick.active'] = elems.active.value
-	ls['joystick.bgImage'] = elems.bgImage.value
-	ls['joystick.bgOpacity'] = elems.bgOpacity.value
-	ls['joystick.bgBlur'] = elems.bgBlur.value
-	ls['joystick.customCSS'] = elems.customCSS.value
-	ls['joystick.driveSensitivity'] = elems.driveSensitivity.value
-	ls['joystick.drivePrecision'] = elems.drivePrecision.value
-	ls['joystick.locked'] = lockedBtns.join(',')
-	ls['joystick.hidden'] = hiddenItems.join(',')
+	localStorage.setItem('joystick.code', elems.code.value)
+	localStorage.setItem('joystick.layout', elems.layout.value)
+	localStorage.setItem('joystick.player', elems.player.value)
+	localStorage.setItem('joystick.debug', elems.debug.checked)
+	localStorage.setItem('joystick.invert', elems.invert.checked)
+	localStorage.setItem('joystick.vibrate', elems.vibrate.checked)
+	localStorage.setItem('joystick.background', elems.background.value)
+	localStorage.setItem('joystick.color', elems.color.value)
+	localStorage.setItem('joystick.border', elems.border.value)
+	localStorage.setItem('joystick.active', elems.active.value)
+	localStorage.setItem('joystick.bgImage', elems.bgImage.value)
+	localStorage.setItem('joystick.bgOpacity', elems.bgOpacity.value)
+	localStorage.setItem('joystick.bgBlur', elems.bgBlur.value)
+	localStorage.setItem('joystick.customCSS', elems.customCSS.value)
+	localStorage.setItem('joystick.driveSensitivity', elems.driveSensitivity.value)
+	localStorage.setItem('joystick.drivePrecision', elems.drivePrecision.value)
+	localStorage.setItem('joystick.locked', lockedBtns.join(','))
+	localStorage.setItem('joystick.hidden', hiddenItems.join(','))
 
 	loading()
 	location.href = 'joystick.html'
