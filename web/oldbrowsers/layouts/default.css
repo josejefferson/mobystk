@@ -295,6 +295,10 @@
 	transform: translateX(-50%);
 }
 
+.drive .driveArrow {
+	transition: transform .2s ease;
+}
+
 /* Pause button */
 .pause {
 	left: 50%;

@@ -92,7 +92,12 @@ button svg {
 .nipple .back {
 	background-color: var(--btn-background) !important;
 	border: var(--border) var(--border-size) var(--border-style);
-	transition: border-color 1s ease !important;
+	transition:
+		border-color 1s ease,
+		border-top-width .2s ease,
+		border-left-width .2s ease,
+		border-right-width .2s ease,
+		border-bottom-width .2s ease !important;
 }
 
 /* Joystick front */

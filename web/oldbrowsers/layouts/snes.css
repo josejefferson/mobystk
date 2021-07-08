@@ -13,15 +13,15 @@
 
 .arrows,
 .actions {
-   display: block;
+	display: block;
 }
 
 body.invert .joystickA {
-   display: block;
+	display: block;
 }
 
 body.invert .arrows {
-   display: none;
+	display: none;
 }
 
 /* ==========================================================================
@@ -44,5 +44,5 @@ body.invert .arrows {
 .save,
 .volumeUp,
 .volumeDown {
-   display: flex;
+	display: flex;
 }

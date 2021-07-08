@@ -1,96 +1,128 @@
-var _localStorage$getItem, _localStorage$getItem2, _localStorage$getItem3, _localStorage$getItem4;
+var _ls$getItem, _ls$getItem$split, _ls$getItem2, _ls$getItem2$split;
+
+const ls = localStorage;
+const form = document.forms[0];
+const formEls = form.elements; // Eventos
 
 window.addEventListener('load', () => {
-  document.body.classList.remove('preload');
+	document.body.classList.remove('preload');
 });
-
-document.oncontextmenu = () => false;
-
-document.forms[0].elements.code.value = localStorage.getItem('joystick.code') || window.location.hostname + ':5000';
-document.forms[0].elements.layout.value = localStorage.getItem('joystick.layout');
-document.forms[0].elements.player.value = localStorage.getItem('joystick.player');
-document.forms[0].elements.invert.checked = localStorage.getItem('joystick.invert') === 'true';
-document.forms[0].elements.vibrate.checked = !(localStorage.getItem('joystick.vibrate') === 'false');
-document.forms[0].elements.background.value = localStorage.getItem('joystick.background') || 'rgba(0, 0, 0, 1)';
-document.forms[0].elements.color.value = localStorage.getItem('joystick.color') || 'rgba(255, 255, 255, 0.53)';
-document.forms[0].elements.border.value = localStorage.getItem('joystick.border') || 'rgba(255, 255, 255, 0.53)';
-document.forms[0].elements.active.value = localStorage.getItem('joystick.active') || 'rgba(255, 255, 255, 0.2)';
-document.forms[0].elements.bgImage.value = localStorage.getItem('joystick.bgImage');
-document.forms[0].elements.bgOpacity.value = localStorage.getItem('joystick.bgOpacity') || '0.5';
-document.forms[0].elements.bgBlur.value = localStorage.getItem('joystick.bgBlur') || '0';
-document.forms[0].elements.customCSS.value = localStorage.getItem('joystick.customCSS');
-(_localStorage$getItem = localStorage.getItem('joystick.locked')) === null || _localStorage$getItem === void 0 ? void 0 : (_localStorage$getItem2 = _localStorage$getItem.split(',')) === null || _localStorage$getItem2 === void 0 ? void 0 : _localStorage$getItem2.forEach(e => {
-  if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true;
+window.addEventListener('scroll', () => {
+	if (document.scrollingElement.scrollTop > window.innerHeight) {
+		document.querySelector('.start.floating').classList.remove('hidden');
+	} else {
+		document.querySelector('.start.floating').classList.add('hidden');
+	}
 });
-(_localStorage$getItem3 = localStorage.getItem('joystick.hidden')) === null || _localStorage$getItem3 === void 0 ? void 0 : (_localStorage$getItem4 = _localStorage$getItem3.split(',')) === null || _localStorage$getItem4 === void 0 ? void 0 : _localStorage$getItem4.forEach(e => {
-  if (e) document.querySelector(`[name=hide][value="${e}"]`).checked = true;
+document.addEventListener('contextmenu', () => false);
+document.querySelectorAll('a').forEach(e => e.addEventListener('click', loading));
+document.querySelectorAll('.start').forEach(e => {
+	e.addEventListener('contextmenu', () => {
+		document.querySelector('.hiddenOptions').style.display = 'flex';
+	});
 });
+const $loading = document.querySelector('.loadingScreen');
 
-document.forms[0].onsubmit = function (e) {
-  e.preventDefault();
-  localStorage.setItem('joystick.code', this.elements.code.value);
-  localStorage.setItem('joystick.layout', this.elements.layout.value);
-  localStorage.setItem('joystick.player', this.elements.player.value);
-  localStorage.setItem('joystick.debug', this.elements.debug.checked);
-  localStorage.setItem('joystick.invert', this.elements.invert.checked);
-  localStorage.setItem('joystick.vibrate', this.elements.vibrate.checked);
-  localStorage.setItem('joystick.background', this.elements.background.value);
-  localStorage.setItem('joystick.color', this.elements.color.value);
-  localStorage.setItem('joystick.border', this.elements.border.value);
-  localStorage.setItem('joystick.active', this.elements.active.value);
-  localStorage.setItem('joystick.bgImage', this.elements.bgImage.value);
-  localStorage.setItem('joystick.bgOpacity', this.elements.bgOpacity.value);
-  localStorage.setItem('joystick.bgBlur', this.elements.bgBlur.value);
-  localStorage.setItem('joystick.customCSS', this.elements.customCSS.value);
-  const lockedBtns = [];
-  const hiddenItems = [];
-  this.elements.lock.forEach(e => {
-    if (e.checked) lockedBtns.push(e.value);
-  });
-  this.elements.hide.forEach(e => {
-    if (e.checked) hiddenItems.push(e.value);
-  });
-  localStorage.setItem('joystick.locked', lockedBtns.join(','));
-  localStorage.setItem('joystick.hidden', hiddenItems.join(','));
-  location.href = 'joystick.html';
-};
+function loading() {
+	$loading.classList.add('visible');
+} // Carregar opções
+
+
+formEls.code.value = ls.getItem('joystick.code') || window.location.hostname + ':5000';
+formEls.layout.value = ls.getItem('joystick.layout');
+formEls.player.value = ls.getItem('joystick.player');
+formEls.invert.checked = ls.getItem('joystick.invert') === 'true';
+formEls.vibrate.checked = !(ls.getItem('joystick.vibrate') === 'false');
+formEls.background.value = ls.getItem('joystick.background') || 'rgba(0, 0, 0, 1)';
+formEls.color.value = ls.getItem('joystick.color') || 'rgba(255, 255, 255, 0.53)';
+formEls.border.value = ls.getItem('joystick.border') || 'rgba(255, 255, 255, 0.53)';
+formEls.active.value = ls.getItem('joystick.active') || 'rgba(255, 255, 255, 0.2)';
+formEls.bgImage.value = ls.getItem('joystick.bgImage');
+formEls.bgOpacity.value = ls.getItem('joystick.bgOpacity') || '0.5';
+formEls.bgBlur.value = ls.getItem('joystick.bgBlur') || '0';
+formEls.customCSS.value = ls.getItem('joystick.customCSS');
+formEls.driveSensitivity.value = ls.getItem('joystick.driveSensitivity') || '2';
+formEls.drivePrecision.value = ls.getItem('joystick.drivePrecision') || '1';
+(_ls$getItem = ls.getItem('joystick.locked')) === null || _ls$getItem === void 0 ? void 0 : (_ls$getItem$split = _ls$getItem.split(',')) === null || _ls$getItem$split === void 0 ? void 0 : _ls$getItem$split.forEach(e => {
+	if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true;
+});
+(_ls$getItem2 = ls.getItem('joystick.hidden')) === null || _ls$getItem2 === void 0 ? void 0 : (_ls$getItem2$split = _ls$getItem2.split(',')) === null || _ls$getItem2$split === void 0 ? void 0 : _ls$getItem2$split.forEach(e => {
+	if (e) document.querySelector(`[name=hide][value="${e}"]`).checked = true;
+}); // Salvar opções
+
+document.forms[0].addEventListener('submit', function (e) {
+	e.preventDefault();
+	const elems = this.elements;
+	const lockedBtns = [];
+	const hiddenItems = [];
+	elems.lock.forEach(e => {
+		if (e.checked) lockedBtns.push(e.value);
+	});
+	elems.hide.forEach(e => {
+		if (e.checked) hiddenItems.push(e.value);
+	});
+	localStorage.setItem('joystick.code', elems.code.value);
+	localStorage.setItem('joystick.layout', elems.layout.value);
+	localStorage.setItem('joystick.player', elems.player.value);
+	localStorage.setItem('joystick.debug', elems.debug.checked);
+	localStorage.setItem('joystick.invert', elems.invert.checked);
+	localStorage.setItem('joystick.vibrate', elems.vibrate.checked);
+	localStorage.setItem('joystick.background', elems.background.value);
+	localStorage.setItem('joystick.color', elems.color.value);
+	localStorage.setItem('joystick.border', elems.border.value);
+	localStorage.setItem('joystick.active', elems.active.value);
+	localStorage.setItem('joystick.bgImage', elems.bgImage.value);
+	localStorage.setItem('joystick.bgOpacity', elems.bgOpacity.value);
+	localStorage.setItem('joystick.bgBlur', elems.bgBlur.value);
+	localStorage.setItem('joystick.customCSS', elems.customCSS.value);
+	localStorage.setItem('joystick.driveSensitivity', elems.driveSensitivity.value);
+	localStorage.setItem('joystick.drivePrecision', elems.drivePrecision.value);
+	localStorage.setItem('joystick.locked', lockedBtns.join(','));
+	localStorage.setItem('joystick.hidden', hiddenItems.join(','));
+	loading();
+	location.href = 'joystick.html';
+}); // Cores
 
 const colors = {
-  background: createPickr('background', '#000'),
-  color: createPickr('color', '#FFF8', '88'),
-  border: createPickr('border', '#FFF8', '88'),
-  active: createPickr('active', '#FFF3', '33')
+	background: createPickr('background', '#000'),
+	color: createPickr('color', '#FFF8', '88'),
+	border: createPickr('border', '#FFF8', '88'),
+	active: createPickr('active', '#FFF3', '33')
 };
-
-document.querySelector('.start').oncontextmenu = () => {
-  document.querySelector('.links').style.display = 'block';
-};
-
-document.querySelector('.resetColors').onclick = () => {
-  colors.background.setColor('#000');
-  colors.color.setColor('#FFF8');
-  colors.border.setColor('#FFF8');
-  colors.active.setColor('#FFF3');
-};
+document.querySelector('.resetColors').addEventListener('click', () => {
+	colors.background.setColor('#000');
+	colors.color.setColor('#FFF8');
+	colors.border.setColor('#FFF8');
+	colors.active.setColor('#FFF3');
+});
 
 function createPickr(el, defaultColor, opacity) {
-  return Pickr.create({
-    el: `.pickr-${el}`,
-    theme: 'nano',
-    default: localStorage.getItem('joystick.' + el) || defaultColor,
-    defaultRepresentation: 'HEXA',
-    comparison: false,
-    autoReposition: true,
-    components: {
-      preview: true,
-      opacity: true,
-      hue: true,
-      interaction: {
-        input: true
-      }
-    },
-    swatches: ['#F44336' + (opacity || ''), '#E91E63' + (opacity || ''), '#9C27B0' + (opacity || ''), '#673AB7' + (opacity || ''), '#3F51B5' + (opacity || ''), '#2196F3' + (opacity || ''), '#03A9F4' + (opacity || ''), '#00BCD4' + (opacity || ''), '#009688' + (opacity || ''), '#4CAF50' + (opacity || ''), '#8BC34A' + (opacity || ''), '#CDDC39' + (opacity || ''), '#FFEB3B' + (opacity || ''), '#FFC107' + (opacity || ''), '#FF9800' + (opacity || ''), '#FF5722' + (opacity || ''), '#795548' + (opacity || ''), '#9E9E9E' + (opacity || ''), '#607D8B' + (opacity || ''), '#FFFFFF' + (opacity || ''), '#000000' + (opacity || '')]
-  }).on('change', color => {
-    document.forms[0].elements[el].value = color.toRGBA().toString();
-  });
+	return Pickr.create({
+		el: `.pickr-${el}`,
+		theme: 'classic',
+		default: ls['joystick.' + el] || defaultColor,
+		defaultRepresentation: 'HEXA',
+		comparison: false,
+		autoReposition: true,
+		components: {
+			preview: true,
+			opacity: true,
+			hue: true,
+			interaction: {
+				input: true,
+				save: true
+			}
+		},
+		i18n: {
+			'btn:save': 'Fechar'
+		},
+		swatches: ['#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B', '#FFFFFF', '#000000'].map(e => e + (opacity || ''))
+	}).on('change', color => {
+		color = color.toRGBA().toString();
+		const $input = formEls[el];
+		$input.value = color;
+		$input.parentElement.querySelector('.pickr button').style.setProperty('--pcr-color', color);
+	}).on('save', (color, instance) => {
+		instance.hide();
+	});
 }

@@ -8,380 +8,407 @@
 	<link rel="manifest" href="manifest.json">
 	<title>Joystick</title>
 	<link rel="stylesheet" href="lib/css/materialdesignicons.min.css">
-	<link rel="stylesheet" href="lib/css/pickr.nano.min.css">
+	<link rel="stylesheet" href="lib/css/pickr.classic.min.css">
+	<link rel="stylesheet" href="css/colors.css">
+	<link rel="stylesheet" href="css/common.css">
 	<link rel="stylesheet" href="css/index.css">
 </head>
 
 <body class="preload">
+	<header>
+		<div class="logo">
+			<img src="img/logo.svg">
+			<span>Web Joystick</span>
+		</div>
+
+		<nav>
+			<ul>
+				<li>
+					<a href="setup.html">
+						<i class="mdi mdi-gamepad"></i>
+						<span>Conf. Emuladores</span>
+					</a>
+				</li>
+				<li>
+					<a href="oldbrowsers/index.html">
+						<i class="mdi mdi-earth"></i>
+						<span>Antigo</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
 	<form class="container" action="joystick.html" method="GET">
-		<!-- Código -->
-		<div class="optionTitle">Digite o código que aparece no seu computador</div>
-		<label class="textOption">
-			<input type="text" name="code" class="code" autocomplete="off" required>
-		</label>
+		<section class="main">
 
-		<hr>
+			<main>
+				<!-- Código -->
+				<div class="explanation">Digite o código que aparece no seu computador</div>
+				<input type="text" name="code" class="code" autocomplete="off" required>
 
-		<!-- Layouts -->
-		<div class="optionTitle">Selecione o console</div>
-		<div class="optionsGroup">
-			<label class="option layout">
-				<input type="radio" name="layout" value="psp" checked>
-				<div class="optionLabel">PSP</div>
-			</label>
+				<!-- Layouts -->
+				<div class="explanation">Selecione o videogame</div>
+				<div class="chipsGroup selectLayout">
+					<label class="chip">
+						<input type="radio" name="layout" value="psp" checked>
+						<div class="label">PSP</div>
+					</label>
+					<label class="chip">
+						<input type="radio" name="layout" value="ps2">
+						<div class="label">PS2</div>
+					</label>
+					<label class="chip">
+						<input type="radio" name="layout" value="snes">
+						<div class="label">SNES</div>
+					</label>
+				</div>
+			</main>
 
-			<label class="option layout">
-				<input type="radio" name="layout" value="ps2">
-				<div class="optionLabel">PS2</div>
-			</label>
+			<footer>
+				<div class="selectPlayer chipsGroup">
+					<div class="title">Controle nº:</div>
+					<label class="chip player">
+						<input type="radio" name="player" value="1" checked>
+						<div class="label">1</div>
+					</label>
+					<label class="chip player">
+						<input type="radio" name="player" value="2">
+						<div class="label">2</div>
+					</label>
+					<label class="chip player">
+						<input type="radio" name="player" value="3">
+						<div class="label">3</div>
+					</label>
+					<label class="chip player">
+						<input type="radio" name="player" value="4">
+						<div class="label">4</div>
+					</label>
+				</div>
 
-			<label class="option layout">
-				<input type="radio" name="layout" value="snes">
-				<div class="optionLabel">SNES</div>
-			</label>
-		</div>
+				<div class="advancedOptions">
+					<div>Opções avançadas</div>
+					<i class="mdi mdi-chevron-down"></i>
+				</div>
 
-		<hr>
+				<div class="start">
+					<button type="submit">
+						<i class="mdi mdi-google-controller"></i> Jogar
+					</button>
+				</div>
+			</footer>
+		</section>
 
-		<!-- Jogador -->
-		<div class="optionTitle">Selecione qual o seu jogador</div>
-		<div class="optionsGroup">
-			<label class="option player">
-				<input type="radio" name="player" value="1" checked>
-				<div class="optionLabel">Jogador 1</div>
-			</label>
-
-			<label class="option player">
-				<input type="radio" name="player" value="2">
-				<div class="optionLabel">Jogador 2</div>
-			</label>
-
-			<label class="option player">
-				<input type="radio" name="player" value="3">
-				<div class="optionLabel">Jogador 3</div>
-			</label>
-
-			<label class="option player">
-				<input type="radio" name="player" value="4">
-				<div class="optionLabel">Jogador 4</div>
-			</label>
-		</div>
-
-		<hr>
-
-		<!-- Opções -->
-		<div class="optionTitle">Opções</div>
-		<div class="optionsGroup">
-			<label class="option settings">
-				<input type="checkbox" name="invert">
-				<div class="optionLabel">Inverter joystick/setas</div>
-			</label>
-
-			<label class="option settings">
-				<input type="checkbox" name="vibrate" checked>
-				<div class="optionLabel">Vibração</div>
-			</label>
-		</div>
-
-		<hr>
+		<!-- Opções comuns -->
+		<section class="advanced commonOptions">
+			<header>
+				<div class="title">Opções comuns</div>
+			</header>
+			<main>
+				<label class="option">
+					<input type="checkbox" name="invert">
+					<div class="label">Inverter joystick/setas</div>
+				</label>
+				<label class="option">
+					<input type="checkbox" name="vibrate" checked>
+					<div class="label">Vibração</div>
+				</label>
+				<label class="option range">
+					<div class="label">
+						<div class="text">Sensibilidade do volante</div>
+						<input type="range" name="driveSensitivity" min="1" max="5" step="0.5" value="2">
+					</div>
+				</label>
+				<label class="option range">
+					<div class="label">
+						<div class="text">Precisão do volante</div>
+						<input type="range" name="drivePrecision" min="0" max="3" step="0.5" value="1">
+					</div>
+				</label>
+			</main>
+		</section>
 
 		<!-- Teclas traváveis -->
-		<details>
-			<summary class="optionTitle">Selecione as teclas traváveis</summary>
-			<small class="optionSubTitle">As teclas que você selecionar não precisarão serem mantidas pressionadas</small>
-			<div class="optionsGroup">
-				<label class="option lock"><input type="checkbox" name="lock" value="l">
-					<div class="optionLabel">L</div>
-				</label>
+		<section class="advanced lockedKeys">
+			<header>
+				<div class="title">Teclas bloqueáveis</div>
+				<div class="subtitle">As teclas que você selecionar se manterão ativas apenas com um toque</div>
+			</header>
 
-				<label class="option lock"><input type="checkbox" name="lock" value="l1">
-					<div class="optionLabel">L1</div>
-				</label>
+			<main>
+				<div class="chipsGroup">
+					<label class="chip"><input type="checkbox" name="lock" value="l">
+						<div class="label">L</div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="l1">
+						<div class="label">L1</div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="l2">
+						<div class="label">L2</div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="l3">
+						<div class="label">L3</div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="r">
+						<div class="label">R</div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="r1">
+						<div class="label">R1</div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="r2">
+						<div class="label">R2</div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="r3">
+						<div class="label">R3</div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="up">
+						<div class="label"><i class="mdi mdi-menu-up-outline"></i></div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="left">
+						<div class="label"><i class="mdi mdi-menu-left-outline"></i></div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="right">
+						<div class="label"><i class="mdi mdi-menu-right-outline"></i></div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="down">
+						<div class="label"><i class="mdi mdi-menu-down-outline"></i></div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="actUp">
+						<div class="label"><i class="mdi mdi-triangle-outline"></i></div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="actLeft">
+						<div class="label"><i class="mdi mdi-square-outline"></i></div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="actRight">
+						<div class="label"><i class="mdi mdi-circle-outline"></i></div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="actDown">
+						<div class="label"><i class="mdi mdi-close"></i></div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="snesActUp">
+						<div class="label">X</div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="snesActLeft">
+						<div class="label">Y</div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="snesActRight">
+						<div class="label">A</div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="snesActDown">
+						<div class="label">B</div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="select">
+						<div class="label">SELECT</div>
+					</label>
+					<label class="chip"><input type="checkbox" name="lock" value="start">
+						<div class="label">START</div>
+					</label>
+				</div>
+			</main>
+		</section>
 
-				<label class="option lock"><input type="checkbox" name="lock" value="l2">
-					<div class="optionLabel">L2</div>
-				</label>
+		<!-- Ocultar itens -->
+		<section class="advanced hiddenItems">
+			<header>
+				<div class="title">Ocultar itens</div>
+				<div class="subtitle">Selecione os itens que você não quer que apareça no controle</div>
+			</header>
 
-				<label class="option lock"><input type="checkbox" name="lock" value="l3">
-					<div class="optionLabel">L3</div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="r">
-					<div class="optionLabel">R</div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="r1">
-					<div class="optionLabel">R1</div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="r2">
-					<div class="optionLabel">R2</div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="r3">
-					<div class="optionLabel">R3</div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="up">
-					<div class="optionLabel"><i class="mdi mdi-menu-up-outline"></i></div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="left">
-					<div class="optionLabel"><i class="mdi mdi-menu-left-outline"></i></div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="right">
-					<div class="optionLabel"><i class="mdi mdi-menu-right-outline"></i></div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="down">
-					<div class="optionLabel"><i class="mdi mdi-menu-down-outline"></i></div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="actUp">
-					<div class="optionLabel"><i class="mdi mdi-triangle-outline"></i></div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="actLeft">
-					<div class="optionLabel"><i class="mdi mdi-square-outline"></i></div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="actRight">
-					<div class="optionLabel"><i class="mdi mdi-circle-outline"></i></div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="actDown">
-					<div class="optionLabel"><i class="mdi mdi-close"></i></div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="snesActUp">
-					<div class="optionLabel">X</div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="snesActLeft">
-					<div class="optionLabel">Y</div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="snesActRight">
-					<div class="optionLabel">A</div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="snesActDown">
-					<div class="optionLabel">B</div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="select">
-					<div class="optionLabel">SELECT</div>
-				</label>
-
-				<label class="option lock"><input type="checkbox" name="lock" value="start">
-					<div class="optionLabel">START</div>
-				</label>
-			</div>
-		</details>
-
-		<hr>
-
-		<!-- Ocultar -->
-		<details>
-			<summary class="optionTitle">Ocultar itens</summary>
-			<small class="optionSubTitle">Selecione os itens que você não quer que apareça no controle</small>
-			<div class="optionsGroup">
-				<label class="option hide"><input type="checkbox" name="hide" value="deviceInfo">
-					<div class="optionLabel">Informações</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="drive">
-					<div class="optionLabel">Volante</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="recordMacro playMacro">
-					<div class="optionLabel">Macro</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="joystickL">
-					<div class="optionLabel">Joystick Esq.</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="joystickR">
-					<div class="optionLabel">Joystick Dir.</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="joystickA">
-					<div class="optionLabel">Joystick Setas</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="select">
-					<div class="optionLabel">SELECT</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="start">
-					<div class="optionLabel">START</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="l">
-					<div class="optionLabel">L</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="l1">
-					<div class="optionLabel">L1</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="l2">
-					<div class="optionLabel">L2</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="l3">
-					<div class="optionLabel">L3</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="r">
-					<div class="optionLabel">R</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="r1">
-					<div class="optionLabel">R1</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="r2">
-					<div class="optionLabel">R2</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="r3">
-					<div class="optionLabel">R3</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="volumeDown volumeUp">
-					<div class="optionLabel">
-						<i class="mdi mdi-volume-high"></i>
-					</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="load">
-					<div class="optionLabel"><i class="mdi mdi-file-download"></i></div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="save">
-					<div class="optionLabel"><i class="mdi mdi-content-save"></i></div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="pause">
-					<div class="optionLabel"><i class="mdi mdi-pause"></i></div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="toggleInvert">
-					<div class="optionLabel"><i class="mdi mdi-swap-vertical"></i></div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="arrows">
-					<div class="optionLabel">
-						<i class="mdi mdi-menu-up-outline"></i>
-						<i class="mdi mdi-menu-left-outline"></i>
-						<i class="mdi mdi-menu-right-outline"></i>
-						<i class="mdi mdi-menu-down-outline"></i>
-					</div>
-				</label>
-
-				<label class="option hide"><input type="checkbox" name="hide" value="actions">
-					<div class="optionLabel">
-						<i class="mdi mdi-triangle-outline"></i>
-						<i class="mdi mdi-square-outline"></i>
-						<i class="mdi mdi-circle-outline"></i>
-						<i class="mdi mdi-close"></i>
-					</div>
-				</label>
-			</div>
-		</details>
-
-		<hr>
+			<main>
+				<div class="chipsGroup">
+					<label class="chip hide"><input type="checkbox" name="hide" value="deviceInfo">
+						<div class="label">Informações</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="drive">
+						<div class="label">Volante</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="recordMacro playMacro">
+						<div class="label">Macro</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="joystickL">
+						<div class="label">Joystick Esq.</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="joystickR">
+						<div class="label">Joystick Dir.</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="joystickA">
+						<div class="label">Joystick Setas</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="select">
+						<div class="label">SELECT</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="start">
+						<div class="label">START</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="l">
+						<div class="label">L</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="l1">
+						<div class="label">L1</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="l2">
+						<div class="label">L2</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="l3">
+						<div class="label">L3</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="r">
+						<div class="label">R</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="r1">
+						<div class="label">R1</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="r2">
+						<div class="label">R2</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="r3">
+						<div class="label">R3</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="volumeDown volumeUp">
+						<div class="label">
+							<i class="mdi mdi-volume-high"></i>
+						</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="load">
+						<div class="label"><i class="mdi mdi-file-download"></i></div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="save">
+						<div class="label"><i class="mdi mdi-content-save"></i></div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="pause">
+						<div class="label"><i class="mdi mdi-pause"></i></div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="toggleInvert">
+						<div class="label"><i class="mdi mdi-swap-vertical"></i></div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="arrows">
+						<div class="label">
+							<i class="mdi mdi-menu-up-outline"></i>
+							<i class="mdi mdi-menu-left-outline"></i>
+							<i class="mdi mdi-menu-right-outline"></i>
+							<i class="mdi mdi-menu-down-outline"></i>
+						</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="actions">
+						<div class="label">
+							<i class="mdi mdi-triangle-outline"></i>
+							<i class="mdi mdi-square-outline"></i>
+							<i class="mdi mdi-circle-outline"></i>
+							<i class="mdi mdi-close"></i>
+						</div>
+					</label>
+					<label class="chip hide"><input type="checkbox" name="hide" value="diag">
+						<div class="label">Diagonais</div>
+					</label>
+				</div>
+			</main>
+		</section>
 
 		<!-- Cores -->
-		<div class="optionTitle">Cores</div>
-		<div class="optionsGroup">
-			<label class="option color">
-				<div class="optionLabel">
-					<div class="text">Fundo</div>
-					<div class="pickr-background"></div>
+		<section class="advanced colors">
+			<header>
+				<div class="title">Cores</div>
+			</header>
+
+			<main>
+				<div class="optionsGroup">
+					<label class="option color">
+						<div class="label">
+							<div class="text">Fundo</div>
+							<div class="pickr-background"></div>
+						</div>
+						<input type="hidden" name="background" value="#000">
+					</label>
+					<label class="option color">
+						<div class="label">
+							<div class="text">Cor do botão</div>
+							<div class="pickr-color"></div>
+						</div>
+						<input type="hidden" name="color" value="#FFF8">
+					</label>
+					<label class="option color">
+						<div class="label">
+							<div class="text">Borda do botão</div>
+							<div class="pickr-border"></div>
+						</div>
+						<input type="hidden" name="border" value="#FFF8">
+					</label>
+					<label class="option color">
+						<div class="label">
+							<div class="text">Fundo ativo</div>
+							<div class="pickr-active"></div>
+						</div>
+						<input type="hidden" name="active" value="#FFF3">
+					</label>
 				</div>
-				<input type="hidden" name="background" value="#000">
-			</label>
 
-			<label class="option color">
-				<div class="optionLabel">
-					<div class="text">Cor do botão</div>
-					<div class="pickr-color"></div>
-				</div>
-				<input type="hidden" name="color" value="#FFF8">
-			</label>
+				<button type="button" class="resetColors">Redefinir cores</button>
+			</main>
 
-			<label class="option color">
-				<div class="optionLabel">
-					<div class="text">Borda do botão</div>
-					<div class="pickr-border"></div>
-				</div>
-				<input type="hidden" name="border" value="#FFF8">
-			</label>
-
-			<label class="option color">
-				<div class="optionLabel">
-					<div class="text">Fundo ativo</div>
-					<div class="pickr-active"></div>
-				</div>
-				<input type="hidden" name="active" value="#FFF3">
-			</label>
-		</div>
-
-		<button type="button" class="resetColors">Redefinir cores</button>
-
-		<hr>
+		</section>
 
 		<!-- Fundo personalizado -->
-		<details>
-			<summary class="optionTitle">Fundo personalizado</summary>
-			<small class="optionSubTitle">Coloque o link da imagem</small>
-			<label class="textOption">
+		<section class="advanced customBG">
+			<header>
+				<div class="title">Fundo personalizado</div>
+				<div class="subtitle">Coloque o link da imagem</div>
+			</header>
+
+			<main>
 				<input type="text" name="bgImage" autocomplete="off" placeholder="URL da imagem">
-			</label>
 
-			<label class="option customBG">
-				<div class="optionLabel">
-					<div class="text">Opacidade</div>
-					<input type="range" name="bgOpacity" min="0" max="1" step="0.1" value="0.5">
+				<div class="optionsGroup">
+					<label class="option range">
+						<div class="label">
+							<div class="text">Opacidade</div>
+							<input type="range" name="bgOpacity" min="0" max="1" step="0.1" value="0.5">
+						</div>
+					</label>
+
+					<label class="option range">
+						<div class="label">
+							<div class="text">Borrado</div>
+							<input type="range" name="bgBlur" min="0" max="10" step="1" value="0">
+						</div>
+					</label>
 				</div>
-			</label>
-
-			<label class="option customBG">
-				<div class="optionLabel">
-					<div class="text">Borrado</div>
-					<input type="range" name="bgBlur" min="0" max="10" step="1" value="0">
-				</div>
-			</label>
-		</details>
-
-		<hr>
+			</main>
+		</section>
 
 		<!-- CSS personalizado -->
-		<div class="optionTitle">CSS personalizado</div>
-		<textarea name="customCSS" placeholder="CSS personalizado"></textarea>
+		<section class="advanced customCSS">
+			<header>
+				<div class="title">CSS personalizado</div>
+			</header>
 
-		<hr>
+			<main>
+				<textarea name="customCSS" placeholder="CSS personalizado"></textarea>
+			</main>
+		</section>
 
-		<!-- Configurar emuladores -->
-		<div class="optionTitle">Configurações</div>
-		<div>
-			<a class="button setup" href="setup.html">Configurar emuladores</a>
-			<a class="button" href="oldbrowsers/index.html">Navegador antigo</a>
-		</div>
+		<!-- Opções escondidas -->
+		<section class="advanced hiddenOptions" style="display: none;">
+			<header>
+				<div class="title">Opções escondidas</div>
+			</header>
 
-		<!-- Iniciar -->
-		<button type="submit" class="start">Jogar</button>
+			<main>
+				<label>Modo depuração: <input type="checkbox" name="debug" value="true"></label>
+				<br><button type="button" onclick="localStorage.clear();loading();location.reload()">Redefinir
+					configurações</button>
+			</main>
+		</section>
 
-		<!-- Debug -->
-		<div class="links" style="display: none;">
-			<label>Debug: <input type="checkbox" name="debug" value="true"></label>
-			<br><button type="button" onclick="localStorage.clear();location.reload()">RESET ALL</button>
+		<div class="start floating hidden">
+			<button type="submit">
+				<i class="mdi mdi-google-controller"></i>
+			</button>
 		</div>
 	</form>
+
+	<div class="loadingScreen">
+		<div class="text">Aguarde</div>
+		<i class="mdi mdi-timer-sand"></i>
+	</div>
 
 	<script src="lib/js/pickr.es5.min.js"></script>
 	<script src="js/index.js"></script>

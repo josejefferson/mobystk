@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US" class="notranslate" translate="no">
+<html lang="pt-BR" class="notranslate" translate="no">
 
 <head>
 	<meta charset="UTF-8">
@@ -17,7 +17,6 @@
 
 <body class="connecting preload">
 	<div class="backgroundImage"></div>
-	<div id="errors" style="color: red;position: fixed;left:0;top:0;width:100%;height:100%"></div>
 
 	<!-- Joysticks -->
 	<div class="joystick joystickL group touch" data-keys="joyLUp joyLLeft joyLDown joyLRight"></div>
@@ -138,7 +137,8 @@
 	<!-- Drive -->
 	<button class="drive touch">
 		<svg viewBox="0 0 32 32">
-			<path d="M16 0a16 16 0 100 32 16 16 0 000-32zm0 4a12 12 0 0111.3 8H4.7c1.7-4.6 6-8 11.3-8zm0 14a2 2 0 110-4 2 2 0 010 4zM4 16c5.5 0 9.9 5.3 10 11.8A12 12 0 014 16zm14 11.8c.1-6.5 4.5-11.8 10-11.8a12 12 0 01-10 11.8z">
+			<path
+				d="M16 0a16 16 0 100 32 16 16 0 000-32zm0 4a12 12 0 0111.3 8H4.7c1.7-4.6 6-8 11.3-8zm0 14a2 2 0 110-4 2 2 0 010 4zM4 16c5.5 0 9.9 5.3 10 11.8A12 12 0 014 16zm14 11.8c.1-6.5 4.5-11.8 10-11.8a12 12 0 01-10 11.8z">
 		</svg>
 	</button>
 
@@ -163,9 +163,20 @@
 		</button>
 	</a>
 
+	<div class="loadingScreen">
+		<div class="text">Aguarde</div>
+		<i class="mdi mdi-timer-sand"></i>
+	</div>
+
 	<script src="lib/js/nipplejs.min.js"></script>
 	<script src="js/keymappings.js"></script>
-	<script src="js/joystick.js"></script>
+	<script src="js/joystick/index.js"></script>
+	<script src="js/joystick/backend-integration.js"></script>
+	<script src="js/joystick/joystick.js"></script>
+	<script src="js/joystick/user-interface.js"></script>
+	<script src="js/joystick/element-actions.js"></script>
+	<script src="js/joystick/interactions.js"></script>
+	<script src="js/joystick/motion-control.js"></script>
 </body>
 
 </html>
