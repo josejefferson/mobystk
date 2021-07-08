@@ -2,7 +2,7 @@ window.addEventListener('load', () => {
 	document.body.classList.remove('preload')
 })
 
-document.querySelectorAll('a').forEach(e => e.onclick = loading)
+document.querySelectorAll('a').forEach(e => e.addEventListener('click', loading))
 const $progress = document.querySelector('.progress')
 const $bar = $progress.querySelector('.bar')
 const $cancel = $progress.querySelector('.cancel')

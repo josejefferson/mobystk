@@ -1,3 +1,5 @@
+const ls = localStorage
+
 const $root = document.documentElement
 const $loading = document.querySelector('.loadingScreen')
 const $edit = document.querySelector('.edit')
@@ -14,22 +16,22 @@ const $layout = $deviceInfo.querySelector('.layout')
 const $drive = document.querySelector('.drive')
 const $invert = document.querySelector('.toggleInvert')
 
-const ip = localStorage.getItem('joystick.code') || 'localhost:5000'
-const layout = localStorage.getItem('joystick.layout')
-const player = parseInt(localStorage.getItem('joystick.player')) - 1
-const debug = localStorage.getItem('joystick.debug') === 'true'
-const locked = localStorage.getItem('joystick.locked')?.split(',')
-const hidden = localStorage.getItem('joystick.hidden')?.split(',')
-const invert = localStorage.getItem('joystick.invert') === 'true'
-const vibrate = !(localStorage.getItem('joystick.vibrate') === 'false')
-const bgImage = localStorage.getItem('joystick.bgImage')
-const bgOpacity = localStorage.getItem('joystick.bgOpacity')
-const bgBlur = localStorage.getItem('joystick.bgBlur')
-const colorsBackground = localStorage.getItem('joystick.background')
-const colorsColor = localStorage.getItem('joystick.color')
-const colorsBorder = localStorage.getItem('joystick.border')
-const colorsActive = localStorage.getItem('joystick.active')
-const customCSS = localStorage.getItem('joystick.customCSS')
+const ip = ls['joystick.code'] || 'localhost:5000'
+const layout = ls['joystick.layout']
+const player = parseInt(ls['joystick.player']) - 1
+const debug = ls['joystick.debug'] === 'true'
+const locked = ls['joystick.locked']?.split(',')
+const hidden = ls['joystick.hidden']?.split(',')
+const invert = ls['joystick.invert'] === 'true'
+const vibrate = !(ls['joystick.vibrate'] === 'false')
+const bgImage = ls['joystick.bgImage']
+const bgOpacity = ls['joystick.bgOpacity']
+const bgBlur = ls['joystick.bgBlur']
+const colorsBackground = ls['joystick.background']
+const colorsColor = ls['joystick.color']
+const colorsBorder = ls['joystick.border']
+const colorsActive = ls['joystick.active']
+const customCSS = ls['joystick.customCSS']
 
 if (!layout) location.href = 'index.html'
 if (debug) document.body.classList.add('debug')
@@ -311,9 +313,9 @@ if (!(location.protocol === 'https:' ||
 
 // Ligar/desligar sensor
 function toggleDriveMode(e) {
-	const SENSITIVITY = parseFloat(localStorage.getItem('joystick.driveSensitivity') || 2)
-	const PRECISION = parseFloat(localStorage.getItem('joystick.drivePrecision') || 1)
-	
+	const SENSITIVITY = parseFloat(ls['joystick.driveSensitivity'] || 2)
+	const PRECISION = parseFloat(ls['joystick.drivePrecision'] || 1)
+
 	if (e.target.classList.contains('active')) {
 		e.target.classList.remove('active')
 		e.target.innerHTML = driveHTML
@@ -323,11 +325,11 @@ function toggleDriveMode(e) {
 		sendCmd('joyLUp', true)
 		return
 	}
-	
+
 	e.target.classList.add('active')
 	e.target.innerHTML = '<i class="driveArrow mdi mdi-arrow-up"></i>'
 	let driveY = 0, driveAngle = 0, lastDirections = []
-	
+
 	// Detecta os movimentos
 	window.ondevicemotion = e => {
 		const orientation = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
@@ -347,7 +349,7 @@ function toggleDriveMode(e) {
 			if (driveY < -SENSITIVITY * 2) angle *= 2
 		} else {
 			if (driveY > SENSITIVITY) angle = 45
-			if (driveY < -SENSITIVITY) angle = -45	
+			if (driveY < -SENSITIVITY) angle = -45
 			if (driveY > SENSITIVITY * 2) angle *= 2
 			if (driveY < -SENSITIVITY * 2) angle *= 2
 		}
@@ -362,7 +364,7 @@ function toggleDriveMode(e) {
 			case 90: directions = ['joyLRight']; break
 			default: directions = ['joyLUp']
 		}
-	
+
 		driveAngle = angle
 		if (vibrate) navigator.vibrate(30)
 

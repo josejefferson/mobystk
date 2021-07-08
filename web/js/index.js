@@ -1,3 +1,8 @@
+const ls = localStorage
+const form = document.forms[0]
+const formEls = form.elements
+
+// Eventos
 window.addEventListener('load', () => {
 	document.body.classList.remove('preload')
 })
@@ -10,66 +15,79 @@ window.addEventListener('scroll', () => {
 	}
 })
 
-document.oncontextmenu = () => false
-document.querySelectorAll('a').forEach(e => e.onclick = loading)
-document.forms[0].elements.code.value = localStorage.getItem('joystick.code') || window.location.hostname + ':5000'
-document.forms[0].elements.layout.value = localStorage.getItem('joystick.layout')
-document.forms[0].elements.player.value = localStorage.getItem('joystick.player')
-document.forms[0].elements.invert.checked = localStorage.getItem('joystick.invert') === 'true'
-document.forms[0].elements.vibrate.checked = !(localStorage.getItem('joystick.vibrate') === 'false')
-document.forms[0].elements.background.value = localStorage.getItem('joystick.background') || 'rgba(0, 0, 0, 1)'
-document.forms[0].elements.color.value = localStorage.getItem('joystick.color') || 'rgba(255, 255, 255, 0.53)'
-document.forms[0].elements.border.value = localStorage.getItem('joystick.border') || 'rgba(255, 255, 255, 0.53)'
-document.forms[0].elements.active.value = localStorage.getItem('joystick.active') || 'rgba(255, 255, 255, 0.2)'
-document.forms[0].elements.bgImage.value = localStorage.getItem('joystick.bgImage')
-document.forms[0].elements.bgOpacity.value = localStorage.getItem('joystick.bgOpacity') || '0.5'
-document.forms[0].elements.bgBlur.value = localStorage.getItem('joystick.bgBlur') || '0'
-document.forms[0].elements.customCSS.value = localStorage.getItem('joystick.customCSS')
-document.forms[0].elements.driveSensitivity.value = localStorage.getItem('joystick.driveSensitivity') || '2'
-document.forms[0].elements.drivePrecision.value = localStorage.getItem('joystick.drivePrecision') || '1'
+document.addEventListener('contextmenu', () => false)
+document.querySelectorAll('a').forEach(e => e.addEventListener('click', loading))
+document.querySelectorAll('.start').forEach(e => {
+	e.addEventListener('contextmenu', () => {
+		document.querySelector('.hiddenOptions').style.display = 'flex'
+	})
+})
 
-localStorage.getItem('joystick.locked')?.split(',')?.forEach(e => {
+const $loading = document.querySelector('.loadingScreen')
+function loading() {
+	$loading.classList.add('visible')
+}
+
+// Carregar opções
+formEls.code.value = ls['joystick.code'] || window.location.hostname + ':5000'
+formEls.layout.value = ls['joystick.layout']
+formEls.player.value = ls['joystick.player']
+formEls.invert.checked = ls['joystick.invert'] === 'true'
+formEls.vibrate.checked = !(ls['joystick.vibrate'] === 'false')
+formEls.background.value = ls['joystick.background'] || 'rgba(0, 0, 0, 1)'
+formEls.color.value = ls['joystick.color'] || 'rgba(255, 255, 255, 0.53)'
+formEls.border.value = ls['joystick.border'] || 'rgba(255, 255, 255, 0.53)'
+formEls.active.value = ls['joystick.active'] || 'rgba(255, 255, 255, 0.2)'
+formEls.bgImage.value = ls['joystick.bgImage']
+formEls.bgOpacity.value = ls['joystick.bgOpacity'] || '0.5'
+formEls.bgBlur.value = ls['joystick.bgBlur'] || '0'
+formEls.customCSS.value = ls['joystick.customCSS']
+formEls.driveSensitivity.value = ls['joystick.driveSensitivity'] || '2'
+formEls.drivePrecision.value = ls['joystick.drivePrecision'] || '1'
+ls['joystick.locked']?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true
 })
-localStorage.getItem('joystick.hidden')?.split(',')?.forEach(e => {
+ls['joystick.hidden']?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=hide][value="${e}"]`).checked = true
 })
 
-document.forms[0].onsubmit = function (e) {
+// Salvar opções
+document.forms[0].addEventListener('submit', function (e) {
 	e.preventDefault()
-	localStorage.setItem('joystick.code', this.elements.code.value)
-	localStorage.setItem('joystick.layout', this.elements.layout.value)
-	localStorage.setItem('joystick.player', this.elements.player.value)
-	localStorage.setItem('joystick.debug', this.elements.debug.checked)
-	localStorage.setItem('joystick.invert', this.elements.invert.checked)
-	localStorage.setItem('joystick.vibrate', this.elements.vibrate.checked)
-	localStorage.setItem('joystick.background', this.elements.background.value)
-	localStorage.setItem('joystick.color', this.elements.color.value)
-	localStorage.setItem('joystick.border', this.elements.border.value)
-	localStorage.setItem('joystick.active', this.elements.active.value)
-	localStorage.setItem('joystick.bgImage', this.elements.bgImage.value)
-	localStorage.setItem('joystick.bgOpacity', this.elements.bgOpacity.value)
-	localStorage.setItem('joystick.bgBlur', this.elements.bgBlur.value)
-	localStorage.setItem('joystick.customCSS', this.elements.customCSS.value)
-	localStorage.setItem('joystick.driveSensitivity', this.elements.driveSensitivity.value)
-	localStorage.setItem('joystick.drivePrecision', this.elements.drivePrecision.value)
-
+	const elems = this.elements
 	const lockedBtns = []
 	const hiddenItems = []
-	this.elements.lock.forEach(e => {
+	elems.lock.forEach(e => {
 		if (e.checked) lockedBtns.push(e.value)
 	})
-	this.elements.hide.forEach(e => {
+	elems.hide.forEach(e => {
 		if (e.checked) hiddenItems.push(e.value)
 	})
-	
-	localStorage.setItem('joystick.locked', lockedBtns.join(','))
-	localStorage.setItem('joystick.hidden', hiddenItems.join(','))
-	
+
+	ls['joystick.code'] = elems.code.value
+	ls['joystick.layout'] = elems.layout.value
+	ls['joystick.player'] = elems.player.value
+	ls['joystick.debug'] = elems.debug.checked
+	ls['joystick.invert'] = elems.invert.checked
+	ls['joystick.vibrate'] = elems.vibrate.checked
+	ls['joystick.background'] = elems.background.value
+	ls['joystick.color'] = elems.color.value
+	ls['joystick.border'] = elems.border.value
+	ls['joystick.active'] = elems.active.value
+	ls['joystick.bgImage'] = elems.bgImage.value
+	ls['joystick.bgOpacity'] = elems.bgOpacity.value
+	ls['joystick.bgBlur'] = elems.bgBlur.value
+	ls['joystick.customCSS'] = elems.customCSS.value
+	ls['joystick.driveSensitivity'] = elems.driveSensitivity.value
+	ls['joystick.drivePrecision'] = elems.drivePrecision.value
+	ls['joystick.locked'] = lockedBtns.join(',')
+	ls['joystick.hidden'] = hiddenItems.join(',')
+
 	loading()
 	location.href = 'joystick.html'
-}
+})
 
+// Cores
 const colors = {
 	background: createPickr('background', '#000'),
 	color: createPickr('color', '#FFF8', '88'),
@@ -77,22 +95,18 @@ const colors = {
 	active: createPickr('active', '#FFF3', '33')
 }
 
-document.querySelectorAll('.start').forEach (e => e.oncontextmenu = () => {
-	document.querySelector('.hiddenOptions').style.display = 'block'
-})
-
-document.querySelector('.resetColors').onclick = () => {
+document.querySelector('.resetColors').addEventListener('click', () => {
 	colors.background.setColor('#000')
 	colors.color.setColor('#FFF8')
 	colors.border.setColor('#FFF8')
 	colors.active.setColor('#FFF3')
-}
+})
 
 function createPickr(el, defaultColor, opacity) {
 	return Pickr.create({
 		el: `.pickr-${el}`,
 		theme: 'classic',
-		default: localStorage.getItem('joystick.' + el) || defaultColor,
+		default: ls['joystick.' + el] || defaultColor,
 		defaultRepresentation: 'HEXA',
 		comparison: false,
 		autoReposition: true,
@@ -132,15 +146,13 @@ function createPickr(el, defaultColor, opacity) {
 			'#000000'
 		].map(e => e + (opacity || ''))
 
-	}).on('change', (color) => {
-		const $input = document.forms[0].elements[el]
+	}).on('change', color => {
 		color = color.toRGBA().toString()
+		const $input = formEls[el]
 		$input.value = color
-		$input.parentElement.querySelector('.pickr button').style.setProperty('--pcr-color', color)
-	}).on('save', (color, instance) => instance.hide())
-}
-
-const $loading = document.querySelector('.loadingScreen')
-function loading() {
-	$loading.classList.add('visible')
+		$input.parentElement.querySelector('.pickr button')
+			.style.setProperty('--pcr-color', color)
+	}).on('save', (color, instance) => {
+		instance.hide()
+	})
 }

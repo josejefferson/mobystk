@@ -1,4 +1,5 @@
-button, .back {
+button,
+.back {
 	border-color: #fff !important;
 	color: #fff !important;
 	box-shadow: cyan 0 0 8px, inset cyan 0 0 5px;
@@ -13,13 +14,16 @@ button:active {
 	text-shadow: #f40 0 0 10px, #f40 0 0 10px !important;
 }
 
-button i, button svg, .deviceInfo {
+button i,
+button svg,
+.deviceInfo {
 	color: #fff !important;
 	text-shadow: #f40 0 0 8px, #f40 0 0 8px;
 	transition: text-shadow .1s ease !important;
 }
 
-button:active i, button:active svg {
+button:active i,
+button:active svg {
 	text-shadow: #f40 0 0 10px, #f40 0 0 10px;
 }
 

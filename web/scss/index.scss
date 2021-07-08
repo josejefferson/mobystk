@@ -65,7 +65,8 @@
 	width: 100%;
 }
 
-.container input[type="text"], %inputText {
+.container input[type="text"],
+%inputText {
 	background: none;
 	border-radius: 1000px;
 	border: #888 2px solid;
@@ -214,6 +215,7 @@
 	}
 
 }
+
 .start {
 	flex: 1;
 	text-align: right;
@@ -238,6 +240,7 @@
 		position: fixed;
 		bottom: 15px;
 		right: 20px;
+
 		button {
 			width: 48px;
 			height: 48px;
@@ -253,8 +256,7 @@
 	}
 }
 
-.start button {
-}
+.start button {}
 
 .container section.advanced {
 	// min-height: 100vh;
@@ -289,22 +291,26 @@
 	justify-content: space-around;
 	padding: 20px;
 }
+
 .container section.advanced.lockedKeys main .chipsGroup .chip {
 	flex: 1;
+
 	.label {
 		border-radius: 5px;
 		border-color: var(--pink-400);
 		color: var(--pink-400);
 	}
 
-	input:checked + .label {
+	input:checked+.label {
 		background-color: var(--pink-500);
 		border-color: inherit;
 		color: inherit;
 	}
 }
+
 .container section.advanced.hiddenItems main .chipsGroup .chip {
 	flex: 1;
+
 	.label {
 		border-radius: 5px;
 		border-color: var(--cyan-500);
@@ -331,6 +337,7 @@
 
 .container section.advanced.customBG main {
 	padding: 0 20px;
+
 	input {
 		width: 100%;
 		border-color: var(--yellow-400);
@@ -347,6 +354,7 @@
 
 .container section.advanced.customCSS main {
 	padding: 0 20px 20px 20px;
+
 	textarea {
 		height: 270px !important;
 		border-color: var(--red-400);
@@ -380,7 +388,7 @@
 		}
 	}
 
-	input[type="checkbox"] + .label::before {
+	input[type="checkbox"]+.label::before {
 		content: "\F0131";
 		font-family: "Material Design Icons";
 		font-size: 24px;
@@ -398,7 +406,7 @@
 .pcr-app {
 	left: 50% !important;
 	top: 50% !important;
-  transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
 	width: calc(100% - 40px) !important;
 	height: calc(100% - 40px) !important;
 	max-width: 680px !important;
