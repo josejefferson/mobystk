@@ -385,6 +385,18 @@
 			</main>
 		</section>
 
+		<!-- Importar/exportar configurações -->
+		<section class="advanced importExportSettings">
+			<header>
+				<div class="title">Importar/exportar configurações</div>
+			</header>
+
+			<main>
+				<button type="button" class="importSettings">Importar configurações</button>
+				<button type="button" class="exportSettings">Exportar configurações</button>
+			</main>
+		</section>
+
 		<!-- Opções escondidas -->
 		<section class="advanced hiddenOptions" style="display: none;">
 			<header>
@@ -392,9 +404,13 @@
 			</header>
 
 			<main>
-				<label>Modo depuração: <input type="checkbox" name="debug" value="true"></label>
-				<br><button type="button" onclick="localStorage.clear();loading();location.reload()">Redefinir
-					configurações</button>
+				<label class="option">
+					<input type="checkbox" name="debug" value="true">
+					<div class="label">Modo depuração</div>
+				</label>
+				<button type="button" class="resetSettings" onclick="localStorage.clear();loading();location.reload()">
+					Redefinir configurações
+				</button>
 			</main>
 		</section>
 

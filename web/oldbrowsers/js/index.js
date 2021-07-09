@@ -126,3 +126,56 @@ function createPickr(el, defaultColor, opacity) {
 		instance.hide();
 	});
 }
+
+const $import = document.querySelector('.importSettings');
+$import.addEventListener('click', importSettings);
+
+function importSettings() {
+	const el = document.createElement('input');
+	el.type = 'file';
+	el.style.display = 'none';
+	el.click();
+
+	el.onchange = async function () {
+		try {
+			const file = this.files[0];
+			if (!file) return;
+			let content = await new Promise((resolve, reject) => {
+				let reader = new FileReader();
+
+				reader.onload = () => {
+					resolve(reader.result);
+				};
+
+				reader.onerror = reject;
+				reader.readAsText(file);
+			});
+			content = JSON.parse(content);
+
+			for (option in content) {
+				ls.setItem(option, content[option]);
+			}
+
+			loading();
+			location.reload();
+		} catch (err) {
+			console.error(err);
+			alert('Ocorreu um erro ao importar as configurações.');
+		}
+	};
+}
+
+const $export = document.querySelector('.exportSettings');
+$export.addEventListener('click', exportSettings);
+
+function exportSettings() {
+	const content = JSON.stringify(ls);
+	const el = document.createElement('a');
+	const blob = new Blob([content], {
+		type: 'application/json'
+	});
+	const url = URL.createObjectURL(blob);
+	el.href = url;
+	el.download = `web-joystick-settings-${Date.now()}.json`;
+	el.click();
+}

@@ -61,7 +61,8 @@
   width: 100%;
 }
 
-.container input[type=text], .container textarea {
+.container input[type=text],
+.container textarea {
   background: none;
   border-radius: 1000px;
   border: #888 2px solid;
@@ -73,7 +74,8 @@
   transition: 0.15s ease;
   width: auto;
 }
-.container input[type=text]:focus, .container textarea:focus {
+.container input[type=text]:focus,
+.container textarea:focus {
   border-color: #AAA;
   box-shadow: 0 0 0 4px #444;
 }
@@ -319,7 +321,25 @@
 }
 
 .container section.advanced.hiddenOptions main {
-  align-items: center;
+  padding-bottom: 20px;
+}
+.container section.advanced.hiddenOptions main .resetSettings {
+  align-self: center;
+  margin-top: 10px;
+  border-color: var(--red-500);
+}
+
+.container section.advanced.importExportSettings main {
+  padding-bottom: 20px;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+.container section.advanced.importExportSettings main button.importSettings, .container section.advanced.importExportSettings main .chipsGroup .chip .importSettings.label, .chipsGroup .chip .container section.advanced.importExportSettings main .importSettings.label {
+  border-color: var(--yellow-500);
+}
+.container section.advanced.importExportSettings main button.exportSettings, .container section.advanced.importExportSettings main .chipsGroup .chip .exportSettings.label, .chipsGroup .chip .container section.advanced.importExportSettings main .exportSettings.label {
+  border-color: var(--green-500);
 }
 
 .option {
