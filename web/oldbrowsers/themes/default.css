@@ -21,6 +21,7 @@
 	--disconnected-color: rgba(255, 68, 68, 0.53);
 	--disconnected-active: rgba(255, 68, 68, 0.2);
 	--disconnected-border: var(--disconnected-color);
+	--font-family: Arial, sans-serif;
 	--border-size: 2.5px;
 	--border-style: solid;
 }
@@ -49,9 +50,14 @@ button {
 	border: var(--border) var(--border-size) var(--border-style);
 	color: var(--color);
 	font-size: 12.5px;
+	font-family: var(--font-family);
 	transition:
 		border-color 1s ease,
 		color 1s ease;
+}
+
+button i {
+	font-family: initial;
 }
 
 /* Grouped buttons */
@@ -105,4 +111,12 @@ button svg {
 	background-color: var(--color) !important;
 	border: var(--border) var(--border-size) var(--border-style);
 	transition: border-color 1s ease, background-color 1s ease !important;
+}
+
+.deviceInfo {
+	font-family: var(--font-family);
+	color: var(--color);
+	font-size: 20px;
+	transition: 1s ease;
+	text-align: center;
 }

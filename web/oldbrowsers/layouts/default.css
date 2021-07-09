@@ -17,11 +17,6 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	color: var(--color);
-	font-family: sans-serif;
-	font-size: 20px;
-	transition: 1s ease;
-	text-align: center;
 }
 
 /* Arrows (up, down, left, right) */
