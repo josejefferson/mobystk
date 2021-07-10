@@ -15,7 +15,12 @@ const $DI_layout = $deviceInfo.querySelector('.layout'); // CARREGAMENTO DO LAYO
 
 $layoutCSS.href = 'layouts/' + options.layout + '.css'; // CARREGAMENTO DAS OPÇÕES
 
-$edit.onclick = loading;
+$edit.addEventListener('click', loading);
+$edit.addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+  loading();
+  location.reload();
+});
 if (!options.layout) location.href = 'index.html';
 if (options.debug) document.body.classList.add('debug');
 if (options.invert) document.body.classList.add('invert');
@@ -28,19 +33,19 @@ if (options.colorsBorder) $root.style.setProperty('--border', options.colorsBord
 if (options.colorsActive) $root.style.setProperty('--active', options.colorsActive); // BOTÕES BLOQUEÁVEIS
 
 (_options$locked = options.locked) === null || _options$locked === void 0 ? void 0 : _options$locked.forEach(key => {
-	if (key) key.split(' ').forEach(key => {
-		document.querySelectorAll('.' + key).forEach(el => {
-			el.classList.add('lock');
-		});
-	});
+  if (key) key.split(' ').forEach(key => {
+    document.querySelectorAll('.' + key).forEach(el => {
+      el.classList.add('lock');
+    });
+  });
 }); // BOTÕES OCULTOS
 
 (_options$hidden = options.hidden) === null || _options$hidden === void 0 ? void 0 : _options$hidden.forEach(item => {
-	if (item) item.split(' ').forEach(item => {
-		document.querySelectorAll('.' + item).forEach(el => {
-			el.style.display = 'none';
-		});
-	});
+  if (item) item.split(' ').forEach(item => {
+    document.querySelectorAll('.' + item).forEach(el => {
+      el.style.display = 'none';
+    });
+  });
 }); // CSS PERSONALIZADO
 
 const $customCSS = document.createElement('style');
@@ -48,26 +53,26 @@ $customCSS.textContent = options.customCSS;
 document.body.append($customCSS); // INFORMAÇÕES - BATERIA
 
 (_navigator$getBattery = navigator.getBattery()) === null || _navigator$getBattery === void 0 ? void 0 : _navigator$getBattery.then(b => {
-	updateBattery(b);
-	b.addEventListener('chargingchange', e => updateBattery(e.target));
-	b.addEventListener('levelchange', e => updateBattery(e.target));
+  updateBattery(b);
+  b.addEventListener('chargingchange', e => updateBattery(e.target));
+  b.addEventListener('levelchange', e => updateBattery(e.target));
 }).catch(console.error); // Atualiza o ícone e porcentagem da bateria
 
 function updateBattery(b) {
-	$DI_batteryIcon.classList.remove(...$DI_batteryIcon.classList);
-	$DI_batteryIcon.classList.add('mdi');
-	const charging = b.charging;
-	const level = b.level * 100;
-	const roundLevel = Math.round(level / 10) * 10;
-	$DI_batteryLevel.innerText = Math.round(level) + '%';
+  $DI_batteryIcon.classList.remove(...$DI_batteryIcon.classList);
+  $DI_batteryIcon.classList.add('mdi');
+  const charging = b.charging;
+  const level = b.level * 100;
+  const roundLevel = Math.round(level / 10) * 10;
+  $DI_batteryLevel.innerText = Math.round(level) + '%';
 
-	if (roundLevel === 0) {
-		$DI_batteryIcon.classList.add('mdi-battery-outline');
-	} else if (roundLevel === 100) {
-		$DI_batteryIcon.classList.add('mdi-battery' + (charging ? '-charging-100' : ''));
-	} else {
-		$DI_batteryIcon.classList.add('mdi-battery-' + (charging ? 'charging-' : '') + roundLevel);
-	}
+  if (roundLevel === 0) {
+    $DI_batteryIcon.classList.add('mdi-battery-outline');
+  } else if (roundLevel === 100) {
+    $DI_batteryIcon.classList.add('mdi-battery' + (charging ? '-charging-100' : ''));
+  } else {
+    $DI_batteryIcon.classList.add('mdi-battery-' + (charging ? 'charging-' : '') + roundLevel);
+  }
 } // INFORMAÇÕES - RELÓGIO
 
 
@@ -75,9 +80,9 @@ window.setInterval(updateClock, 1000);
 updateClock(); // Atualiza as horas do relógio
 
 function updateClock() {
-	const hours = new Date().getHours().toString().padStart(2, '0');
-	const minutes = new Date().getMinutes().toString().padStart(2, '0');
-	$DI_clock.innerText = hours + ':' + minutes;
+  const hours = new Date().getHours().toString().padStart(2, '0');
+  const minutes = new Date().getMinutes().toString().padStart(2, '0');
+  $DI_clock.innerText = hours + ':' + minutes;
 } // INFORMAÇÕES - Nº JOGADOR E NOME DO LAYOUT
 
 

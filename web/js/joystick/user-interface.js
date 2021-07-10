@@ -15,7 +15,12 @@ const $DI_layout = $deviceInfo.querySelector('.layout')
 $layoutCSS.href = 'layouts/' + options.layout + '.css'
 
 // CARREGAMENTO DAS OPÇÕES
-$edit.onclick = loading
+$edit.addEventListener('click', loading)
+$edit.addEventListener('contextmenu', function (e) {
+	e.preventDefault()
+	loading()
+	location.reload()
+})
 if (!options.layout) location.href = 'index.html'
 if (options.debug) document.body.classList.add('debug')
 if (options.invert) document.body.classList.add('invert')
