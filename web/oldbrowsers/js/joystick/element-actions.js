@@ -15,6 +15,17 @@ document.querySelectorAll('.lock').forEach(el => {
 			sendCmd(el.dataset.key);
 		}
 	}
+}); // CARREGAR E SALVAR
+
+const $load = document.querySelector('.load');
+$load.addEventListener(options.dblClickLoadSave ? 'dblclick' : 'click', () => {
+	sendCmd('load');
+	sendCmd('load', true);
+});
+const $save = document.querySelector('.save');
+$save.addEventListener(options.dblClickLoadSave ? 'dblclick' : 'click', () => {
+	sendCmd('save');
+	sendCmd('save', true);
 }); // INVERTER JOYSTICK/SETAS
 
 const $invert = document.querySelector('.toggleInvert');

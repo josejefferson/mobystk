@@ -31,6 +31,7 @@ const options = {
   invert: ls['joystick.invert'] === 'true',
   disJoyXAxis: ls['joystick.disJoyXAxis'] === 'true',
   disJoyYAxis: ls['joystick.disJoyYAxis'] === 'true',
+  dblClickLoadSave: ls['joystick.dblClickLoadSave'] === 'true',
   vibrate: !(ls['joystick.vibrate'] === 'false'),
   bgImage: ls['joystick.bgImage'],
   bgOpacity: ls['joystick.bgOpacity'],
