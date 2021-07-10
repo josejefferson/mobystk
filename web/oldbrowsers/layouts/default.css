@@ -93,6 +93,25 @@
 	transform: translateY(-50%);
 }
 
+/* Active state */
+.up.active,
+.down.active,
+.actUp.active,
+.actDown.active,
+.snesActUp.active,
+.snesActDown.active {
+	transform: translateX(-50%) scale(1.2);
+}
+
+.left.active,
+.right.active,
+.actLeft.active,
+.actRight.active,
+.snesActLeft.active,
+.snesActRight.active {
+	transform: translateY(-50%) scale(1.2);
+}
+
 /* ==========================================================================
    ACTION BUTTONS
    ========================================================================== */
