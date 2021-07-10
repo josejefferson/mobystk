@@ -8,6 +8,8 @@ const options = {
 	locked: ls['joystick.locked']?.split(','),
 	hidden: ls['joystick.hidden']?.split(','),
 	invert: ls['joystick.invert'] === 'true',
+	disJoyXAxis: ls['joystick.disJoyXAxis'] === 'true',
+	disJoyYAxis: ls['joystick.disJoyYAxis'] === 'true',	
 	vibrate: !(ls['joystick.vibrate'] === 'false'),
 	bgImage: ls['joystick.bgImage'],
 	bgOpacity: ls['joystick.bgOpacity'],

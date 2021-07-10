@@ -29,6 +29,8 @@ const options = {
   locked: (_ls$joystickLocked = ls['joystick.locked']) === null || _ls$joystickLocked === void 0 ? void 0 : _ls$joystickLocked.split(','),
   hidden: (_ls$joystickHidden = ls['joystick.hidden']) === null || _ls$joystickHidden === void 0 ? void 0 : _ls$joystickHidden.split(','),
   invert: ls['joystick.invert'] === 'true',
+  disJoyXAxis: ls['joystick.disJoyXAxis'] === 'true',
+  disJoyYAxis: ls['joystick.disJoyYAxis'] === 'true',
   vibrate: !(ls['joystick.vibrate'] === 'false'),
   bgImage: ls['joystick.bgImage'],
   bgOpacity: ls['joystick.bgOpacity'],

@@ -6,7 +6,9 @@ const JOYSTICK_OPTIONS = $el => ({
 	position: {
 		left: '50%',
 		top: '50%'
-	}
+	},
+	lockX: options.disJoyYAxis,
+	lockY: options.disJoyXAxis
 })
 
 const joysticks = []
@@ -28,10 +30,10 @@ function updateJoystick(joystick, id, angle, direction) {
 	}
 
 	// Define as teclas de acordo com a posição
-	update('up', angle > 22.5 && angle < 157.5)
-	update('left', angle > 112.5 && angle < 247.5)
-	update('down', angle > 202.5 && angle < 337.5)
-	update('right', angle > 292.5 || angle < 67.5)
+	if (!options.disJoyYAxis) update('up', angle > 22.5 && angle < 157.5)
+	if (!options.disJoyXAxis) update('left', angle > 112.5 && angle < 247.5)
+	if (!options.disJoyYAxis) update('down', angle > 202.5 && angle < 337.5)
+	if (!options.disJoyXAxis) update('right', angle > 292.5 || angle < 67.5)
 
 	// Pressiona as teclas
 	function update(dir, value, key) {
@@ -86,3 +88,4 @@ function resizeJoystick() {
 		else return 'device-width'
 	}
 }
+resizeJoystick()
