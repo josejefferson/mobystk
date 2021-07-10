@@ -11,6 +11,10 @@
    BUTTON GROUPS
    ========================================================================== */
 
+.deviceInfo {
+	display: block;
+}
+
 .arrows,
 .actions {
 	display: block;
@@ -43,6 +47,10 @@ body.invert .arrows {
 .load,
 .save,
 .volumeUp,
-.volumeDown {
+.volumeDown,
+.recordMacro,
+.playMacro,
+.fast,
+.toggleInvert {
 	display: flex;
 }

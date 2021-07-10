@@ -11,6 +11,10 @@
    BUTTON GROUPS
    ========================================================================== */
 
+.deviceInfo {
+	display: block;
+}
+
 .arrows,
 .actions,
 .joystickL {
@@ -54,7 +58,11 @@ body.invert .joystick.joystickL {
 .pause,
 .drive,
 .volumeUp,
-.volumeDown {
+.volumeDown,
+.recordMacro,
+.playMacro,
+.fast,
+.toggleInvert {
 	display: flex;
 }
 

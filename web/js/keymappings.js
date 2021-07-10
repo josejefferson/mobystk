@@ -26,6 +26,7 @@ const keymappings = {
 	pause    : ["ESC", "ESC", "ESC", "ESC"],
 	load     : ["F1", "F1", "F1", "F1"],
 	save     : ["[", "[", "[", "["],
+	fast     : ["TAB", "TAB", "TAB", "TAB"],
 	volUp  : ["MEDIA_VOLUME_UP", "MEDIA_VOLUME_UP", "MEDIA_VOLUME_UP", "MEDIA_VOLUME_UP"],
 	volDown: ["MEDIA_VOLUME_DOWN", "MEDIA_VOLUME_DOWN", "MEDIA_VOLUME_DOWN", "MEDIA_VOLUME_DOWN"],
 }

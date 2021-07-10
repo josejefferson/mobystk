@@ -12,7 +12,6 @@
 
 /* Device info */
 .deviceInfo {
-	display: block;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -357,17 +356,26 @@
 }
 
 .recordMacro {
-	display: flex;
 	right: 50%;
 	border-radius: 1000px 0 0 0;
 	border-right: none;
 }
 
 .playMacro {
-	display: flex;
 	left: 50%;
 	border-radius: 0 1000px 0 0;
 	border-left: none;
+}
+
+/* "Fast" button */
+.fast {
+	display: flex;
+	right: 5px;
+	bottom: 5px;
+	border-radius: 1000px;
+	font-size: 16px;
+	width: 40px;
+	height: 25px;
 }
 
 /* "Invert" button */
