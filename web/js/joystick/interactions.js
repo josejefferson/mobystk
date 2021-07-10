@@ -44,7 +44,7 @@ document.ontouchmove = e => {
 		if (oldtouch.target === target) continue
 		oldtouch.target?.classList.remove('active')
 
-		let keys = oldtouch?.target?.dataset.key.split(' ')
+		let keys = oldtouch?.target?.dataset?.key?.split(' ')
 		// Diagonal
 		keys?.forEach(key => {
 			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {

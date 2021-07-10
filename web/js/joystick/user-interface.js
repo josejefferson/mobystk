@@ -16,8 +16,7 @@ $layoutCSS.href = 'layouts/' + options.layout + '.css'
 
 // CARREGAMENTO DAS OPÇÕES
 $edit.addEventListener('click', loading)
-$edit.addEventListener('contextmenu', function (e) {
-	e.preventDefault()
+$edit.addEventListener('contextmenu', () => {
 	loading()
 	location.reload()
 })

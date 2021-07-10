@@ -22,7 +22,7 @@ const options = {
 }
 
 // EVENTOS DA PÁGINA
-document.addEventListener('contextmenu', () => false)
+document.addEventListener('contextmenu', e => e.preventDefault())
 window.addEventListener('load', () => {
 	document.body.classList.remove('preload')
 })
