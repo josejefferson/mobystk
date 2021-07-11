@@ -59,6 +59,42 @@ button.dActive {
 	background-color: var(--active);
 }
 
+.up.active,
+.down.active,
+.actUp.active,
+.actDown.active,
+.snesActUp.active,
+.snesActDown.active {
+	transform: translateX(-50%) scale(1.2);
+}
+
+.left.active,
+.right.active,
+.actLeft.active,
+.actRight.active,
+.snesActLeft.active,
+.snesActRight.active {
+	transform: translateY(-50%) scale(1.2);
+}
+
+.up.dActive:not(.active),
+.down.dActive:not(.active),
+.actUp.dActive:not(.active),
+.actDown.dActive:not(.active),
+.snesActUp.dActive:not(.active),
+.snesActDown.dActive:not(.active) {
+	transform: translateX(-50%) scale(0.8);
+}
+
+.left.dActive:not(.active),
+.right.dActive:not(.active),
+.actLeft.dActive:not(.active),
+.actRight.dActive:not(.active),
+.snesActLeft.dActive:not(.active),
+.snesActRight.dActive:not(.active) {
+	transform: translateY(-50%) scale(0.8);
+}
+
 /* Button icons */
 button .mdi {
 	color: var(--color);
