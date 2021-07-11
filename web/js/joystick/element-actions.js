@@ -41,12 +41,14 @@ function toggleInvert() {
 
 // MACROS
 let recordingMacro = false
+let playingMacro = false
 let lastMacro = []
 
 // Iniciar/parar gravação da macro
 const $recordMacro = document.querySelector('.recordMacro')
-$recordMacro.onclick = function () {
-	this.classList.toggle('active')
+$recordMacro.onclick = () => {
+	if (playingMacro) return
+	$recordMacro.classList.toggle('active')
 	if (!recordingMacro) lastMacro = []
 	recordingMacro = !recordingMacro
 }
@@ -54,8 +56,11 @@ $recordMacro.onclick = function () {
 // Executar macro
 const $playMacro = document.querySelector('.playMacro')
 $playMacro.onclick = async function () {
+	if (recordingMacro) return
+	playingMacro = !playingMacro
 	$playMacro.classList.add('active')
 	for (command of lastMacro) {
+		if (!playingMacro) break
 		if (socket.readyState !== 1) break
 		socket.send(command)
 		await new Promise(r => setTimeout(r, 50))
