@@ -15,12 +15,6 @@
 	--color: rgba(255, 255, 255, 0.53);
 	--active: rgba(255, 255, 255, 0.2);
 	--border: var(--color);
-	--connecting-color: rgba(255, 255, 68, 0.53);
-	--connecting-active: rgba(255, 255, 68, 0.2);
-	--connecting-border: var(--connecting-color);
-	--disconnected-color: rgba(255, 68, 68, 0.53);
-	--disconnected-active: rgba(255, 68, 68, 0.2);
-	--disconnected-border: var(--disconnected-color);
 	--font-family: Arial, sans-serif;
 	--border-size: 2.5px;
 	--border-style: solid;
@@ -28,18 +22,6 @@
 
 body {
 	background-color: var(--background);
-}
-
-body.disconnected:not(.debug) {
-	--color: var(--disconnected-color);
-	--active: var(--disconnected-active);
-	--border: var(--disconnected-border);
-}
-
-body.connecting:not(.debug) {
-	--color: var(--connecting-color);
-	--active: var(--connecting-active);
-	--border: var(--connecting-border);
 }
 
 /* ==========================================================================

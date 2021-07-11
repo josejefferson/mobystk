@@ -52,28 +52,27 @@ body.preload * {
 	height: 50%;
 	position: absolute;
 	width: 50%;
-	/*border: var(--color) 1px solid;*/
 }
 
-.diag.dLT { 
+.diag.dLT {
 	left: 0;
 	top: 0;
 	border-radius: 75px 0 50px 0;
 }
 
-.diag.dRT { 
+.diag.dRT {
 	right: 0;
 	top: 0;
 	border-radius: 0 75px 0 50px;
 }
 
-.diag.dLB { 
+.diag.dLB {
 	left: 0;
 	bottom: 0;
 	border-radius: 0 50px 0 75px;
 }
 
-.diag.dRB { 
+.diag.dRB {
 	right: 0;
 	bottom: 0;
 	border-radius: 50px 0 75px 0;
@@ -118,8 +117,63 @@ button.edit {
 	cursor: move;
 }
 
+/* Informações do dispositivo - Status */
+.deviceInfo .status {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 20px;
+	overflow: hidden;
+	font-size: 14px;
+	opacity: 1;
+	transition:
+		height .15s ease,
+		opacity 1s ease .15s;
+}
+
+.deviceInfo .status::before {
+	font-family: 'Material Design Icons';
+	margin-right: 10px;
+	margin-bottom: 2px;
+}
+
+body.connecting .deviceInfo .status::before {
+	content: '\F0772';
+	animation: mdi-spin 2s infinite linear;
+}
+
+body.connecting .deviceInfo .status::after {
+	content: 'Conectando';
+}
+
+body.connected .deviceInfo .status {
+	opacity: 0;
+	height: 0;
+	transition:
+		opacity 1s ease 3s,
+		height .15s ease 4s;
+}
+
+body.connected .deviceInfo .status::before {
+	content: '\F05E1';
+}
+
+body.connected .deviceInfo .status::after {
+	content: 'Conectado';
+}
+
+body.disconnected .deviceInfo .status::before {
+	content: '\F015A';
+}
+
+body.disconnected .deviceInfo .status::after {
+	content: 'Desconectado';
+}
+
 /* Oculta os botões enquanto não carregar o layout */
-button, .group, .joystick {
+button,
+.group,
+.joystick {
 	display: none;
 }
 
@@ -173,7 +227,9 @@ svg {
 	from {
 		transform: rotate(0deg);
 	}
-	50%, to {
+
+	50%,
+	to {
 		transform: rotate(360deg);
 	}
 }

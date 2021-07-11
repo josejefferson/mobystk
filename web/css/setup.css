@@ -1,134 +1,159 @@
-main > p {
-  padding: 0 20px;
+main>p {
+	padding: 0 20px;
 }
 
 main button {
-  align-items: center;
-  background: none;
-  border-radius: 1000px;
-  border: #888 2px solid;
-  color: inherit;
-  cursor: pointer;
-  display: inline-flex;
-  font-size: 16px;
-  justify-content: center;
-  outline: none;
-  padding: 6px 15px;
-  text-decoration: none;
-  transition: 0.15s ease;
+	align-items: center;
+	background: none;
+	border-radius: 1000px;
+	border: #888 2px solid;
+	color: inherit;
+	cursor: pointer;
+	display: inline-flex;
+	font-size: 16px;
+	justify-content: center;
+	outline: none;
+	padding: 6px 15px;
+	text-decoration: none;
+	transition: 0.15s ease;
 }
+
 main button.square {
-  border-radius: 5px;
+	border-radius: 5px;
 }
+
 main button:active {
-  transform: scale(1.2);
+	transform: scale(1.2);
 }
-main button:disabled, main button.disabled {
-  opacity: 0.5;
-  pointer-events: none;
+
+main button:disabled,
+main button.disabled {
+	opacity: 0.5;
+	pointer-events: none;
 }
 
 .ip {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 .connectStatus.connecting {
-  color: var(--yellow-300);
+	color: var(--yellow-300);
 }
+
 .connectStatus.connecting::before {
-  content: "conectando";
+	content: "conectando";
 }
+
 .connectStatus.connected {
-  color: var(--green-300);
+	color: var(--green-300);
 }
+
 .connectStatus.connected::before {
-  content: "conectado";
+	content: "conectado";
 }
+
 .connectStatus.disconnected {
-  color: var(--red-300);
+	color: var(--red-300);
 }
+
 .connectStatus.disconnected::before {
-  content: "desconectado";
+	content: "desconectado";
 }
 
 .apps .app {
-  padding: 20px;
+	padding: 20px;
 }
+
 .apps .app:first-child {
-  border-top: var(--gray-500) 1px solid;
+	border-top: var(--gray-500) 1px solid;
 }
+
 .apps .app:not(:last-child) {
-  border-bottom: var(--gray-500) 1px solid;
+	border-bottom: var(--gray-500) 1px solid;
 }
+
 .apps .app .name {
-  font-size: 24px;
-  font-weight: bold;
+	font-size: 24px;
+	font-weight: bold;
 }
+
 .apps .app .actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
 }
+
 .apps .app .actions button {
-  background-color: var(--red-500);
-  border-color: inherit;
-  color: inherit;
+	background-color: var(--red-500);
+	border-color: inherit;
+	color: inherit;
 }
 
 .progress {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: black;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  font-size: 18px;
-  transition: 0.15s ease;
-  text-align: left;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: black;
+	height: 45px;
+	display: flex;
+	align-items: center;
+	font-size: 18px;
+	transition: 0.15s ease;
+	text-align: left;
 }
+
 .progress.hidden {
-  transform: translateY(100%);
+	transform: translateY(100%);
 }
+
 .progress::before {
-  content: "Configurando...";
-  margin-left: 10px;
-  z-index: 1;
+	content: "Configurando...";
+	margin-left: 10px;
+	z-index: 1;
 }
+
 .progress.complete::before {
-  content: "Pronto";
+	content: "Pronto";
 }
+
 .progress.stopped::before {
-  content: "Interrompido";
+	content: "Interrompido";
 }
+
 .progress .bar {
-  background-color: var(--blue-500);
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0;
-  transition: 0.15s ease;
+	background-color: var(--blue-500);
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 0;
+	transition: 0.15s ease;
 }
+
 .progress.complete .bar {
-  background-color: var(--green-500);
+	background-color: var(--green-500);
 }
+
 .progress.stopped .bar {
-  background-color: var(--red-500);
+	background-color: var(--red-500);
 }
-.progress.complete .cancel, .progress.stopped .cancel {
-  display: none;
+
+.progress.complete .cancel,
+.progress.stopped .cancel {
+	display: none;
 }
+
 .progress .cancel {
-  display: flex;
-  margin-right: 10px;
-  margin-left: auto;
-  z-index: 1;
-  font-size: 24px;
+	display: flex;
+	margin-right: 10px;
+	margin-left: auto;
+	z-index: 1;
+	font-size: 24px;
 }
+
 .progress .cancel:active {
-  transform: scale(1.2);
+	transform: scale(1.2);
 }
 
 /*# sourceMappingURL=setup.css.map */

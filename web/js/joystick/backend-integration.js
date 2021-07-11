@@ -2,6 +2,8 @@
 let socket = socketConnect()
 function socketConnect() {
 	const ws = new WebSocket('ws://' + options.ip)
+	document.body.classList.remove('connected', 'disconnected')
+	document.body.classList.add('connecting')
 	// Socket conectado
 	ws.onopen = () => {
 		document.body.classList.remove('connecting', 'disconnected')
@@ -9,7 +11,7 @@ function socketConnect() {
 	}
 	// Socket desconectado
 	ws.onclose = () => {
-		document.body.classList.remove('connecting')
+		document.body.classList.remove('connecting', 'connected')
 		document.body.classList.add('disconnected')
 		setTimeout(() => socket = socketConnect(), 3000)
 	}

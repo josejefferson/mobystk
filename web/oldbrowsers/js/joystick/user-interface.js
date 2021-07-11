@@ -11,7 +11,8 @@ const $DI_batteryIcon = $DI_battery.querySelector('.battery-icon');
 const $DI_batteryLevel = $DI_battery.querySelector('.battery-level');
 const $DI_clock = $deviceInfo.querySelector('.clock');
 const $DI_playerNumber = $deviceInfo.querySelector('.player .player-number');
-const $DI_layout = $deviceInfo.querySelector('.layout'); // CARREGAMENTO DO LAYOUT
+const $DI_layout = $deviceInfo.querySelector('.layout');
+const $DI_status = $deviceInfo.querySelector('.status'); // CARREGAMENTO DO LAYOUT
 
 $layoutCSS.href = 'layouts/' + options.layout + '.css'; // CARREGAMENTO DAS OPÇÕES
 

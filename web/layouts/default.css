@@ -304,7 +304,7 @@
 .drive {
 	left: 50%;
 	top: auto;
-	bottom: 80px;
+	bottom: 70px;
 	transform: translateX(-50%);
 }
 
@@ -329,7 +329,7 @@
 .volumeDown {
 	width: 72px;
 	height: 52px;
-	top: 90px;
+	top: 80px;
 	font-size: 28px !important;
 }
 
@@ -350,7 +350,7 @@
 .playMacro {
 	width: 48px;
 	height: 32px;
-	top: 58px;
+	top: 48px;
 	font-size: 16px !important;
 	border-bottom: none;
 }

@@ -1,401 +1,471 @@
 @charset "UTF-8";
+
 .chipsGroup {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  max-width: 100%;
+	display: flex;
+	gap: 15px;
+	flex-wrap: wrap;
+	max-width: 100%;
 }
+
 .chipsGroup .title {
-  font-size: 12px;
-  width: 100%;
+	font-size: 12px;
+	width: 100%;
 }
-.chipsGroup .chip > input {
-  display: none;
+
+.chipsGroup .chip>input {
+	display: none;
 }
+
 .chipsGroup .chip .label {
-  padding: 5px 20px;
-  display: flex;
-  font-size: 18px;
-  white-space: nowrap;
-  width: 100%;
+	padding: 5px 20px;
+	display: flex;
+	font-size: 18px;
+	white-space: nowrap;
+	width: 100%;
 }
-.chipsGroup .chip > input:checked + .label {
-  border-color: inherit;
-  color: inherit;
-  background-color: #888;
+
+.chipsGroup .chip>input:checked+.label {
+	border-color: inherit;
+	color: inherit;
+	background-color: #888;
 }
 
 .container input[type=range] {
-  -webkit-appearance: none;
-  background-color: transparent;
-  box-sizing: border-box;
-  height: 4px;
-  margin-left: 20px;
-  outline: none;
-  padding: 0;
-  width: 100%;
+	-webkit-appearance: none;
+	background-color: transparent;
+	box-sizing: border-box;
+	height: 4px;
+	margin-left: 20px;
+	outline: none;
+	padding: 0;
+	width: 100%;
 }
 
 .container input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  background-color: var(--blue-300);
-  border-radius: 50%;
-  border: none;
-  margin-top: -5.5px;
-  height: 15px;
-  width: 15px;
+	-webkit-appearance: none;
+	background-color: var(--blue-300);
+	border-radius: 50%;
+	border: none;
+	margin-top: -5.5px;
+	height: 15px;
+	width: 15px;
 }
 
 .container input[type=range]:active::-webkit-slider-thumb {
-  height: 20px;
-  width: 20px;
-  margin-top: -8px;
-  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.1);
+	height: 20px;
+	width: 20px;
+	margin-top: -8px;
+	box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 .container input[type=range]::-webkit-slider-runnable-track {
-  background-color: var(--gray-600);
-  border-radius: 1000px;
-  cursor: pointer;
-  height: 4px;
-  width: 100%;
+	background-color: var(--gray-600);
+	border-radius: 1000px;
+	cursor: pointer;
+	height: 4px;
+	width: 100%;
 }
 
 .container input[type=text],
 .container textarea {
-  background: none;
-  border-radius: 1000px;
-  border: #888 2px solid;
-  color: inherit;
-  font-size: 18px;
-  height: 40px;
-  outline: none;
-  text-align: center;
-  transition: 0.15s ease;
-  width: auto;
+	background: none;
+	border-radius: 1000px;
+	border: #888 2px solid;
+	color: inherit;
+	font-size: 18px;
+	height: 40px;
+	outline: none;
+	text-align: center;
+	transition: 0.15s ease;
+	width: auto;
 }
+
 .container input[type=text]:focus,
 .container textarea:focus {
-  border-color: #AAA;
-  box-shadow: 0 0 0 4px #444;
+	border-color: #AAA;
+	box-shadow: 0 0 0 4px #444;
 }
 
 .container textarea {
-  text-align: left;
-  padding: 10px;
-  border-radius: 5px;
-  height: 100%;
-  resize: none;
+	text-align: left;
+	padding: 10px;
+	border-radius: 5px;
+	height: 100%;
+	resize: none;
 }
 
-.container button, .container .chipsGroup .chip .label, .chipsGroup .chip .container .label,
+.container button,
+.container .chipsGroup .chip .label,
+.chipsGroup .chip .container .label,
 .container a.button {
-  align-items: center;
-  background: none;
-  border-radius: 1000px;
-  border: #888 2px solid;
-  color: inherit;
-  cursor: pointer;
-  display: inline-flex;
-  font-size: 18px;
-  justify-content: center;
-  outline: none;
-  padding: 8px 25px;
-  text-decoration: none;
-  transition: 0.15s ease;
+	align-items: center;
+	background: none;
+	border-radius: 1000px;
+	border: #888 2px solid;
+	color: inherit;
+	cursor: pointer;
+	display: inline-flex;
+	font-size: 18px;
+	justify-content: center;
+	outline: none;
+	padding: 8px 25px;
+	text-decoration: none;
+	transition: 0.15s ease;
 }
-.container button.square, .container .chipsGroup .chip .square.label, .chipsGroup .chip .container .square.label,
+
+.container button.square,
+.container .chipsGroup .chip .square.label,
+.chipsGroup .chip .container .square.label,
 .container a.button.square {
-  border-radius: 5px;
+	border-radius: 5px;
 }
-.container button:active, .container .chipsGroup .chip .label:active, .chipsGroup .chip .container .label:active,
+
+.container button:active,
+.container .chipsGroup .chip .label:active,
+.chipsGroup .chip .container .label:active,
 .container a.button:active {
-  transform: scale(1.2);
+	transform: scale(1.2);
 }
-.container button:disabled, .container .chipsGroup .chip .label:disabled, .chipsGroup .chip .container .label:disabled, .container button.disabled, .container .chipsGroup .chip .disabled.label, .chipsGroup .chip .container .disabled.label,
+
+.container button:disabled,
+.container .chipsGroup .chip .label:disabled,
+.chipsGroup .chip .container .label:disabled,
+.container button.disabled,
+.container .chipsGroup .chip .disabled.label,
+.chipsGroup .chip .container .disabled.label,
 .container a.button:disabled,
 .container a.button.disabled {
-  opacity: 0.5;
-  pointer-events: none;
+	opacity: 0.5;
+	pointer-events: none;
 }
 
 .container section {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .container section.main {
-  min-height: calc(360px - 56px);
-  height: calc(100vh - 56px);
+	min-height: calc(360px - 56px);
+	height: calc(100vh - 56px);
 }
 
 .container section.main main {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  flex-direction: column;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1;
+	flex-direction: column;
 }
+
 .container section.main main .explanation {
-  font-size: 20px;
-  margin: 20px 0 10px 0;
-  text-align: center;
+	font-size: 20px;
+	margin: 20px 0 10px 0;
+	text-align: center;
 }
+
 .container section.main main .code {
-  border-color: var(--purple-400);
+	border-color: var(--purple-400);
 }
+
 .container section.main main .code:focus {
-  border-color: var(--purple-300);
+	border-color: var(--purple-300);
 }
+
 .container section.main main .chipsGroup.selectLayout {
-  padding: 0 15px;
-  justify-content: center;
+	padding: 0 15px;
+	justify-content: center;
 }
+
 .container section.main main .chipsGroup.selectLayout .chip .label {
-  border-color: var(--red-400);
-  color: var(--red-400);
+	border-color: var(--red-400);
+	color: var(--red-400);
 }
-.container section.main main .chipsGroup.selectLayout .chip input:checked + .label {
-  background-color: var(--red-500);
-  border-color: inherit;
-  color: inherit;
+
+.container section.main main .chipsGroup.selectLayout .chip input:checked+.label {
+	background-color: var(--red-500);
+	border-color: inherit;
+	color: inherit;
 }
 
 .container section.main footer {
-  display: flex;
-  justify-content: space-between;
-  padding: 15px 20px;
-  align-items: flex-end;
+	display: flex;
+	justify-content: space-between;
+	padding: 15px 20px;
+	align-items: flex-end;
 }
+
 .container section.main footer .chipsGroup.selectPlayer {
-  flex: 1;
-  gap: 5px;
-  justify-content: flex-start;
+	flex: 1;
+	gap: 5px;
+	justify-content: flex-start;
 }
+
 .container section.main footer .chipsGroup.selectPlayer .chip .label {
-  border-radius: 5px;
-  border-color: var(--blue-400);
-  color: var(--blue-400);
-  width: 40px;
-  height: 40px;
-  margin-bottom: 4px;
-  padding: 0;
+	border-radius: 5px;
+	border-color: var(--blue-400);
+	color: var(--blue-400);
+	width: 40px;
+	height: 40px;
+	margin-bottom: 4px;
+	padding: 0;
 }
-.container section.main footer .chipsGroup.selectPlayer .chip input:checked + .label {
-  background: var(--blue-500);
-  color: inherit;
-  border-color: inherit;
+
+.container section.main footer .chipsGroup.selectPlayer .chip input:checked+.label {
+	background: var(--blue-500);
+	color: inherit;
+	border-color: inherit;
 }
+
 .container section.main footer .advancedOptions {
-  flex: 1;
-  align-self: flex-end;
-  font-size: 12px;
-  text-align: center;
+	flex: 1;
+	align-self: flex-end;
+	font-size: 12px;
+	text-align: center;
 }
+
 .container section.main footer .advancedOptions .mdi {
-  font-size: 20px;
+	font-size: 20px;
 }
 
 .start {
-  flex: 1;
-  text-align: right;
-  transform: scale(1);
-  transition: transform 0.15s ease;
+	flex: 1;
+	text-align: right;
+	transform: scale(1);
+	transition: transform 0.15s ease;
 }
-.start button, .start .chipsGroup .chip .label, .chipsGroup .chip .start .label {
-  animation: pulse 2s infinite;
-  background-color: var(--orange-600);
-  border-color: var(--orange-300);
-  font-size: 18px;
-  padding: 5px 15px;
-  text-transform: uppercase;
+
+.start button,
+.start .chipsGroup .chip .label,
+.chipsGroup .chip .start .label {
+	animation: pulse 2s infinite;
+	background-color: var(--orange-600);
+	border-color: var(--orange-300);
+	font-size: 18px;
+	padding: 5px 15px;
+	text-transform: uppercase;
 }
-.start button .mdi, .start .chipsGroup .chip .label .mdi, .chipsGroup .chip .start .label .mdi {
-  font-size: 30px;
-  margin-right: 10px;
+
+.start button .mdi,
+.start .chipsGroup .chip .label .mdi,
+.chipsGroup .chip .start .label .mdi {
+	font-size: 30px;
+	margin-right: 10px;
 }
+
 .start.floating {
-  position: fixed;
-  bottom: 15px;
-  right: 20px;
+	position: fixed;
+	bottom: 15px;
+	right: 20px;
 }
-.start.floating button, .start.floating .chipsGroup .chip .label, .chipsGroup .chip .start.floating .label {
-  width: 48px;
-  height: 48px;
+
+.start.floating button,
+.start.floating .chipsGroup .chip .label,
+.chipsGroup .chip .start.floating .label {
+	width: 48px;
+	height: 48px;
 }
-.start.floating button .mdi, .start.floating .chipsGroup .chip .label .mdi, .chipsGroup .chip .start.floating .label .mdi {
-  margin-right: 0;
+
+.start.floating button .mdi,
+.start.floating .chipsGroup .chip .label .mdi,
+.chipsGroup .chip .start.floating .label .mdi {
+	margin-right: 0;
 }
+
 .start.hidden {
-  transform: scale(0);
+	transform: scale(0);
 }
 
 .container section.advanced header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 50px 10px 20px 10px;
-  font-size: 24px;
-  text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 50px 10px 20px 10px;
+	font-size: 24px;
+	text-align: center;
 }
+
 .container section.advanced header .subtitle {
-  font-size: 16px;
-  margin-top: 5px;
+	font-size: 16px;
+	margin-top: 5px;
 }
 
 .container section.advanced main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
 }
 
 .container section.advanced.lockedKeys main .chipsGroup,
 .container section.advanced.hiddenItems main .chipsGroup {
-  column-gap: 10px;
-  justify-content: space-around;
-  padding: 20px;
+	column-gap: 10px;
+	justify-content: space-around;
+	padding: 20px;
 }
 
 .container section.advanced.lockedKeys main .chipsGroup .chip {
-  flex: 1;
+	flex: 1;
 }
+
 .container section.advanced.lockedKeys main .chipsGroup .chip .label {
-  border-radius: 5px;
-  border-color: var(--pink-400);
-  color: var(--pink-400);
+	border-radius: 5px;
+	border-color: var(--pink-400);
+	color: var(--pink-400);
 }
-.container section.advanced.lockedKeys main .chipsGroup .chip input:checked + .label {
-  background-color: var(--pink-500);
-  border-color: inherit;
-  color: inherit;
+
+.container section.advanced.lockedKeys main .chipsGroup .chip input:checked+.label {
+	background-color: var(--pink-500);
+	border-color: inherit;
+	color: inherit;
 }
 
 .container section.advanced.hiddenItems main .chipsGroup .chip {
-  flex: 1;
+	flex: 1;
 }
+
 .container section.advanced.hiddenItems main .chipsGroup .chip .label {
-  border-radius: 5px;
-  border-color: var(--cyan-500);
-  color: var(--cyan-500);
+	border-radius: 5px;
+	border-color: var(--cyan-500);
+	color: var(--cyan-500);
 }
-.container section.advanced.hiddenItems main .chipsGroup .chip input:checked + .label {
-  background-color: var(--cyan-600);
-  border-color: inherit;
-  color: inherit;
+
+.container section.advanced.hiddenItems main .chipsGroup .chip input:checked+.label {
+	background-color: var(--cyan-600);
+	border-color: inherit;
+	color: inherit;
 }
 
 .container section.advanced.colors main .pickr {
-  margin-left: auto;
+	margin-left: auto;
 }
+
 .container section.advanced.colors main .resetColors {
-  align-self: center;
-  border-color: var(--orange-500);
+	align-self: center;
+	border-color: var(--orange-500);
 }
 
 .container section.advanced.customBG main {
-  padding: 0 20px;
+	padding: 0 20px;
 }
+
 .container section.advanced.customBG main input {
-  width: 100%;
-  border-color: var(--yellow-400);
+	width: 100%;
+	border-color: var(--yellow-400);
 }
+
 .container section.advanced.customBG main input:focus {
-  border-color: var(--yellow-300);
+	border-color: var(--yellow-300);
 }
+
 .container section.advanced.customBG main .optionsGroup {
-  margin-top: 10px;
+	margin-top: 10px;
 }
 
 .container section.advanced.customCSS main {
-  padding: 0 20px 20px 20px;
+	padding: 0 20px 20px 20px;
 }
+
 .container section.advanced.customCSS main textarea {
-  height: 270px !important;
-  border-color: var(--red-400);
+	height: 270px !important;
+	border-color: var(--red-400);
 }
+
 .container section.advanced.customCSS main textarea:focus {
-  border-color: var(--red-300);
+	border-color: var(--red-300);
 }
 
 .container section.advanced.hiddenOptions main {
-  padding-bottom: 20px;
+	padding-bottom: 20px;
 }
+
 .container section.advanced.hiddenOptions main .resetSettings {
-  align-self: center;
-  margin-top: 10px;
-  border-color: var(--red-500);
+	align-self: center;
+	margin-top: 10px;
+	border-color: var(--red-500);
 }
 
 .container section.advanced.importExportSettings main {
-  padding-bottom: 20px;
-  flex-direction: row;
-  justify-content: center;
-  gap: 10px;
+	padding-bottom: 20px;
+	flex-direction: row;
+	justify-content: center;
+	gap: 10px;
 }
-.container section.advanced.importExportSettings main button.importSettings, .container section.advanced.importExportSettings main .chipsGroup .chip .importSettings.label, .chipsGroup .chip .container section.advanced.importExportSettings main .importSettings.label {
-  border-color: var(--yellow-500);
+
+.container section.advanced.importExportSettings main button.importSettings,
+.container section.advanced.importExportSettings main .chipsGroup .chip .importSettings.label,
+.chipsGroup .chip .container section.advanced.importExportSettings main .importSettings.label {
+	border-color: var(--yellow-500);
 }
-.container section.advanced.importExportSettings main button.exportSettings, .container section.advanced.importExportSettings main .chipsGroup .chip .exportSettings.label, .chipsGroup .chip .container section.advanced.importExportSettings main .exportSettings.label {
-  border-color: var(--green-500);
+
+.container section.advanced.importExportSettings main button.exportSettings,
+.container section.advanced.importExportSettings main .chipsGroup .chip .exportSettings.label,
+.chipsGroup .chip .container section.advanced.importExportSettings main .exportSettings.label {
+	border-color: var(--green-500);
 }
 
 .option {
-  white-space: nowrap;
+	white-space: nowrap;
 }
-.option > input {
-  display: none;
+
+.option>input {
+	display: none;
 }
+
 .option .label {
-  height: 56px;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  transition: 0.15s ease;
+	height: 56px;
+	display: flex;
+	align-items: center;
+	padding: 0 20px;
+	transition: 0.15s ease;
 }
+
 .option .label:active {
-  background-color: var(--gray-700);
+	background-color: var(--gray-700);
 }
-.option input[type=checkbox] + .label::before {
-  content: "󰄱";
-  font-family: "Material Design Icons";
-  font-size: 24px;
-  text-rendering: auto;
-  line-height: inherit;
-  margin-right: 10px;
+
+.option input[type=checkbox]+.label::before {
+	content: "󰄱";
+	font-family: "Material Design Icons";
+	font-size: 24px;
+	text-rendering: auto;
+	line-height: inherit;
+	margin-right: 10px;
 }
-.option input:checked + .label::before {
-  content: "󰄲";
-  color: var(--blue-300);
+
+.option input:checked+.label::before {
+	content: "󰄲";
+	color: var(--blue-300);
 }
 
 .pcr-app {
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%);
-  width: calc(100% - 40px) !important;
-  height: calc(100% - 40px) !important;
-  max-width: 680px !important;
-  max-height: 320px !important;
-  box-shadow: 0 0.15em 1.5em 0 rgba(0, 0, 0, 0.1), 0 0 1em 0 rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.5) 0 0 0 10000px;
+	left: 50% !important;
+	top: 50% !important;
+	transform: translate(-50%, -50%);
+	width: calc(100% - 40px) !important;
+	height: calc(100% - 40px) !important;
+	max-width: 680px !important;
+	max-height: 320px !important;
+	box-shadow: 0 0.15em 1.5em 0 rgba(0, 0, 0, 0.1), 0 0 1em 0 rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.5) 0 0 0 10000px;
 }
 
 .pcr-color-palette {
-  height: 100% !important;
+	height: 100% !important;
 }
 
 @keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 var(--orange-400);
-  }
-  70% {
-    box-shadow: 0 0 0 10px transparent;
-  }
-  100% {
-    box-shadow: 0 0 0 0 transparent;
-  }
+	0% {
+		box-shadow: 0 0 0 0 var(--orange-400);
+	}
+
+	70% {
+		box-shadow: 0 0 0 10px transparent;
+	}
+
+	100% {
+		box-shadow: 0 0 0 0 transparent;
+	}
 }
 
 /*# sourceMappingURL=index.css.map */
