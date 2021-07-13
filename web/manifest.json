@@ -2,8 +2,7 @@
 	"name": "Web Joystick",
 	"short_name": "Joystick",
 	"description": "",
-	"icons": [
-		{
+	"icons": [{
 			"src": "img/icon.png",
 			"type": "image/png",
 			"sizes": "256x256"
@@ -17,7 +16,6 @@
 	],
 	"start_url": "joystick.html",
 	"display": "fullscreen",
-	"orientation": "landscape",
 	"background_color": "#000000",
 	"theme_color": "#000000"
 }

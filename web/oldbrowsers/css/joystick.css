@@ -54,28 +54,33 @@ body.preload * {
 	width: 50%;
 }
 
+.diag {
+	--external-radius: 75px;
+	--internal-radius: 30px;
+}
+
 .diag.dLT {
 	left: 0;
 	top: 0;
-	border-radius: 75px 0 50px 0;
+	border-radius: var(--external-radius) 0 var(--internal-radius) 0;
 }
 
 .diag.dRT {
 	right: 0;
 	top: 0;
-	border-radius: 0 75px 0 50px;
+	border-radius: 0 var(--external-radius) 0 var(--internal-radius);
 }
 
 .diag.dLB {
 	left: 0;
 	bottom: 0;
-	border-radius: 0 50px 0 75px;
+	border-radius: 0 var(--internal-radius) 0 var(--external-radius);
 }
 
 .diag.dRB {
 	right: 0;
 	bottom: 0;
-	border-radius: 50px 0 75px 0;
+	border-radius: var(--internal-radius) 0 var(--external-radius) 0;
 }
 
 /* Botões */

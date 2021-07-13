@@ -1,3 +1,22 @@
+@media (max-width: 639px) {
+	.advancedOptions {
+		display: none;
+	}
+
+	.start {
+		flex: initial !important;
+	}
+
+	.start button {
+		width: 48px;
+		height: 48px;
+	}
+
+	.start button span {
+		display: none;
+	}
+}
+
 .chipsGroup {
 	display: flex;
 	gap: 15px;
@@ -232,7 +251,10 @@
 
 		.mdi {
 			font-size: 30px;
-			margin-right: 10px;
+		}
+
+		span {
+			margin-left: 10px;
 		}
 	}
 
@@ -244,10 +266,6 @@
 		button {
 			width: 48px;
 			height: 48px;
-
-			.mdi {
-				margin-right: 0;
-			}
 		}
 	}
 
@@ -367,6 +385,7 @@
 
 .container section.advanced.hiddenOptions main {
 	padding-bottom: 20px;
+
 	.resetSettings {
 		align-self: center;
 		margin-top: 10px;
@@ -379,9 +398,11 @@
 	flex-direction: row;
 	justify-content: center;
 	gap: 10px;
+
 	button.importSettings {
 		border-color: var(--yellow-500)
 	}
+
 	button.exportSettings {
 		border-color: var(--green-500)
 	}

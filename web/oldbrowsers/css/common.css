@@ -5,7 +5,7 @@
 }
 
 @media (max-width: 639px) {
-	section.main header nav ul li a span {
+	body header nav ul li a span {
 		display: none;
 	}
 }
@@ -115,14 +115,14 @@ body>header nav ul li a .mdi {
 
 .loadingScreen .text {
 	margin-bottom: 20px;
-	font-size: 8vh;
+	font-size: 8vmin;
 }
 
 .loadingScreen .mdi {
-	font-size: 25vh;
-	border: white 2vh solid;
-	width: 40vh;
-	height: 40vh;
+	font-size: 25vmin;
+	border: white 2vmin solid;
+	width: 40vmin;
+	height: 40vmin;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -140,5 +140,3 @@ body>header nav ul li a .mdi {
 		transform: rotate(360deg);
 	}
 }
-
-/*# sourceMappingURL=common.css.map */
