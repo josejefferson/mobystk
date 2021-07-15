@@ -110,6 +110,10 @@ body>header {
 	&.visible {
 		display: flex;
 		opacity: 1;
+
+		.mdi {
+			animation: sandClock 3s ease infinite;
+		}
 	}
 
 	.text {
@@ -126,7 +130,6 @@ body>header {
 		align-items: center;
 		justify-content: center;
 		border-radius: 50%;
-		animation: sandClock 3s ease infinite;
 	}
 }
 

@@ -113,6 +113,10 @@ body>header nav ul li a .mdi {
 	opacity: 1;
 }
 
+.loadingScreen.visible .mdi {
+	animation: sandClock 3s ease infinite;
+}
+
 .loadingScreen .text {
 	margin-bottom: 20px;
 	font-size: 8vmin;
@@ -127,7 +131,6 @@ body>header nav ul li a .mdi {
 	align-items: center;
 	justify-content: center;
 	border-radius: 50%;
-	animation: sandClock 3s ease infinite;
 }
 
 @keyframes sandClock {

@@ -211,21 +211,24 @@ svg {
 	opacity: 1;
 }
 
+.loadingScreen.visible .mdi {
+	animation: sandClock 3s ease infinite;
+}
+
 .loadingScreen .text {
 	margin-bottom: 20px;
-	font-size: 8vh;
+	font-size: 8vmin;
 }
 
 .loadingScreen .mdi {
-	font-size: 25vh;
-	border: white 2vh solid;
-	width: 40vh;
-	height: 40vh;
+	font-size: 25vmin;
+	border: white 2vmin solid;
+	width: 40vmin;
+	height: 40vmin;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	border-radius: 50%;
-	animation: sandClock 3s ease infinite;
 }
 
 @keyframes sandClock {
