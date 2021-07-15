@@ -31,9 +31,10 @@ function toggleDriveMode(e) {
 
 	// Detecta os movimentos
 	window.ondevicemotion = e => {
-		const orientation = e.accelerationIncludingGravity.x >= 0 ? 1 : -1
-		driveY = parseFloat(e.accelerationIncludingGravity.y.toFixed(1))
-		driveY *= orientation
+		const land = window.outerWidth > window.outerHeight
+		const inverted = e.accelerationIncludingGravity[land ? 'x' : 'y'] >= 0 ? 1 : -1
+		driveY = parseFloat(e.accelerationIncludingGravity[land ? 'y' : 'x'].toFixed(1))
+		driveY *= inverted * (land ? 1 : -1)
 
 		// Define a direção (ângulo)
 		angle = 0
