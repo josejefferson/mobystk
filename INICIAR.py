@@ -143,10 +143,11 @@ if len(ips) > 1:
 	print(f'  Caso não funcione, tente: ')
 	print(f'  {" ou ".join(coloredIPs)}')
 
+async def wsServer():
+	async with websockets.serve(server, port=WS_PORT):
+		await asyncio.Future()
 
 if __name__ == "__main__":
-	start_server = websockets.serve(server, port=WS_PORT)
-	asyncio.get_event_loop().run_until_complete(start_server)
 	httpThread = threading.Thread(target=httpServer)
 	httpThread.start()
-	asyncio.get_event_loop().run_forever()
+	asyncio.run(wsServer())
