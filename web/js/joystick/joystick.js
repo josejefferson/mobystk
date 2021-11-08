@@ -75,17 +75,10 @@ function resizeJoystick() {
 		e.classList.add('joystick', 'touch')
 	})
 
-	// Retorna "true" se a altura afeta a posição dos botões
-	function inadequateHeight() {
-		if (window.outerWidth >= 640) return window.outerHeight < 360
-		else return window.outerWidth / window.outerHeight > 1.7777777777777778
-	}
-
 	// Retorna a propriedade "width" adequada para a metatag "viewport"
-	function width() {
-		if (inadequateHeight()) return window.outerWidth * (360 / window.outerHeight)
-		else if (window.outerWidth <= 640) return 640
-		else return 'device-width'
+	function width(){
+		if (window.outerHeight > window.outerWidth / 1.7777777777777777) return 640
+		return window.outerWidth / window.outerHeight * (360)
 	}
 }
 resizeJoystick()

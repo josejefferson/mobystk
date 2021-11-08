@@ -9,14 +9,16 @@ try:
 	import shutil
 	import zipfile
 except ModuleNotFoundError:
-	print('[ERRO] Alguns módulos estão faltando para o funcionamento desta aplicação.')
-	print('Você precisa executar os seguintes comandos no terminal para instalá-los:\n')
+	print('Ops! Alguns módulos estão faltando para o funcionamento desta aplicação.')
+	print('Você precisa executar os seguintes comandos no terminal para instalá-los (ou pressionar Enter):\n')
 	commands = [
 		'python -m pip install requests',
 		'python -m pip install colorama'
 	]
 	for c in commands: print(c)
-	input('\nPressione Enter para instalar os módulos inexistentes...')
+	input('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n' + \
+				'┃ Pressione Enter para instalar os módulos inexistentes... ┃\n' + \
+				'┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 	import os, sys
 	for c in commands: os.system(c.replace('python', sys.executable))
 	os.system(f'{sys.executable} {os.path.basename(__file__)}')
@@ -98,7 +100,9 @@ def askForUpdates(messages, since):
 	for message in messages:
 		print(f'{F.BLUE}• {F.WHITE}{message}')
 
-	print(f'\n{F.MAGENTA}Pressione Enter para atualizar...', end='')
+	print(f'\n{F.YELLOW}{S.BRIGHT}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
+	print(f'{F.YELLOW}{S.BRIGHT}┃{F.MAGENTA} Pressione Enter para atualizar... {F.YELLOW}┃')
+	print(f'{F.YELLOW}{S.BRIGHT}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛', end='')
 	input()
 
 def downloadUpdates():
