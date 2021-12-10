@@ -139,7 +139,7 @@ print(f'  ┃ {S.BRIGHT}{wsIp.ljust(21)}{S.RESET_ALL} ┃')
 print(f'  ┗━━━━━━━━━━━━━━━━━━━━━━━┛\n')
 print(S.BRIGHT + qrCode('http://' + httpIp))
 if len(ips) > 1:
-	coloredIPs = [f'{F.CYAN}{ip}{S.RESET_ALL}' for ip in ips[:-1]]
+	coloredIPs = [f'{F.CYAN}http://{ip}:{HTTP_PORT}{S.RESET_ALL}' for ip in ips[:-1]]
 	print(f'  Caso não funcione, tente: ')
 	print(f'  {" ou ".join(coloredIPs)}')
 
