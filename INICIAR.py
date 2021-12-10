@@ -42,6 +42,8 @@ handler = http.server.SimpleHTTPRequestHandler
 # Define o diretório atual e o IP
 os.chdir(os.path.join(os.path.dirname(__file__), 'web'))
 ips = socket.gethostbyname_ex(socket.gethostname())[-1]
+if '192.168.137.1' in ips: ips.append(ips.pop(ips.index('192.168.137.1')))
+if '192.168.56.1' in ips: ips.remove('192.168.56.1')
 httpIp = '{}:{}'.format(ips[-1], HTTP_PORT)
 wsIp = '{}:{}'.format(ips[-1], WS_PORT)
 
