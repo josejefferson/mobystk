@@ -37,6 +37,10 @@ body.preload * {
 	transition: none !important;
 }
 
+a {
+	color: inherit;
+}
+
 /* Grupos */
 .group {
 	position: absolute;
@@ -107,6 +111,15 @@ button.edit {
 	top: 0;
 	transform: translateX(-50%);
 	width: 60px;
+}
+
+button.edit.loading-layout-editor i {
+	animation: mdi-spin 2s infinite linear;
+}
+
+button.edit.layout-editor-opened {
+	border-color: red;
+	color: red;
 }
 
 /* Joystick */
@@ -229,6 +242,12 @@ svg {
 	align-items: center;
 	justify-content: center;
 	border-radius: 50%;
+}
+
+@keyframes rotate {
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 @keyframes sandClock {

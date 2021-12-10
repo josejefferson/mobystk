@@ -18,8 +18,17 @@ $layoutCSS.href = 'layouts/' + options.layout + '.css'
 // CARREGAMENTO DAS OPÇÕES
 $edit.addEventListener('click', loading)
 $edit.addEventListener('contextmenu', () => {
-	loading()
-	location.reload()
+	if (!window.layoutEditor) {
+		const $script = document.createElement('script')
+		$script.src = 'js/joystick/layout-editor.js'
+		$script.addEventListener('load', () => window.layoutEditor.load())
+		document.body.appendChild($script)
+		$edit.classList.add('loading-layout-editor')
+	} else if (!window.layoutEditor.opened) {
+		window.layoutEditor.start()
+	} else {
+		window.layoutEditor.end()
+	}
 })
 if (!options.layout) location.href = 'index.html'
 if (options.debug) document.body.classList.add('debug')
