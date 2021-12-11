@@ -20,7 +20,7 @@ except ModuleNotFoundError:
 				'┃ Pressione Enter para instalar os módulos inexistentes... ┃\n' + \
 				'┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 	import os, sys
-	for c in commands: os.system(c.replace('python', sys.executable))
+	for c in commands: os.system(c.replace('python -m', f'"{sys.executable}" -m'))
 	os.system(f'{sys.executable} {os.path.basename(__file__)}')
 	quit()
 

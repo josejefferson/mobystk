@@ -18,8 +18,8 @@ try:
 	import threading
 	import websockets
 except ModuleNotFoundError:
-	print('[ERRO] Alguns módulos estão faltando para o funcionamento desta aplicação.')
-	print('Você precisa executar os seguintes comandos no terminal para instalá-los:\n')
+	print('Ops! Alguns módulos estão faltando para o funcionamento desta aplicação.')
+	print('Você precisa executar os seguintes comandos no terminal para instalá-los (ou pressionar Enter):\n')
 	commands = [
 		'python -m pip install colorama',
 		'python -m pip install pynput',
@@ -27,10 +27,12 @@ except ModuleNotFoundError:
 		'python -m pip install websockets'
 	]
 	for c in commands: print(c)
-	input('\nPressione Enter para instalar os módulos inexistentes...')
+	input('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n' + \
+				'┃ Pressione Enter para instalar os módulos inexistentes... ┃\n' + \
+				'┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 	import os, sys
-	for c in commands: os.system(c.replace('python', sys.executable))
-	os.system('{} {}'.format(sys.executable, os.path.basename(__file__)))
+	for c in commands: os.system(c.replace('python -m', f'"{sys.executable}" -m'))
+	os.system(f'{sys.executable} {os.path.basename(__file__)}')
 	quit()
 
 
