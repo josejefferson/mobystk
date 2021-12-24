@@ -90,7 +90,7 @@ def getUpdateMessages(response):
 def askForUpdates(messages, since):
 	if messages == None: return
 	if len(messages) == 0:
-		print(f'{F.GREEN}O Web Joystick já está atualizado. {F.MAGENTA}' + \
+		print(f'{F.GREEN}O MobyStk já está atualizado. {F.MAGENTA}' + \
 			'Pressione Enter para atualizar mesmo assim, ou feche esta janela para cancelar.', end='')
 		input()
 		return
@@ -204,9 +204,9 @@ def cleanAndFinalize(extractFolderName):
 		quit()
 
 
-print(f'{F.CYAN}{S.BRIGHT}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
-print(f'{F.CYAN}{S.BRIGHT}┃{F.YELLOW} Ferramenta de atualização do Web Joystick {F.CYAN}┃')
-print(f'{F.CYAN}{S.BRIGHT}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n')
+print(f'{F.CYAN}{S.BRIGHT}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
+print(f'{F.CYAN}{S.BRIGHT}┃{F.YELLOW} Ferramenta de atualização do MobyStk {F.CYAN}┃')
+print(f'{F.CYAN}{S.BRIGHT}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n')
 
 since = getLastUpdateDate(lastUpdateFile)
 response = checkForUpdates(since)
@@ -220,6 +220,6 @@ copyNewFiles(extractFolderName, backupFolder)
 cleanAndFinalize(extractFolderName)
 
 print(f'{S.BRIGHT}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-print(f'{S.BRIGHT}{F.GREEN} O Web Joystick foi atualizado com sucesso!')
+print(f'{S.BRIGHT}{F.GREEN} O MobyStk foi atualizado com sucesso!')
 print(f'{S.BRIGHT}{F.MAGENTA} Você pode fechar esta janela agora!')
 input()

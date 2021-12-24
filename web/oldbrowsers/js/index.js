@@ -182,6 +182,6 @@ function exportSettings() {
   });
   const url = URL.createObjectURL(blob);
   el.href = url;
-  el.download = `web-joystick-settings-${Date.now()}.json`;
+	el.download = `mobyStk-settings-${Date.now()}.json`;
   el.click();
 }

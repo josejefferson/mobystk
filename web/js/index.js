@@ -204,6 +204,6 @@ function exportSettings() {
 	const blob = new Blob([content], { type: 'application/json' })
 	const url = URL.createObjectURL(blob)
 	el.href = url
-	el.download = `web-joystick-settings-${Date.now()}.json`
+	el.download = `mobyStk-settings-${Date.now()}.json`
 	el.click()
 }
