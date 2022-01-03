@@ -12,6 +12,7 @@ const options = {
 	disJoyYAxis: ls['joystick.disJoyYAxis'] === 'true',
 	dblClickLoadSave: ls['joystick.dblClickLoadSave'] === 'true',
 	vibrate: !(ls['joystick.vibrate'] === 'false'),
+	vgamepad: ls['joystick.vgamepad'] === 'true',
 	bgImage: ls['joystick.bgImage'],
 	bgOpacity: ls['joystick.bgOpacity'],
 	bgBlur: ls['joystick.bgBlur'],
@@ -23,6 +24,8 @@ const options = {
 	driveSensitivity: parseFloat(ls['joystick.driveSensitivity'] || 2),
 	drivePrecision: parseFloat(ls['joystick.drivePrecision'] || 1)
 }
+
+if (options.vgamepad) options.player = 4
 
 // EVENTOS DA PÁGINA
 document.addEventListener('contextmenu', e => e.preventDefault())

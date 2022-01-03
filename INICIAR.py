@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-DEBUG = False # Se True, mostrará logs
+DEBUG = True # Se True, mostrará logs
 HTTP_PORT = 8877 # Porta do servidor HTTP
 WS_PORT = 5000 # Porta do servidor WebSocket
 
@@ -35,6 +35,16 @@ except ModuleNotFoundError:
 	os.system(f'{sys.executable} {os.path.basename(__file__)}')
 	quit()
 
+# Importa o vgamepad se tiver sido instalado
+try:
+	import vgamepad as vg
+	gamepad = vg.VDS4Gamepad()
+except ModuleNotFoundError:
+	gamepad = None
+	pass
+except Exception as err:
+	gamepad = None
+	print(err)
 
 coloramaInit(autoreset=True)
 keyboard = Controller()
@@ -81,26 +91,55 @@ async def server(websocket, path):
 		commands = {
 			'r': 'RELEASE',
 			'p': 'PRESS',
-			't': 'TAP'
+			't': 'TAP',
+			'vr': 'VJOY RELEASE',
+			'vp': 'VJOY PRESS',
+			'vd': 'VJOY DPAD',
+			'vjl': 'VJOY LEFT JOYSTICK',
+			'vjr': 'VJOY RIGHT JOYSTICK'
 		}
 		if DEBUG: print(f'{F.CYAN}[{commands[cmd]} KEY] {S.RESET_ALL}{key} ')
 		try:
+			# pass
 			if cmd == 'r': keyboard.release(key)
 			elif cmd == 'p': keyboard.press(key)
 			elif cmd == 't':
 				keyboard.press(key)
 				sleep(0.05)
 				keyboard.release(key)
+			elif gamepad and cmd == 'vr':
+				gamepad.release_button(button=vg.DS4_BUTTONS[key.upper()])
+				gamepad.update()
+			elif gamepad and cmd == 'vp':
+				gamepad.press_button(button=vg.DS4_BUTTONS[key.upper()])
+				gamepad.update()
+			elif gamepad and cmd == 'vd':
+				gamepad.press_button(button=vg.DS4_DPAD_DIRECTIONS[key.upper()])
+				gamepad.update()
+			elif gamepad and cmd == 'vjl':
+				x,y = key.split(',')
+				x = int(x)
+				y = int(y)
+				gamepad.left_joystick(x_value=x, y_value=y)
+				gamepad.update()
+			elif gamepad and cmd == 'vjr':
+				x,y = key.split(',')
+				x = int(x)
+				y = int(y)
+				gamepad.right_joystick(x_value=x, y_value=y)
+				gamepad.update()
 		except Exception as err:
 			if DEBUG: print(f'{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro: dados inválidos')
-			if DEBUG: print(F.RED + str(e))
+			if DEBUG: print(F.RED + str(err))
 
 	def message(msg):
 		msg = msg.lower().split(' ')
+		if msg[0].startswith('v'):
+			return keyCommand(msg[1], msg[0])
 		msg[1] = msg[1].split(',')
 		for keyName in msg[1]:
 			key = getKey(keyName)
-			keyCommand(key, msg[0])			
+			keyCommand(key, msg[0])
 
 	try:
 		if DEBUG: print(f'{F.YELLOW}[WEBSOCKET]{S.RESET_ALL} Usuário conectado')

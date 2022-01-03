@@ -19,15 +19,18 @@ function socketConnect() {
 }
 
 // ENVIA COMANDOS PARA O SERVIDOR
-function sendCmd(keys, release = false) {
+function sendCmd(keys, release = false, custom) {
 	if (!keys || !keys.length) return
 	if (typeof keys === 'string') keys = [keys]
-	keys = keys.map(key => {
+	if (!custom) keys = keys.map(key => {
 		key = keymappings[key]?.[options.player]
 		return key
 	})
 
-	if (recordingMacro) return lastMacro.push((release ? 'R ' : 'P ') + keys)
+	if (recordingMacro) return lastMacro.push((custom + ' ' || (release ? 'R ' : 'P ')) + keys)
 	if (socket.readyState !== 1) return
-	socket.send((release ? 'R ' : 'P ') + keys)
+	if (!custom && options.vgamepad) {
+		return socket.send((release ? 'VR ' : 'VP ') + keys)
+	}
+	socket.send((custom + ' ' || (release ? 'R ' : 'P ')) + keys)
 }

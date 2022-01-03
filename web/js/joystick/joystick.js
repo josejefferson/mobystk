@@ -67,7 +67,16 @@ function resizeJoystick() {
 		const $el = document.querySelector('.' + id)
 		joysticks[id] = { up: false, down: false, left: false, right: false }
 		joysticks[id].instance = nipplejs.create(JOYSTICK_OPTIONS($el)).on('move end', (e, d) => {
-			updateJoystick($el, id, d?.angle?.degree, d?.direction)
+			if (options.vgamepad && ['joystickL', 'joystickR'].includes(id)) {
+				let x = Math.round(255 / 90 * (45 + d?.distance * Math.cos(d?.angle?.radian)))
+				let y = Math.round(255 / 90 * (45 + d?.distance * Math.sin(d?.angle?.radian)))
+				if (isNaN(x) || isNaN(y)) x = y = 128
+				debug('X: ' + x + '\nY: ' + y)
+				if (id === 'joystickL') sendCmd(`${x},${y}`, false, 'VJL')
+				else if (id === 'joystickR') sendCmd(`${x},${y}`, false, 'VJR')
+			} else {
+				updateJoystick($el, id, d?.angle?.degree, d?.direction)
+			}
 		})
 	})
 
