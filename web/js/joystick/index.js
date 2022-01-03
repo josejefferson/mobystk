@@ -30,6 +30,12 @@ window.addEventListener('load', () => {
 	document.body.classList.remove('preload')
 })
 
+// DEBUG
+const $debug = document.querySelector('.debug')
+function debug(text) {
+	$debug.innerText = text || ''
+}
+
 // TELA DE CARREGAMENTO
 const $loading = document.querySelector('.loadingScreen')
 function loading() {
