@@ -45,6 +45,7 @@ except ModuleNotFoundError:
 except Exception as err:
 	gamepad = None
 	print(err)
+vgamepadError = False
 
 coloramaInit(autoreset=True)
 keyboard = Controller()
@@ -99,7 +100,11 @@ async def server(websocket, path):
 		try:
 			# Comandos vgamepad
 			if vpad:
-				if not gamepad: return print(f'{F.RED}[VGAMEPAD] Erro: VGamepad não está instalado')
+				global vgamepadError
+				if not gamepad and not vgamepadError:
+					vgamepadError = True
+					return print(f'{S.BRIGHT}{F.RED}[VGAMEPAD] Erro: VGamepad não está instalado\n' +\
+						'Instale-o executando o comando "python -m pip install vgamepad"')
 				if key.startswith('ds4_button_dpad'):
 					gamepad.directional_pad(direction=vg.DS4_DPAD_DIRECTIONS[key.upper()])
 				elif cmd == 'r':
