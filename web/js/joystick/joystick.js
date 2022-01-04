@@ -69,11 +69,10 @@ function resizeJoystick() {
 		joysticks[id].instance = nipplejs.create(JOYSTICK_OPTIONS($el)).on('move end', (e, d) => {
 			if (options.vgamepad && ['joystickL', 'joystickR'].includes(id)) {
 				let x = Math.round(255 / 90 * (45 + d?.distance * Math.cos(d?.angle?.radian)))
-				let y = Math.round(255 / 90 * (45 + d?.distance * Math.sin(d?.angle?.radian)))
+				let y = Math.round(255 / 90 * (45 + d?.distance * Math.sin(d?.angle?.radian))) + 1
 				if (isNaN(x) || isNaN(y)) x = y = 128
-				debug('X: ' + x + '\nY: ' + y)
-				if (id === 'joystickL') sendCmd(`${x},${y}`, false, 'VJL')
-				else if (id === 'joystickR') sendCmd(`${x},${y}`, false, 'VJR')
+				if (id === 'joystickL') sendCmd(`${x}|${y}`, false, 'VJL')
+				if (id === 'joystickR') sendCmd(`${x}|${y}`, false, 'VJR')
 			} else {
 				updateJoystick($el, id, d?.angle?.degree, d?.direction)
 			}
@@ -85,7 +84,7 @@ function resizeJoystick() {
 	})
 
 	// Retorna a propriedade "width" adequada para a metatag "viewport"
-	function width(){
+	function width() {
 		if (window.outerHeight > window.outerWidth / 1.7777777777777777) return 640
 		return window.outerWidth / window.outerHeight * (360)
 	}

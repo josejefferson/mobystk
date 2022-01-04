@@ -48,9 +48,13 @@ formEls.bgBlur.value = ls.getItem('joystick.bgBlur') || '0'
 formEls.customCSS.value = ls.getItem('joystick.customCSS')
 formEls.driveSensitivity.value = ls.getItem('joystick.driveSensitivity') || '2'
 formEls.drivePrecision.value = ls.getItem('joystick.drivePrecision') || '1'
+if (ls.getItem('joystick.locked') !== null)
+	document.querySelectorAll('[name=lock]').forEach(e => e.checked = false)
 ls.getItem('joystick.locked')?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true
 })
+if (ls.getItem('joystick.hidden') !== null)
+	document.querySelectorAll('[name=hide]').forEach(e => e.checked = false)
 ls.getItem('joystick.hidden')?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=hide][value="${e}"]`).checked = true
 })

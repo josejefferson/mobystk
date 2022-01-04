@@ -66,4 +66,5 @@ $playMacro.onclick = async function () {
 		await new Promise(r => setTimeout(r, 50))
 	}
 	$playMacro.classList.remove('active')
+	playingMacro = false
 }

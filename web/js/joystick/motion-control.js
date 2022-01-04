@@ -35,6 +35,7 @@ function toggleDriveMode(e) {
 		const inverted = e.accelerationIncludingGravity[land ? 'x' : 'y'] >= 0 ? 1 : -1
 		driveY = parseFloat(e.accelerationIncludingGravity[land ? 'y' : 'x'].toFixed(1))
 		driveY *= inverted * (land ? 1 : -1)
+		debug('driveY: ' + driveY + '\ndriveAngle: ' + driveAngle)
 
 		// Define a direção (ângulo)
 		angle = 0
