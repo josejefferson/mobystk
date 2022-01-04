@@ -32,7 +32,8 @@ function loading() {
 formEls.code.value = ls.getItem('joystick.code') || window.location.hostname + ':5000'
 formEls.layout.value = ls.getItem('joystick.layout')
 formEls.player.value = ls.getItem('joystick.player')
-formEls.invert.checked = ls.getItem('joystick.invert') === 'true'
+formEls.invertL.checked = ls.getItem('joystick.invertL') === 'true'
+formEls.invertR.checked = ls.getItem('joystick.invertR') === 'true'
 formEls.disJoyXAxis.checked = ls.getItem('joystick.disJoyXAxis') === 'true'
 formEls.disJoyYAxis.checked = ls.getItem('joystick.disJoyYAxis') === 'true'
 formEls.dblClickLoadSave.checked = ls.getItem('joystick.dblClickLoadSave') === 'true'
@@ -76,7 +77,8 @@ document.forms[0].addEventListener('submit', function (e) {
 	localStorage.setItem('joystick.layout', elems.layout.value)
 	localStorage.setItem('joystick.player', elems.player.value)
 	localStorage.setItem('joystick.debug', elems.debug.checked)
-	localStorage.setItem('joystick.invert', elems.invert.checked)
+	localStorage.setItem('joystick.invertL', elems.invertL.checked)
+	localStorage.setItem('joystick.invertR', elems.invertR.checked)
 	localStorage.setItem('joystick.disJoyXAxis', elems.disJoyXAxis.checked)
 	localStorage.setItem('joystick.disJoyYAxis', elems.disJoyYAxis.checked)
 	localStorage.setItem('joystick.dblClickLoadSave', elems.dblClickLoadSave.checked)

@@ -34,7 +34,7 @@ $save.addEventListener(options.dblClickLoadSave ? 'dblclick' : 'click', () => {
 const $invert = document.querySelector('.toggleInvert')
 $invert.ontouchstart = toggleInvert
 function toggleInvert() {
-	document.body.classList.toggle('invert')
+	document.body.classList.toggle('invertL')
 	$invert.classList.toggle('active')
 	resizeJoystick()
 }

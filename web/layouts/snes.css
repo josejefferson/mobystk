@@ -20,11 +20,11 @@
 	display: block;
 }
 
-body.invert .joystickA {
+body.invertL .joystickA {
 	display: block;
 }
 
-body.invert .arrows {
+body.invertL .arrows {
 	display: none;
 }
 
