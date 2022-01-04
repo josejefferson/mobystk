@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-DEBUG = True # Se True, mostrará logs
+DEBUG = False # Se True, mostrará logs
 HTTP_PORT = 8877 # Porta do servidor HTTP
 WS_PORT = 5000 # Porta do servidor WebSocket
 
@@ -103,9 +103,13 @@ async def server(websocket, path):
 				if key.startswith('ds4_button_dpad'):
 					gamepad.directional_pad(direction=vg.DS4_DPAD_DIRECTIONS[key.upper()])
 				elif cmd == 'r':
-					gamepad.release_button(button=vg.DS4_BUTTONS[key.upper()])
+					if key == 'ds4_button_trigger_left': gamepad.left_trigger(value=0)
+					elif key == 'ds4_button_trigger_right': gamepad.right_trigger(value=0)
+					else: gamepad.release_button(button=vg.DS4_BUTTONS[key.upper()])
 				elif cmd == 'p':
-					gamepad.press_button(button=vg.DS4_BUTTONS[key.upper()])
+					if key == 'ds4_button_trigger_left': gamepad.left_trigger(value=255)
+					elif key == 'ds4_button_trigger_right': gamepad.right_trigger(value=255)
+					else: gamepad.press_button(button=vg.DS4_BUTTONS[key.upper()])
 				elif cmd == 'vjl':
 					x,y = list(map(int, key.split('|')))
 					gamepad.left_joystick(x_value=x, y_value=y)
