@@ -88,5 +88,41 @@ const KEY_SEQUENCE = {
 			'SPACE', 'save', 'DOWN',
 			'SPACE', 'load', 'ESC'
 		]
+	},
+	pspVGamepad: {
+		pause: 150,
+		sequence: [
+			'UP',
+			'LEFT',
+			'RIGHT',
+			'SPACE', 'padUp', 'DS4_BUTTON_DPAD_NONE', 'DOWN',
+			'SPACE', 'padDown', 'DS4_BUTTON_DPAD_NONE', 'DOWN',
+			'SPACE', 'padLeft', 'DS4_BUTTON_DPAD_NONE', 'DOWN',
+			'SPACE', 'padRight', 'DS4_BUTTON_DPAD_NONE', 'DOWN',
+			'SPACE', 'actRight', 'DOWN',
+			'SPACE', 'actDown', 'DOWN',
+			'SPACE', 'actLeft', 'DOWN',
+			'SPACE', 'actUp', 'DOWN',
+			'SPACE', 'start', 'DOWN',
+			'SPACE', 'select', 'DOWN',
+			'SPACE', 'left1', 'DOWN',
+			'SPACE', 'right1', 'DOWN',
+			'SPACE', '*VJL 128|255', '*VJL 128|128', 'DOWN',
+			'SPACE', '*VJL 128|1', '*VJL 128|128', 'DOWN',
+			'SPACE', '*VJL 0|128', '*VJL 128|128', 'DOWN',
+			'SPACE', '*VJL 255|128', '*VJL 128|128', 'DOWN',
+			'DOWN',
+			'DOWN',
+			'DOWN',
+			'DOWN',
+			'DOWN',
+			'DOWN',
+			'SPACE', 'pause', 'DOWN',
+			'DOWN',
+			'DOWN',
+			'DOWN',
+			'SPACE', 'save', 'DOWN',
+			'SPACE', 'load', 'ESC'
+		]
 	}
 }

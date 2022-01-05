@@ -115,6 +115,15 @@ async def server(websocket, path):
 					if key == 'ds4_button_trigger_left': gamepad.left_trigger(value=255)
 					elif key == 'ds4_button_trigger_right': gamepad.right_trigger(value=255)
 					else: gamepad.press_button(button=vg.DS4_BUTTONS[key.upper()])
+				elif cmd == 't':
+					if key == 'ds4_button_trigger_left': gamepad.left_trigger(value=255)
+					elif key == 'ds4_button_trigger_right': gamepad.right_trigger(value=255)
+					else: gamepad.press_button(button=vg.DS4_BUTTONS[key.upper()])
+					gamepad.update()
+					sleep(0.05)
+					if key == 'ds4_button_trigger_left': gamepad.left_trigger(value=0)
+					elif key == 'ds4_button_trigger_right': gamepad.right_trigger(value=0)
+					else: gamepad.release_button(button=vg.DS4_BUTTONS[key.upper()])
 				elif cmd == 'vjl':
 					x,y = list(map(int, key.split('|')))
 					gamepad.left_joystick(x_value=x, y_value=y)

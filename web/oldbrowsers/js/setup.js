@@ -114,7 +114,7 @@ function sendKey(key, player) {
 	key = ((_keymappings$key = keymappings[key]) === null || _keymappings$key === void 0 ? void 0 : _keymappings$key[player - 1]) || key;
 	console.log(key);
 	if (socket.readyState !== 1) return;
-	socket.send('T ' + key);
+	if (key.startsWith('*')) socket.send(key.substr(1)); else socket.send('T ' + key);
 }
 
 async function wait(sec) {

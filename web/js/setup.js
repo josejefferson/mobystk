@@ -90,7 +90,8 @@ function sendKey(key, player) {
 	key = keymappings[key]?.[player - 1] || key
 	console.log(key)
 	if (socket.readyState !== 1) return
-	socket.send('T ' + key)
+	if (key.startsWith('*')) socket.send(key.substr(1))
+	else socket.send('T ' + key)
 }
 
 async function wait(sec) {
