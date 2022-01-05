@@ -12,9 +12,15 @@ function toggleDriveMode(e) {
 		e.target.classList.remove('active');
 		e.target.innerHTML = driveHTML;
 		window.ondevicemotion = null;
-		sendCmd('joyLUp', true);
-		sendCmd('joyLLeft', true);
-		sendCmd('joyLRight', true);
+
+		if (!options.vgamepad) {
+			sendCmd('joyLUp', true);
+			sendCmd('joyLLeft', true);
+			sendCmd('joyLRight', true);
+		} else {
+			sendCmd('128|128', false, 'VJL');
+		}
+
 		return;
 	} // Ativa o sensor
 
@@ -29,58 +35,70 @@ function toggleDriveMode(e) {
 		const land = window.outerWidth > window.outerHeight;
 		const inverted = e.accelerationIncludingGravity[land ? 'x' : 'y'] >= 0 ? 1 : -1;
 		driveY = parseFloat(e.accelerationIncludingGravity[land ? 'y' : 'x'].toFixed(1));
-		driveY *= inverted * (land ? 1 : -1); // Define a direção (ângulo)
+		driveY *= inverted * (land ? 1 : -1);
 
-		angle = 0;
+		if (!options.vgamepad) {
+			// Define a direção (ângulo)
+			angle = 0;
 
-		if (driveAngle === -45) {
-			if (driveY > SENSITIVITY) angle = 45;
-			if (driveY < -SENSITIVITY + PRECISION) angle = -45;
-			if (driveY > SENSITIVITY * 2) angle *= 2;
-			if (driveY < -SENSITIVITY * 2 - PRECISION) angle *= 2;
-		} else if (driveAngle === 45) {
-			if (driveY > SENSITIVITY - PRECISION) angle = 45;
-			if (driveY < -SENSITIVITY) angle = -45;
-			if (driveY > SENSITIVITY * 2 + PRECISION) angle *= 2;
-			if (driveY < -SENSITIVITY * 2) angle *= 2;
+			if (driveAngle === -45) {
+				if (driveY > SENSITIVITY) angle = 45;
+				if (driveY < -SENSITIVITY + PRECISION) angle = -45;
+				if (driveY > SENSITIVITY * 2) angle *= 2;
+				if (driveY < -SENSITIVITY * 2 - PRECISION) angle *= 2;
+			} else if (driveAngle === 45) {
+				if (driveY > SENSITIVITY - PRECISION) angle = 45;
+				if (driveY < -SENSITIVITY) angle = -45;
+				if (driveY > SENSITIVITY * 2 + PRECISION) angle *= 2;
+				if (driveY < -SENSITIVITY * 2) angle *= 2;
+			} else {
+				if (driveY > SENSITIVITY) angle = 45;
+				if (driveY < -SENSITIVITY) angle = -45;
+				if (driveY > SENSITIVITY * 2) angle *= 2;
+				if (driveY < -SENSITIVITY * 2) angle *= 2;
+			}
+
+			if (angle === driveAngle) return;
+			$drive.children[0].style.transform = `rotate(${angle}deg)`; // Define a direção
+
+			switch (angle) {
+				case -90:
+					directions = ['joyLLeft'];
+					break;
+
+				case -45:
+					directions = ['joyLUp', 'joyLLeft'];
+					break;
+
+				case 45:
+					directions = ['joyLUp', 'joyLRight'];
+					break;
+
+				case 90:
+					directions = ['joyLRight'];
+					break;
+
+				default:
+					directions = ['joyLUp'];
+			}
+
+			driveAngle = angle;
+			if (options.vibrate) navigator.vibrate(30); // Pressiona as teclas
+
+			const pressKeys = directions.filter(e => !lastDirections.includes(e));
+			const unpressKeys = lastDirections.filter(e => !directions.includes(e));
+			sendCmd(pressKeys);
+			sendCmd(unpressKeys, true);
+			lastDirections = [...directions];
 		} else {
-			if (driveY > SENSITIVITY) angle = 45;
-			if (driveY < -SENSITIVITY) angle = -45;
-			if (driveY > SENSITIVITY * 2) angle *= 2;
-			if (driveY < -SENSITIVITY * 2) angle *= 2;
+			// Usando vgamepad
+			let x = Math.round(128 + 128 / SENSITIVITY * 2 * driveY);
+			if (x < 128 + 42 * PRECISION && x > 128 - 42 * PRECISION) x = 128;
+			if (x > 255) x = 255;
+			if (x < 0) x = 0;
+			const angle = x * (45 / 64) - 90;
+			$drive.children[0].style.transform = `rotate(${angle}deg)`;
+			sendCmd(`${x}|128`, false, 'VJL');
 		}
-
-		if (angle === driveAngle) return;
-		$drive.children[0].style.transform = `rotate(${angle}deg)`; // Define a direção
-
-		switch (angle) {
-			case -90:
-				directions = ['joyLLeft'];
-				break;
-
-			case -45:
-				directions = ['joyLUp', 'joyLLeft'];
-				break;
-
-			case 45:
-				directions = ['joyLUp', 'joyLRight'];
-				break;
-
-			case 90:
-				directions = ['joyLRight'];
-				break;
-
-			default:
-				directions = ['joyLUp'];
-		}
-
-		driveAngle = angle;
-		if (options.vibrate) navigator.vibrate(30); // Pressiona as teclas
-
-		const pressKeys = directions.filter(e => !lastDirections.includes(e));
-		const unpressKeys = lastDirections.filter(e => !directions.includes(e));
-		sendCmd(pressKeys);
-		sendCmd(unpressKeys, true);
-		lastDirections = [...directions];
 	};
 }

@@ -29,7 +29,7 @@ document.ontouchstart = e => {
 
 document.ontouchmove = e => {
 	for (const touch of e.changedTouches) {
-		var _target2, _oldtouch$target, _oldtouch$target2, _keys, _target$dataset$key2, _keys2;
+		var _target2, _oldtouch$target, _oldtouch$target2, _oldtouch$target2$dat, _oldtouch$target2$dat2, _keys, _target$dataset$key2, _keys2;
 
 		const i = currentTouches.findIndex(t => {
 			return t.touch.identifier === touch.identifier;
@@ -42,7 +42,7 @@ document.ontouchmove = e => {
 		if (!((_target2 = target) !== null && _target2 !== void 0 && _target2.classList.contains('touch')) || target.classList.contains('joystick')) target = null;
 		if (oldtouch.target === target) continue;
 		(_oldtouch$target = oldtouch.target) === null || _oldtouch$target === void 0 ? void 0 : _oldtouch$target.classList.remove('active');
-		let keys = oldtouch === null || oldtouch === void 0 ? void 0 : (_oldtouch$target2 = oldtouch.target) === null || _oldtouch$target2 === void 0 ? void 0 : _oldtouch$target2.dataset.key.split(' '); // Diagonal
+		let keys = oldtouch === null || oldtouch === void 0 ? void 0 : (_oldtouch$target2 = oldtouch.target) === null || _oldtouch$target2 === void 0 ? void 0 : (_oldtouch$target2$dat = _oldtouch$target2.dataset) === null || _oldtouch$target2$dat === void 0 ? void 0 : (_oldtouch$target2$dat2 = _oldtouch$target2$dat.key) === null || _oldtouch$target2$dat2 === void 0 ? void 0 : _oldtouch$target2$dat2.split(' '); // Diagonal
 
 		(_keys = keys) === null || _keys === void 0 ? void 0 : _keys.forEach(key => {
 			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {

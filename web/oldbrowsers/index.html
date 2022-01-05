@@ -92,7 +92,8 @@
 
 				<div class="start">
 					<button type="submit">
-						<i class="mdi mdi-google-controller"></i> Jogar
+						<i class="mdi mdi-google-controller"></i>
+						<span>Jogar</span>
 					</button>
 				</div>
 			</footer>
@@ -105,8 +106,12 @@
 			</header>
 			<main>
 				<label class="option">
-					<input type="checkbox" name="invert">
-					<div class="label">Inverter joystick/setas</div>
+					<input type="checkbox" name="invertL">
+					<div class="label">Inverter joystick esquerdo/setas</div>
+				</label>
+				<label class="option">
+					<input type="checkbox" name="invertR">
+					<div class="label">Inverter joystick direito/botões</div>
 				</label>
 				<label class="option">
 					<input type="checkbox" name="disJoyXAxis">
@@ -123,6 +128,10 @@
 				<label class="option">
 					<input type="checkbox" name="vibrate" checked>
 					<div class="label">Vibração</div>
+				</label>
+				<label class="option">
+					<input type="checkbox" name="vgamepad">
+					<div class="label">Usar&nbsp;<i>vgamepad</i></div>
 				</label>
 				<label class="option range">
 					<div class="label">
@@ -236,7 +245,7 @@
 					<label class="chip hide"><input type="checkbox" name="hide" value="drive">
 						<div class="label">Volante</div>
 					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="recordMacro playMacro">
+					<label class="chip hide"><input type="checkbox" name="hide" value="recordMacro playMacro" checked>
 						<div class="label">Macro</div>
 					</label>
 					<label class="chip hide"><input type="checkbox" name="hide" value="joystickL">
@@ -292,10 +301,10 @@
 					<label class="chip hide"><input type="checkbox" name="hide" value="pause">
 						<div class="label"><i class="mdi mdi-pause"></i></div>
 					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="toggleInvert">
+					<label class="chip hide"><input type="checkbox" name="hide" value="toggleInvert" checked>
 						<div class="label"><i class="mdi mdi-swap-vertical"></i></div>
 					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="fast">
+					<label class="chip hide"><input type="checkbox" name="hide" value="fast" checked>
 						<div class="label"><i class="mdi mdi-fast-forward"></i></div>
 					</label>
 					<label class="chip hide"><input type="checkbox" name="hide" value="arrows">
