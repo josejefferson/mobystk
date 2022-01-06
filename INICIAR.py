@@ -75,8 +75,12 @@ class NoCacheRequestHandler(SimpleHTTPRequestHandler):
 	def log_message(self, format, *args):
 		return
 
+class CustomThreadingHTTPServer(ThreadingHTTPServer):
+	def handle_error(self, request, client_address):
+		return
+
 def httpServer():
-	httpd = ThreadingHTTPServer(('', 8877), NoCacheRequestHandler)
+	httpd = CustomThreadingHTTPServer(('', 8877), NoCacheRequestHandler)
 	httpd.serve_forever()
 
 
