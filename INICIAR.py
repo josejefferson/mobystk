@@ -7,6 +7,7 @@ WS_PORT = 5000 # Porta do servidor WebSocket
 
 try:
 	from colorama import init as coloramaInit, Back as B, Fore as F, Style as S
+	from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 	from pynput.keyboard import Key, KeyCode, Controller
 	from time import sleep
 	import asyncio
@@ -14,7 +15,6 @@ try:
 	import os
 	import pyqrcode
 	import socket
-	import socketserver
 	import threading
 	import websockets
 except ModuleNotFoundError:
@@ -62,10 +62,10 @@ wsIp = '{}:{}'.format(ips[-1], WS_PORT)
 
 
 # HTTP Server
-class NoCacheHandler(handler):
+class NoCacheRequestHandler(SimpleHTTPRequestHandler):
 	def end_headers(self):
 		self.myHeaders()
-		handler.end_headers(self)
+		SimpleHTTPRequestHandler.end_headers(self)
 
 	def myHeaders(self):
 		self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
@@ -76,8 +76,8 @@ class NoCacheHandler(handler):
 		return
 
 def httpServer():
-	with socketserver.TCPServer(('', HTTP_PORT), NoCacheHandler) as httpd:
-		httpd.serve_forever()
+	httpd = ThreadingHTTPServer(('', 8877), NoCacheRequestHandler)
+	httpd.serve_forever()
 
 
 # WebSocket Server
@@ -205,5 +205,7 @@ async def wsServer():
 
 if __name__ == "__main__":
 	httpThread = threading.Thread(target=httpServer)
+	httpThread.daemon = True
 	httpThread.start()
-	asyncio.run(wsServer())
+	try: asyncio.run(wsServer())
+	except KeyboardInterrupt: pass
