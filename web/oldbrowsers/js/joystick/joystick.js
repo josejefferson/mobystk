@@ -87,9 +87,9 @@ function resizeJoystick() {
 			if (options.vgamepad && ['joystickL', 'joystickR'].includes(id)) {
 				var _d$angle, _d$angle2;
 
-				let x = Math.round(255 / 90 * (45 + (d === null || d === void 0 ? void 0 : d.distance) * Math.cos(d === null || d === void 0 ? void 0 : (_d$angle = d.angle) === null || _d$angle === void 0 ? void 0 : _d$angle.radian)));
-				let y = Math.round(255 / 90 * (45 + (d === null || d === void 0 ? void 0 : d.distance) * Math.sin(d === null || d === void 0 ? void 0 : (_d$angle2 = d.angle) === null || _d$angle2 === void 0 ? void 0 : _d$angle2.radian))) + 1;
-				if (isNaN(x) || isNaN(y)) x = y = 128;
+				let x = Math.round(-32768 + 65534 / 90 * (45 + (d === null || d === void 0 ? void 0 : d.distance) * Math.cos(d === null || d === void 0 ? void 0 : (_d$angle = d.angle) === null || _d$angle === void 0 ? void 0 : _d$angle.radian)));
+				let y = Math.round(-32768 + 65534 / 90 * (45 + (d === null || d === void 0 ? void 0 : d.distance) * Math.sin(d === null || d === void 0 ? void 0 : (_d$angle2 = d.angle) === null || _d$angle2 === void 0 ? void 0 : _d$angle2.radian)));
+				if (isNaN(x) || isNaN(y)) x = y = 0;
 				if (id === 'joystickL') sendCmd(`${x}|${y}`, false, 'VJL');
 				if (id === 'joystickR') sendCmd(`${x}|${y}`, false, 'VJR');
 			} else {

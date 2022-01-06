@@ -13,6 +13,7 @@ const options = {
 	disJoyYAxis: ls['joystick.disJoyYAxis'] === 'true',
 	dblClickLoadSave: ls['joystick.dblClickLoadSave'] === 'true',
 	vibrate: !(ls['joystick.vibrate'] === 'false'),
+	vibrationFromGame: !(ls['joystick.vibrationFromGame'] === 'false'),
 	vgamepad: ls['joystick.vgamepad'] === 'true',
 	bgImage: ls['joystick.bgImage'],
 	bgOpacity: ls['joystick.bgOpacity'],

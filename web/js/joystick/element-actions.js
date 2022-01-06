@@ -5,12 +5,12 @@ document.querySelectorAll('.lock').forEach(el => {
 	function event(e) {
 		if ('ontouchstart' in document.documentElement && e.type === 'mousedown') return
 		if (options.vibrate) navigator.vibrate(15)
-		// Ativa a tecla
 		if (el.classList.contains('active')) {
+			// Ativa a tecla
 			el.classList.remove('active')
 			sendCmd(el.dataset.key, true)
-		// Desativa a tecla
 		} else {
+			// Desativa a tecla
 			el.classList.add('active')
 			sendCmd(el.dataset.key)
 		}

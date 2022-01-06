@@ -37,6 +37,7 @@ formEls.disJoyXAxis.checked = ls.getItem('joystick.disJoyXAxis') === 'true';
 formEls.disJoyYAxis.checked = ls.getItem('joystick.disJoyYAxis') === 'true';
 formEls.dblClickLoadSave.checked = ls.getItem('joystick.dblClickLoadSave') === 'true';
 formEls.vibrate.checked = !(ls.getItem('joystick.vibrate') === 'false');
+formEls.vibrationFromGame.checked = !(ls.getItem('joystick.vibrationFromGame') === 'false');
 formEls.vgamepad.checked = ls.getItem('joystick.vgamepad') === 'true';
 formEls.background.value = ls.getItem('joystick.background') || 'rgba(0, 0, 0, 1)';
 formEls.color.value = ls.getItem('joystick.color') || 'rgba(255, 255, 255, 0.53)';
@@ -78,6 +79,7 @@ document.forms[0].addEventListener('submit', function (e) {
 	localStorage.setItem('joystick.disJoyYAxis', elems.disJoyYAxis.checked);
 	localStorage.setItem('joystick.dblClickLoadSave', elems.dblClickLoadSave.checked);
 	localStorage.setItem('joystick.vibrate', elems.vibrate.checked);
+	localStorage.setItem('joystick.vibrationFromGame', elems.vibrationFromGame.checked);
 	localStorage.setItem('joystick.vgamepad', elems.vgamepad.checked);
 	localStorage.setItem('joystick.background', elems.background.value);
 	localStorage.setItem('joystick.color', elems.color.value);

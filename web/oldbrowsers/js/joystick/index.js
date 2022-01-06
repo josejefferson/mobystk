@@ -1,23 +1,3 @@
-if (!String.prototype.padStart) {
-	String.prototype.padStart = function padStart(targetLength, padString) {
-		targetLength = targetLength >> 0;
-
-		padString = String(typeof padString !== 'undefined' ? padString : ' ');
-
-		if (this.length >= targetLength) {
-			return String(this);
-		} else {
-			targetLength = targetLength - this.length;
-
-			if (targetLength > padString.length) {
-				padString += padString.repeat(targetLength / padString.length);
-			}
-
-			return padString.slice(0, targetLength) + String(this);
-		}
-	}
-}
-
 var _ls$joystickLocked, _ls$joystickHidden;
 
 const ls = localStorage;
@@ -34,6 +14,7 @@ const options = {
 	disJoyYAxis: ls['joystick.disJoyYAxis'] === 'true',
 	dblClickLoadSave: ls['joystick.dblClickLoadSave'] === 'true',
 	vibrate: !(ls['joystick.vibrate'] === 'false'),
+	vibrationFromGame: !(ls['joystick.vibrationFromGame'] === 'false'),
 	vgamepad: ls['joystick.vgamepad'] === 'true',
 	bgImage: ls['joystick.bgImage'],
 	bgOpacity: ls['joystick.bgOpacity'],

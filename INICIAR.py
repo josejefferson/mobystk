@@ -8,15 +8,13 @@ WS_PORT = 5000 # Porta do servidor WebSocket
 try:
 	from colorama import init as coloramaInit, Back as B, Fore as F, Style as S
 	from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+	from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 	from pynput.keyboard import Key, KeyCode, Controller
 	from time import sleep
-	import asyncio
-	import http.server
 	import os
 	import pyqrcode
 	import socket
 	import threading
-	import websockets
 except ModuleNotFoundError:
 	print('Ops! Alguns módulos estão faltando para o funcionamento desta aplicação.')
 	print('Você precisa executar os seguintes comandos no terminal para instalá-los (ou pressionar Enter):\n')
@@ -24,7 +22,7 @@ except ModuleNotFoundError:
 		'python -m pip install colorama',
 		'python -m pip install pynput',
 		'python -m pip install pyqrcode',
-		'python -m pip install websockets'
+		'python -m pip install SimpleWebSocketServer'
 	]
 	for c in commands: print(c)
 	input('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n' + \
@@ -38,7 +36,7 @@ except ModuleNotFoundError:
 # Importa o vgamepad se tiver sido instalado
 try:
 	import vgamepad as vg
-	gamepad = vg.VDS4Gamepad()
+	gamepad = vg.VX360Gamepad()
 except ModuleNotFoundError:
 	gamepad = None
 	pass
@@ -49,7 +47,6 @@ vgamepadError = False
 
 coloramaInit(autoreset=True)
 keyboard = Controller()
-handler = http.server.SimpleHTTPRequestHandler
 
 
 # Define o diretório atual e o IP
@@ -84,87 +81,110 @@ def httpServer():
 	httpd.serve_forever()
 
 
-# WebSocket Server
-async def server(websocket, path):
-	def getKey(keyName):
-		if len(keyName) > 1:
-			if keyName.isdigit(): return KeyCode(int(keyName))
-			else: return Key[keyName]
-		return keyName
+# Retorna a tecla do teclado pelo nome
+def getKey(keyName):
+	if len(keyName) > 1:
+		if keyName.isdigit(): return KeyCode(int(keyName))
+		else: return Key[keyName]
+	return keyName
 
-	def keyCommand(cmd, key, vpad = False):
-		commands = {
-			'r': 'RELEASE',
-			'p': 'PRESS',
-			't': 'TAP',
-			'vjl': 'LEFT JOYSTICK',
-			'vjr': 'RIGHT JOYSTICK'
-		}
-		if DEBUG: print(f'{F.CYAN}[{commands[cmd]} KEY] {S.RESET_ALL}{key} ')
-		try:
-			# Comandos vgamepad
-			if vpad:
-				global vgamepadError
-				if not gamepad and not vgamepadError:
+# Aperta/desaperta as teclas ou botões
+def keyCommand(cmd, key, vpad = False):
+	commands = {
+		'r': 'RELEASE',
+		'p': 'PRESS',
+		't': 'TAP',
+		'vjl': 'LEFT JOYSTICK',
+		'vjr': 'RIGHT JOYSTICK'
+	}
+	if DEBUG: print(f'{F.CYAN}[{commands[cmd]} KEY] {S.RESET_ALL}{key} ')
+	try:
+		# Comandos VGamepad
+		if vpad:
+			# Se o VGamepad não estiver instalado
+			global vgamepadError
+			if not gamepad:
+				if not vgamepadError:
 					vgamepadError = True
-					return print(f'{S.BRIGHT}{F.RED}[VGAMEPAD] Erro: VGamepad não está instalado\n' +\
+					print(f'{S.BRIGHT}{F.RED}[VGAMEPAD] Erro: VGamepad não está instalado\n' +\
 						'Instale-o executando o comando "python -m pip install vgamepad"')
-				if key.startswith('ds4_button_dpad'):
-					gamepad.directional_pad(direction=vg.DS4_DPAD_DIRECTIONS[key.upper()])
-				elif cmd == 'r':
-					if key == 'ds4_button_trigger_left': gamepad.left_trigger(value=0)
-					elif key == 'ds4_button_trigger_right': gamepad.right_trigger(value=0)
-					else: gamepad.release_button(button=vg.DS4_BUTTONS[key.upper()])
-				elif cmd == 'p':
-					if key == 'ds4_button_trigger_left': gamepad.left_trigger(value=255)
-					elif key == 'ds4_button_trigger_right': gamepad.right_trigger(value=255)
-					else: gamepad.press_button(button=vg.DS4_BUTTONS[key.upper()])
-				elif cmd == 't':
-					if key == 'ds4_button_trigger_left': gamepad.left_trigger(value=255)
-					elif key == 'ds4_button_trigger_right': gamepad.right_trigger(value=255)
-					else: gamepad.press_button(button=vg.DS4_BUTTONS[key.upper()])
-					gamepad.update()
-					sleep(0.05)
-					if key == 'ds4_button_trigger_left': gamepad.left_trigger(value=0)
-					elif key == 'ds4_button_trigger_right': gamepad.right_trigger(value=0)
-					else: gamepad.release_button(button=vg.DS4_BUTTONS[key.upper()])
-				elif cmd == 'vjl':
-					x,y = list(map(int, key.split('|')))
-					gamepad.left_joystick(x_value=x, y_value=y)
-				elif cmd == 'vjr':
-					x,y = list(map(int, key.split('|')))
-					gamepad.right_joystick(x_value=x, y_value=y)
-				gamepad.update()
+				return
 
-			# Comandos de teclado
-			elif cmd == 'r': keyboard.release(key)
-			elif cmd == 'p': keyboard.press(key)
+			# Pressiona um botão do gamepad
+			def button(action, key):
+				t = 255 if action == 'press' else 0
+				if key == 'xusb_gamepad_left_trigger': gamepad.left_trigger(value=t)
+				elif key == 'xusb_gamepad_right_trigger': gamepad.right_trigger(value=t)
+				else: getattr(gamepad, f'{action}_button')(button=vg.XUSB_BUTTON[key.upper()])
+
+			# Direciona um joystick do gamepad
+			def joystick(side, key):
+				x,y = list(map(int, key.split('|')))
+				getattr(gamepad, f'{side}_joystick')(x_value=x, y_value=y)
+
+			if cmd == 'vjl': joystick('left', key)
+			elif cmd == 'vjr': joystick('right', key)
+			elif cmd == 'r': button('release', key)
+			elif cmd == 'p': button('press', key)
 			elif cmd == 't':
-				keyboard.press(key)
+				button('press', key)
+				gamepad.update()
 				sleep(0.05)
-				keyboard.release(key)
+				button('release', key)
+			gamepad.update()
 
+		# Comandos de teclado
+		elif cmd == 'r': keyboard.release(key)
+		elif cmd == 'p': keyboard.press(key)
+		elif cmd == 't':
+			keyboard.press(key)
+			sleep(0.05)
+			keyboard.release(key)
+
+	except Exception as err:
+		if DEBUG: print(f'{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro: dados inválidos')
+		if DEBUG: print(F.RED + str(err))
+
+# Lida com as mensagens do WebSocket
+def message(msg):
+	msg = msg.lower().split(' ')
+	cmd = msg[0]
+	keys = msg[1].split(',')
+	for key in keys:
+		if cmd.startswith('v') or key.startswith('xusb_gamepad'):
+			keyCommand(cmd, key, True)
+		else:
+			keyCommand(cmd, getKey(key))
+
+
+# WebSocket Server
+wsClients = []
+class WebSocketServer(WebSocket):
+	def handleMessage(self):
+		try: message(self.data)
 		except Exception as err:
-			if DEBUG: print(f'{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro: dados inválidos')
+			if DEBUG: print(f'{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro desconhecido')
 			if DEBUG: print(F.RED + str(err))
 
-	def message(msg):
-		msg = msg.lower().split(' ')
-		cmd = msg[0]
-		keys = msg[1].split(',')
-		for key in keys:
-			if cmd.startswith('v') or key.startswith('ds4_button'):
-				keyCommand(cmd, key, True)
-			else:
-				keyCommand(cmd, getKey(key))
+	def handleConnected(self):
+		wsClients.append(self)
+		if DEBUG: print(f'{F.YELLOW}[WEBSOCKET]{S.RESET_ALL} Usuário conectado ({self.address})')
 
-	try:
-		if DEBUG: print(f'{F.YELLOW}[WEBSOCKET]{S.RESET_ALL} Usuário conectado')
-		async for msg in websocket:
-			message(msg)
-	except Exception as err:
-		if DEBUG: print(f'{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro desconhecido')
-		if DEBUG: print(F.RED + str(err))
+	def handleClose(self):
+		wsClients.remove(self)
+		if DEBUG: print(f'{F.YELLOW}[WEBSOCKET]{S.RESET_ALL} Usuário desconectado ({self.address})')
+
+# Envia uma mensagem para todos os clientes WebSocket
+def sendWebSocketMsg(msg):
+	for client in wsClients:
+		client.sendMessage(msg)
+
+
+# Notificação para vibração do controle
+def gamepadNotification(client, target, large_motor, small_motor, led_number, user_data):
+	sendWebSocketMsg(f'V {large_motor}|{small_motor}')
+
+gamepad.register_notification(callback_function=gamepadNotification)
 
 
 # QR Code (bit.ly/3dpXMa9)
@@ -211,5 +231,6 @@ if __name__ == "__main__":
 	httpThread = threading.Thread(target=httpServer)
 	httpThread.daemon = True
 	httpThread.start()
-	try: asyncio.run(wsServer())
+	wsServer = SimpleWebSocketServer('0.0.0.0', WS_PORT, WebSocketServer)
+	try: wsServer.serveforever()
 	except KeyboardInterrupt: pass

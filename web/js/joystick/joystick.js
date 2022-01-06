@@ -68,9 +68,9 @@ function resizeJoystick() {
 		joysticks[id] = { up: false, down: false, left: false, right: false }
 		joysticks[id].instance = nipplejs.create(JOYSTICK_OPTIONS($el)).on('move end', (e, d) => {
 			if (options.vgamepad && ['joystickL', 'joystickR'].includes(id)) {
-				let x = Math.round(255 / 90 * (45 + d?.distance * Math.cos(d?.angle?.radian)))
-				let y = Math.round(255 / 90 * (45 + d?.distance * Math.sin(d?.angle?.radian))) + 1
-				if (isNaN(x) || isNaN(y)) x = y = 128
+				let x = Math.round(-32768 + (65534 / 90 * (45 + d?.distance * Math.cos(d?.angle?.radian))))
+				let y = Math.round(-32768 + (65534 / 90 * (45 + d?.distance * Math.sin(d?.angle?.radian))))
+				if (isNaN(x) || isNaN(y)) x = y = 0
 				if (id === 'joystickL') sendCmd(`${x}|${y}`, false, 'VJL')
 				if (id === 'joystickR') sendCmd(`${x}|${y}`, false, 'VJR')
 			} else {
