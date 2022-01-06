@@ -97,7 +97,7 @@ def askForUpdates(messages, since):
 
 	if since == None: print(f'{F.GREEN}Esta é a primeira atualização! Veja as últimas novidades:')
 	else: print(f'{F.GREEN}Atualização disponível! Veja as novidades:')
-	for message in messages:
+	for message in messages[-10:]:
 		print(f'{F.BLUE}• {F.WHITE}{message}')
 
 	print(f'\n{F.YELLOW}{S.BRIGHT}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
@@ -203,6 +203,12 @@ def cleanAndFinalize(extractFolderName):
 		input()
 		quit()
 
+def installShortcut():
+	print(f'{F.YELLOW}Criando atalho, aguarde...')
+	os.system(f"powershell \"$s=(New-Object -COM WScript.Shell).CreateShortcut('%userprofile%\\Desktop\\MobyStk.lnk');$s.TargetPath='{os.getcwd()}\\INICIAR.py';$s.Description='Use seu smartphone como controle de videogame para PC';$s.IconLocation='{os.getcwd()}\\web\\img\\icon.ico';$s.Save()\"")
+	print(f'{F.GREEN}O atalho para o MobyStk foi criado na área de trabalho! {S.BRIGHT}Pode fechar esta janela agora!')
+	input()
+
 
 print(f'{F.CYAN}{S.BRIGHT}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
 print(f'{F.CYAN}{S.BRIGHT}┃{F.YELLOW} Ferramenta de atualização do MobyStk {F.CYAN}┃')
@@ -219,7 +225,10 @@ removeOldVersion(backupFolder)
 copyNewFiles(extractFolderName, backupFolder)
 cleanAndFinalize(extractFolderName)
 
-print(f'{S.BRIGHT}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-print(f'{S.BRIGHT}{F.GREEN} O MobyStk foi atualizado com sucesso!')
-print(f'{S.BRIGHT}{F.MAGENTA} Você pode fechar esta janela agora!')
+print(f'{S.BRIGHT}\n ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
+print(f'{S.BRIGHT} ┃{F.GREEN} O MobyStk foi atualizado com sucesso!   {F.RESET}┃')
+print(f'{S.BRIGHT} ┃{F.MAGENTA} Você pode fechar esta janela agora!     {F.RESET}┃')
+if os.name == 'nt': print(f'{S.BRIGHT} ┃{F.YELLOW} Ou pressione {F.WHITE}Enter{F.YELLOW} para criar um atalho {F.RESET}┃')
+print(f'{S.BRIGHT} ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 input()
+if os.name == 'nt': installShortcut()
