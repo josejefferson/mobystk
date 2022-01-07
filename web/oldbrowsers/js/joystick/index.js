@@ -56,7 +56,7 @@ window.addEventListener('load', () => {
 const $debug = document.querySelector('.debugLog');
 
 function debug(text) {
-	$debug.innerText = text || '';
+	$debug.innerText = text === undefined ? '' : text;
 } // TELA DE CARREGAMENTO
 
 

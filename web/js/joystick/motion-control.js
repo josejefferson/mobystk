@@ -23,7 +23,7 @@ function toggleDriveMode(e) {
 			sendCmd('joyLLeft', true)
 			sendCmd('joyLRight', true)
 		} else {
-			sendCmd('128|128', false, 'VJL')
+			sendCmd('0|0', false, 'VJL')
 		}
 		return
 	}
@@ -83,14 +83,14 @@ function toggleDriveMode(e) {
 
 			lastDirections = [...directions]
 		} else {
-			// Usando vgamepad
-			let x = Math.round(128 + 128 / SENSITIVITY * 2 * driveY)
-			if ((x < 128 + 42 * PRECISION) && (x > 128 - 42 * PRECISION)) x = 128
-			if (x > 255) x = 255
-			if (x < 0) x = 0
-			const angle = x * (45 / 64) - 90
+			// Usando VGamepad
+			let x = Math.round(32767 / SENSITIVITY * 2 * driveY)
+			if ((x < 10923 * PRECISION) && (x > -10923 * PRECISION)) x = 0
+			if (x > 32767) x = 32767
+			if (x < -32767) x = -32767
+			const angle = 90 * x / 32767
 			$drive.children[0].style.transform = `rotate(${angle}deg)`
-			sendCmd(`${x}|128`, false, 'VJL')
+			sendCmd(`${x}|0`, false, 'VJL')
 		}
 	}
 }
