@@ -27,8 +27,6 @@ const options = {
 	drivePrecision: parseFloat(ls['joystick.drivePrecision'] || 1)
 }
 
-if (options.vgamepad) options.player = 4
-
 // EVENTOS DA PÁGINA
 document.addEventListener('contextmenu', e => e.preventDefault())
 window.addEventListener('load', () => {
@@ -36,7 +34,7 @@ window.addEventListener('load', () => {
 })
 
 // DEBUG
-const $debug = document.querySelector('.debug')
+const $debug = document.querySelector('.debugLog')
 function debug(text) {
 	$debug.innerText = text || ''
 }

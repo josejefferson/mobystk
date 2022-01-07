@@ -35,13 +35,18 @@ except ModuleNotFoundError:
 
 # Importa o vgamepad se tiver sido instalado
 try:
-	import vgamepad as vg
-	gamepad = vg.VX360Gamepad()
+	from vgamepad import VX360Gamepad, XUSB_BUTTON
+	gamepads = [
+		VX360Gamepad(),
+		VX360Gamepad(),
+		VX360Gamepad(),
+		VX360Gamepad()
+	]
 except ModuleNotFoundError:
-	gamepad = None
+	gamepads = None
 	pass
 except Exception as err:
-	gamepad = None
+	gamepads = None
 	print(err)
 vgamepadError = False
 
@@ -77,7 +82,7 @@ class CustomThreadingHTTPServer(ThreadingHTTPServer):
 		return
 
 def httpServer():
-	httpd = CustomThreadingHTTPServer(('', 8877), NoCacheRequestHandler)
+	httpd = CustomThreadingHTTPServer(('', HTTP_PORT), NoCacheRequestHandler)
 	httpd.serve_forever()
 
 
@@ -89,21 +94,21 @@ def getKey(keyName):
 	return keyName
 
 # Aperta/desaperta as teclas ou botões
-def keyCommand(cmd, key, vpad = False):
+def keyCommand(cmd, key, player, vpad = False):
 	commands = {
-		'r': 'RELEASE',
-		'p': 'PRESS',
-		't': 'TAP',
+		'r': 'RELEASE KEY',
+		'p': 'PRESS KEY',
+		't': 'TAP KEY',
 		'vjl': 'LEFT JOYSTICK',
 		'vjr': 'RIGHT JOYSTICK'
 	}
-	if DEBUG: print(f'{F.CYAN}[{commands[cmd]} KEY] {S.RESET_ALL}{key} ')
+	if DEBUG: print(f'{F.CYAN}[PLAYER {player + 1} {commands[cmd]}] {S.RESET_ALL}{key} ')
 	try:
 		# Comandos VGamepad
 		if vpad:
 			# Se o VGamepad não estiver instalado
 			global vgamepadError
-			if not gamepad:
+			if not gamepads:
 				if not vgamepadError:
 					vgamepadError = True
 					print(f'{S.BRIGHT}{F.RED}[VGAMEPAD] Erro: VGamepad não está instalado\n' +\
@@ -113,14 +118,14 @@ def keyCommand(cmd, key, vpad = False):
 			# Pressiona um botão do gamepad
 			def button(action, key):
 				t = 255 if action == 'press' else 0
-				if key == 'xusb_gamepad_left_trigger': gamepad.left_trigger(value=t)
-				elif key == 'xusb_gamepad_right_trigger': gamepad.right_trigger(value=t)
-				else: getattr(gamepad, f'{action}_button')(button=vg.XUSB_BUTTON[key.upper()])
+				if key == 'xusb_gamepad_left_trigger': gamepads[player].left_trigger(value=t)
+				elif key == 'xusb_gamepad_right_trigger': gamepads[player].right_trigger(value=t)
+				else: getattr(gamepads[player], f'{action}_button')(button=XUSB_BUTTON[key.upper()])
 
 			# Direciona um joystick do gamepad
 			def joystick(side, key):
 				x,y = list(map(int, key.split('|')))
-				getattr(gamepad, f'{side}_joystick')(x_value=x, y_value=y)
+				getattr(gamepads[player], f'{side}_joystick')(x_value=x, y_value=y)
 
 			if cmd == 'vjl': joystick('left', key)
 			elif cmd == 'vjr': joystick('right', key)
@@ -128,10 +133,10 @@ def keyCommand(cmd, key, vpad = False):
 			elif cmd == 'p': button('press', key)
 			elif cmd == 't':
 				button('press', key)
-				gamepad.update()
+				gamepads[player].update()
 				sleep(0.05)
 				button('release', key)
-			gamepad.update()
+			gamepads[player].update()
 
 		# Comandos de teclado
 		elif cmd == 'r': keyboard.release(key)
@@ -150,11 +155,12 @@ def message(msg):
 	msg = msg.lower().split(' ')
 	cmd = msg[0]
 	keys = msg[1].split(',')
+	player = int(msg[2]) if len(msg) >= 3 else 0
 	for key in keys:
 		if cmd.startswith('v') or key.startswith('xusb_gamepad'):
-			keyCommand(cmd, key, True)
+			keyCommand(cmd, key, player, True)
 		else:
-			keyCommand(cmd, getKey(key))
+			keyCommand(cmd, getKey(key), player)
 
 
 # WebSocket Server
@@ -182,9 +188,13 @@ def sendWebSocketMsg(msg):
 
 # Notificação para vibração do controle
 def gamepadNotification(client, target, large_motor, small_motor, led_number, user_data):
-	sendWebSocketMsg(f'V {large_motor}|{small_motor}')
+	gamepadIndex = next((x for x, item in enumerate(gamepads) if item._devicep == target), -1)
+	if gamepadIndex >= 0: sendWebSocketMsg(f'V {large_motor}|{small_motor} {gamepadIndex}')
 
-gamepad.register_notification(callback_function=gamepadNotification)
+# Observa as notificações de vibração do controle
+if gamepads:
+	for i in range(len(gamepads)):
+		gamepads[i].register_notification(callback_function=gamepadNotification)
 
 
 # QR Code (bit.ly/3dpXMa9)
@@ -223,9 +233,6 @@ if len(ips) > 1:
 	print(f'  Caso não funcione, tente: ')
 	print(f'  {" ou ".join(coloredIPs)}')
 
-async def wsServer():
-	async with websockets.serve(server, port=WS_PORT):
-		await asyncio.Future()
 
 if __name__ == "__main__":
 	httpThread = threading.Thread(target=httpServer)

@@ -1,3 +1,23 @@
+if (!String.prototype.padStart) {
+	String.prototype.padStart = function padStart(targetLength, padString) {
+		targetLength = targetLength >> 0;
+
+		padString = String(typeof padString !== 'undefined' ? padString : ' ');
+
+		if (this.length >= targetLength) {
+			return String(this);
+		} else {
+			targetLength = targetLength - this.length;
+
+			if (targetLength > padString.length) {
+				padString += padString.repeat(targetLength / padString.length);
+			}
+
+			return padString.slice(0, targetLength) + String(this);
+		}
+	}
+}
+
 var _ls$joystickLocked, _ls$joystickHidden;
 
 const ls = localStorage;
@@ -26,15 +46,14 @@ const options = {
 	customCSS: ls['joystick.customCSS'],
 	driveSensitivity: parseFloat(ls['joystick.driveSensitivity'] || 2),
 	drivePrecision: parseFloat(ls['joystick.drivePrecision'] || 1)
-};
-if (options.vgamepad) options.player = 4; // EVENTOS DA PÁGINA
+}; // EVENTOS DA PÁGINA
 
 document.addEventListener('contextmenu', e => e.preventDefault());
 window.addEventListener('load', () => {
 	document.body.classList.remove('preload');
 }); // DEBUG
 
-const $debug = document.querySelector('.debug');
+const $debug = document.querySelector('.debugLog');
 
 function debug(text) {
 	$debug.innerText = text || '';

@@ -18,8 +18,11 @@ window.addEventListener('scroll', () => {
 document.addEventListener('contextmenu', () => false)
 document.querySelectorAll('a').forEach(e => e.addEventListener('click', loading))
 document.querySelectorAll('.start').forEach(e => {
-	e.addEventListener('contextmenu', () => {
+	e.addEventListener('contextmenu', (e) => {
+		e.preventDefault()
 		document.querySelector('.hiddenOptions').style.display = 'flex'
+		scrollToY(document.body.scrollHeight, 400)
+		return false
 	})
 })
 
@@ -216,4 +219,21 @@ function exportSettings() {
 	el.href = url
 	el.download = `mobyStk-settings-${Date.now()}.json`
 	el.click()
+}
+
+
+function scrollToY(y, duration = 0, element = document.scrollingElement) {
+	if (element.scrollTop === y) return
+	const cosParameter = (element.scrollTop - y) / 2
+	let scrollCount = 0, oldTimestamp = null
+	function step(newTimestamp) {
+		if (oldTimestamp !== null) {
+			scrollCount += Math.PI * (newTimestamp - oldTimestamp) / duration
+			if (scrollCount >= Math.PI) return element.scrollTop = y
+			element.scrollTop = cosParameter + y + cosParameter * Math.cos(scrollCount)
+		}
+		oldTimestamp = newTimestamp
+		window.requestAnimationFrame(step)
+	}
+	window.requestAnimationFrame(step)
 }

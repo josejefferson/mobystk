@@ -94,3 +94,11 @@ function updateClock() {
 // INFORMAÇÕES - Nº JOGADOR E NOME DO LAYOUT
 $DI_playerNumber.innerText = options.player + 1
 $DI_layout.innerText = options.layout.toUpperCase()
+
+
+// ATUALIZA O JOGADOR DO CONTROLE NO MODO DEBUG
+if (options.debug) $deviceInfo.addEventListener('click', () => {
+	options.player += 1
+	if (options.player > 3) options.player = 0
+	$DI_playerNumber.innerText = options.player + 1
+})
