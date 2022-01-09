@@ -205,10 +205,17 @@ def cleanAndFinalize(extractFolderName):
 
 def installShortcut():
 	print(f'{F.YELLOW}Criando atalho, aguarde...')
-	os.system(f"powershell \"$s=(New-Object -COM WScript.Shell).CreateShortcut('%userprofile%\\Desktop\\MobyStk.lnk');$s.TargetPath='{os.getcwd()}\\INICIAR.py';$s.Description='Use seu smartphone como controle de videogame para PC';$s.IconLocation='{os.getcwd()}\\web\\img\\icon.ico';$s.Save()\"")
-	print(f'{F.GREEN}O atalho para o MobyStk foi criado na área de trabalho! {S.BRIGHT}Pode fechar esta janela agora!')
-	input()
-
+	try:
+		os.system(f"powershell \"$s=(New-Object -COM WScript.Shell).CreateShortcut('%userprofile%\\Desktop\\MobyStk.lnk');$s.TargetPath='{os.getcwd()}\\INICIAR.py';$s.Description='Use seu smartphone como controle de videogame para PC';$s.IconLocation='{os.getcwd()}\\web\\img\\icon.ico';$s.Save()\"")
+		os.system(f"powershell \"$s=(New-Object -COM WScript.Shell).CreateShortcut('%appdata%\\Microsoft\\Windows\\Start Menu\\MobyStk.lnk');$s.TargetPath='{os.getcwd()}\\INICIAR.py';$s.IconLocation='{os.getcwd()}\\web\\img\\icon.ico';$s.Save()\"")
+		print(f'{F.GREEN}O atalho para o MobyStk foi criado na área de trabalho! {S.BRIGHT}Pode fechar esta janela agora!')
+		input()
+	except Exception as err:
+		print(f'{B.RED}{F.WHITE}Ocorreu um erro ao criar atalho. ' + \
+			'Veja detalhes sobre o erro abaixo:')
+		print(f'{F.RED}{err}', end='')
+		input()
+		quit()
 
 print(f'{F.CYAN}{S.BRIGHT}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
 print(f'{F.CYAN}{S.BRIGHT}┃{F.YELLOW} Ferramenta de atualização do MobyStk {F.CYAN}┃')

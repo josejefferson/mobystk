@@ -1,3 +1,5 @@
+const $gameVibration = document.querySelector('.game-vibration')
+
 // CONEXÃO DO SOCKET
 let socket = socketConnect()
 function socketConnect() {
@@ -20,7 +22,9 @@ function socketConnect() {
 		const [cmd, value, player] = e.data.toLowerCase().split(' ')
 		if (options.vibrationFromGame && cmd === 'v'/* && parseInt(player) === options.player*/) {
 			const n = parseInt(value.split('|')[0])
-			navigator.vibrate(n ? 5000 : 0)
+			navigator.vibrate(n ? 3000 : 0, true)
+			$gameVibration.classList[n ? 'remove' : 'add']('mdi-google-controller')
+			$gameVibration.classList[n ? 'add' : 'remove']('mdi-vibrate')
 		}
 	})
 	return ws

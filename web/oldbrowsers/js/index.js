@@ -39,7 +39,8 @@ formEls.invertR.checked = ls.getItem('joystick.invertR') === 'true';
 formEls.disJoyXAxis.checked = ls.getItem('joystick.disJoyXAxis') === 'true';
 formEls.disJoyYAxis.checked = ls.getItem('joystick.disJoyYAxis') === 'true';
 formEls.dblClickLoadSave.checked = ls.getItem('joystick.dblClickLoadSave') === 'true';
-formEls.vibrate.checked = !(ls.getItem('joystick.vibrate') === 'false');
+formEls.vibrate.value = ls.getItem('joystick.vibrate') || '15';
+formEls.vibrateJoystick.value = ls.getItem('joystick.vibrateJoystick') || '5';
 formEls.vibrationFromGame.checked = !(ls.getItem('joystick.vibrationFromGame') === 'false');
 formEls.vgamepad.checked = ls.getItem('joystick.vgamepad') === 'true';
 formEls.background.value = ls.getItem('joystick.background') || 'rgba(0, 0, 0, 1)';
@@ -59,6 +60,22 @@ if (ls.getItem('joystick.locked') !== null) document.querySelectorAll('[name=loc
 if (ls.getItem('joystick.hidden') !== null) document.querySelectorAll('[name=hide]').forEach(e => e.checked = false);
 (_ls$getItem2 = ls.getItem('joystick.hidden')) === null || _ls$getItem2 === void 0 ? void 0 : (_ls$getItem2$split = _ls$getItem2.split(',')) === null || _ls$getItem2$split === void 0 ? void 0 : _ls$getItem2$split.forEach(e => {
 	if (e) document.querySelector(`[name=hide][value="${e}"]`).checked = true;
+});
+document.querySelectorAll('input[type="range"] + .value').forEach($value => {
+	const $range = $value.parentElement.querySelector('input[type="range"]');
+	const precision = getPrecision($range.step || 1);
+
+	if ($range) {
+		$range.addEventListener('change', change);
+		$range.addEventListener('mousemove', change);
+		$range.addEventListener('touchmove', change);
+	}
+
+	change();
+
+	function change() {
+		$value.innerText = Number($range.value).toFixed(precision);
+	}
 }); // Salvar opções
 
 document.forms[0].addEventListener('submit', function (e) {
@@ -81,7 +98,8 @@ document.forms[0].addEventListener('submit', function (e) {
 	localStorage.setItem('joystick.disJoyXAxis', elems.disJoyXAxis.checked);
 	localStorage.setItem('joystick.disJoyYAxis', elems.disJoyYAxis.checked);
 	localStorage.setItem('joystick.dblClickLoadSave', elems.dblClickLoadSave.checked);
-	localStorage.setItem('joystick.vibrate', elems.vibrate.checked);
+	localStorage.setItem('joystick.vibrate', elems.vibrate.value);
+	localStorage.setItem('joystick.vibrateJoystick', elems.vibrateJoystick.value);
 	localStorage.setItem('joystick.vibrationFromGame', elems.vibrationFromGame.checked);
 	localStorage.setItem('joystick.vgamepad', elems.vgamepad.checked);
 	localStorage.setItem('joystick.background', elems.background.value);
@@ -215,4 +233,10 @@ function scrollToY(y, duration = 0, element = document.scrollingElement) {
 	}
 
 	window.requestAnimationFrame(step);
+}
+
+function getPrecision(num) {
+	const str = Number(num).toString();
+	const arr = str.indexOf('.') + 1;
+	return !arr ? 0 : str.length - arr;
 }

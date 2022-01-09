@@ -33,7 +33,8 @@ const options = {
 	disJoyXAxis: ls['joystick.disJoyXAxis'] === 'true',
 	disJoyYAxis: ls['joystick.disJoyYAxis'] === 'true',
 	dblClickLoadSave: ls['joystick.dblClickLoadSave'] === 'true',
-	vibrate: !(ls['joystick.vibrate'] === 'false'),
+	vibrate: Number(ls['joystick.vibrate'] || 15),
+	vibrateJoystick: Number(ls['joystick.vibrateJoystick'] || 5),
 	vibrationFromGame: !(ls['joystick.vibrationFromGame'] === 'false'),
 	vgamepad: ls['joystick.vgamepad'] === 'true',
 	bgImage: ls['joystick.bgImage'],
@@ -64,4 +65,24 @@ const $loading = document.querySelector('.loadingScreen');
 
 function loading() {
 	$loading.classList.add('visible');
-}
+} // CUSTOMIZAÇÃO NA VIBRAÇÃO
+
+
+navigator._lastVibration = Date.now();
+navigator._vibrate = navigator.vibrate;
+
+navigator.vibrate = function (pattern, force = false) {
+	let time;
+	if (Array.isArray(pattern)) time = pattern.reduce((a, c) => a += Number(c), 0); else time = Number(pattern);
+
+	if (force) {
+		navigator._lastVibration = Date.now() + time;
+		return navigator._vibrate(pattern);
+	}
+
+	if (Date.now() + time > navigator._lastVibration) {
+		return navigator._vibrate(pattern);
+	}
+
+	return false;
+};

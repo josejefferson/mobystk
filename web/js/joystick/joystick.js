@@ -73,6 +73,7 @@ function resizeJoystick() {
 				if (isNaN(x) || isNaN(y)) x = y = 0
 				if (id === 'joystickL') sendCmd(`${x}|${y}`, false, 'VJL')
 				if (id === 'joystickR') sendCmd(`${x}|${y}`, false, 'VJR')
+				navigator.vibrate(options.vibrateJoystick * d?.distance / 45)
 			} else {
 				updateJoystick($el, id, d?.angle?.degree, d?.direction)
 			}

@@ -73,7 +73,7 @@ function toggleDriveMode(e) {
 			}
 
 			driveAngle = angle
-			if (options.vibrate) navigator.vibrate(30)
+			navigator.vibrate(options.vibrate * 2)
 
 			// Pressiona as teclas
 			const pressKeys = directions.filter(e => !lastDirections.includes(e))

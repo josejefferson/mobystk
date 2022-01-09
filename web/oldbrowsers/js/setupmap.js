@@ -88,41 +88,5 @@ const KEY_SEQUENCE = {
 			'SPACE', 'save', 'DOWN',
 			'SPACE', 'load', 'ESC'
 		]
-	},
-	pspVGamepad: {
-		pause: 150,
-		sequence: [
-			'UP',
-			'LEFT',
-			'RIGHT',
-			'SPACE', 'padUp', 'DOWN',
-			'SPACE', 'padDown', 'DOWN',
-			'SPACE', 'padLeft', 'DOWN',
-			'SPACE', 'padRight', 'DOWN',
-			'SPACE', 'actRight', 'DOWN',
-			'SPACE', 'actDown', 'DOWN',
-			'SPACE', 'actLeft', 'DOWN',
-			'SPACE', 'actUp', 'DOWN',
-			'SPACE', 'start', 'DOWN',
-			'SPACE', 'select', 'DOWN',
-			'SPACE', 'left1', 'DOWN',
-			'SPACE', 'right1', 'DOWN',
-			'SPACE', '*VJL 0|32767', '*VJL 0|0', 'DOWN',
-			'SPACE', '*VJL 0|-32767', '*VJL 0|0', 'DOWN',
-			'SPACE', '*VJL -32767|0', '*VJL 0|0', 'DOWN',
-			'SPACE', '*VJL 32767|0', '*VJL 0|0', 'DOWN',
-			'DOWN',
-			'DOWN',
-			'DOWN',
-			'DOWN',
-			'DOWN',
-			'DOWN',
-			'SPACE', 'pause', 'DOWN',
-			'DOWN',
-			'DOWN',
-			'DOWN',
-			'SPACE', 'save', 'DOWN',
-			'SPACE', 'load', 'ESC'
-		]
 	}
 }

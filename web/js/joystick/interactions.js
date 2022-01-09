@@ -10,7 +10,7 @@ document.ontouchstart = e => {
 		const joystick = target?.classList.contains('joystick') ? true : false
 		currentTouches.push({ target, touch, joystick })
 		if (!target) continue
-		if (options.vibrate) navigator.vibrate(15)
+		navigator.vibrate(options.vibrate)
 		if (joystick) continue
 		target.classList.add('active')
 
@@ -69,7 +69,7 @@ document.ontouchmove = e => {
 		})
 		sendCmd(keys)
 
-		if (options.vibrate) navigator.vibrate(15)
+		navigator.vibrate(options.vibrate)
 	}
 }
 

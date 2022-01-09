@@ -4,7 +4,7 @@ document.querySelectorAll('.lock').forEach(el => {
 	el.onmousedown = event
 	function event(e) {
 		if ('ontouchstart' in document.documentElement && e.type === 'mousedown') return
-		if (options.vibrate) navigator.vibrate(15)
+		navigator.vibrate(options.vibrate)
 		if (el.classList.contains('active')) {
 			// Ativa a tecla
 			el.classList.remove('active')

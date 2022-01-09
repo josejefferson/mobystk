@@ -12,7 +12,7 @@ document.ontouchstart = e => {
 			joystick
 		});
 		if (!target) continue;
-		if (options.vibrate) navigator.vibrate(15);
+		navigator.vibrate(options.vibrate);
 		if (joystick) continue;
 		target.classList.add('active');
 		const keys = (_target$dataset$key = target.dataset.key) === null || _target$dataset$key === void 0 ? void 0 : _target$dataset$key.split(' '); // Diagonal
@@ -62,7 +62,7 @@ document.ontouchmove = e => {
 			});
 		});
 		sendCmd(keys);
-		if (options.vibrate) navigator.vibrate(15);
+		navigator.vibrate(options.vibrate);
 	}
 }; // FIM DO TOQUE
 
