@@ -1,5 +1,5 @@
 /**
- * WebJoy - Layout
+ * MobyStk - Layout
  *
  * @name: PSP
  * @description: Layout for PSP games
@@ -27,13 +27,13 @@
 	height: 128px;
 }
 
-body.invert .arrows {
+body.invertL .arrows {
 	bottom: 20px;
 	width: 150px;
 	height: 150px;
 }
 
-body.invert .joystick.joystickL {
+body.invertL .joystick.joystickL {
 	bottom: 160px;
 }
 
@@ -74,10 +74,10 @@ body.invert .joystick.joystickL {
 	height: 48px;
 }
 
-body.invert .up,
-body.invert .down,
-body.invert .left,
-body.invert .right {
+body.invertL .up,
+body.invertL .down,
+body.invertL .left,
+body.invertL .right {
 	width: 52px;
 	height: 52px;
 }

@@ -5,12 +5,14 @@ document.querySelectorAll('.lock').forEach(el => {
 
 	function event(e) {
 		if ('ontouchstart' in document.documentElement && e.type === 'mousedown') return;
-		if (options.vibrate) navigator.vibrate(15); // Ativa a tecla
+		navigator.vibrate(options.vibrate);
 
 		if (el.classList.contains('active')) {
+			// Ativa a tecla
 			el.classList.remove('active');
-			sendCmd(el.dataset.key, true); // Desativa a tecla
+			sendCmd(el.dataset.key, true);
 		} else {
+			// Desativa a tecla
 			el.classList.add('active');
 			sendCmd(el.dataset.key);
 		}
@@ -32,7 +34,7 @@ const $invert = document.querySelector('.toggleInvert');
 $invert.ontouchstart = toggleInvert;
 
 function toggleInvert() {
-	document.body.classList.toggle('invert');
+	document.body.classList.toggle('invertL');
 	$invert.classList.toggle('active');
 	resizeJoystick();
 } // MACROS
@@ -67,4 +69,5 @@ $playMacro.onclick = async function () {
 	}
 
 	$playMacro.classList.remove('active');
+	playingMacro = false;
 };

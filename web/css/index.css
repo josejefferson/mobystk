@@ -89,6 +89,10 @@
 	width: 100%;
 }
 
+.container input[type=range] + .value {
+	margin-left: 20px;
+}
+
 .container input[type=text],
 .container textarea {
 	background: none;

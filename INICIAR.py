@@ -7,50 +7,67 @@ WS_PORT = 5000 # Porta do servidor WebSocket
 
 try:
 	from colorama import init as coloramaInit, Back as B, Fore as F, Style as S
+	from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+	from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 	from pynput.keyboard import Key, KeyCode, Controller
 	from time import sleep
-	import asyncio
-	import http.server
 	import os
 	import pyqrcode
 	import socket
-	import socketserver
 	import threading
-	import websockets
 except ModuleNotFoundError:
-	print('[ERRO] Alguns módulos estão faltando para o funcionamento desta aplicação.')
-	print('Você precisa executar os seguintes comandos no terminal para instalá-los:\n')
+	print('Ops! Alguns módulos estão faltando para o funcionamento desta aplicação.')
+	print('Você precisa executar os seguintes comandos no terminal para instalá-los (ou pressionar Enter):\n')
 	commands = [
 		'python -m pip install colorama',
 		'python -m pip install pynput',
 		'python -m pip install pyqrcode',
-		'python -m pip install websockets'
+		'python -m pip install SimpleWebSocketServer'
 	]
 	for c in commands: print(c)
-	input('\nPressione Enter para instalar os módulos inexistentes...')
+	input('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n' + \
+				'┃ Pressione Enter para instalar os módulos inexistentes... ┃\n' + \
+				'┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 	import os, sys
-	for c in commands: os.system(c.replace('python', sys.executable))
-	os.system('{} {}'.format(sys.executable, os.path.basename(__file__)))
+	for c in commands: os.system(c.replace('python -m', f'"{sys.executable}" -m'))
+	os.system(f'{sys.executable} {os.path.basename(__file__)}')
 	quit()
 
+# Importa o vgamepad se tiver sido instalado
+try:
+	from vgamepad import VX360Gamepad, XUSB_BUTTON
+	gamepads = [
+		VX360Gamepad(),
+		VX360Gamepad(),
+		VX360Gamepad(),
+		VX360Gamepad()
+	]
+except ModuleNotFoundError:
+	gamepads = None
+	pass
+except Exception as err:
+	gamepads = None
+	print(err)
+vgamepadError = False
 
 coloramaInit(autoreset=True)
 keyboard = Controller()
-handler = http.server.SimpleHTTPRequestHandler
 
 
 # Define o diretório atual e o IP
 os.chdir(os.path.join(os.path.dirname(__file__), 'web'))
 ips = socket.gethostbyname_ex(socket.gethostname())[-1]
+if '192.168.137.1' in ips: ips.append(ips.pop(ips.index('192.168.137.1')))
+if '192.168.56.1' in ips: ips.remove('192.168.56.1')
 httpIp = '{}:{}'.format(ips[-1], HTTP_PORT)
 wsIp = '{}:{}'.format(ips[-1], WS_PORT)
 
 
 # HTTP Server
-class NoCacheHandler(handler):
+class NoCacheRequestHandler(SimpleHTTPRequestHandler):
 	def end_headers(self):
 		self.myHeaders()
-		handler.end_headers(self)
+		SimpleHTTPRequestHandler.end_headers(self)
 
 	def myHeaders(self):
 		self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
@@ -60,51 +77,124 @@ class NoCacheHandler(handler):
 	def log_message(self, format, *args):
 		return
 
+class CustomThreadingHTTPServer(ThreadingHTTPServer):
+	def handle_error(self, request, client_address):
+		return
+
 def httpServer():
-	with socketserver.TCPServer(('', HTTP_PORT), NoCacheHandler) as httpd:
-		httpd.serve_forever()
+	httpd = CustomThreadingHTTPServer(('', HTTP_PORT), NoCacheRequestHandler)
+	httpd.serve_forever()
+
+
+# Retorna a tecla do teclado pelo nome
+def getKey(keyName):
+	if len(keyName) > 1:
+		if keyName.isdigit(): return KeyCode(int(keyName))
+		else: return Key[keyName]
+	return keyName
+
+# Aperta/desaperta as teclas ou botões
+def keyCommand(cmd, key, player, vpad = False):
+	commands = {
+		'r': 'RELEASE KEY',
+		'p': 'PRESS KEY',
+		't': 'TAP KEY',
+		'vjl': 'LEFT JOYSTICK',
+		'vjr': 'RIGHT JOYSTICK'
+	}
+	if DEBUG: print(f'{F.CYAN}[PLAYER {player + 1} {commands[cmd]}] {S.RESET_ALL}{key} ')
+	try:
+		# Comandos VGamepad
+		if vpad:
+			# Se o VGamepad não estiver instalado
+			global vgamepadError
+			if not gamepads:
+				if not vgamepadError:
+					vgamepadError = True
+					print(f'{S.BRIGHT}{F.RED}[VGAMEPAD] Erro: VGamepad não está instalado\n' +\
+						'Instale-o executando o comando "python -m pip install vgamepad"')
+				return
+
+			# Pressiona um botão do gamepad
+			def button(action, key):
+				t = 255 if action == 'press' else 0
+				if key == 'xusb_gamepad_left_trigger': gamepads[player].left_trigger(value=t)
+				elif key == 'xusb_gamepad_right_trigger': gamepads[player].right_trigger(value=t)
+				else: getattr(gamepads[player], f'{action}_button')(button=XUSB_BUTTON[key.upper()])
+
+			# Direciona um joystick do gamepad
+			def joystick(side, key):
+				x,y = list(map(int, key.split('|')))
+				getattr(gamepads[player], f'{side}_joystick')(x_value=x, y_value=y)
+
+			if cmd == 'vjl': joystick('left', key)
+			elif cmd == 'vjr': joystick('right', key)
+			elif cmd == 'r': button('release', key)
+			elif cmd == 'p': button('press', key)
+			elif cmd == 't':
+				button('press', key)
+				gamepads[player].update()
+				sleep(0.05)
+				button('release', key)
+			gamepads[player].update()
+
+		# Comandos de teclado
+		elif cmd == 'r': keyboard.release(key)
+		elif cmd == 'p': keyboard.press(key)
+		elif cmd == 't':
+			keyboard.press(key)
+			sleep(0.05)
+			keyboard.release(key)
+
+	except Exception as err:
+		if DEBUG: print(f'{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro: dados inválidos')
+		if DEBUG: print(F.RED + str(err))
+
+# Lida com as mensagens do WebSocket
+def message(msg):
+	msg = msg.lower().split(' ')
+	cmd = msg[0]
+	keys = msg[1].split(',')
+	player = int(msg[2]) if len(msg) >= 3 else 0
+	for key in keys:
+		if cmd.startswith('v') or key.startswith('xusb_gamepad'):
+			keyCommand(cmd, key, player, True)
+		else:
+			keyCommand(cmd, getKey(key), player)
 
 
 # WebSocket Server
-async def server(websocket, path):
-	def getKey(keyName):
-		if len(keyName) > 1:
-			if keyName.isdigit(): return KeyCode(int(keyName))
-			else: return Key[keyName]
-		return keyName
-
-	def keyCommand(key, cmd):
-		commands = {
-			'r': 'RELEASE',
-			'p': 'PRESS',
-			't': 'TAP'
-		}
-		if DEBUG: print(f'{F.CYAN}[{commands[cmd]} KEY] {S.RESET_ALL}{key} ')
-		try:
-			if cmd == 'r': keyboard.release(key)
-			elif cmd == 'p': keyboard.press(key)
-			elif cmd == 't':
-				keyboard.press(key)
-				sleep(0.05)
-				keyboard.release(key)
+wsClients = []
+class WebSocketServer(WebSocket):
+	def handleMessage(self):
+		try: message(self.data)
 		except Exception as err:
-			if DEBUG: print(f'{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro: dados inválidos')
-			if DEBUG: print(F.RED + str(e))
+			if DEBUG: print(f'{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro desconhecido')
+			if DEBUG: print(F.RED + str(err))
 
-	def message(msg):
-		msg = msg.lower().split(' ')
-		msg[1] = msg[1].split(',')
-		for keyName in msg[1]:
-			key = getKey(keyName)
-			keyCommand(key, msg[0])			
+	def handleConnected(self):
+		wsClients.append(self)
+		if DEBUG: print(f'{F.YELLOW}[WEBSOCKET]{S.RESET_ALL} Usuário conectado ({self.address})')
 
-	try:
-		if DEBUG: print(f'{F.YELLOW}[WEBSOCKET]{S.RESET_ALL} Usuário conectado')
-		async for msg in websocket:
-			message(msg)
-	except Exception as e:
-		if DEBUG: print(f'{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro desconhecido')
-		if DEBUG: print(F.RED + str(e))
+	def handleClose(self):
+		wsClients.remove(self)
+		if DEBUG: print(f'{F.YELLOW}[WEBSOCKET]{S.RESET_ALL} Usuário desconectado ({self.address})')
+
+# Envia uma mensagem para todos os clientes WebSocket
+def sendWebSocketMsg(msg):
+	for client in wsClients:
+		client.sendMessage(msg)
+
+
+# Notificação para vibração do controle
+def gamepadNotification(client, target, large_motor, small_motor, led_number, user_data):
+	gamepadIndex = next((x for x, item in enumerate(gamepads) if item._devicep == target), -1)
+	if gamepadIndex >= 0: sendWebSocketMsg(f'V {large_motor}|{small_motor} {gamepadIndex}')
+
+# Observa as notificações de vibração do controle
+if gamepads:
+	for i in range(len(gamepads)):
+		gamepads[i].register_notification(callback_function=gamepadNotification)
 
 
 # QR Code (bit.ly/3dpXMa9)
@@ -139,15 +229,15 @@ print(f'  ┃ {S.BRIGHT}{wsIp.ljust(21)}{S.RESET_ALL} ┃')
 print(f'  ┗━━━━━━━━━━━━━━━━━━━━━━━┛\n')
 print(S.BRIGHT + qrCode('http://' + httpIp))
 if len(ips) > 1:
-	coloredIPs = [f'{F.CYAN}{ip}{S.RESET_ALL}' for ip in ips[:-1]]
+	coloredIPs = [f'{F.CYAN}http://{ip}:{HTTP_PORT}{S.RESET_ALL}' for ip in ips[:-1]]
 	print(f'  Caso não funcione, tente: ')
 	print(f'  {" ou ".join(coloredIPs)}')
 
-async def wsServer():
-	async with websockets.serve(server, port=WS_PORT):
-		await asyncio.Future()
 
 if __name__ == "__main__":
 	httpThread = threading.Thread(target=httpServer)
+	httpThread.daemon = True
 	httpThread.start()
-	asyncio.run(wsServer())
+	wsServer = SimpleWebSocketServer('0.0.0.0', WS_PORT, WebSocketServer)
+	try: wsServer.serveforever()
+	except KeyboardInterrupt: pass

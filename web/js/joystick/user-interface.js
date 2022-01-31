@@ -32,7 +32,8 @@ $edit.addEventListener('contextmenu', () => {
 })
 if (!options.layout) location.href = 'index.html'
 if (options.debug) document.body.classList.add('debug')
-if (options.invert) document.body.classList.add('invert')
+if (options.invertL) document.body.classList.add('invertL')
+if (options.invertR) document.body.classList.add('invertR')
 if (options.bgImage) $bgImage.style.backgroundImage = `url('${options.bgImage}')`
 if (options.bgOpacity) $bgImage.style.opacity = options.bgOpacity
 if (options.bgBlur) $bgImage.style.filter = `blur(${options.bgBlur}px)`
@@ -102,3 +103,11 @@ function updateClock() {
 // INFORMAÇÕES - Nº JOGADOR E NOME DO LAYOUT
 $DI_playerNumber.innerText = options.player + 1
 $DI_layout.innerText = options.layout.toUpperCase()
+
+
+// ATUALIZA O JOGADOR DO CONTROLE NO MODO DEBUG
+if (options.debug) $deviceInfo.addEventListener('click', () => {
+	options.player += 1
+	if (options.player > 3) options.player = 0
+	$DI_playerNumber.innerText = options.player + 1
+})

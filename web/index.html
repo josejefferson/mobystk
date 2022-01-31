@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, user-scalable=0">
 	<link rel="shortcut icon" href="favicon.png" type="image/png">
 	<link rel="manifest" href="manifest.json">
-	<title>Joystick</title>
+	<title>MobyStk</title>
 	<link rel="stylesheet" href="lib/css/materialdesignicons.min.css">
 	<link rel="stylesheet" href="lib/css/pickr.classic.min.css">
 	<link rel="stylesheet" href="css/colors.css">
@@ -18,7 +18,7 @@
 	<header>
 		<div class="logo">
 			<img src="img/logo.svg">
-			<span>Web Joystick</span>
+			<span>MobyStk</span>
 		</div>
 
 		<nav>
@@ -106,8 +106,12 @@
 			</header>
 			<main>
 				<label class="option">
-					<input type="checkbox" name="invert">
-					<div class="label">Inverter joystick/setas</div>
+					<input type="checkbox" name="invertL">
+					<div class="label">Inverter joystick esquerdo/setas</div>
+				</label>
+				<label class="option">
+					<input type="checkbox" name="invertR">
+					<div class="label">Inverter joystick direito/botões</div>
 				</label>
 				<label class="option">
 					<input type="checkbox" name="disJoyXAxis">
@@ -122,19 +126,39 @@
 					<div class="label">Duplo clique para carregar/salvar</div>
 				</label>
 				<label class="option">
-					<input type="checkbox" name="vibrate" checked>
-					<div class="label">Vibração</div>
+					<input type="checkbox" name="vgamepad">
+					<div class="label">Usar&nbsp;<i>vgamepad</i></div>
+				</label>
+				<label class="option">
+					<input type="checkbox" name="vibrationFromGame" checked>
+					<div class="label">Vibração vinda do jogo</div>
+				</label>
+				<label class="option range">
+					<div class="label">
+						<div class="text">Vibração dos botões</div>
+						<input type="range" name="vibrate" min="0" max="100" step="1" value="15">
+						<div class="value">-</div>
+					</div>
+				</label>
+				<label class="option range">
+					<div class="label">
+						<div class="text">Vibrar ao mover joystick</div>
+						<input type="range" name="vibrateJoystick" min="0" max="50" step="1" value="5">
+						<div class="value">-</div>
+					</div>
 				</label>
 				<label class="option range">
 					<div class="label">
 						<div class="text">Sensibilidade do volante</div>
 						<input type="range" name="driveSensitivity" min="1" max="5" step="0.5" value="2">
+						<div class="value">-</div>
 					</div>
 				</label>
 				<label class="option range">
 					<div class="label">
 						<div class="text">Precisão do volante</div>
 						<input type="range" name="drivePrecision" min="0" max="3" step="0.5" value="1">
+						<div class="value">-</div>
 					</div>
 				</label>
 			</main>
@@ -237,7 +261,7 @@
 					<label class="chip hide"><input type="checkbox" name="hide" value="drive">
 						<div class="label">Volante</div>
 					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="recordMacro playMacro">
+					<label class="chip hide"><input type="checkbox" name="hide" value="recordMacro playMacro" checked>
 						<div class="label">Macro</div>
 					</label>
 					<label class="chip hide"><input type="checkbox" name="hide" value="joystickL">
@@ -293,10 +317,10 @@
 					<label class="chip hide"><input type="checkbox" name="hide" value="pause">
 						<div class="label"><i class="mdi mdi-pause"></i></div>
 					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="toggleInvert">
+					<label class="chip hide"><input type="checkbox" name="hide" value="toggleInvert" checked>
 						<div class="label"><i class="mdi mdi-swap-vertical"></i></div>
 					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="fast">
+					<label class="chip hide"><input type="checkbox" name="hide" value="fast" checked>
 						<div class="label"><i class="mdi mdi-fast-forward"></i></div>
 					</label>
 					<label class="chip hide"><input type="checkbox" name="hide" value="arrows">
@@ -380,6 +404,7 @@
 						<div class="label">
 							<div class="text">Opacidade</div>
 							<input type="range" name="bgOpacity" min="0" max="1" step="0.1" value="0.5">
+							<div class="value">-</div>
 						</div>
 					</label>
 
@@ -387,6 +412,7 @@
 						<div class="label">
 							<div class="text">Borrado</div>
 							<input type="range" name="bgBlur" min="0" max="10" step="1" value="0">
+							<div class="value">-</div>
 						</div>
 					</label>
 				</div>

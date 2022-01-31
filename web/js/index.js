@@ -18,8 +18,11 @@ window.addEventListener('scroll', () => {
 document.addEventListener('contextmenu', () => false)
 document.querySelectorAll('a').forEach(e => e.addEventListener('click', loading))
 document.querySelectorAll('.start').forEach(e => {
-	e.addEventListener('contextmenu', () => {
+	e.addEventListener('contextmenu', (e) => {
+		e.preventDefault()
 		document.querySelector('.hiddenOptions').style.display = 'flex'
+		scrollToY(document.body.scrollHeight, 400)
+		return false
 	})
 })
 
@@ -32,11 +35,15 @@ function loading() {
 formEls.code.value = ls.getItem('joystick.code') || window.location.hostname + ':5000'
 formEls.layout.value = ls.getItem('joystick.layout')
 formEls.player.value = ls.getItem('joystick.player')
-formEls.invert.checked = ls.getItem('joystick.invert') === 'true'
+formEls.invertL.checked = ls.getItem('joystick.invertL') === 'true'
+formEls.invertR.checked = ls.getItem('joystick.invertR') === 'true'
 formEls.disJoyXAxis.checked = ls.getItem('joystick.disJoyXAxis') === 'true'
 formEls.disJoyYAxis.checked = ls.getItem('joystick.disJoyYAxis') === 'true'
 formEls.dblClickLoadSave.checked = ls.getItem('joystick.dblClickLoadSave') === 'true'
-formEls.vibrate.checked = !(ls.getItem('joystick.vibrate') === 'false')
+formEls.vibrate.value = ls.getItem('joystick.vibrate') || '15'
+formEls.vibrateJoystick.value = ls.getItem('joystick.vibrateJoystick') || '5'
+formEls.vibrationFromGame.checked = !(ls.getItem('joystick.vibrationFromGame') === 'false')
+formEls.vgamepad.checked = ls.getItem('joystick.vgamepad') === 'true'
 formEls.background.value = ls.getItem('joystick.background') || 'rgba(0, 0, 0, 1)'
 formEls.color.value = ls.getItem('joystick.color') || 'rgba(255, 255, 255, 0.53)'
 formEls.border.value = ls.getItem('joystick.border') || 'rgba(255, 255, 255, 0.53)'
@@ -47,11 +54,29 @@ formEls.bgBlur.value = ls.getItem('joystick.bgBlur') || '0'
 formEls.customCSS.value = ls.getItem('joystick.customCSS')
 formEls.driveSensitivity.value = ls.getItem('joystick.driveSensitivity') || '2'
 formEls.drivePrecision.value = ls.getItem('joystick.drivePrecision') || '1'
+if (ls.getItem('joystick.locked') !== null)
+	document.querySelectorAll('[name=lock]').forEach(e => e.checked = false)
 ls.getItem('joystick.locked')?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true
 })
+if (ls.getItem('joystick.hidden') !== null)
+	document.querySelectorAll('[name=hide]').forEach(e => e.checked = false)
 ls.getItem('joystick.hidden')?.split(',')?.forEach(e => {
 	if (e) document.querySelector(`[name=hide][value="${e}"]`).checked = true
+})
+
+document.querySelectorAll('input[type="range"] + .value').forEach($value => {
+	const $range = $value.parentElement.querySelector('input[type="range"]')
+	const precision = getPrecision($range.step || 1)
+	if ($range) {
+		$range.addEventListener('change', change)
+		$range.addEventListener('mousemove', change)
+		$range.addEventListener('touchmove', change)
+	}
+	change()
+	function change() {
+		$value.innerText = Number($range.value).toFixed(precision)
+	}
 })
 
 // Salvar opções
@@ -71,11 +96,15 @@ document.forms[0].addEventListener('submit', function (e) {
 	localStorage.setItem('joystick.layout', elems.layout.value)
 	localStorage.setItem('joystick.player', elems.player.value)
 	localStorage.setItem('joystick.debug', elems.debug.checked)
-	localStorage.setItem('joystick.invert', elems.invert.checked)
+	localStorage.setItem('joystick.invertL', elems.invertL.checked)
+	localStorage.setItem('joystick.invertR', elems.invertR.checked)
 	localStorage.setItem('joystick.disJoyXAxis', elems.disJoyXAxis.checked)
 	localStorage.setItem('joystick.disJoyYAxis', elems.disJoyYAxis.checked)
 	localStorage.setItem('joystick.dblClickLoadSave', elems.dblClickLoadSave.checked)
-	localStorage.setItem('joystick.vibrate', elems.vibrate.checked)
+	localStorage.setItem('joystick.vibrate', elems.vibrate.value)
+	localStorage.setItem('joystick.vibrateJoystick', elems.vibrateJoystick.value)
+	localStorage.setItem('joystick.vibrationFromGame', elems.vibrationFromGame.checked)
+	localStorage.setItem('joystick.vgamepad', elems.vgamepad.checked)
 	localStorage.setItem('joystick.background', elems.background.value)
 	localStorage.setItem('joystick.color', elems.color.value)
 	localStorage.setItem('joystick.border', elems.border.value)
@@ -204,6 +233,29 @@ function exportSettings() {
 	const blob = new Blob([content], { type: 'application/json' })
 	const url = URL.createObjectURL(blob)
 	el.href = url
-	el.download = `web-joystick-settings-${Date.now()}.json`
+	el.download = `mobyStk-settings-${Date.now()}.json`
 	el.click()
+}
+
+
+function scrollToY(y, duration = 0, element = document.scrollingElement) {
+	if (element.scrollTop === y) return
+	const cosParameter = (element.scrollTop - y) / 2
+	let scrollCount = 0, oldTimestamp = null
+	function step(newTimestamp) {
+		if (oldTimestamp !== null) {
+			scrollCount += Math.PI * (newTimestamp - oldTimestamp) / duration
+			if (scrollCount >= Math.PI) return element.scrollTop = y
+			element.scrollTop = cosParameter + y + cosParameter * Math.cos(scrollCount)
+		}
+		oldTimestamp = newTimestamp
+		window.requestAnimationFrame(step)
+	}
+	window.requestAnimationFrame(step)
+}
+
+function getPrecision(num) {
+	const str = Number(num).toString()
+	const arr = str.indexOf('.') + 1
+	return !arr ? 0 : str.length - arr
 }

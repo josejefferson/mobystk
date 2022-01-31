@@ -1,5 +1,5 @@
 /**
- * WebJoy - Layout
+ * MobyStk - Layout
  *
  * @name: PS2
  * @description: Layout for PS2 games
@@ -32,14 +32,39 @@
 	bottom: 160px;
 }
 
-body.invert .arrows {
+body.invertL .arrows {
 	bottom: 20px;
 	width: 150px;
 	height: 150px;
 }
 
-body.invert .joystick.joystickL {
+body.invertL .joystick.joystickL {
 	bottom: 160px;
+}
+
+body.invertR .actions {
+	bottom: 150px;
+	width: 128px;
+	height: 128px;
+}
+
+body.invertR .joystick.joystickR {
+	bottom: 0px;
+}
+
+body.invertR:not(.invertL) .joystick.joystickL {
+	left: 50px;
+}
+
+body.invertR:not(.invertL) .joystick.joystickR {
+	right: 50px;
+}
+
+body.invertR:not(.invertL) .actions,
+body.invertR:not(.invertL) .arrows {
+	bottom: 140px;
+	width: 140px;
+	height: 140px;
 }
 
 /* ==========================================================================
@@ -79,10 +104,26 @@ body.invert .joystick.joystickL {
 	height: 48px;
 }
 
-body.invert .up,
-body.invert .down,
-body.invert .left,
-body.invert .right {
+body.invertL .up,
+body.invertL .down,
+body.invertL .left,
+body.invertL .right {
+	width: 52px;
+	height: 52px;
+}
+
+body.invertL.invertR .actUp,
+body.invertL.invertR .actDown,
+body.invertL.invertR .actLeft,
+body.invertL.invertR .actRight {
+	width: 48px;
+	height: 48px;
+}
+
+body.invertR:not(.invertL) .up,
+body.invertR:not(.invertL) .down,
+body.invertR:not(.invertL) .left,
+body.invertR:not(.invertL) .right {
 	width: 52px;
 	height: 52px;
 }

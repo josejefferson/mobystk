@@ -20,7 +20,7 @@ except ModuleNotFoundError:
 				'┃ Pressione Enter para instalar os módulos inexistentes... ┃\n' + \
 				'┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 	import os, sys
-	for c in commands: os.system(c.replace('python', sys.executable))
+	for c in commands: os.system(c.replace('python -m', f'"{sys.executable}" -m'))
 	os.system(f'{sys.executable} {os.path.basename(__file__)}')
 	quit()
 
@@ -90,14 +90,14 @@ def getUpdateMessages(response):
 def askForUpdates(messages, since):
 	if messages == None: return
 	if len(messages) == 0:
-		print(f'{F.GREEN}O Web Joystick já está atualizado. {F.MAGENTA}' + \
+		print(f'{F.GREEN}O MobyStk já está atualizado. {F.MAGENTA}' + \
 			'Pressione Enter para atualizar mesmo assim, ou feche esta janela para cancelar.', end='')
 		input()
 		return
 
 	if since == None: print(f'{F.GREEN}Esta é a primeira atualização! Veja as últimas novidades:')
 	else: print(f'{F.GREEN}Atualização disponível! Veja as novidades:')
-	for message in messages:
+	for message in messages[-10:]:
 		print(f'{F.BLUE}• {F.WHITE}{message}')
 
 	print(f'\n{F.YELLOW}{S.BRIGHT}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
@@ -203,10 +203,23 @@ def cleanAndFinalize(extractFolderName):
 		input()
 		quit()
 
+def installShortcut():
+	print(f'{F.YELLOW}Criando atalho, aguarde...')
+	try:
+		os.system(f"powershell \"$s=(New-Object -COM WScript.Shell).CreateShortcut('%userprofile%\\Desktop\\MobyStk.lnk');$s.TargetPath='{os.getcwd()}\\INICIAR.py';$s.Description='Use seu smartphone como controle de videogame para PC';$s.IconLocation='{os.getcwd()}\\web\\img\\icon.ico';$s.Save()\"")
+		os.system(f"powershell \"$s=(New-Object -COM WScript.Shell).CreateShortcut('%appdata%\\Microsoft\\Windows\\Start Menu\\MobyStk.lnk');$s.TargetPath='{os.getcwd()}\\INICIAR.py';$s.IconLocation='{os.getcwd()}\\web\\img\\icon.ico';$s.Save()\"")
+		print(f'{F.GREEN}O atalho para o MobyStk foi criado na área de trabalho! {S.BRIGHT}Pode fechar esta janela agora!')
+		input()
+	except Exception as err:
+		print(f'{B.RED}{F.WHITE}Ocorreu um erro ao criar atalho. ' + \
+			'Veja detalhes sobre o erro abaixo:')
+		print(f'{F.RED}{err}', end='')
+		input()
+		quit()
 
-print(f'{F.CYAN}{S.BRIGHT}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
-print(f'{F.CYAN}{S.BRIGHT}┃{F.YELLOW} Ferramenta de atualização do Web Joystick {F.CYAN}┃')
-print(f'{F.CYAN}{S.BRIGHT}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n')
+print(f'{F.CYAN}{S.BRIGHT}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
+print(f'{F.CYAN}{S.BRIGHT}┃{F.YELLOW} Ferramenta de atualização do MobyStk {F.CYAN}┃')
+print(f'{F.CYAN}{S.BRIGHT}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n')
 
 since = getLastUpdateDate(lastUpdateFile)
 response = checkForUpdates(since)
@@ -219,7 +232,10 @@ removeOldVersion(backupFolder)
 copyNewFiles(extractFolderName, backupFolder)
 cleanAndFinalize(extractFolderName)
 
-print(f'{S.BRIGHT}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-print(f'{S.BRIGHT}{F.GREEN} O Web Joystick foi atualizado com sucesso!')
-print(f'{S.BRIGHT}{F.MAGENTA} Você pode fechar esta janela agora!')
+print(f'{S.BRIGHT}\n ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
+print(f'{S.BRIGHT} ┃{F.GREEN} O MobyStk foi atualizado com sucesso!   {F.RESET}┃')
+print(f'{S.BRIGHT} ┃{F.MAGENTA} Você pode fechar esta janela agora!     {F.RESET}┃')
+if os.name == 'nt': print(f'{S.BRIGHT} ┃{F.YELLOW} Ou pressione {F.WHITE}Enter{F.YELLOW} para criar um atalho {F.RESET}┃')
+print(f'{S.BRIGHT} ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 input()
+if os.name == 'nt': installShortcut()
