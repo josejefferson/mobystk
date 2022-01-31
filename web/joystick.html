@@ -11,8 +11,8 @@
 	<link rel="stylesheet" href="css/joystick.css">
 	<link rel="stylesheet" href="themes/default.css">
 	<link rel="stylesheet" class="theme">
-	<link rel="stylesheet" href="layouts/default.css">
-	<link rel="stylesheet" class="layout">
+	<!-- <link rel="stylesheet" href="layouts/old/default.css"> -->
+	<!-- <link rel="stylesheet" href="layouts/old/psp.css"> -->
 </head>
 
 <body class="connecting preload">
@@ -169,6 +169,18 @@
 		</button>
 	</a>
 
+	<div class="edit-menu"><!--mudar para edit-toolbar-->
+		<div class="edit-menu-drag"><i class="mdi mdi-drag-vertical"></i></div>
+		<button class="layout-info"><i class="mdi mdi-information-outline"></i></button>
+		<button class="add-element"><i class="mdi mdi-plus"></i></button>
+		<hr>
+		<button class="edit-action edit-mode" data-mode="0"><i class="mdi mdi-cursor-move"></i></button>
+		<button class="edit-action edit-mode" data-mode="1"><i class="mdi mdi-resize"></i></button>
+		<button class="edit-action "><i class="mdi mdi-anchor"></i></button>
+		<button class="edit-action "><i class="mdi mdi-border-style"></i></button>
+		<button class="edit-action "><i class="mdi mdi-cog"></i></button>
+	</div>
+
 	<div class="loadingScreen">
 		<div class="text">Aguarde</div>
 		<i class="mdi mdi-timer-sand"></i>
@@ -177,6 +189,15 @@
 	<script src="lib/js/nipplejs.min.js"></script>
 	<script src="js/keymappings.js"></script>
 	<script src="js/joystick/index.js"></script>
+	<script src="layouts/BUTTONS.js"></script>
+	<script src="layouts/GROUPS.js"></script>
+	<script src="layouts/JOYSTICKS.js"></script>
+	<script src="layouts/built-in.js"></script>
+	<script src="js/classes/EventEmitter.js"></script>
+	<script src="js/classes/Button.js"></script>
+	<script src="js/classes/Group.js"></script>
+	<script src="js/classes/Joystick.js"></script>
+	<script src="js/joystick/layout.js"></script>
 	<script src="js/joystick/backend-integration.js"></script>
 	<script src="js/joystick/joystick.js"></script>
 	<script src="js/joystick/user-interface.js"></script>

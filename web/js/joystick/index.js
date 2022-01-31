@@ -1,4 +1,7 @@
 const ls = localStorage
+const Controller = {
+	layouts: []
+}
 
 const options = {
 	ip: ls['joystick.code'] || 'localhost:5000',

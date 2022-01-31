@@ -1,5 +1,6 @@
 // INÍCIO DO TOQUE
 document.ontouchstart = e => {
+	if (window.layoutEditor?.opened) return
 	for (const touch of e.changedTouches) {
 		let target = document.elementFromPoint(touch.clientX, touch.clientY)
 		if (!target.classList.contains('joystick') &&
@@ -27,6 +28,7 @@ document.ontouchstart = e => {
 
 // MOVIMENTO DO TOQUE
 document.ontouchmove = e => {
+	if (window.layoutEditor?.opened) return
 	for (const touch of e.changedTouches) {
 		const i = currentTouches.findIndex(t => {
 			return t.touch.identifier === touch.identifier
@@ -75,6 +77,7 @@ document.ontouchmove = e => {
 
 // FIM DO TOQUE
 document.ontouchend = e => {
+	if (window.layoutEditor?.opened) return
 	for (const touch of e.changedTouches) {
 		const i = currentTouches.findIndex(t => {
 			return t.touch.identifier === touch.identifier
@@ -98,6 +101,7 @@ document.ontouchend = e => {
 
 // CLIQUE DO MOUSE
 document.onmousedown = e => {
+	if (window.layoutEditor?.opened) return
 	if ('ontouchstart' in document.documentElement) return
 	let target = e.target
 	if (!target.classList.contains('joystick') &&

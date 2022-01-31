@@ -2,7 +2,6 @@
 const $root = document.documentElement
 const $edit = document.querySelector('.edit')
 const $bgImage = document.querySelector('.backgroundImage')
-const $layoutCSS = document.querySelector('.layout')
 const $deviceInfo = document.querySelector('.deviceInfo')
 const $DI_battery = $deviceInfo.querySelector('.battery')
 const $DI_batteryIcon = $DI_battery.querySelector('.battery-icon')
@@ -12,10 +11,12 @@ const $DI_playerNumber = $deviceInfo.querySelector('.player .player-number')
 const $DI_layout = $deviceInfo.querySelector('.layout')
 const $DI_status = $deviceInfo.querySelector('.status')
 
-// CARREGAMENTO DO LAYOUT
-$layoutCSS.href = 'layouts/' + options.layout + '.css'
-
 // CARREGAMENTO DAS OPÇÕES
+// const $script = document.createElement('script') // temp
+// $script.src = 'js/joystick/layout-editor.js' // temp
+// $script.addEventListener('load', () => window.layoutEditor.load()) // temp
+// document.body.appendChild($script) // temp
+// document.body.classList.add('loading-layout-editor') // temp
 $edit.addEventListener('click', loading)
 $edit.addEventListener('contextmenu', () => {
 	if (!window.layoutEditor) {
@@ -23,7 +24,7 @@ $edit.addEventListener('contextmenu', () => {
 		$script.src = 'js/joystick/layout-editor.js'
 		$script.addEventListener('load', () => window.layoutEditor.load())
 		document.body.appendChild($script)
-		$edit.classList.add('loading-layout-editor')
+		document.body.classList.add('loading-layout-editor')
 	} else if (!window.layoutEditor.opened) {
 		window.layoutEditor.start()
 	} else {
@@ -102,7 +103,7 @@ function updateClock() {
 
 // INFORMAÇÕES - Nº JOGADOR E NOME DO LAYOUT
 $DI_playerNumber.innerText = options.player + 1
-$DI_layout.innerText = options.layout.toUpperCase()
+$DI_layout.innerText = Controller.layouts.find(l => l.id === options.layout).name
 
 
 // ATUALIZA O JOGADOR DO CONTROLE NO MODO DEBUG

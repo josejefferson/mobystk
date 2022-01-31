@@ -10,6 +10,7 @@ if (!(location.protocol === 'https:' ||
 
 // LIGA/DESLIGA O SENSOR
 function toggleDriveMode(e) {
+	if (layoutEditor.opened) return
 	const SENSITIVITY = options.driveSensitivity
 	const PRECISION = options.drivePrecision
 
