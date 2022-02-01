@@ -13,6 +13,9 @@ Controller.Button = class {
 		this.border = details.border || [true, true, true, true]
 		this.radius = details.radius || [[0, 'px'], [0, 'px'], [0, 'px'], [0, 'px']]
 		this.fontSize = details.fontSize || [20, 'px']
+		this.diagonal = details.diagonal || false
+		this.lockable = details.lockable || false
+		this.active = false
 		
 		const $button = document.createElement('button')
 		$button.classList.add('controller-button')
@@ -28,6 +31,18 @@ Controller.Button = class {
 
 	validate(details) {
 		return details
+	}
+
+	press() {
+		//if (!this.active) // event emit
+		this.active = true
+		this.render()
+	}
+	
+	release() {
+		//if (this.active) // event emit
+		this.active = false
+		this.render()
 	}
 
 	render() {
@@ -54,6 +69,11 @@ Controller.Button = class {
 
 		this.element.style.width = this.width.join('')
 		this.element.style.height = this.height.join('')
+		
+		if (this.diagonal) this.element.classList.add('diag')
+		else this.element.classList.remove('diag')
+		if (this.lockable) this.element.classList.add('lock')
+		else this.element.classList.remove('lock')
 
 		if (!this.border[0]) this.element.style.borderTop = '0'
 		if (!this.border[1]) this.element.style.borderRight = '0'

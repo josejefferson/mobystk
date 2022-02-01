@@ -3,17 +3,27 @@ document.ontouchstart = e => {
 	if (window.layoutEditor?.opened) return
 	for (const touch of e.changedTouches) {
 		let target = document.elementFromPoint(touch.clientX, touch.clientY)
-		if (!target.classList.contains('joystick') &&
+
+		if (
+			//!target.instance ||
+			(!target.classList.contains('joystick') &&
+			(target?.instance.active ||
+			target?.instance.lockable))
+		) target = null
+
+			/*!target.classList.contains('joystick') &&
 			(!target.classList.contains('touch') ||
 				target.classList.contains('active') ||
-				target.classList.contains('lock'))) target = null
+				target.classList.contains('lock'))) target = null*/
 
 		const joystick = target?.classList.contains('joystick') ? true : false
+
 		currentTouches.push({ target, touch, joystick })
 		if (!target) continue
 		navigator.vibrate(options.vibrate)
 		if (joystick) continue
-		target.classList.add('active')
+		if (!target.instance) continue //temp
+		target.instance.press()'
 
 		const keys = target.dataset.key?.split(' ')
 		// Diagonal

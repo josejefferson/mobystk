@@ -14,6 +14,7 @@ Controller.Joystick = class extends EventEmitter {
 		const $joystick = document.createElement('div')
 		$joystick.classList.add('controller-joystick')
 		$joystick.classList.add('touch')
+		$joystick.classList.add('joystick')
 		/* ## TEMP ## */ $joystick.classList.add('group')
 		/* ## TEMP ## */ $joystick.style.display = 'block'
 		/* ## TEMP ## */ $joystick.style.position = 'absolute'
