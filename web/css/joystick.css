@@ -3,33 +3,34 @@
 	user-select: none;
 }
 
+:root {
+	--background: #000000;
+	--btn-background: transparent;
+	--color: rgba(255, 255, 255, 0.53);
+	--active: rgba(255, 255, 255, 0.2);
+	--border: var(--color);
+	--font-family: Arial, sans-serif;
+	--border-size: 2.5px;
+	--border-style: solid;
+}
+
+.hidden {
+	display: none !important;
+}
+
 body {
+	background-color: var(--background);
+	color: var(--color);
 	height: 100vh;
 	margin: 0;
-	overscroll-behavior: contain;
 	overflow: hidden;
+	overscroll-behavior: contain;
 }
 
-body.debug .joystick.group,
-body.debug .diag {
+body.debug .controller-joystick,
+body.debug .controller-group,
+body.debug .controller-button-diagonal {
 	border: var(--color) 1px solid;
-}
-
-.backgroundImage {
-	width: 100vw;
-	height: 100vh;
-	pointer-events: none;
-	background-position: center center;
-	background-size: cover;
-}
-
-.container {
-	width: 640px;
-	height: 360px;
-	position: relative;
-	transform-origin: 0 0;
-	transition: outline 1s ease;
-	outline: var(--color) 2.5px solid;
 }
 
 /* Desativa as transições enquanto carrega a página */
@@ -41,71 +42,82 @@ a {
 	color: inherit;
 }
 
-/* Grupos */
-.group {
+svg {
+	height: 32px;
+	width: 32px;
+}
+
+/* ==========================================================================
+   Elementos do controle
+   ========================================================================== */
+
+/* Imagem de fundo */
+.backgroundImage {
+	background-position: center center;
+	background-size: cover;
+	height: 100vh;
+	pointer-events: none;
+	width: 100vw;
+}
+
+/* Elementos */
+.controller-button,
+.controller-group,
+.controller-joystick {
+	display: flex;
 	position: absolute;
-}
-
-/* Botões do grupo */
-.group button {
-	z-index: 2;
-}
-
-/* Diagonais do grupo */
-.group .diag {
-	height: 50%;
-	position: absolute;
-	width: 50%;
-}
-
-.diag {
-	--external-radius: 75px;
-	--internal-radius: 30px;
-}
-
-.diag.dLT {
-	left: 0;
-	top: 0;
-	border-radius: var(--external-radius) 0 var(--internal-radius) 0;
-}
-
-.diag.dRT {
-	right: 0;
-	top: 0;
-	border-radius: 0 var(--external-radius) 0 var(--internal-radius);
-}
-
-.diag.dLB {
-	left: 0;
-	bottom: 0;
-	border-radius: 0 var(--internal-radius) 0 var(--external-radius);
-}
-
-.diag.dRB {
-	right: 0;
-	bottom: 0;
-	border-radius: var(--internal-radius) 0 var(--external-radius) 0;
 }
 
 /* Botões */
-button {
+.controller-button {
 	align-items: center;
-	display: flex;
+	background-color: var(--btn-background);
+	border: var(--border) var(--border-size) var(--border-style);
+	color: inherit;
+	cursor: pointer;
+	font-family: var(--font-family);
+	font-size: 12.5px;
+	font-size: 20px;
 	justify-content: center;
 	outline: none;
 	position: absolute;
-	cursor: pointer;
+	transition:
+		border-color 1s ease,
+		color 1s ease;
+}
+
+.controller-button.controller-button-lockable {
+	border-style: dashed;
+}
+
+.controller-button.controller-button-active {
+	background-color: var(--active);
 }
 
 /* Ícones dos botões */
-button svg {
+.controller-button .mdi {
+	color: inherit;
+	font-size: inherit !important;
+	transition: color 1s ease;
 	pointer-events: none;
+}
+
+.controller-button svg {
+	fill: var(--color);
+	pointer-events: none;
+	transition: fill 1s ease;
 	z-index: -1;
 }
 
+.controller-button i {
+	font-family: initial;
+}
+
 /* Botão de editar */
-button.edit {
-	display: flex;
+.controller-button.edit {
+	border-radius: 0 0 30px 30px;
+	border-top: none;
+	font-size: 16px;
 	height: 30px;
 	left: 50%;
 	top: 0;
@@ -113,44 +125,63 @@ button.edit {
 	width: 60px;
 }
 
-body.loading-layout-editor button.edit i {
-	animation: mdi-spin 2s infinite linear;
+/* Botões dentro de um grupo */
+.controller-group .controller-button {
+	z-index: 2;
 }
 
-body.layout-editor-opened button.edit {
-	border-color: red;
-	color: red;
-}
-
-/* Joystick */
-.joystick {
-	border-radius: 50%;
-}
-
+/* Joysticks */
 .nipple,
 .nipple .back,
 .nipple .front {
 	box-sizing: border-box;
-	opacity: 1 !important;
 	cursor: move;
+	opacity: 1 !important;
 }
 
+/* Joystick back */
+.nipple .back {
+	background-color: var(--btn-background) !important;
+	border: var(--border) var(--border-size) var(--border-style);
+	transition:
+		border-color 1s ease,
+		border-top-width .2s ease,
+		border-left-width .2s ease,
+		border-right-width .2s ease,
+		border-bottom-width .2s ease !important;
+}
+
+/* Joystick front */
+.nipple .front {
+	background-color: var(--color) !important;
+	border: var(--border) var(--border-size) var(--border-style);
+	transition: border-color 1s ease, background-color 1s ease !important;
+}
+
+/* ==========================================================================
+   Informações do dispositivo
+   ========================================================================== */
 .deviceInfo {
-	position: absolute;
-	top: 50%;
+	color: inherit;
+	font-family: var(--font-family);
+	font-size: 20px;
 	left: 50%;
+	position: absolute;
+	text-align: center;
+	top: 50%;
 	transform: translate(-50%, -50%);
+	transition: 1s ease;
 }
 
-/* Informações do dispositivo - Status */
+/* Status */
 .deviceInfo .status {
-	display: flex;
 	align-items: center;
-	justify-content: center;
-	height: 20px;
-	overflow: hidden;
+	display: flex;
 	font-size: 14px;
+	height: 20px;
+	justify-content: center;
 	opacity: 1;
+	overflow: hidden;
 	transition:
 		height .15s ease,
 		opacity 1s ease .15s;
@@ -158,86 +189,47 @@ body.layout-editor-opened button.edit {
 
 .deviceInfo .status::before {
 	font-family: 'Material Design Icons';
-	margin-right: 10px;
 	margin-bottom: 2px;
+	margin-right: 10px;
 }
 
-body.connecting .deviceInfo .status::before {
-	content: '\F0772';
-	animation: mdi-spin 2s infinite linear;
-}
-
-body.connecting .deviceInfo .status::after {
-	content: 'Conectando';
-}
-
-body.connected .deviceInfo .status {
-	opacity: 0;
-	height: 0;
-	transition:
-		opacity 1s ease 3s,
-		height .15s ease 4s;
-}
-
-body.connected .deviceInfo .status::before {
-	content: '\F05E1';
-}
-
-body.connected .deviceInfo .status::after {
-	content: 'Conectado';
-}
-
-body.disconnected .deviceInfo .status::before {
-	content: '\F015A';
-}
-
-body.disconnected .deviceInfo .status::after {
-	content: 'Desconectado';
-}
-
-/* Oculta os botões enquanto não carregar o layout */
-button,
-.group,
-.joystick {
-	display: none;
-}
-
-svg {
-	width: 32px;
-	height: 32px;
-}
-
+/* ==========================================================================
+   Debug
+   ========================================================================== */
 .debugLog {
-	position: fixed;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	font-family: monospace;
-	z-index: 5;
-	pointer-events: none;
-	user-select: none;
 	color: white;
+	font-family: monospace;
+	height: 100%;
+	left: 0;
+	pointer-events: none;
+	position: fixed;
+	top: 0;
+	user-select: none;
 	white-space: pre;
+	width: 100%;
+	z-index: 5;
 }
 
+/* ==========================================================================
+   Tela de carregamento
+   ========================================================================== */
 .loadingScreen {
 	align-items: center;
 	background-color: rgba(0, 0, 0, 0.5);
-	display: flex;
-	justify-content: center;
-	position: fixed;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 10001;
-	flex-direction: column;
-	pointer-events: none;
-	opacity: 0;
-	transition: opacity 0.15s ease;
 	color: white;
+	display: flex;
+	flex-direction: column;
 	font-family: Roboto, Arial, sans-serif;
+	height: 100%;
+	justify-content: center;
+	left: 0;
+	opacity: 0;
+	pointer-events: none;
+	position: fixed;
+	top: 0;
+	transition: opacity 0.15s ease;
+	width: 100%;
+	z-index: 10001;
 }
 
 .loadingScreen.visible {
@@ -250,21 +242,24 @@ svg {
 }
 
 .loadingScreen .text {
-	margin-bottom: 20px;
 	font-size: 8vmin;
+	margin-bottom: 20px;
 }
 
 .loadingScreen .mdi {
-	font-size: 25vmin;
-	border: white 2vmin solid;
-	width: 40vmin;
-	height: 40vmin;
-	display: flex;
 	align-items: center;
-	justify-content: center;
 	border-radius: 50%;
+	border: white 2vmin solid;
+	display: flex;
+	font-size: 25vmin;
+	height: 40vmin;
+	justify-content: center;
+	width: 40vmin;
 }
 
+/* ==========================================================================
+   Animações
+   ========================================================================== */
 @keyframes rotate {
 	to {
 		transform: rotate(360deg);
@@ -282,30 +277,15 @@ svg {
 	}
 }
 
-.hidden {
-	display: none !important;
-}
+/* ==========================================================================
+   Editor de Layouts
+   ========================================================================== */
 
-/* "Invert" button */
-.toggleInvert {
-	display: flex;
-	right: 0;
-	top: 50%;
-	transform: translateY(-50%);
-	border-radius: 30px 0 0 30px;
-	font-size: 16px;
-	border-right: none;
-	height: 40px;
-	width: 20px;
+/* Editor de Layouts */
+body.layout-editor-opened button.edit {
+	border-color: red;
+	color: red;
 }
-
-/* "Edit" button */
-.edit {
-	border-radius: 0 0 30px 30px;
-	border-top: none;
-	font-size: 16px;
-}
-
 
 body.layout-editor-opened .editing {
 	background-color: #f005;
@@ -313,14 +293,16 @@ body.layout-editor-opened .editing {
 }
 
 body.layout-editor-opened {
-  background-image:
-    repeating-linear-gradient(#ccc2 0 1px, transparent 1px 100%),
-    repeating-linear-gradient(90deg, #ccc2 0 1px, transparent 1px 100%);
-  background-size: var(--grid-size, 10px) var(--grid-size, 10px) ;
+	background-image:
+		repeating-linear-gradient(#ccc2 0 1px, transparent 1px 100%),
+		repeating-linear-gradient(90deg, #ccc2 0 1px, transparent 1px 100%);
+	background-size: var(--grid-size, 10px) var(--grid-size, 10px);
 }
 
 @keyframes editing {
-	from, to {
+
+	from,
+	to {
 		opacity: 1;
 	}
 

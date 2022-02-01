@@ -1,6 +1,17 @@
 const ls = localStorage
 const Controller = {
-	layouts: []
+	BUTTONS: [],
+	GROUPS: [],
+	JOYSTICKS: [],
+	layouts: [],
+	currentLayout: null,
+	currentTouches: [],
+	elements: {
+		all: [],
+		buttons: [],
+		groups: [],
+		joysticks: []
+	}
 }
 
 const options = {

@@ -2,10 +2,6 @@ const layoutEditor = {}
 window.layoutEditor = layoutEditor
 
 layoutEditor.opened = false
-layoutEditor.load = () => {
-	document.body.classList.remove('loading-layout-editor')
-	layoutEditor.start()
-}
 
 const GRID_SIZE = 5
 layoutEditor.start = () => {
@@ -133,7 +129,7 @@ function touchEnd(e) {
 
 // temp
 function convert(str) {
-	var n = parseFloat(str);
+	var n = parseFloat(str)
 	var u = str.trim().substring(n.toString().length)
 	return {
 		value: n,

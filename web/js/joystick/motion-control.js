@@ -1,23 +1,27 @@
-const $drive = document.querySelector('.drive')
-const driveHTML = $drive.innerHTML
-$drive.ontouchstart = toggleDriveMode
+const drive = Controller.elements.buttons.find(e => e.customAction === 'drive')
+const driveHTML = drive ? drive.element.innerHTML = `
+	<svg viewBox="0 0 32 32">
+		<path d="M16 0a16 16 0 100 32 16 16 0 000-32zm0 4a12 12 0 0111.3 8H4.7c1.7-4.6 6-8 11.3-8zm0 14a2 2 0 110-4 2 2 0 010 4zM4 16c5.5 0 9.9 5.3 10 11.8A12 12 0 014 16zm14 11.8c.1-6.5 4.5-11.8 10-11.8a12 12 0 01-10 11.8z"></path>
+	</svg>` : ''
+if (drive) drive.element.addEventListener('touchstart', toggleDriveMode)
 
 // Caso não esteja em HTTPS, desativa o ícone de volante
 if (!(location.protocol === 'https:' ||
 	location.hostname === 'localhost' ||
 	location.hostname === '127.0.0.1'))
-	$drive.style.display = 'none'
+	drive.element.style.display = 'none'
 
 // LIGA/DESLIGA O SENSOR
 function toggleDriveMode(e) {
-	if (layoutEditor.opened) return
+	if (window.layoutEditor?.opened) return
+
 	const SENSITIVITY = options.driveSensitivity
 	const PRECISION = options.drivePrecision
 
 	// Desliga o sensor e desaperta as teclas
-	if (e.target.classList.contains('active')) {
-		e.target.classList.remove('active')
-		e.target.innerHTML = driveHTML
+	if (drive.active) {
+		drive.release()
+		drive.element.innerHTML = driveHTML
 		window.ondevicemotion = null
 		if (!options.vgamepad) {
 			sendCmd('joyLUp', true)
@@ -30,12 +34,12 @@ function toggleDriveMode(e) {
 	}
 
 	// Ativa o sensor
-	e.target.classList.add('active')
-	e.target.innerHTML = '<i class="driveArrow mdi mdi-arrow-up"></i>'
+	drive.press()
+	drive.element.innerHTML = '<i class="driveArrow mdi mdi-arrow-up"></i>'
 	let driveY = 0, driveAngle = 0, lastDirections = []
 
 	// Detecta os movimentos
-	window.ondevicemotion = e => {
+	window.ondevicemotion = (e) => {
 		const land = window.outerWidth > window.outerHeight
 		const inverted = e.accelerationIncludingGravity[land ? 'x' : 'y'] >= 0 ? 1 : -1
 		driveY = parseFloat(e.accelerationIncludingGravity[land ? 'y' : 'x'].toFixed(1))
@@ -62,7 +66,7 @@ function toggleDriveMode(e) {
 			}
 
 			if (angle === driveAngle) return
-			$drive.children[0].style.transform = `rotate(${angle}deg)`
+			drive.element.children[0].style.transform = `rotate(${angle}deg)`
 
 			// Define a direção
 			switch (angle) {
@@ -90,7 +94,7 @@ function toggleDriveMode(e) {
 			if (x > 32767) x = 32767
 			if (x < -32767) x = -32767
 			const angle = 90 * x / 32767
-			$drive.children[0].style.transform = `rotate(${angle}deg)`
+			drive.element.children[0].style.transform = `rotate(${angle}deg)`
 			sendCmd(`${x}|0`, false, 'VJL')
 		}
 	}

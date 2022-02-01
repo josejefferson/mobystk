@@ -3,32 +3,21 @@ const $root = document.documentElement
 const $edit = document.querySelector('.edit')
 const $bgImage = document.querySelector('.backgroundImage')
 const $deviceInfo = document.querySelector('.deviceInfo')
-const $DI_battery = $deviceInfo.querySelector('.battery')
-const $DI_batteryIcon = $DI_battery.querySelector('.battery-icon')
-const $DI_batteryLevel = $DI_battery.querySelector('.battery-level')
-const $DI_clock = $deviceInfo.querySelector('.clock')
-const $DI_playerNumber = $deviceInfo.querySelector('.player .player-number')
-const $DI_layout = $deviceInfo.querySelector('.layout')
-const $DI_status = $deviceInfo.querySelector('.status')
+const $DIBattery = $deviceInfo.querySelector('.battery')
+const $DIBatteryIcon = $DIBattery.querySelector('.battery-icon')
+const $DIBatteryLevel = $DIBattery.querySelector('.battery-level')
+const $DIClock = $deviceInfo.querySelector('.clock')
+const $DIPlayerNumber = $deviceInfo.querySelector('.player .player-number')
+const $DILayout = $deviceInfo.querySelector('.layout')
+const $DIStatus = $deviceInfo.querySelector('.status')
 
 // CARREGAMENTO DAS OPÇÕES
-// const $script = document.createElement('script') // temp
-// $script.src = 'js/joystick/layout-editor.js' // temp
-// $script.addEventListener('load', () => window.layoutEditor.load()) // temp
-// document.body.appendChild($script) // temp
-// document.body.classList.add('loading-layout-editor') // temp
 $edit.addEventListener('click', loading)
 $edit.addEventListener('contextmenu', () => {
-	if (!window.layoutEditor) {
-		const $script = document.createElement('script')
-		$script.src = 'js/joystick/layout-editor.js'
-		$script.addEventListener('load', () => window.layoutEditor.load())
-		document.body.appendChild($script)
-		document.body.classList.add('loading-layout-editor')
-	} else if (!window.layoutEditor.opened) {
-		window.layoutEditor.start()
+	if (!layoutEditor.opened) {
+		layoutEditor.start()
 	} else {
-		window.layoutEditor.end()
+		layoutEditor.end()
 	}
 })
 if (!options.layout) location.href = 'index.html'
@@ -42,24 +31,6 @@ if (options.colorsBackground) $root.style.setProperty('--background', options.co
 if (options.colorsColor) $root.style.setProperty('--color', options.colorsColor)
 if (options.colorsBorder) $root.style.setProperty('--border', options.colorsBorder)
 if (options.colorsActive) $root.style.setProperty('--active', options.colorsActive)
-
-// BOTÕES BLOQUEÁVEIS
-options.locked?.forEach(key => {
-	if (key) key.split(' ').forEach(key => {
-		document.querySelectorAll('.' + key).forEach(el => {
-			el.classList.add('lock')
-		})
-	})
-})
-
-// BOTÕES OCULTOS
-options.hidden?.forEach(item => {
-	if (item) item.split(' ').forEach(item => {
-		document.querySelectorAll('.' + item).forEach(el => {
-			el.style.display = 'none'
-		})
-	})
-})
 
 // CSS PERSONALIZADO
 const $customCSS = document.createElement('style')
@@ -75,18 +46,18 @@ navigator.getBattery()?.then(b => {
 
 // Atualiza o ícone e porcentagem da bateria
 function updateBattery(b) {
-	$DI_batteryIcon.classList.remove(...$DI_batteryIcon.classList)
-	$DI_batteryIcon.classList.add('mdi')
+	$DIBatteryIcon.classList.remove(...$DIBatteryIcon.classList)
+	$DIBatteryIcon.classList.add('mdi')
 	const charging = b.charging
 	const level = b.level * 100
 	const roundLevel = Math.round(level / 10) * 10
-	$DI_batteryLevel.innerText = Math.round(level) + '%'
+	$DIBatteryLevel.innerText = Math.round(level) + '%'
 	if (roundLevel === 0) {
-		$DI_batteryIcon.classList.add('mdi-battery-outline')
+		$DIBatteryIcon.classList.add('mdi-battery-outline')
 	} else if (roundLevel === 100) {
-		$DI_batteryIcon.classList.add('mdi-battery' + (charging ? '-charging-100' : ''))
+		$DIBatteryIcon.classList.add('mdi-battery' + (charging ? '-charging-100' : ''))
 	} else {
-		$DI_batteryIcon.classList.add('mdi-battery-' + (charging ? 'charging-' : '') + roundLevel)
+		$DIBatteryIcon.classList.add('mdi-battery-' + (charging ? 'charging-' : '') + roundLevel)
 	}
 }
 
@@ -98,17 +69,17 @@ updateClock()
 function updateClock() {
 	const hours = new Date().getHours().toString().padStart(2, '0')
 	const minutes = new Date().getMinutes().toString().padStart(2, '0')
-	$DI_clock.innerText = hours + ':' + minutes
+	$DIClock.innerText = hours + ':' + minutes
 }
 
 // INFORMAÇÕES - Nº JOGADOR E NOME DO LAYOUT
-$DI_playerNumber.innerText = options.player + 1
-$DI_layout.innerText = Controller.layouts.find(l => l.id === options.layout).name
+$DIPlayerNumber.innerText = options.player + 1
+$DILayout.innerText = Controller.layouts.find(l => l.id === options.layout).name
 
 
 // ATUALIZA O JOGADOR DO CONTROLE NO MODO DEBUG
 if (options.debug) $deviceInfo.addEventListener('click', () => {
 	options.player += 1
 	if (options.player > 3) options.player = 0
-	$DI_playerNumber.innerText = options.player + 1
+	$DIPlayerNumber.innerText = options.player + 1
 })

@@ -1,4 +1,5 @@
 Controller.GROUPS = [
+	// Setas
 	{
 		type: 'mobystk:group',
 		id: 'mobystk:arrows',
@@ -21,6 +22,7 @@ Controller.GROUPS = [
 		]
 	},
 
+	// Setas no topo
 	{
 		type: 'mobystk:group',
 		id: 'mobystk:arrows_top',
@@ -43,6 +45,7 @@ Controller.GROUPS = [
 		]
 	},
 
+	// Ações (estilo XBOX)
 	{
 		type: 'mobystk:group',
 		id: 'mobystk:xbox_actions',
@@ -65,6 +68,7 @@ Controller.GROUPS = [
 		]
 	},
 
+	// Ações (estilo PlayStation)
 	{
 		type: 'mobystk:group',
 		id: 'mobystk:ps_actions',
@@ -85,5 +89,28 @@ Controller.GROUPS = [
 			{ import: 'mobystk:ps_act_right' },
 			{ import: 'mobystk:ps_act_down' }
 		]
-	},	
+	},
+
+	// Ações (estilo PlayStation) no topo
+	{
+		type: 'mobystk:group',
+		id: 'mobystk:ps_actions_top',
+		name: 'Ações (estilo PlayStation) no topo',
+		anchorX: 1,
+		anchorY: 1,
+		x: [30, 'px'],
+		y: [150, 'px'],
+		width: [128, 'px'],
+		height: [128, 'px'],
+		content: [
+			{ import: 'mobystk:diag_left_up', targets: ['mobystk:ps_act_left', 'mobystk:ps_act_up'] },
+			{ import: 'mobystk:diag_right_up', targets: ['mobystk:ps_act_right', 'mobystk:ps_act_up'] },
+			{ import: 'mobystk:diag_left_down', targets: ['mobystk:ps_act_left', 'mobystk:ps_act_down'] },
+			{ import: 'mobystk:diag_right_down', targets: ['mobystk:ps_act_right', 'mobystk:ps_act_down'] },
+			{ import: 'mobystk:ps_act_up', width: [48, 'px'], height: [48, 'px'] },
+			{ import: 'mobystk:ps_act_left', width: [48, 'px'], height: [48, 'px'] },
+			{ import: 'mobystk:ps_act_right', width: [48, 'px'], height: [48, 'px'] },
+			{ import: 'mobystk:ps_act_down', width: [48, 'px'], height: [48, 'px'] }
+		]
+	}
 ]
