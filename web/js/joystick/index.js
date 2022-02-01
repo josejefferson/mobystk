@@ -1,45 +1,35 @@
-const ls = localStorage
-const Controller = {
-	BUTTONS: [],
-	GROUPS: [],
-	JOYSTICKS: [],
-	layouts: [],
-	currentLayout: null,
-	currentTouches: [],
-	elements: {
-		all: [],
-		buttons: [],
-		groups: [],
-		joysticks: []
-	}
+Lockr.prefix = 'joystick.'
+const options = {
+	ip: getOpt('code', 'localhost:5000'),
+	layout: getOpt('layout'),
+	player: getOpt('player', 1) - 1,
+	debug: getOpt('debug', false),
+	locked: getOpt('locked', []),
+	hidden: getOpt('hidden', []),
+	invertL: getOpt('invertL', false),
+	invertR: getOpt('invertR', false),
+	disJoyXAxis: getOpt('disJoyXAxis', false),
+	disJoyYAxis: getOpt('disJoyYAxis', false),
+	dblClickLoadSave: getOpt('dblClickLoadSave', false),
+	vibrate: getOpt('vibrate', 15),
+	vibrateJoystick: getOpt('vibrateJoystick', 5),
+	vibrationFromGame: getOpt('vibrationFromGame', true),
+	vgamepad: getOpt('vgamepad', false),
+	bgImage: getOpt('bgImage', ''),
+	bgOpacity: getOpt('bgOpacity', 0.5),
+	bgBlur: getOpt('bgBlur', 0),
+	colorsBackground: getOpt('background', 'rgba(0, 0, 0, 1)'),
+	colorsColor: getOpt('color', 'rgba(255, 255, 255, 0.53)'),
+	colorsBorder: getOpt('border', 'rgba(255, 255, 255, 0.53)'),
+	colorsActive: getOpt('active', 'rgba(255, 255, 255, 0.2)'),
+	customCSS: getOpt('customCSS', ''),
+	driveSensitivity: getOpt('driveSensitivity', 2),
+	drivePrecision: getOpt('drivePrecision', 1)
 }
 
-const options = {
-	ip: ls['joystick.code'] || 'localhost:5000',
-	layout: ls['joystick.layout'],
-	player: parseInt(ls['joystick.player']) - 1,
-	debug: ls['joystick.debug'] === 'true',
-	locked: ls['joystick.locked']?.split(','),
-	hidden: ls['joystick.hidden']?.split(','),
-	invertL: ls['joystick.invertL'] === 'true',
-	invertR: ls['joystick.invertR'] === 'true',
-	disJoyXAxis: ls['joystick.disJoyXAxis'] === 'true',
-	disJoyYAxis: ls['joystick.disJoyYAxis'] === 'true',
-	dblClickLoadSave: ls['joystick.dblClickLoadSave'] === 'true',
-	vibrate: Number(ls['joystick.vibrate'] || 15),
-	vibrateJoystick: Number(ls['joystick.vibrateJoystick'] || 5),
-	vibrationFromGame: !(ls['joystick.vibrationFromGame'] === 'false'),
-	vgamepad: ls['joystick.vgamepad'] === 'true',
-	bgImage: ls['joystick.bgImage'],
-	bgOpacity: ls['joystick.bgOpacity'],
-	bgBlur: ls['joystick.bgBlur'],
-	colorsBackground: ls['joystick.background'],
-	colorsColor: ls['joystick.color'],
-	colorsBorder: ls['joystick.border'],
-	colorsActive: ls['joystick.active'],
-	customCSS: ls['joystick.customCSS'],
-	driveSensitivity: parseFloat(ls['joystick.driveSensitivity'] || 2),
-	drivePrecision: parseFloat(ls['joystick.drivePrecision'] || 1)
+function getOpt(name, defaultValue) {
+	const value = Lockr.get(name)
+	return value === undefined ? defaultValue : value
 }
 
 // EVENTOS DA PÁGINA

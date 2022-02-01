@@ -1,4 +1,3 @@
-const ls = localStorage
 const form = document.forms[0]
 const formEls = form.elements
 
@@ -31,39 +30,84 @@ function loading() {
 	$loading.classList.add('visible')
 }
 
+// Carregar elementos
+const $selectLayout = document.querySelector('.selectLayout')
+for (const layout of Controller.layouts) {
+	$selectLayout.innerHTML += `
+		<label class="chip">
+			<input type="radio" name="layout" value="${escapeHTML(layout.id)}">
+			<div class="label">${escapeHTML(layout.name)}</div>
+		</label>`
+}
+
+const $lockableKeys = document.querySelector('.lockableKeysList')
+for (const button of Controller.buttons) {
+	if (!button.content || button.customAction || button.diagonal) continue
+	let content = ''
+	if (button.content.type === 'mobystk:text') content += escapeHTML(button.content.value)
+	else if (button.content.type === 'mobystk:icon') content += `<i class="mdi mdi-${escapeHTML(button.content.value)}"></i>`
+	$lockableKeys.innerHTML += `
+		<label class="chip">
+			<input type="checkbox" name="lock" data-id="${escapeHTML(button.id)}" value="${escapeHTML(button.id)}">
+			<div class="label">${content}</div>
+		</label>`
+}
+
+const $hiddenItems = document.querySelector('.hiddenItemsList')
+for (const element of [...Controller.buttons, ...Controller.groups, ...Controller.joysticks]) {
+	let content = ''
+	if (element.type === 'mobystk:group') content += '<i class="mdi mdi-group"></i>&nbsp;'
+	if (element.type === 'mobystk:joystick') content += '<i class="mdi mdi-gamepad"></i>&nbsp;'
+	if (element.content?.type === 'mobystk:text') content += escapeHTML(element.content.value)
+	else if (element.content?.type === 'mobystk:icon') content += `<i class="mdi mdi-${escapeHTML(element.content.value)}"></i>`
+	else if (element.name) content += escapeHTML(element.name)
+
+	$hiddenItems.innerHTML += `
+		<label class="chip"">
+			<input type="checkbox" name="hide" data-id="${escapeHTML(element.id)}" value="${escapeHTML(element.id)}">
+			<div class="label">${content}</div>
+		</label>`
+}
+
 // Carregar opções
-formEls.code.value = ls.getItem('joystick.code') || window.location.hostname + ':5000'
-formEls.layout.value = ls.getItem('joystick.layout')
-formEls.player.value = ls.getItem('joystick.player')
-formEls.invertL.checked = ls.getItem('joystick.invertL') === 'true'
-formEls.invertR.checked = ls.getItem('joystick.invertR') === 'true'
-formEls.disJoyXAxis.checked = ls.getItem('joystick.disJoyXAxis') === 'true'
-formEls.disJoyYAxis.checked = ls.getItem('joystick.disJoyYAxis') === 'true'
-formEls.dblClickLoadSave.checked = ls.getItem('joystick.dblClickLoadSave') === 'true'
-formEls.vibrate.value = ls.getItem('joystick.vibrate') || '15'
-formEls.vibrateJoystick.value = ls.getItem('joystick.vibrateJoystick') || '5'
-formEls.vibrationFromGame.checked = !(ls.getItem('joystick.vibrationFromGame') === 'false')
-formEls.vgamepad.checked = ls.getItem('joystick.vgamepad') === 'true'
-formEls.background.value = ls.getItem('joystick.background') || 'rgba(0, 0, 0, 1)'
-formEls.color.value = ls.getItem('joystick.color') || 'rgba(255, 255, 255, 0.53)'
-formEls.border.value = ls.getItem('joystick.border') || 'rgba(255, 255, 255, 0.53)'
-formEls.active.value = ls.getItem('joystick.active') || 'rgba(255, 255, 255, 0.2)'
-formEls.bgImage.value = ls.getItem('joystick.bgImage')
-formEls.bgOpacity.value = ls.getItem('joystick.bgOpacity') || '0.5'
-formEls.bgBlur.value = ls.getItem('joystick.bgBlur') || '0'
-formEls.customCSS.value = ls.getItem('joystick.customCSS')
-formEls.driveSensitivity.value = ls.getItem('joystick.driveSensitivity') || '2'
-formEls.drivePrecision.value = ls.getItem('joystick.drivePrecision') || '1'
-// if (ls.getItem('joystick.locked') !== null)
-// 	document.querySelectorAll('[name=lock]').forEach(e => e.checked = false)
-// ls.getItem('joystick.locked')?.split(',')?.forEach(e => {
-// 	if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true
-// })
-// if (ls.getItem('joystick.hidden') !== null)
-// 	document.querySelectorAll('[name=hide]').forEach(e => e.checked = false)
-// ls.getItem('joystick.hidden')?.split(',')?.forEach(e => {
-// 	if (e) document.querySelector(`[name=hide][value="${e}"]`).checked = true
-// })
+Lockr.prefix = 'joystick.'
+formEls.code.value = getOpt('code', window.location.hostname + ':5000')
+formEls.layout.value = getOpt('layout', Controller.layouts[0]?.id)
+formEls.player.value = getOpt('player', '1')
+formEls.invertL.checked = getOpt('invertL', false)
+formEls.invertR.checked = getOpt('invertR', false)
+formEls.disJoyXAxis.checked = getOpt('disJoyXAxis', false)
+formEls.disJoyYAxis.checked = getOpt('disJoyYAxis', false)
+formEls.dblClickLoadSave.checked = getOpt('dblClickLoadSave', false)
+formEls.vibrate.value = getOpt('vibrate', '15')
+formEls.vibrateJoystick.value = getOpt('vibrateJoystick', '5')
+formEls.vibrationFromGame.checked = getOpt('vibrationFromGame', true)
+formEls.vgamepad.checked = getOpt('vgamepad', false)
+formEls.background.value = getOpt('background', 'rgba(0, 0, 0, 1)')
+formEls.color.value = getOpt('color', 'rgba(255, 255, 255, 0.53)')
+formEls.border.value = getOpt('border', 'rgba(255, 255, 255, 0.53)')
+formEls.active.value = getOpt('active', 'rgba(255, 255, 255, 0.2)')
+formEls.bgImage.value = getOpt('bgImage', '')
+formEls.bgOpacity.value = getOpt('bgOpacity', '0.5')
+formEls.bgBlur.value = getOpt('bgBlur', '0')
+formEls.customCSS.value = getOpt('customCSS', '')
+formEls.driveSensitivity.value = getOpt('driveSensitivity', '2')
+formEls.drivePrecision.value = getOpt('drivePrecision', '1')
+const locked = getOpt('locked', [])
+const hidden = getOpt('hidden', ['mobystk:macro_record', 'mobystk:macro_play', 'mobystk:fast_forward'])
+for (const item of locked) {
+	const $input = document.querySelector(`[name=lock][data-id="${escapeHTML(item)}"]`)
+	if ($input) $input.checked = true
+}
+for (const item of hidden) {
+	const $input = document.querySelector(`[name=hide][data-id="${escapeHTML(item)}"]`)
+	if ($input) $input.checked = true
+}
+
+function getOpt(name, defaultValue) {
+	const value = Lockr.get(name)
+	return value === undefined ? defaultValue : value
+}
 
 document.querySelectorAll('input[type="range"] + .value').forEach($value => {
 	const $range = $value.parentElement.querySelector('input[type="range"]')
@@ -92,31 +136,31 @@ document.forms[0].addEventListener('submit', function (e) {
 		if (e.checked) hiddenItems.push(e.value)
 	})
 
-	localStorage.setItem('joystick.code', elems.code.value)
-	localStorage.setItem('joystick.layout', elems.layout.value)
-	localStorage.setItem('joystick.player', elems.player.value)
-	localStorage.setItem('joystick.debug', elems.debug.checked)
-	localStorage.setItem('joystick.invertL', elems.invertL.checked)
-	localStorage.setItem('joystick.invertR', elems.invertR.checked)
-	localStorage.setItem('joystick.disJoyXAxis', elems.disJoyXAxis.checked)
-	localStorage.setItem('joystick.disJoyYAxis', elems.disJoyYAxis.checked)
-	localStorage.setItem('joystick.dblClickLoadSave', elems.dblClickLoadSave.checked)
-	localStorage.setItem('joystick.vibrate', elems.vibrate.value)
-	localStorage.setItem('joystick.vibrateJoystick', elems.vibrateJoystick.value)
-	localStorage.setItem('joystick.vibrationFromGame', elems.vibrationFromGame.checked)
-	localStorage.setItem('joystick.vgamepad', elems.vgamepad.checked)
-	localStorage.setItem('joystick.background', elems.background.value)
-	localStorage.setItem('joystick.color', elems.color.value)
-	localStorage.setItem('joystick.border', elems.border.value)
-	localStorage.setItem('joystick.active', elems.active.value)
-	localStorage.setItem('joystick.bgImage', elems.bgImage.value)
-	localStorage.setItem('joystick.bgOpacity', elems.bgOpacity.value)
-	localStorage.setItem('joystick.bgBlur', elems.bgBlur.value)
-	localStorage.setItem('joystick.customCSS', elems.customCSS.value)
-	localStorage.setItem('joystick.driveSensitivity', elems.driveSensitivity.value)
-	localStorage.setItem('joystick.drivePrecision', elems.drivePrecision.value)
-	localStorage.setItem('joystick.locked', lockedBtns.join(','))
-	localStorage.setItem('joystick.hidden', hiddenItems.join(','))
+	Lockr.set('code', elems.code.value)
+	Lockr.set('layout', elems.layout.value)
+	Lockr.set('player', Number(elems.player.value))
+	Lockr.set('debug', elems.debug.checked)
+	Lockr.set('invertL', elems.invertL.checked)
+	Lockr.set('invertR', elems.invertR.checked)
+	Lockr.set('disJoyXAxis', elems.disJoyXAxis.checked)
+	Lockr.set('disJoyYAxis', elems.disJoyYAxis.checked)
+	Lockr.set('dblClickLoadSave', elems.dblClickLoadSave.checked)
+	Lockr.set('vibrate', Number(elems.vibrate.value))
+	Lockr.set('vibrateJoystick', Number(elems.vibrateJoystick.value))
+	Lockr.set('vibrationFromGame', elems.vibrationFromGame.checked)
+	Lockr.set('vgamepad', elems.vgamepad.checked)
+	Lockr.set('background', elems.background.value)
+	Lockr.set('color', elems.color.value)
+	Lockr.set('border', elems.border.value)
+	Lockr.set('active', elems.active.value)
+	Lockr.set('bgImage', elems.bgImage.value)
+	Lockr.set('bgOpacity', Number(elems.bgOpacity.value))
+	Lockr.set('bgBlur', Number(elems.bgBlur.value))
+	Lockr.set('customCSS', elems.customCSS.value)
+	Lockr.set('driveSensitivity', Number(elems.driveSensitivity.value))
+	Lockr.set('drivePrecision', Number(elems.drivePrecision.value))
+	Lockr.set('locked', lockedBtns)
+	Lockr.set('hidden', hiddenItems)
 
 	loading()
 	location.href = 'joystick.html'
@@ -141,7 +185,7 @@ function createPickr(el, defaultColor, opacity) {
 	return Pickr.create({
 		el: `.pickr-${el}`,
 		theme: 'classic',
-		default: ls['joystick.' + el] || defaultColor,
+		default: Lockr.get(el) || defaultColor,
 		defaultRepresentation: 'HEXA',
 		comparison: false,
 		autoReposition: true,
@@ -155,7 +199,7 @@ function createPickr(el, defaultColor, opacity) {
 			}
 		},
 		i18n: {
-			'btn:save': 'Fechar',
+			'btn:save': 'Fechar'
 		},
 		swatches: [
 			'#F44336',
@@ -258,4 +302,13 @@ function getPrecision(num) {
 	const str = Number(num).toString()
 	const arr = str.indexOf('.') + 1
 	return !arr ? 0 : str.length - arr
+}
+
+function escapeHTML(unsafe) {
+	return unsafe
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#039;')
 }

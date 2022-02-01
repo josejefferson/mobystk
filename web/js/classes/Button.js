@@ -38,7 +38,7 @@ Controller.Button = class extends EventEmitter {
 
 	press(diagonal = false) {
 		if (this.diagonal) {
-			const targets = Controller.elements.buttons.filter((e) => this.targets.includes(e.id))
+			const targets = Controller.elements.buttons.filter((e) => this.targets.includes(e.id) && !e.lockable)
 			for (const target of targets) target.press(true)
 		} else {
 			if (!this.active && !this.customAction) this.emit('press', this.key)
@@ -104,7 +104,7 @@ Controller.Button = class extends EventEmitter {
 
 		// Botões de diagonal e bloqueáveis
 		el.classList[this.diagonal ? 'add' : 'remove']('controller-button-diagonal')
-		el.classList[this.diagonal ? 'add' : 'remove']('controller-button-lockable')
+		el.classList[this.lockable ? 'add' : 'remove']('controller-button-lockable')
 
 		// Conteúdo do botão
 		el.innerHTML = ''

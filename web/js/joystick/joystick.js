@@ -50,6 +50,7 @@ function updateJoystick(target, e, d) {
 
 // REINICIA OS JOYSTICKS PARA EVITAR BUGS
 const $viewport = document.querySelector('meta[name="viewport"]')
+window.addEventListener('load', resizeJoystick)
 window.addEventListener('resize', resizeJoystick)
 function resizeJoystick() {
 	// Ajusta os tamanhos do controle

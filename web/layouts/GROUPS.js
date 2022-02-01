@@ -1,9 +1,9 @@
-Controller.GROUPS = [
+Controller.groups.push(
 	// Setas
 	{
 		type: 'mobystk:group',
 		id: 'mobystk:arrows',
-		name: 'Setas',
+		name: 'Grupo setas',
 		anchorX: 0,
 		anchorY: 1,
 		x: [30, 'px'],
@@ -26,7 +26,7 @@ Controller.GROUPS = [
 	{
 		type: 'mobystk:group',
 		id: 'mobystk:arrows_top',
-		name: 'Setas no topo',
+		name: 'Grupo setas no topo',
 		anchorX: 0,
 		anchorY: 1,
 		x: [30, 'px'],
@@ -49,7 +49,7 @@ Controller.GROUPS = [
 	{
 		type: 'mobystk:group',
 		id: 'mobystk:xbox_actions',
-		name: 'Ações (estilo XBOX)',
+		name: 'Grupo ações (estilo XBOX)',
 		anchorX: 1,
 		anchorY: 1,
 		x: [30, 'px'],
@@ -72,7 +72,7 @@ Controller.GROUPS = [
 	{
 		type: 'mobystk:group',
 		id: 'mobystk:ps_actions',
-		name: 'Ações (estilo PlayStation)',
+		name: 'Grupo ações (estilo PlayStation)',
 		anchorX: 1,
 		anchorY: 1,
 		x: [30, 'px'],
@@ -95,7 +95,7 @@ Controller.GROUPS = [
 	{
 		type: 'mobystk:group',
 		id: 'mobystk:ps_actions_top',
-		name: 'Ações (estilo PlayStation) no topo',
+		name: 'Grupo ações (estilo PlayStation) no topo',
 		anchorX: 1,
 		anchorY: 1,
 		x: [30, 'px'],
@@ -113,4 +113,4 @@ Controller.GROUPS = [
 			{ import: 'mobystk:ps_act_down', width: [48, 'px'], height: [48, 'px'] }
 		]
 	}
-]
+)

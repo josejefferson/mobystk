@@ -1,4 +1,4 @@
-Controller.JOYSTICKS = [
+Controller.joysticks.push(
 	// Joystick esquerdo
 	{
 		type: 'mobystk:joystick',
@@ -40,4 +40,4 @@ Controller.JOYSTICKS = [
 		padding: 60,
 		keys: ['padUp', 'padLeft', 'padDown', 'padRight']
 	}
-]
+)

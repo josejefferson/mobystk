@@ -1,11 +1,13 @@
 // Carrega o layout no controle
+const $layout = document.querySelector('.controller-layout')
 function loadLayout(layout) {
 	layout.content = layout.content.map(parseElement).filter(e => e)
 	const allElements = getAllElements(layout)
 
+	$layout.innerHTML = ''
 	for (const object of layout.content) {
 		if (!object) continue
-		document.body.appendChild(object.element)
+		$layout.appendChild(object.element)
 		if (object instanceof Controller.Joystick) object.render()
 	}
 
@@ -14,6 +16,10 @@ function loadLayout(layout) {
 	Controller.elements.buttons = allElements.filter(e => e instanceof Controller.Button)
 	Controller.elements.groups = allElements.filter(e => e instanceof Controller.Group)
 	Controller.elements.joysticks = allElements.filter(e => e instanceof Controller.Joystick)
+	$DILayout.innerText = layout.name || '???'
+
+	loadElementActions()
+	loadDriveMode()
 
 	return layout
 }
@@ -36,7 +42,7 @@ function parseElement(object) {
 	if (!object) return
 
 	if (object.type === 'mobystk:button') {
-		if (options.locked?.includes(object.id)) object = { ...object, lockable: true }
+		if (options.locked?.includes(object.import || object.id)) object = { ...object, lockable: true }
 		return new Controller.Button(object)
 	} else if (object.type === 'mobystk:group') {
 		object.content = object.content.map(parseElement).filter(e => e)
@@ -48,12 +54,16 @@ function parseElement(object) {
 
 // Reutiliza um elemento
 function importElement(object) {
-	const ALL_ELEMENTS = [...Controller.BUTTONS, ...Controller.GROUPS, ...Controller.JOYSTICKS]
-	const element = ALL_ELEMENTS.find((e) => e.id === object.import)
+	const allElements = [...Controller.buttons, ...Controller.groups, ...Controller.joysticks]
+	const element = allElements.find((e) => e.id === object.import)
 	if (element) return { ...element, ...object }
 }
 
 // Carrega o layout selecionado
+if (!options.layout) {
+	window.location.href = 'index.html'
+	throw new Error('Layout não selecionado')
+}
 const layout = Controller.layouts.find(l => l.id === options.layout)
 if (!layout) {
 	alert('Layout não encontrado!')

@@ -1,4 +1,4 @@
-Controller.BUTTONS = [
+Controller.buttons.push(
 	// L
 	{
 		type: 'mobystk:button',
@@ -661,6 +661,159 @@ Controller.BUTTONS = [
 		]
 	},
 
+	// Volante
+	{
+		type: 'mobystk:button',
+		id: 'mobystk:drive',
+		name: 'Volante',
+		customAction: 'drive',
+		anchorX: 2,
+		anchorY: 1,
+		x: [0, '%'],
+		y: [70, 'px'],
+		width: [52, 'px'],
+		height: [52, 'px'],
+		border: [true, true, true, true],
+		fontSize: [28, 'px'],
+		radius: [
+			[50, '%'],
+			[50, '%'],
+			[50, '%'],
+			[50, '%']
+		]
+	},
+
+	// Gravar macro
+	{
+		type: 'mobystk:button',
+		id: 'mobystk:macro_record',
+		name: 'Gravar macro',
+		customAction: 'macro-record',
+		anchorX: 1,
+		anchorY: 0,
+		x: [50, '%'],
+		y: [48, 'px'],
+		width: [48, 'px'],
+		height: [32, 'px'],
+		border: [true, false, false, true],
+		fontSize: [16, 'px'],
+		content: {
+			type: 'mobystk:icon',
+			value: 'record'
+		},
+		radius: [
+			[1000, 'px'],
+			[0, 'px'],
+			[0, 'px'],
+			[0, 'px']
+		]
+	},
+
+	// Reproduzir macro
+	{
+		type: 'mobystk:button',
+		id: 'mobystk:macro_play',
+		name: 'Reproduzir macro',
+		customAction: 'macro-play',
+		anchorX: 0,
+		anchorY: 0,
+		x: [50, '%'],
+		y: [48, 'px'],
+		width: [48, 'px'],
+		height: [32, 'px'],
+		border: [true, true, false, false],
+		fontSize: [16, 'px'],
+		content: {
+			type: 'mobystk:icon',
+			value: 'play'
+		},
+		radius: [
+			[0, 'px'],
+			[1000, 'px'],
+			[0, 'px'],
+			[0, 'px']
+		]
+	},
+
+	// Aumentar volume
+	{
+		type: 'mobystk:button',
+		id: 'mobystk:volume_up',
+		name: 'Aumentar volume',
+		key: 'volUp',
+		anchorX: 0,
+		anchorY: 0,
+		x: [50, '%'],
+		y: [80, 'px'],
+		width: [72, 'px'],
+		height: [52, 'px'],
+		border: [true, true, true, false],
+		fontSize: [28, 'px'],
+		content: {
+			type: 'mobystk:icon',
+			value: 'volume-plus'
+		},
+		radius: [
+			[0, 'px'],
+			[1000, 'px'],
+			[1000, 'px'],
+			[0, 'px']
+		]
+	},
+
+	// Diminuir volume
+	{
+		type: 'mobystk:button',
+		id: 'mobystk:volume_down',
+		name: 'Diminuir volume',
+		key: 'volDown',
+		anchorX: 1,
+		anchorY: 0,
+		x: [50, '%'],
+		y: [80, 'px'],
+		width: [72, 'px'],
+		height: [52, 'px'],
+		border: [true, false, true, true],
+		fontSize: [28, 'px'],
+		content: {
+			type: 'mobystk:icon',
+			value: 'volume-minus'
+		},
+		radius: [
+			[1000, 'px'],
+			[0, 'px'],
+			[0, 'px'],
+			[1000, 'px']
+		]
+	},
+
+	// Avanço rápido
+	{
+		type: 'mobystk:button',
+		id: 'mobystk:fast_forward',
+		name: 'Avanço rápido',
+		key: 'fast',
+		anchorX: 1,
+		anchorY: 1,
+		x: [5, 'px'],
+		y: [5, 'px'],
+		width: [40, 'px'],
+		height: [25, 'px'],
+		content: {
+			type: 'mobystk:icon',
+			value: 'fast-forward'
+		},
+		scalable: true,
+		border: [true, true, true, true],
+		fontSize: [16, 'px'],
+		radius: [
+			[1000, 'px'],
+			[1000, 'px'],
+			[1000, 'px'],
+			[1000, 'px']
+		]
+	},
+
 	// Diagonal esquerda cima
 	{
 		type: 'mobystk:button',
@@ -743,158 +896,5 @@ Controller.BUTTONS = [
 			[75, 'px'],
 			[0, 'px']
 		]
-	},
-	
-	// Volante
-	{
-		type: 'mobystk:button',
-		id: 'mobystk:drive',
-		name: 'Volante',
-		customAction: 'drive',
-		anchorX: 2,
-		anchorY: 1,
-		x: [0, '%'],
-		y: [70, 'px'],
-		width: [52, 'px'],
-		height: [52, 'px'],
-		border: [true, true, true, true],
-		fontSize: [28, 'px'],
-		radius: [
-			[50, '%'],
-			[50, '%'],
-			[50, '%'],
-			[50, '%']
-		]
-	},
-
-	// Gravar macro
-	{
-		type: 'mobystk:button',
-		id: 'mobystk:macro_record',
-		name: 'Gravar macro',
-		customAction: 'macro-record',
-		anchorX: 1,
-		anchorY: 0,
-		x: [50, '%'],
-		y: [48, 'px'],
-		width: [48, 'px'],
-		height: [32, 'px'],
-		border: [true, false, false, true],
-		fontSize: [16, 'px'],
-		content: {
-			type: 'mobystk:icon',
-			value: 'record'
-		},
-		radius: [
-			[1000, 'px'],
-			[0, 'px'],
-			[0, 'px'],
-			[0, 'px']
-		]
-	},
-	
-	// Reproduzir macro
-	{
-		type: 'mobystk:button',
-		id: 'mobystk:macro_play',
-		name: 'Reproduzir macro',
-		customAction: 'macro-play',
-		anchorX: 0,
-		anchorY: 0,
-		x: [50, '%'],
-		y: [48, 'px'],
-		width: [48, 'px'],
-		height: [32, 'px'],
-		border: [true, true, false, false],
-		fontSize: [16, 'px'],
-		content: {
-			type: 'mobystk:icon',
-			value: 'play'
-		},
-		radius: [
-			[0, 'px'],
-			[1000, 'px'],
-			[0, 'px'],
-			[0, 'px']
-		]
-	},
-	
-	// Aumentar volume
-	{
-		type: 'mobystk:button',
-		id: 'mobystk:volume_up',
-		name: 'Aumentar volume',
-		key: 'volUp',
-		anchorX: 0,
-		anchorY: 0,
-		x: [50, '%'],
-		y: [80, 'px'],
-		width: [72, 'px'],
-		height: [52, 'px'],
-		border: [true, true, true, false],
-		fontSize: [28, 'px'],
-		content: {
-			type: 'mobystk:icon',
-			value: 'volume-plus'
-		},
-		radius: [
-			[0, 'px'],
-			[1000, 'px'],
-			[1000, 'px'],
-			[0, 'px']
-		]
-	},
-
-	// Diminuir volume
-	{
-		type: 'mobystk:button',
-		id: 'mobystk:volume_down',
-		name: 'Diminuir volume',
-		key: 'volDown',
-		anchorX: 1,
-		anchorY: 0,
-		x: [50, '%'],
-		y: [80, 'px'],
-		width: [72, 'px'],
-		height: [52, 'px'],
-		border: [true, false, true, true],
-		fontSize: [28, 'px'],
-		content: {
-			type: 'mobystk:icon',
-			value: 'volume-minus'
-		},
-		radius: [
-			[1000, 'px'],
-			[0, 'px'],
-			[0, 'px'],
-			[1000, 'px']
-		]
-	},
-	
-	// Avanço rápido
-	{
-		type: 'mobystk:button',
-		id: 'mobystk:fast_forward',
-		name: 'Avanço rápido',
-		key: 'fast',
-		anchorX: 1,
-		anchorY: 1,
-		x: [5, 'px'],
-		y: [5, 'px'],
-		width: [40, 'px'],
-		height: [25, 'px'],
-		content: {
-			type: 'mobystk:icon',
-			value: 'fast-forward'
-		},
-		scalable: true,
-		border: [true, true, true, true],
-		fontSize: [16, 'px'],
-		radius: [
-			[1000, 'px'],
-			[1000, 'px'],
-			[1000, 'px'],
-			[1000, 'px']
-		]
 	}
-]
+)

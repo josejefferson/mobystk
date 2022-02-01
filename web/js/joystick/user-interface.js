@@ -10,6 +10,9 @@ const $DIClock = $deviceInfo.querySelector('.clock')
 const $DIPlayerNumber = $deviceInfo.querySelector('.player .player-number')
 const $DILayout = $deviceInfo.querySelector('.layout')
 const $DIStatus = $deviceInfo.querySelector('.status')
+if (options.hidden.includes('mobystk:deviceInfo')) {
+	$deviceInfo.classList.add('hidden')
+}
 
 // CARREGAMENTO DAS OPÇÕES
 $edit.addEventListener('click', loading)
@@ -74,7 +77,6 @@ function updateClock() {
 
 // INFORMAÇÕES - Nº JOGADOR E NOME DO LAYOUT
 $DIPlayerNumber.innerText = options.player + 1
-$DILayout.innerText = Controller.layouts.find(l => l.id === options.layout).name
 
 
 // ATUALIZA O JOGADOR DO CONTROLE NO MODO DEBUG

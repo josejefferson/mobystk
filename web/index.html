@@ -48,20 +48,7 @@
 
 				<!-- Layouts -->
 				<div class="explanation">Selecione o videogame</div>
-				<div class="chipsGroup selectLayout">
-					<label class="chip">
-						<input type="radio" name="layout" value="mobystk:psp" checked>
-						<div class="label">PSP</div>
-					</label>
-					<label class="chip">
-						<input type="radio" name="layout" value="mobystk:ps2">
-						<div class="label">PS2</div>
-					</label>
-					<label class="chip">
-						<input type="radio" name="layout" value="mobystk:snes">
-						<div class="label">SNES</div>
-					</label>
-				</div>
+				<div class="chipsGroup selectLayout"></div>
 			</main>
 
 			<footer>
@@ -172,8 +159,8 @@
 			</header>
 
 			<main>
-				<div class="chipsGroup">
-					<label class="chip"><input type="checkbox" name="lock" value="mobystk:l">
+				<div class="chipsGroup lockableKeysList">
+					<!-- <label class="chip"><input type="checkbox" name="lock" value="mobystk:l">
 						<div class="label">L</div>
 					</label>
 					<label class="chip"><input type="checkbox" name="lock" value="mobystk:l1">
@@ -241,7 +228,7 @@
 					</label>
 					<label class="chip"><input type="checkbox" name="lock" value="mobystk:start">
 						<div class="label">START</div>
-					</label>
+					</label> -->
 				</div>
 			</main>
 		</section>
@@ -254,11 +241,12 @@
 			</header>
 
 			<main>
-				<div class="chipsGroup">
-					<label class="chip hide"><input type="checkbox" name="hide" value="mobystk:deviceInfo">
+				<div class="chipsGroup hiddenItemsList">
+					<label class="chip hide">
+						<input type="checkbox" name="hide" data-id="mobystk:deviceInfo" value="mobystk:deviceInfo">
 						<div class="label">Informações</div>
 					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="mobystk:drive">
+					<!-- <label class="chip hide"><input type="checkbox" name="hide" value="mobystk:drive">
 						<div class="label">Volante</div>
 					</label>
 					<label class="chip hide"><input type="checkbox" name="hide" value="mobystk:recordMacro playMacro" checked>
@@ -341,7 +329,7 @@
 					</label>
 					<label class="chip hide"><input type="checkbox" name="hide" value="mobystk:diag">
 						<div class="label">Diagonais</div>
-					</label>
+					</label> -->
 				</div>
 			</main>
 		</section>
@@ -472,6 +460,12 @@
 	</div>
 
 	<script src="lib/js/pickr.es5.min.js"></script>
+	<script src="lib/js/lockr.js"></script>
+	<script src="js/classes/Controller.js"></script>
+	<script src="layouts/buttons.js"></script>
+	<script src="layouts/groups.js"></script>
+	<script src="layouts/joysticks.js"></script>
+	<script src="layouts/layouts.js"></script>
 	<script src="js/index.js"></script>
 </body>
 
