@@ -26,6 +26,7 @@ Controller.Button = class extends EventEmitter {
 		this.fontSize = details.fontSize || [20, 'px']
 
 		this.active = false
+		this.editing = false
 		this._transform = ''
 
 		const $button = document.createElement('button')
@@ -103,9 +104,10 @@ Controller.Button = class extends EventEmitter {
 			el.style.transform = this._transform = 'translateY(-50%)'
 		}
 
-		// Botões de diagonal e bloqueáveis
+		// Botões de diagonal e bloqueáveis e editando
 		el.classList[this.diagonal ? 'add' : 'remove']('controller-button-diagonal')
 		el.classList[this.lockable ? 'add' : 'remove']('controller-button-lockable')
+		el.classList[this.editing ? 'add' : 'remove']('controller-button-editing')
 
 		// Conteúdo do botão
 		el.innerHTML = ''

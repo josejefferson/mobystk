@@ -40,6 +40,7 @@ const $editMenu = document.querySelector('.edit-menu')
 const $editMenuDrag = $editMenu.querySelector('.edit-menu .edit-menu-drag')
 let editMenuDragging = false
 $editMenuDrag.addEventListener('touchstart', (e) => {
+	//navigator.vibrate(100)
 	editMenuDragging = true
 })
 
@@ -78,14 +79,19 @@ $editMenuDrag.addEventListener('touchend', (e) => {
 
 let editingelement = null
 function elementClick(e) {
-	if (this.classList.contains('editing')) {
+	/*if (this.classList.contains('editing')) {
 		$editMenu.classList.remove('editing-element')
 		this.classList.remove('editing')
 		return
 	}
 	document.querySelectorAll('.controller-button,.controller-group,.controller-joystick').forEach(b => b.classList.remove('editing'))
 	this.classList.add('editing')
-	$editMenu.classList.add('editing-element')
+	$editMenu.classList.add('editing-element')*/
+	if (editingelement) editingelement.editing = false
+	editingelement.render()
+	editingelement = this.instance
+	if (editingelement) editingelement.editing = true
+	editingelement.render()
 	if (activeMode === -1) activeMode = 0
 }
 function touchStart(e) {
@@ -94,23 +100,31 @@ function touchStart(e) {
 let deltaxordeltay = -1 // 0 = x; 1 = y
 let free = true
 function touchMove(e) {
-	const el = document.querySelector('.editing')
+	const el = editingelement
+	
 	if (!el) return
 	const deltaX = e.changedTouches[0].clientX - touch.clientX
 	const deltaY = e.changedTouches[0].clientY - touch.clientY
 
-	if (deltaxordeltay === -1) deltaxordeltay = Math.abs(deltaX) > Math.abs(deltaY) ? 0 : 1
-
+	//if (deltaxordeltay === -1) deltaxordeltay = Math.abs(deltaX) > Math.abs(deltaY) ? 0 : 1
+	
 	if (activeMode === 0) {
-		const x = (parseFloat(el.getAttribute('data-x')) || convert(getComputedStyle(el).left).value)
-		const y = (parseFloat(el.getAttribute('data-y')) || convert(getComputedStyle(el).top).value)
+		//const x = (parseFloat(el.getAttribute('data-x')) || convert(getComputedStyle(el).left).value)
+		//const y = (parseFloat(el.getAttribute('data-y')) || convert(getComputedStyle(el).top).value)
+		const x = editingelement.x[0]
+		const y = editingelement.y[0]
+		
 		const gridX = Math.round(x / GRID_SIZE) * GRID_SIZE
 		const gridY = Math.round(y / GRID_SIZE) * GRID_SIZE
-		if (free || deltaxordeltay === 0) el.setAttribute('data-x', x + deltaX)
-		if (free || deltaxordeltay === 1) el.setAttribute('data-y', y + deltaY)
-		el.style.position = 'absolute'
-		if (free || deltaxordeltay === 0) el.style.left = gridX + 'px'
-		if (free || deltaxordeltay === 1) el.style.top = gridY + 'px'
+		//if (free || deltaxordeltay === 0) el.setAttribute('data-x', x + deltaX)
+		//if (free || deltaxordeltay === 1) el.setAttribute('data-y', y + deltaY)
+		//el.style.position = 'absolute'
+		console.log(gridX, gridY)
+		el.x[0] = gridX + deltaX
+		el.y[0] = gridY + deltaY
+		el.render()
+		//if (free || deltaxordeltay === 0) el.style.left = gridX + 'px'
+		//if (free || deltaxordeltay === 1) el.style.top = gridY + 'px'
 
 	} else if (activeMode === 1) {
 		const currentWidth = convert(getComputedStyle(el).width).value

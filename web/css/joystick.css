@@ -331,17 +331,17 @@ body:not(.layout-editor-opened) .layout-tree {
 .edit-menu {
 	position: fixed;
 	left: 0;
-	top: calc(100% - 34px);
+	top: calc(100% - 42px);
 	color: white;
 	background-color: #333;
-	height: 34px;
+	height: 42px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: row;
 	border-radius: 1000px;
 	padding-right: 2px;
-	z-index: 999;
+	z-index: 1001;
 }
 
 .edit-menu .edit-menu-drag {
@@ -360,9 +360,10 @@ body:not(.layout-editor-opened) .layout-tree {
 	cursor: pointer;
 	position: static;
 	padding: 0;
-	width: 30px;
-	height: 30px;
-	/*background: yellow;*/
+	width: 38px;
+	height: 38px;
+	background: none;
+	color: #fff;
 	transition: none;
 	border-radius: 50%;
 }
@@ -377,7 +378,7 @@ body:not(.layout-editor-opened) .layout-tree {
 }
 
 .edit-menu i.mdi {
-	font-size: 24px !important;
+	font-size: 28px !important;
 }
 
 .edit-menu hr {
@@ -397,7 +398,7 @@ body:not(.layout-editor-opened) .layout-tree {
 	width: 250px;
 	height: 100%;
 	background: rgba(50,50,50,0.9);
-	z-index: 3;
+	z-index: 1000;
 	flex-direction: column;
 	overflow: auto;
 	padding-top: 10px;
