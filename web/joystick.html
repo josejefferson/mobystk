@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="notranslate" translate="no">
 
-<head>
+<head><script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>eruda.init()</script>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=0">
 	<link rel="shortcut icon" href="favicon.png" type="image/png">
@@ -50,6 +51,19 @@
 		<button class="edit-action "><i class="mdi mdi-anchor"></i></button>
 		<button class="edit-action "><i class="mdi mdi-border-style"></i></button>
 		<button class="edit-action "><i class="mdi mdi-cog"></i></button>
+	</div>
+	
+	<div class="layout-tree">
+		<div class="element button"><div class="name">L</div></div>
+		<div class="element button active"><div class="name">R</div></div>
+		<div class="element button"><div class="name">Start</div></div>
+		<div class="element group">
+			<div class="name">Setas</div>
+			<div class="content">
+				<div class="element button"><div class="name">Seta apontada para Cima</div></div>
+				<div class="element button"><div class="name">Baixo</div></div>
+			</div>
+		</div>
 	</div>
 
 	<div class="loadingScreen">

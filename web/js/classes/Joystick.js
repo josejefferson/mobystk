@@ -18,6 +18,7 @@ Controller.Joystick = class extends EventEmitter {
 
 		const $joystick = document.createElement('div')
 		$joystick.classList.add('controller-joystick')
+		$joystick.dataset.id = this.id
 		$joystick.instance = this
 		this.element = $joystick
 

@@ -21,6 +21,7 @@
 body {
 	background-color: var(--background);
 	color: var(--color);
+	font-family: Roboto, Arial, sans-serif;
 	height: 100vh;
 	margin: 0;
 	overflow: hidden;
@@ -30,7 +31,15 @@ body {
 body.debug .controller-joystick,
 body.debug .controller-group,
 body.debug .controller-button-diagonal {
-	border: var(--color) 1px solid;
+	border: var(--color) 1px solid !important;
+}
+
+body.debug .controller-group {
+	border-style: dashed !important;
+}
+
+body.debug .controller-joystick {
+	border-style: dotted !important;
 }
 
 /* Desativa as transições enquanto carrega a página */
@@ -131,6 +140,10 @@ svg {
 }
 
 /* Joysticks */
+.controller-joystick {
+	border-radius: 50%;
+}
+
 .nipple,
 .nipple .back,
 .nipple .front {
@@ -288,7 +301,6 @@ body.layout-editor-opened button.edit {
 }
 
 body.layout-editor-opened .editing {
-	background-color: #f005;
 	animation: editing 1s ease infinite;
 }
 
@@ -303,15 +315,16 @@ body.layout-editor-opened {
 
 	from,
 	to {
-		opacity: 1;
+		background: rgba(255, 0, 0, 0.3);
 	}
 
 	50% {
-		opacity: 0.5;
+		background: rgba(255, 0, 0, 0.15);
 	}
 }
 
-body:not(.layout-editor-opened) .edit-menu {
+body:not(.layout-editor-opened) .edit-menu,
+body:not(.layout-editor-opened) .layout-tree {
 	display: none;
 }
 
@@ -374,4 +387,52 @@ body:not(.layout-editor-opened) .edit-menu {
 	width: 0.5px;
 	margin: 5px;
 	opacity: 0.2;
+}
+
+.layout-tree {
+	display: flex;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 250px;
+	height: 100%;
+	background: rgba(50,50,50,0.9);
+	z-index: 3;
+	flex-direction: column;
+	overflow: auto;
+	padding-top: 10px;
+	//backdrop-filter: blur(3px)
+}
+
+.layout-tree .element {
+	display: inline-block;
+}
+
+.layout-tree .element .name {
+	width: 200px;
+	padding: 10px 15px;
+	background: #555;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	border-radius: 5px;
+	display: inline-block;
+	font-size: 18px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.layout-tree .element.active .name {
+	border: white 2px solid;
+	padding: 8px 13px;
+}
+
+.layout-tree .element .name i {
+	margin-left: -5px;
+	margin-right: 10px;
+}
+
+.layout-tree .element .content {
+	margin-left: 10px;
 }

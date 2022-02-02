@@ -30,6 +30,7 @@ Controller.Button = class extends EventEmitter {
 
 		const $button = document.createElement('button')
 		$button.classList.add('controller-button')
+		$button.dataset.id = this.id
 		$button.instance = this
 		this.element = $button
 

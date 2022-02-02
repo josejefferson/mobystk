@@ -15,6 +15,7 @@ Controller.Group = class {
 
 		const $group = document.createElement('div')
 		$group.classList.add('controller-group')
+		$group.dataset.id = this.id
 		$group.instance = this
 		this.element = $group
 
