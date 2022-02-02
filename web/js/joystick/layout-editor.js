@@ -3,14 +3,14 @@ window.layoutEditor = layoutEditor
 
 layoutEditor.opened = false
 
-const GRID_SIZE = 5
+const GRID_SIZE = 30
 layoutEditor.start = () => {
 	layoutEditor.opened = true
 	options.disJoyXAxis = true
 	options.disJoyYAxis = true
 	resizeJoystick()
 	document.body.classList.add('layout-editor-opened')
-	document.querySelectorAll('.controller-button,.controller-group,.controller-joystick').forEach((el) => {
+	document.querySelectorAll('.controller-button,.controller-joystick').forEach((el) => {
 		el.addEventListener('click', elementClick)
 	})
 
@@ -77,63 +77,51 @@ $editMenuDrag.addEventListener('touchend', (e) => {
 	editMenuDragging = false
 })
 
-let editingelement = null
+let editingElement = null
 function elementClick(e) {
-	/*if (this.classList.contains('editing')) {
-		$editMenu.classList.remove('editing-element')
-		this.classList.remove('editing')
-		return
+	if (editingElement) {
+		editingElement.editing = false
+		editingElement.render()
 	}
-	document.querySelectorAll('.controller-button,.controller-group,.controller-joystick').forEach(b => b.classList.remove('editing'))
-	this.classList.add('editing')
-	$editMenu.classList.add('editing-element')*/
-	if (editingelement) editingelement.editing = false
-	editingelement.render()
-	editingelement = this.instance
-	if (editingelement) editingelement.editing = true
-	editingelement.render()
+	editingElement = this.instance
+	if (editingElement) {
+		editingElement.editing = true
+		editingElement.render()
+	}
 	if (activeMode === -1) activeMode = 0
 }
 function touchStart(e) {
 	touch = e.changedTouches[0]
 }
-let deltaxordeltay = -1 // 0 = x; 1 = y
-let free = true
+// let deltaxordeltay = -1 // 0 = x; 1 = y
+// let free = true
 function touchMove(e) {
-	const el = editingelement
-	
+	const el = editingElement
 	if (!el) return
-	const deltaX = e.changedTouches[0].clientX - touch.clientX
-	const deltaY = e.changedTouches[0].clientY - touch.clientY
+
+	let deltaX = e.changedTouches[0].clientX - touch.clientX
+	let deltaY = e.changedTouches[0].clientY - touch.clientY
+	if (el.anchorX === 1) deltaX = -deltaX
+	if (el.anchorY === 1) deltaY = -deltaY
 
 	//if (deltaxordeltay === -1) deltaxordeltay = Math.abs(deltaX) > Math.abs(deltaY) ? 0 : 1
 	
 	if (activeMode === 0) {
-		//const x = (parseFloat(el.getAttribute('data-x')) || convert(getComputedStyle(el).left).value)
-		//const y = (parseFloat(el.getAttribute('data-y')) || convert(getComputedStyle(el).top).value)
-		const x = editingelement.x[0]
-		const y = editingelement.y[0]
-		
-		const gridX = Math.round(x / GRID_SIZE) * GRID_SIZE
-		const gridY = Math.round(y / GRID_SIZE) * GRID_SIZE
-		//if (free || deltaxordeltay === 0) el.setAttribute('data-x', x + deltaX)
-		//if (free || deltaxordeltay === 1) el.setAttribute('data-y', y + deltaY)
-		//el.style.position = 'absolute'
-		console.log(gridX, gridY)
-		el.x[0] = gridX + deltaX
-		el.y[0] = gridY + deltaY
+		if (el.anchorX === 2) deltaX = 0
+		if (el.anchorY === 2) deltaY = 0
+		const x = editingElement.imaginaryX || editingElement.x[0]
+		const y = editingElement.imaginaryY || editingElement.y[0]
+		el.x[0] = Math.round((x + deltaX) / GRID_SIZE) * GRID_SIZE
+		el.y[0] = Math.round((y + deltaY) / GRID_SIZE) * GRID_SIZE
+		el.imaginaryX = x + deltaX
+		el.imaginaryY = y + deltaY
 		el.render()
-		//if (free || deltaxordeltay === 0) el.style.left = gridX + 'px'
-		//if (free || deltaxordeltay === 1) el.style.top = gridY + 'px'
-
 	} else if (activeMode === 1) {
-		const currentWidth = convert(getComputedStyle(el).width).value
-		const currentHeight = convert(getComputedStyle(el).height).value
-		const width = currentWidth + deltaX
-		const height = currentHeight + deltaY
-		console.log(currentWidth, width, currentHeight, height)
-		el.style.width = width + 'px'
-		el.style.height = height + 'px'
+		const width = editingElement.width[0]
+		const height = editingElement.height[0]
+		el.width[0] = width + deltaX
+		el.height[0] = height + deltaY
+		el.render()
 	}
 	touch = e.changedTouches[0]
 }

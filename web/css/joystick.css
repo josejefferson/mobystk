@@ -89,6 +89,7 @@ svg {
 	font-size: 20px;
 	justify-content: center;
 	outline: none;
+	padding: 0;
 	position: absolute;
 	transition:
 		border-color 1s ease,
@@ -300,7 +301,7 @@ body.layout-editor-opened button.edit {
 	color: red;
 }
 
-body.layout-editor-opened .editing {
+body.layout-editor-opened .controller-editing {
 	animation: editing 1s ease infinite;
 }
 
@@ -308,6 +309,13 @@ body.layout-editor-opened {
 	background-image:
 		repeating-linear-gradient(#ccc2 0 1px, transparent 1px 100%),
 		repeating-linear-gradient(90deg, #ccc2 0 1px, transparent 1px 100%);
+	background-size: var(--grid-size, 10px) var(--grid-size, 10px);
+}
+
+body.layout-editor-opened .controller-group {
+	background-image:
+		repeating-linear-gradient(#ffc6 0 1px, transparent 1px 100%),
+		repeating-linear-gradient(90deg, #ffc6 0 1px, transparent 1px 100%);
 	background-size: var(--grid-size, 10px) var(--grid-size, 10px);
 }
 
@@ -368,10 +376,10 @@ body:not(.layout-editor-opened) .layout-tree {
 	border-radius: 50%;
 }
 
-.edit-menu:not(.editing-element) button.edit-action {
+/*.edit-menu:not(.editing-element) button.edit-action {
 	opacity: 0.3;
 	pointer-events: none;
-}
+}*/
 
 .edit-menu button.mode-active {
 	background-color: blue;

@@ -1,17 +1,7 @@
-Controller.Button = class extends EventEmitter {
+Controller.Button = class extends Controller.Element {
 	constructor(details) {
-		super()
-
+		super(details)
 		this.type = 'mobystk:button'
-		this.id = details.id || 'mobystk:unknown'
-		this.name = details.name || '(Sem nome)'
-
-		this.x = details.x || [0, 'px']
-		this.y = details.y || [0, 'px']
-		this.anchorX = details.anchorX || 0
-		this.anchorY = details.anchorY || 0
-		this.width = details.width || [50, 'px']
-		this.height = details.height || [25, 'px']
 
 		this.content = details.content || { 'type': 'mobystk:text', 'value': '' }
 		this.key = details.key || ''
@@ -69,45 +59,22 @@ Controller.Button = class extends EventEmitter {
 	}
 
 	render() {
+		this._render()
 		const el = this.element
 
-		// Reseta os estilos
-		el.style.left = null
-		el.style.right = null
-		el.style.top = null
-		el.style.bottom = null
-		el.style.transform = null
-
 		// Aplica os estilos
-		el.style.width = this.width.join('')
-		el.style.height = this.height.join('')
 		if (!this.border[0]) el.style.borderTop = '0'
 		if (!this.border[1]) el.style.borderRight = '0'
 		if (!this.border[2]) el.style.borderBottom = '0'
 		if (!this.border[3]) el.style.borderLeft = '0'
-		if (this.anchorX === 0) el.style.left = this.x.join('')
-		if (this.anchorX === 1) el.style.right = this.x.join('')
-		if (this.anchorX === 2) el.style.left = '50%'
-		if (this.anchorY === 0) el.style.top = this.y.join('')
-		if (this.anchorY === 1) el.style.bottom = this.y.join('')
-		if (this.anchorY === 2) el.style.top = '50%'
+		
 		const radius = this.radius.map(e => e.join('')).join(' ')
 		el.style.borderRadius = radius
 		el.style.fontSize = this.fontSize.join('')
 
-		// Se o botão estiver centralizado
-		if (this.anchorX === 2 && this.anchorY === 2) {
-			el.style.transform = this._transform = 'translate(-50%, -50%)'
-		} else if (this.anchorX === 2 && this.anchorY !== 2) {
-			el.style.transform = this._transform = 'translateX(-50%)'
-		} else if (this.anchorX !== 2 && this.anchorY === 2) {
-			el.style.transform = this._transform = 'translateY(-50%)'
-		}
-
 		// Botões de diagonal e bloqueáveis e editando
 		el.classList[this.diagonal ? 'add' : 'remove']('controller-button-diagonal')
 		el.classList[this.lockable ? 'add' : 'remove']('controller-button-lockable')
-		el.classList[this.editing ? 'add' : 'remove']('controller-button-editing')
 
 		// Conteúdo do botão
 		el.innerHTML = ''
