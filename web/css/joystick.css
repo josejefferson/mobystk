@@ -303,6 +303,7 @@ body.layout-editor-opened button.edit {
 
 body.layout-editor-opened .controller-editing {
 	animation: editing 1s ease infinite;
+	outline: #fff9 1px dashed;
 }
 
 body.layout-editor-opened {
@@ -444,4 +445,17 @@ body:not(.layout-editor-opened) .layout-tree {
 
 .layout-tree .element .content {
 	margin-left: 10px;
+}
+
+.horizontal-anchor,
+.vertical-anchor {
+	position: absolute;
+}
+
+.horizontal-anchor {
+	border-top: #fff9 1px dashed;
+}
+
+.vertical-anchor {
+	border-left: #fff9 1px dashed;
 }

@@ -3,7 +3,7 @@ window.layoutEditor = layoutEditor
 
 layoutEditor.opened = false
 
-const GRID_SIZE = 30
+const GRID_SIZE = 10
 layoutEditor.start = () => {
 	layoutEditor.opened = true
 	options.disJoyXAxis = true
@@ -77,6 +77,8 @@ $editMenuDrag.addEventListener('touchend', (e) => {
 	editMenuDragging = false
 })
 
+const $hAnchor = document.querySelector('.horizontal-anchor')
+const $vAnchor = document.querySelector('.vertical-anchor')
 let editingElement = null
 function elementClick(e) {
 	if (editingElement) {
@@ -87,11 +89,44 @@ function elementClick(e) {
 	if (editingElement) {
 		editingElement.editing = true
 		editingElement.render()
+		updateAnchorLines()
 	}
 	if (activeMode === -1) activeMode = 0
 }
+
+function updateAnchorLines() {
+	$hAnchor.style.left = null
+	$hAnchor.style.right = null
+	$hAnchor.style.top = null
+	$hAnchor.style.bottom = null
+	$vAnchor.style.left = null
+	$vAnchor.style.right = null
+	$vAnchor.style.top = null
+	$vAnchor.style.bottom = null
+	if (!editingElement) return
+	if (editingElement.anchorX === 0) {
+		$hAnchor.style.left = '0px'
+		$vAnchor.style.left = editingElement.x[0] + editingElement.width[0] / 2 + 'px'
+	}
+	if (editingElement.anchorX === 1) {
+		$hAnchor.style.right = '0px'
+		$vAnchor.style.right = editingElement.x[0] + editingElement.width[0] / 2 + 'px'
+	}
+	if (editingElement.anchorY === 0) {
+		$vAnchor.style.top = '0px'
+		$hAnchor.style.top = editingElement.y[0] + editingElement.height[0] / 2 + 'px'
+	}
+	if (editingElement.anchorY === 1) {
+		$vAnchor.style.bottom = '0px'
+		$hAnchor.style.bottom = editingElement.y[0] + editingElement.height[0] / 2 + 'px'
+	}
+	$hAnchor.style.width = editingElement.x.join('')
+	$vAnchor.style.height = editingElement.y.join('')
+}
+
 function touchStart(e) {
 	touch = e.changedTouches[0]
+	
 }
 // let deltaxordeltay = -1 // 0 = x; 1 = y
 // let free = true
@@ -121,8 +156,11 @@ function touchMove(e) {
 		const height = editingElement.height[0]
 		el.width[0] = width + deltaX
 		el.height[0] = height + deltaY
+		if (el.width[0] < 0) el.width[0] = 0
+		if (el.height[0] < 0) el.height[0] = 0
 		el.render()
 	}
+	updateAnchorLines()
 	touch = e.changedTouches[0]
 }
 function touchEnd(e) {
