@@ -17,8 +17,4 @@ Controller.Group = class extends Controller.Element {
 
 		this.render()
 	}
-
-	render() {
-		this._render()
-	}
 }

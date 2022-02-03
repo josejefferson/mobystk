@@ -1,9 +1,10 @@
 function loadDriveMode() {
 	const drive = Controller.elements.buttons.find(e => e.customAction === 'drive')
-	const driveHTML = drive ? drive.element.innerHTML = `
+	const driveHTML = drive ? drive._html = `
 		<svg viewBox="0 0 32 32">
 			<path d="M16 0a16 16 0 100 32 16 16 0 000-32zm0 4a12 12 0 0111.3 8H4.7c1.7-4.6 6-8 11.3-8zm0 14a2 2 0 110-4 2 2 0 010 4zM4 16c5.5 0 9.9 5.3 10 11.8A12 12 0 014 16zm14 11.8c.1-6.5 4.5-11.8 10-11.8a12 12 0 01-10 11.8z"></path>
 		</svg>` : ''
+	drive?.render()
 	if (drive) drive.element.addEventListener('touchstart', toggleDriveMode)
 	
 	// Caso não esteja em HTTPS, desativa o ícone de volante

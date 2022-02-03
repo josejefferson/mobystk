@@ -19,15 +19,13 @@ Controller.Joystick = class extends Controller.Element {
 	}
 
 	render() {
-		this._render()
+		this.width = [this.size[0] + this.padding, this.size[1]]
+		this.height = [this.size[0] + this.padding, this.size[1]]
+		super.render()
 		const el = this.element
 
 		// Reseta a posição
 		this.position = { up: false, down: false, left: false, right: false }
-
-		// Aplica os estilos
-		el.style.width = this.size[0] + this.padding + this.size[1]
-		el.style.height = this.size[0] + this.padding + this.size[1]
 
 		// NippleJS
 		if (this.nipple) this.nipple.destroy()

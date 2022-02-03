@@ -1,5 +1,6 @@
 * {
 	-webkit-tap-highlight-color: transparent;
+	box-sizing: border-box;
 	user-select: none;
 }
 
@@ -54,6 +55,12 @@ a {
 svg {
 	height: 32px;
 	width: 32px;
+}
+
+i.mdi {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 }
 
 /* ==========================================================================
@@ -148,7 +155,6 @@ svg {
 .nipple,
 .nipple .back,
 .nipple .front {
-	box-sizing: border-box;
 	cursor: move;
 	opacity: 1 !important;
 }
@@ -289,173 +295,4 @@ svg {
 	to {
 		transform: rotate(360deg);
 	}
-}
-
-/* ==========================================================================
-   Editor de Layouts
-   ========================================================================== */
-
-/* Editor de Layouts */
-body.layout-editor-opened button.edit {
-	border-color: red;
-	color: red;
-}
-
-body.layout-editor-opened .controller-editing {
-	animation: editing 1s ease infinite;
-	outline: #fff9 1px dashed;
-}
-
-body.layout-editor-opened {
-	background-image:
-		repeating-linear-gradient(#ccc2 0 1px, transparent 1px 100%),
-		repeating-linear-gradient(90deg, #ccc2 0 1px, transparent 1px 100%);
-	background-size: var(--grid-size, 10px) var(--grid-size, 10px);
-}
-
-body.layout-editor-opened .controller-group {
-	background-image:
-		repeating-linear-gradient(#ffc6 0 1px, transparent 1px 100%),
-		repeating-linear-gradient(90deg, #ffc6 0 1px, transparent 1px 100%);
-	background-size: var(--grid-size, 10px) var(--grid-size, 10px);
-}
-
-@keyframes editing {
-
-	from,
-	to {
-		background: rgba(255, 0, 0, 0.3);
-	}
-
-	50% {
-		background: rgba(255, 0, 0, 0.15);
-	}
-}
-
-body:not(.layout-editor-opened) .edit-menu,
-body:not(.layout-editor-opened) .layout-tree {
-	display: none;
-}
-
-.edit-menu {
-	position: fixed;
-	left: 0;
-	top: calc(100% - 42px);
-	color: white;
-	background-color: #333;
-	height: 42px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: row;
-	border-radius: 1000px;
-	padding-right: 2px;
-	z-index: 1001;
-}
-
-.edit-menu .edit-menu-drag {
-	opacity: 0.5;
-	height: 100%;
-	display: flex;
-	align-items: center;
-}
-
-.edit-menu button {
-	border: none;
-	align-items: center;
-	display: flex;
-	justify-content: center;
-	outline: none;
-	cursor: pointer;
-	position: static;
-	padding: 0;
-	width: 38px;
-	height: 38px;
-	background: none;
-	color: #fff;
-	transition: none;
-	border-radius: 50%;
-}
-
-/*.edit-menu:not(.editing-element) button.edit-action {
-	opacity: 0.3;
-	pointer-events: none;
-}*/
-
-.edit-menu button.mode-active {
-	background-color: blue;
-}
-
-.edit-menu i.mdi {
-	font-size: 28px !important;
-}
-
-.edit-menu hr {
-	height: calc(100% - 10px);
-	border: 0;
-	background: lightgray;
-	width: 0.5px;
-	margin: 5px;
-	opacity: 0.2;
-}
-
-.layout-tree {
-	display: flex;
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: 250px;
-	height: 100%;
-	background: rgba(50,50,50,0.9);
-	z-index: 1000;
-	flex-direction: column;
-	overflow: auto;
-	padding-top: 10px;
-	//backdrop-filter: blur(3px)
-}
-
-.layout-tree .element {
-	display: inline-block;
-}
-
-.layout-tree .element .name {
-	width: 200px;
-	padding: 10px 15px;
-	background: #555;
-	margin-left: 10px;
-	margin-right: 10px;
-	margin-bottom: 5px;
-	border-radius: 5px;
-	display: inline-block;
-	font-size: 18px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.layout-tree .element.active .name {
-	border: white 2px solid;
-	padding: 8px 13px;
-}
-
-.layout-tree .element .name i {
-	margin-left: -5px;
-	margin-right: 10px;
-}
-
-.layout-tree .element .content {
-	margin-left: 10px;
-}
-
-.horizontal-anchor,
-.vertical-anchor {
-	position: absolute;
-}
-
-.horizontal-anchor {
-	border-top: #fff9 1px dashed;
-}
-
-.vertical-anchor {
-	border-left: #fff9 1px dashed;
 }

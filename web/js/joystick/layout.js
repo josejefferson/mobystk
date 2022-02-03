@@ -46,7 +46,9 @@ function parseElement(object) {
 		return new Controller.Button(object)
 	} else if (object.type === 'mobystk:group') {
 		object.content = object.content.map(parseElement).filter(e => e)
-		return new Controller.Group(object)
+		const group = new Controller.Group(object)
+		object.content = object.content.map((e) => e.parent = group)
+		return group
 	} else if (object.type === 'mobystk:joystick') {
 		return new Controller.Joystick(object)
 	}

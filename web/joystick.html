@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="notranslate" translate="no">
 
-<head><script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-<script>eruda.init()</script>
+<head>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script> -->
+	<!-- <script>eruda.init()</script> -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=0">
 	<link rel="shortcut icon" href="favicon.png" type="image/png">
@@ -10,6 +11,7 @@
 	<title>MobyStk</title>
 	<link rel="stylesheet" href="lib/css/materialdesignicons.min.css">
 	<link rel="stylesheet" href="css/joystick.css">
+	<link rel="stylesheet" href="css/layout-editor.css">
 </head>
 
 <body class="connecting preload">
@@ -40,34 +42,30 @@
 
 	<div class="controller-layout"></div>
 
-	<div class="edit-menu">
-		<!--mudar para edit-toolbar-->
-		<div class="edit-menu-drag"><i class="mdi mdi-drag-vertical"></i></div>
+	<div class="layout-editor-toolbar showing-more" tabindex="0">
+		<div class="drag"><i class="mdi mdi-drag-vertical"></i></div>
 		<button class="layout-info"><i class="mdi mdi-information-outline"></i></button>
-		<button class="add-element"><i class="mdi mdi-plus"></i></button>
-		<hr>
-		<button class="edit-action edit-mode" data-mode="0"><i class="mdi mdi-cursor-move"></i></button>
-		<button class="edit-action edit-mode" data-mode="1"><i class="mdi mdi-resize"></i></button>
-		<button class="edit-action "><i class="mdi mdi-anchor"></i></button>
-		<button class="edit-action "><i class="mdi mdi-border-style"></i></button>
-		<button class="edit-action "><i class="mdi mdi-cog"></i></button>
-	</div>
-	
-	<div class="layout-tree hidden">
-		<div class="element button"><div class="name">L</div></div>
-		<div class="element button active"><div class="name">R</div></div>
-		<div class="element button"><div class="name">Start</div></div>
-		<div class="element group">
-			<div class="name">Setas</div>
-			<div class="content">
-				<div class="element button"><div class="name">Seta apontada para Cima</div></div>
-				<div class="element button"><div class="name">Baixo</div></div>
-			</div>
+		<button class="action"><i class="mdi mdi-file-tree"></i></button>
+		<button class="action"><i class="mdi mdi-cog"></i></button>
+		<button class="add-element"><i class="mdi mdi-plus-circle-outline"></i></button>
+		<button class="show-more"><i class="mdi mdi-chevron-right"></i></button>
+		<div class="more">
+			<button class="action mode" data-mode="0"><i class="mdi mdi-cursor-move"></i></button>
+			<button class="action mode" data-mode="1"><i class="mdi mdi-resize"></i></button>
+			<hr>
+			<button class="action"><i class="mdi mdi-anchor"></i></button>
+			<button class="action"><i class="mdi mdi-border-style"></i></button>
+			<button class="action"><i class="mdi mdi-dots-horizontal-circle-outline"></i></button>
+			<hr>
+			<button class="action"><i class="mdi mdi-magnet"></i></button>
+			<button class="action"><i class="mdi mdi-grid"></i></button>
+			<button class="action"><i class="mdi mdi-border-inside"></i></button>
+			<hr>
+			<button class="action"><i class="mdi mdi-content-save"></i></button>
 		</div>
 	</div>
 	
-	<div class="horizontal-anchor"></div>
-	<div class="vertical-anchor"></div>
+	<div class="layout-tree hidden"></div>
 
 	<div class="loadingScreen">
 		<div class="text">Aguarde</div>
@@ -95,7 +93,11 @@
 	<script src="js/joystick/layout.js"></script>
 	<script src="js/joystick/backend-integration.js"></script>
 	<script src="js/joystick/interactions.js"></script>
-	<script src="js/joystick/layout-editor.js"></script>
+	<script src="js/joystick/layout-editor/guides.js"></script>
+	<script src="js/joystick/layout-editor/index.js"></script>
+	<script src="js/joystick/layout-editor/toolbar.js"></script>
+	<script src="js/joystick/layout-editor/interactions.js"></script>
+	<script src="js/joystick/layout-editor/tree.js"></script>
 </body>
 
 </html>

@@ -59,7 +59,7 @@ Controller.Button = class extends Controller.Element {
 	}
 
 	render() {
-		this._render()
+		super.render()
 		const el = this.element
 
 		// Aplica os estilos
@@ -78,11 +78,15 @@ Controller.Button = class extends Controller.Element {
 
 		// Conteúdo do botão
 		el.innerHTML = ''
-		if (this.content.type === 'mobystk:text') el.innerText = this.content.value
-		else if (this.content.type === 'mobystk:icon') {
+		if (this.content.type === 'mobystk:text') {
+			el.innerText = this.content.value
+		} else if (this.content.type === 'mobystk:icon') {
 			const $icon = document.createElement('i')
 			$icon.classList.add('mdi', 'mdi-' + this.content.value)
 			el.appendChild($icon)
+		}
+		if (this._html) {
+			el.innerHTML = this._html
 		}
 
 		// Botão com ação personalizada

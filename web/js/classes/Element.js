@@ -14,7 +14,7 @@ Controller.Element = class extends EventEmitter {
 		this.height = details.height || [100, 'px']
 	}
 
-	_render() {
+	render() {
 		const el = this.element
 
 		// Reseta os estilos
