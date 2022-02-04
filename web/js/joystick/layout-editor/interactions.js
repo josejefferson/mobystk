@@ -12,6 +12,7 @@ function elementClick(element) {
 		addAnchorLines(editingElement)
 		updateAnchorLines(editingElement)
 	}
+	tree.render()
 }
 
 
@@ -22,6 +23,8 @@ function touchStart(e) {
 
 function touchMove(e) {
 	if (toolbar.interacting) return
+	if (tree.interacting) return
+
 	const el = editingElement
 	if (!el) return
 

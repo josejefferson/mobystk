@@ -1,32 +1,67 @@
+class Tree {
+	constructor(element) {
+		this.element = element
+		this.opened = false
+		this.interacting = false
 
-function renderTree(element, root = true) {
-	let html = root ? '' : `
-		<div class="element group">
-			<div class="name"><i class="mdi mdi-${gettypeicon(element)}"></i> ${element.name}</div>
-			<div class="content">`
-	for (const el of element.content) {
-		if (Array.isArray(el.content)) html += renderTree(el, false)
-		else html += `
-			<div class="element button">
-				<div class="name"><i class="mdi mdi-${gettypeicon(el)}"></i> ${el.name}</div>
-			</div>`
+		element.addEventListener('touchstart', () => this.interacting = true)
+		element.addEventListener('touchend', () => this.interacting = false)
+
+		this.render()
 	}
-	html += root ? '' : '</div></div>'
-	return html
-}
 
-function gettypeicon(element) {
-	let typeicon = ''
-	switch(element.type) {
-		case 'mobystk:button': {
-			if (element.content.type === 'mobystk:icon') typeicon = element.content.value
-			else typeicon = 'checkbox-intermediate'
-			break
+	render() {
+		this.element.classList[this.opened ? 'add' : 'remove']('opened')
+		this.element.innerHTML = ''
+		this.element.appendChild(this._html(Controller.currentLayout))
+	}
+
+	_html(element, root = true) {
+		const $tree = document.createDocumentFragment()
+		let $groupContent
+		if (!root && element instanceof Controller.Group) {
+			const $group = document.createElement('div')
+			$group.classList.add('element', 'group')
+			if (element === editingElement) $group.classList.add('active')
+			const $name = document.createElement('div')
+			$name.classList.add('name')
+			$name.innerHTML += `<i class="mdi mdi-${this._getIcon(element)}"></i> ${element.name}`
+			$name.instance = element
+			$group.appendChild($name)
+			$groupContent = document.createElement('div')
+			$groupContent.classList.add('content')
+			$group.appendChild($groupContent)
+			$tree.appendChild($group)
+		} else {
+			$groupContent = $tree
 		}
-		case 'mobystk:group': typeicon = 'group'; break
-		case 'mobystk:joystick': typeicon = 'gamepad'
+
+		for (const el of element.content) {
+			if (Array.isArray(el.content)) {
+				$groupContent.appendChild(this._html(el, false))
+			} else {
+				const $element = document.createElement('div')
+				const type = el instanceof Controller.Button ? 'button' : el instanceof Controller.Joystick ? 'joystick' : ''
+				$element.classList.add('element', type)
+				if (el === editingElement) $element.classList.add('active')
+				const $name = document.createElement('div')
+				$name.classList.add('name')
+				$name.innerHTML += `<i class="mdi mdi-${this._getIcon(el)}"></i> ${el.name}`
+				$name.instance = el
+				$element.appendChild($name)
+				$groupContent.appendChild($element)
+			}
+		}
+		return $tree
 	}
-	return typeicon
+
+	_getIcon(element) {
+		switch (element.type) {
+			case 'mobystk:button': return element.content.type === 'mobystk:icon' ? element.content.value : 'checkbox-intermediate'
+			case 'mobystk:group': return 'group'
+			case 'mobystk:joystick': return 'gamepad'
+		}
+	}
 }
 
-document.querySelector('.layout-tree').innerHTML = renderTree(Controller.currentLayout)
+const tree = new Tree(document.querySelector('.layout-tree'))

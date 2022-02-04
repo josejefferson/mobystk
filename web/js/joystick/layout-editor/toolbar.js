@@ -24,8 +24,15 @@ class Toolbar {
 			this.render()
 		})
 
-		const $toolbarShowMore = element.querySelector('.show-more')
-		$toolbarShowMore.addEventListener('click', (e) => {
+		this.$showLayoutTree = element.querySelector('.show-layout-tree')
+		this.$showLayoutTree.addEventListener('click', (e) => {
+			tree.opened = !tree.opened
+			tree.render()
+			this.render()
+		})
+
+		this.$toolbarShowMore = element.querySelector('.show-more')
+		this.$toolbarShowMore.addEventListener('click', (e) => {
 			this.showingMore = !this.showingMore
 			this.render()
 		})
@@ -48,6 +55,8 @@ class Toolbar {
 		const el = this.element
 		el.classList[this.showingMore ? 'add' : 'remove']('showing-more')
 		el.classList[this.interacting ? 'add' : 'remove']('interacting')
+		try{this.$showLayoutTree.classList[tree.opened ? 'add' : 'remove']('active')}catch(err){console.error(err)}
+		console.log(this.$toolbarShowMore.classList)
 
 		let x = this.x
 		let y = this.y
