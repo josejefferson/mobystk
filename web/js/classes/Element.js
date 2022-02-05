@@ -1,3 +1,11 @@
+// Controller.Element.LEFT = 0
+// Controller.Element.RIGHT = 1
+// Controller.Element.TOP = 0
+// Controller.Element.BOTTOM = 1
+// Controller.Element.CENTER = 2
+// Controller.Element.MIDDLE = 2
+
+
 Controller.Element = class extends EventEmitter {
 	constructor(details) {
 		super()

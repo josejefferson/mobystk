@@ -1,3 +1,6 @@
+// window.onload = () => layoutEditor.start() //temp
+
+
 const layoutEditor = {}
 window.layoutEditor = layoutEditor
 
@@ -22,6 +25,9 @@ layoutEditor.start = () => {
 	document.addEventListener('touchstart', touchStart)
 	document.addEventListener('touchmove', touchMove)
 	document.addEventListener('touchend', touchEnd)
+
+	toast('Modo edição ativado')
+	toast('Clique em algum elemento para editar')
 }
 
 layoutEditor.end = () => {
@@ -34,4 +40,6 @@ layoutEditor.end = () => {
 	document.removeEventListener('touchstart', touchStart)
 	document.removeEventListener('touchmove', touchMove)
 	document.removeEventListener('touchend', touchEnd)
+
+	toast('Modo edição desativado')
 }

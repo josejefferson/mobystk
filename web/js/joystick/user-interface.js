@@ -16,7 +16,6 @@ if (options.hidden.includes('mobystk:deviceInfo')) {
 
 // CARREGAMENTO DAS OPÇÕES
 $edit.addEventListener('click', loading)
-window.onload = () => layoutEditor.start() //temp
 $edit.addEventListener('contextmenu', () => {
 	if (!layoutEditor.opened) {
 		layoutEditor.start()
