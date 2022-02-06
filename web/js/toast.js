@@ -58,7 +58,7 @@ const $toastCSS = document.createElement('style')
 $toastCSS.innerHTML = `
 .toast {
 	z-index: 99999999999;
-	background-color: rgba(28, 28, 28, 0.67);
+	background-color: #444444ee; /* rgba(28, 28, 28, 0.67) */
 	border-radius: 20px;
 	bottom: 10%;
 	color: rgb(232, 230, 227);

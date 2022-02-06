@@ -111,6 +111,11 @@ body:not(.layout-editor-opened) .layout-tree {
 	background-color: #546E7A;
 }
 
+.layout-editor-toolbar button:disabled {
+	opacity: 0.3;
+	pointer-events: none;
+}
+
 .layout-editor-toolbar .show-more {
 	width: 28px;
 	height: 28px;

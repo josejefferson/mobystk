@@ -63,6 +63,22 @@ i.mdi {
 	justify-content: center;
 }
 
+.center-x {
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.center-y {
+	top: 50%;	
+	transform: translateY(-50%);
+}
+
+.center-x.center-y {
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
 /* ==========================================================================
    Elementos do controle
    ========================================================================== */
@@ -211,6 +227,39 @@ i.mdi {
 	font-family: 'Material Design Icons';
 	margin-bottom: 2px;
 	margin-right: 10px;
+}
+
+body.connecting .deviceInfo .status::before {
+	content: '\F0772';
+	animation: mdi-spin 2s infinite linear;
+}
+
+body.connecting .deviceInfo .status::after {
+	content: 'Conectando';
+}
+
+body.connected .deviceInfo .status {
+	opacity: 0;
+	height: 0;
+	transition:
+		opacity 1s ease 3s,
+		height .15s ease 4s;
+}
+
+body.connected .deviceInfo .status::before {
+	content: '\F05E1';
+}
+
+body.connected .deviceInfo .status::after {
+	content: 'Conectado';
+}
+
+body.disconnected .deviceInfo .status::before {
+	content: '\F015A';
+}
+
+body.disconnected .deviceInfo .status::after {
+	content: 'Desconectado';
 }
 
 /* ==========================================================================

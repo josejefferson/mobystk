@@ -7,8 +7,8 @@ function updateAnchorLines() {
 	if (!editingElement) return
 	const {anchorX, anchorY, width, height, x, y} = editingElement
 
-	$hAnchor.style.width = x.join('')
-	$vAnchor.style.height = y.join('')
+	$hAnchor.style.width = anchorX !== 2 ? x.join('') : '0px'
+	$vAnchor.style.height = anchorY !== 2 ? y.join('') : '0px'
 	$editBox.style.width = width.join('')
 	$editBox.style.height = height.join('')
 

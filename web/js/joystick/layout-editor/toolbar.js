@@ -48,6 +48,24 @@ class Toolbar {
 			})
 		}
 
+		this.$anchorX = document.querySelector('.anchor-x')
+		this.$anchorX.addEventListener('click', (e) => {
+			editingElement.anchorX += 1
+			if (editingElement.anchorX > 2) editingElement.anchorX = 0
+			this.render()
+			editingElement.render()
+			updateAnchorLines()
+		})
+
+		this.$anchorY = document.querySelector('.anchor-y')
+		this.$anchorY.addEventListener('click', (e) => {
+			editingElement.anchorY += 1
+			if (editingElement.anchorY > 2) editingElement.anchorY = 0
+			this.render()
+			editingElement.render()
+			updateAnchorLines()
+		})
+
 		this.render()
 	}
 
@@ -56,7 +74,6 @@ class Toolbar {
 		el.classList[this.showingMore ? 'add' : 'remove']('showing-more')
 		el.classList[this.interacting ? 'add' : 'remove']('interacting')
 		try{this.$showLayoutTree.classList[tree.opened ? 'add' : 'remove']('active')}catch(err){console.error(err)}
-		console.log(this.$toolbarShowMore.classList)
 
 		let x = this.x
 		let y = this.y
@@ -72,6 +89,27 @@ class Toolbar {
 			const mode = parseInt($mode.dataset.mode)
 			if (isNaN(mode)) continue
 			$mode.classList[this.mode === mode ? 'add' : 'remove']('active-mode')
+		}
+
+		const $anchorX = this.$anchorX.querySelector('i.mdi')
+		const $anchorY = this.$anchorY.querySelector('i.mdi')
+		$anchorX.classList.remove('mdi-align-horizontal-left', 'mdi-align-horizontal-center', 'mdi-align-horizontal-right')
+		$anchorY.classList.remove('mdi-align-vertical-top', 'mdi-align-vertical-center', 'mdi-align-vertical-bottom')
+
+		if (typeof editingElement !== 'undefined' && editingElement) {
+			this.$anchorX.disabled = false
+			this.$anchorY.disabled = false
+			if (editingElement.anchorX === 0) $anchorX.classList.add('mdi-align-horizontal-left')
+			if (editingElement.anchorX === 1) $anchorX.classList.add('mdi-align-horizontal-right')
+			if (editingElement.anchorX === 2) $anchorX.classList.add('mdi-align-horizontal-center')
+			if (editingElement.anchorY === 0) $anchorY.classList.add('mdi-align-vertical-top')
+			if (editingElement.anchorY === 1) $anchorY.classList.add('mdi-align-vertical-bottom')
+			if (editingElement.anchorY === 2) $anchorY.classList.add('mdi-align-vertical-center')
+		} else {
+			this.$anchorX.disabled = true
+			this.$anchorY.disabled = true
+			$anchorX.classList.add('mdi-align-horizontal-left')
+			$anchorY.classList.add('mdi-align-vertical-top')
 		}
 	}
 }

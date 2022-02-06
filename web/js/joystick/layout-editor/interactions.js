@@ -13,6 +13,7 @@ function elementClick(element) {
 		updateAnchorLines(editingElement)
 	}
 	tree.render()
+	toolbar.render()
 }
 
 
@@ -30,6 +31,14 @@ function touchMove(e) {
 
 	let deltaX = e.changedTouches[0].clientX - touch.clientX
 	let deltaY = e.changedTouches[0].clientY - touch.clientY
+
+	if (
+		(el.anchorX === 2 && (deltaX < -20 || deltaX > 20) && !toastObj.showing) ||
+		(el.anchorY === 2 && (deltaY < -20 || deltaY > 20) && !toastObj.showing)
+	) {
+		toast('Não é possível mover o elemento centralizado\nMude a posição do elemento para movimentá-lo')
+	}
+
 	touch = e.changedTouches[0]
 	if (el.anchorX === 1) deltaX = -deltaX
 	if (el.anchorY === 1) deltaY = -deltaY

@@ -37,19 +37,11 @@ Controller.Element = class extends EventEmitter {
 		el.style.height = this.height.join('')
 		if (this.anchorX === 0) el.style.left = this.x.join('')
 		if (this.anchorX === 1) el.style.right = this.x.join('')
-		if (this.anchorX === 2) el.style.left = '50%'
 		if (this.anchorY === 0) el.style.top = this.y.join('')
 		if (this.anchorY === 1) el.style.bottom = this.y.join('')
-		if (this.anchorY === 2) el.style.top = '50%'
 
-		// Se o elemento estiver centralizado
-		if (this.anchorX === 2 && this.anchorY === 2) {
-			el.style.transform = this._transform = 'translate(-50%, -50%)'
-		} else if (this.anchorX === 2 && this.anchorY !== 2) {
-			el.style.transform = this._transform = 'translateX(-50%)'
-		} else if (this.anchorX !== 2 && this.anchorY === 2) {
-			el.style.transform = this._transform = 'translateY(-50%)'
-		}
+		el.classList[this.anchorX === 2 ? 'add' : 'remove']('center-x')
+		el.classList[this.anchorY === 2 ? 'add' : 'remove']('center-y')
 
 		// Editando elemento
 		el.classList[this.editing ? 'add' : 'remove']('controller-editing')
