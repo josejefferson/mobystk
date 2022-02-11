@@ -17,9 +17,9 @@ function elementClick(element) {
 }
 
 
-
+let touch
 function touchStart(e) {
-	touch = e.changedTouches[0]	
+	touch = e.changedTouches?.[0]	|| e
 }
 
 function touchMove(e) {
@@ -29,8 +29,9 @@ function touchMove(e) {
 	const el = editingElement
 	if (!el) return
 
-	let deltaX = e.changedTouches[0].clientX - touch.clientX
-	let deltaY = e.changedTouches[0].clientY - touch.clientY
+	const { clientX, clientY } = e.changedTouches?.[0] || e
+	let deltaX = clientX - (touch?.clientX || clientX)
+	let deltaY = clientY - (touch?.clientY || clientY)
 
 	if (
 		(el.anchorX === 2 && (deltaX < -20 || deltaX > 20) && !toastObj.showing) ||
@@ -39,7 +40,7 @@ function touchMove(e) {
 		toast('Não é possível mover o elemento centralizado\nMude a posição do elemento para movimentá-lo')
 	}
 
-	touch = e.changedTouches[0]
+	touch = e.changedTouches?.[0] || e
 	if (el.anchorX === 1) deltaX = -deltaX
 	if (el.anchorY === 1) deltaY = -deltaY
 

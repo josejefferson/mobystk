@@ -5,6 +5,7 @@ class Toast {
 	 */
 	constructor(element) {
 		this.element = element
+		this.content = element.querySelector('.toast-content')
 		this.toasts = []
 		this.showing = false
 	}
@@ -45,45 +46,68 @@ class Toast {
 	run() {
 		this.element.classList.add('show')
 		const toast = this.toasts.shift()
-		this.element[toast.html ? 'innerHTML' : 'innerText'] = toast.message
+		this.content[toast.html ? 'innerHTML' : 'innerText'] = toast.message
 		setTimeout(this.start.bind(this), toast.time || 2000)
 	}
 }
 
 const $toast = document.createElement('div')
 $toast.classList.add('toast')
+$toast.innerHTML = '<div class="toast-content"></div>'
 document.body.appendChild($toast)
 
 const $toastCSS = document.createElement('style')
 $toastCSS.innerHTML = `
 .toast {
-	z-index: 99999999999;
-	background-color: #444444ee; /* rgba(28, 28, 28, 0.67) */
-	border-radius: 20px;
-	bottom: 10%;
-	color: rgb(232, 230, 227);
-	display: inline-block;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	background-color: rgba(85, 85, 85, 0.9);
+	border-radius: 22px;
+	bottom: 48px; 
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	color: #FFFFFF;
+	display: -webkit-inline-box;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
 	font-family: Roboto, Arial, sans-serif;
-	font-size: 16px;
+	font-size: 14px;
 	left: 50%;
-	line-height: 20px;
 	margin: 16px;
-	max-width: 400px;
-	min-height: 16px;
+	max-width: 320px;
+	min-height: 44px;
 	opacity: 0;
-	padding: 10px 16px;
+	padding: 13.8px 25px;
 	pointer-events: none;
-	position: fixed;
+	position: absolute;
 	text-align: left;
 	text-shadow: black 0 0 2px;
+	-webkit-transform: translateX(calc(-50% - 16px));
+	-ms-transform: translateX(calc(-50% - 16px));
 	transform: translateX(calc(-50% - 16px));
-	transition: 1s ease;
+	-webkit-transition: opacity 500ms cubic-bezier(0.5, 1, 0.89, 1);
+	-o-transition: opacity 500ms cubic-bezier(0.5, 1, 0.89, 1);
+	transition: opacity 500ms cubic-bezier(0.5, 1, 0.89, 1);
+	width: -webkit-fit-content;
 	width: -moz-fit-content;
 	width: fit-content;
+	z-index: 99999999999;
 }
 
 .toast.show {
 	opacity: 1;
+	-webkit-transition: opacity 500ms cubic-bezier(0.11, 0, 0.5, 0);
+	-o-transition: opacity 500ms cubic-bezier(0.11, 0, 0.5, 0);
+	transition: opacity 500ms cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.toast .toast-content {
+	letter-spacing: -0.03px;
+	line-height: 17.6px;
+	-webkit-transform: scaleY(1.11);
+	-ms-transform: scaleY(1.11);
+	transform: scaleY(1.11);
 }
 `
 document.body.appendChild($toastCSS)

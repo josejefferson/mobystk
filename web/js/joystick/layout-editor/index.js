@@ -14,7 +14,6 @@ layoutEditor.start = () => {
 	resizeJoystick()
 	document.body.classList.add('layout-editor-opened')
 	document.addEventListener('click', (e) => {
-		// verificar se o clique não foi na barra de edição
 		if (e.path.includes(toolbar.element)) return
 		let i = 0
 		while (e.path[i] && (!e.path[i]?.instance || e.path[i]?.instance?.editing)) i++
@@ -22,10 +21,24 @@ layoutEditor.start = () => {
 	})
 
 	document.body.style.setProperty('--grid-size', GRID_SIZE + 'px')
-	let touch
 	document.addEventListener('touchstart', touchStart)
 	document.addEventListener('touchmove', touchMove)
 	document.addEventListener('touchend', touchEnd)
+
+	// let mouseDown = false
+	// document.addEventListener('mousedown', (e) => {
+	// 	console.log('mousedown')
+	// 	mouseDown = true
+	// 	touchStart(e)
+	// })
+	// document.addEventListener('mouseup', (e) => {
+	// 	console.log('mouseup')
+	// 	mouseDown = false
+	// 	touchEnd(e)
+	// })
+	// document.addEventListener('mousemove', (e) => {
+	// 	if (mouseDown) touchMove(e)
+	// })
 
 	toast('Modo edição ativado')
 	toast('Clique em algum elemento para editar')
