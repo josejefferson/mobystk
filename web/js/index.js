@@ -1,3 +1,4 @@
+window.ls = store.namespace('joystick')
 const form = document.forms[0]
 const formEls = form.elements
 
@@ -6,13 +7,16 @@ window.addEventListener('load', () => {
 	document.body.classList.remove('preload')
 })
 
-window.addEventListener('scroll', () => {
+window.addEventListener('load', updateStartButton)
+window.addEventListener('scroll', updateStartButton)
+
+function updateStartButton() {
 	if (document.scrollingElement.scrollTop > window.innerHeight) {
 		document.querySelector('.start.floating').classList.remove('hidden')
 	} else {
 		document.querySelector('.start.floating').classList.add('hidden')
 	}
-})
+}
 
 document.addEventListener('contextmenu', () => false)
 document.querySelectorAll('a').forEach(e => e.addEventListener('click', loading))
@@ -70,7 +74,6 @@ for (const element of [...Controller.buttons, ...Controller.groups, ...Controlle
 }
 
 // Carregar opções
-Lockr.prefix = 'joystick.'
 formEls.code.value = getOpt('code', window.location.hostname + ':5000')
 formEls.layout.value = getOpt('layout', Controller.layouts[0]?.id)
 formEls.player.value = getOpt('player', '1')
@@ -105,8 +108,8 @@ for (const item of hidden) {
 }
 
 function getOpt(name, defaultValue) {
-	const value = Lockr.get(name)
-	return value === undefined ? defaultValue : value
+	const value = ls(name)
+	return value === null ? defaultValue : value
 }
 
 document.querySelectorAll('input[type="range"] + .value').forEach($value => {
@@ -136,31 +139,31 @@ document.forms[0].addEventListener('submit', function (e) {
 		if (e.checked) hiddenItems.push(e.value)
 	})
 
-	Lockr.set('code', elems.code.value)
-	Lockr.set('layout', elems.layout.value)
-	Lockr.set('player', Number(elems.player.value))
-	Lockr.set('debug', elems.debug.checked)
-	Lockr.set('invertL', elems.invertL.checked)
-	Lockr.set('invertR', elems.invertR.checked)
-	Lockr.set('disJoyXAxis', elems.disJoyXAxis.checked)
-	Lockr.set('disJoyYAxis', elems.disJoyYAxis.checked)
-	Lockr.set('dblClickLoadSave', elems.dblClickLoadSave.checked)
-	Lockr.set('vibrate', Number(elems.vibrate.value))
-	Lockr.set('vibrateJoystick', Number(elems.vibrateJoystick.value))
-	Lockr.set('vibrationFromGame', elems.vibrationFromGame.checked)
-	Lockr.set('vgamepad', elems.vgamepad.checked)
-	Lockr.set('background', elems.background.value)
-	Lockr.set('color', elems.color.value)
-	Lockr.set('border', elems.border.value)
-	Lockr.set('active', elems.active.value)
-	Lockr.set('bgImage', elems.bgImage.value)
-	Lockr.set('bgOpacity', Number(elems.bgOpacity.value))
-	Lockr.set('bgBlur', Number(elems.bgBlur.value))
-	Lockr.set('customCSS', elems.customCSS.value)
-	Lockr.set('driveSensitivity', Number(elems.driveSensitivity.value))
-	Lockr.set('drivePrecision', Number(elems.drivePrecision.value))
-	Lockr.set('locked', lockedBtns)
-	Lockr.set('hidden', hiddenItems)
+	ls('code', elems.code.value)
+	ls('layout', elems.layout.value)
+	ls('player', Number(elems.player.value))
+	ls('debug', elems.debug.checked)
+	ls('invertL', elems.invertL.checked)
+	ls('invertR', elems.invertR.checked)
+	ls('disJoyXAxis', elems.disJoyXAxis.checked)
+	ls('disJoyYAxis', elems.disJoyYAxis.checked)
+	ls('dblClickLoadSave', elems.dblClickLoadSave.checked)
+	ls('vibrate', Number(elems.vibrate.value))
+	ls('vibrateJoystick', Number(elems.vibrateJoystick.value))
+	ls('vibrationFromGame', elems.vibrationFromGame.checked)
+	ls('vgamepad', elems.vgamepad.checked)
+	ls('background', elems.background.value)
+	ls('color', elems.color.value)
+	ls('border', elems.border.value)
+	ls('active', elems.active.value)
+	ls('bgImage', elems.bgImage.value)
+	ls('bgOpacity', Number(elems.bgOpacity.value))
+	ls('bgBlur', Number(elems.bgBlur.value))
+	ls('customCSS', elems.customCSS.value)
+	ls('driveSensitivity', Number(elems.driveSensitivity.value))
+	ls('drivePrecision', Number(elems.drivePrecision.value))
+	ls('locked', lockedBtns)
+	ls('hidden', hiddenItems)
 
 	loading()
 	location.href = 'joystick.html'
@@ -185,7 +188,7 @@ function createPickr(el, defaultColor, opacity) {
 	return Pickr.create({
 		el: `.pickr-${el}`,
 		theme: 'classic',
-		default: Lockr.get(el) || defaultColor,
+		default: ls(el) || defaultColor,
 		defaultRepresentation: 'HEXA',
 		comparison: false,
 		autoReposition: true,
@@ -247,18 +250,13 @@ function importSettings() {
 		try {
 			const file = this.files[0]
 			if (!file) return
-			let content = await new Promise((resolve, reject) => {
-				let reader = new FileReader()
-				reader.onload = () => {
-					resolve(reader.result)
-				}
+			const content = await new Promise((resolve, reject) => {
+				const reader = new FileReader()
+				reader.onload = () => resolve(reader.result)
 				reader.onerror = reject
 				reader.readAsText(file)
 			})
-			content = JSON.parse(content)
-			for (option in content) {
-				ls.setItem(option, content[option])
-			}
+			ls(JSON.parse(content))
 			loading()
 			location.reload()
 		} catch (err) {
@@ -272,12 +270,12 @@ const $export = document.querySelector('.exportSettings')
 $export.addEventListener('click', exportSettings)
 
 function exportSettings() {
-	const content = JSON.stringify(ls)
+	const content = JSON.stringify(ls())
 	const el = document.createElement('a')
 	const blob = new Blob([content], { type: 'application/json' })
 	const url = URL.createObjectURL(blob)
 	el.href = url
-	el.download = `mobyStk-settings-${Date.now()}.json`
+	el.download = `mobyStk-settings-${new Date().toISOString()}.json`
 	el.click()
 }
 

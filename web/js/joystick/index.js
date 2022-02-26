@@ -1,4 +1,4 @@
-Lockr.prefix = 'joystick.'
+window.ls = store.namespace('joystick')
 const options = {
 	ip: getOpt('code', 'localhost:5000'),
 	layout: getOpt('layout'),
@@ -28,8 +28,8 @@ const options = {
 }
 
 function getOpt(name, defaultValue) {
-	const value = Lockr.get(name)
-	return value === undefined ? defaultValue : value
+	const value = ls(name)
+	return value === null ? defaultValue : value
 }
 
 // EVENTOS DA PÁGINA
@@ -67,4 +67,13 @@ navigator.vibrate = function (pattern, force = false) {
 		return navigator._vibrate(pattern)
 	}
 	return false
+}
+
+function escapeHTML(unsafe) {
+	return unsafe
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#039;')
 }

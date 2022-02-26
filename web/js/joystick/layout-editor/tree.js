@@ -25,7 +25,7 @@ class Tree {
 			if (element === editingElement) $group.classList.add('active')
 			const $name = document.createElement('div')
 			$name.classList.add('name')
-			$name.innerHTML += `<i class="mdi mdi-${this._getIcon(element)}"></i> ${element.name}`
+			$name.innerHTML += `<i class="mdi mdi-${escapeHTML(this._getIcon(element))}"></i> ${escapeHTML(element.name)}`
 			$name.instance = element
 			$group.appendChild($name)
 			$groupContent = document.createElement('div')
@@ -46,7 +46,7 @@ class Tree {
 				if (el === editingElement) $element.classList.add('active')
 				const $name = document.createElement('div')
 				$name.classList.add('name')
-				$name.innerHTML += `<i class="mdi mdi-${this._getIcon(el)}"></i> ${el.name}`
+				$name.innerHTML += `<i class="mdi mdi-${escapeHTML(this._getIcon(el))}"></i> ${escapeHTML(el.name)}`
 				$name.instance = el
 				$element.appendChild($name)
 				$groupContent.appendChild($element)
