@@ -94,6 +94,14 @@ def renderIPDetails():
 			ignore_content_width = True,
 			wrap_lines = True
 		))
+	if len(_ips) >= 3:
+		infos.append(Window(width = 1, char = '│'))
+		infos.append(Window(
+			content = FormattedTextControl(ANSI(getIPContent(_ips[2], HTTP_PORT, WS_PORT, 2))),
+			align = WindowAlign.CENTER,
+			ignore_content_width = True,
+			wrap_lines = True
+		))
 
 	# Atualiza a tela
 	ipDetails.children = infos
