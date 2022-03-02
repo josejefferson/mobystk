@@ -12,7 +12,6 @@ try:
 	from time import sleep
 	import os
 	import pyqrcode
-	import socket
 	import threading
 except ModuleNotFoundError:
 	print('Ops! Alguns módulos estão faltando para o funcionamento desta aplicação.')
@@ -56,9 +55,8 @@ coloramaInit(autoreset=True)
 keyboard = Controller()
 
 
-# Define o diretório atual e o IP
+# Define o diretório atual
 os.chdir(os.path.join(os.path.dirname(__file__), '../web'))
-ips = socket.gethostbyname_ex(socket.gethostname())[-1]
 
 
 # Retorna a tecla do teclado pelo nome

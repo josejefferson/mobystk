@@ -7,10 +7,11 @@ WS_PORT = 5000 # Porta do servidor WebSocket
 
 try:
 	import util.logo
-	from util.server import ips
 	from util.dialogs import optionsDialog
 	from util.helpers import clearConsole, getIPContent
 	from util.tasks import runAfterExitTasks
+	import socket
+	import threading
 	from time import sleep
 	from colorama import init as coloramaInit, Back as B, Fore as F, Style as S
 	from prompt_toolkit import ANSI
@@ -45,28 +46,6 @@ except ModuleNotFoundError:
 
 coloramaInit(autoreset = True)
 
-# Organiza os IPs
-if '192.168.137.1' in ips: ips.insert(0, ips.pop(ips.index('192.168.137.1')))
-if '192.168.56.1' in ips: ips.remove('192.168.56.1')
-
-# Prepara as informações de IP e QRCode
-infos = []
-if len(ips) <= 0:
-	text = 'Infelizmente seu computador não possui placa de rede, não é possível utilizar o MobyStk'
-	infos.append(Window(content = FormattedTextControl(text), align = WindowAlign.CENTER))
-if len(ips) >= 1:
-	infos.append(Window(
-		content = FormattedTextControl(ANSI(getIPContent(ips[0], HTTP_PORT, WS_PORT, 0))),
-		align = WindowAlign.CENTER,
-		ignore_content_width = True
-	))
-if len(ips) >= 2:
-	infos.append(Window(width = 1, char = '│'))
-	infos.append(Window(
-		content = FormattedTextControl(ANSI(getIPContent(ips[1], HTTP_PORT, WS_PORT, 1))),
-		align = WindowAlign.CENTER,
-		ignore_content_width = True
-	))
 
 # Título "MobyStk"
 title = ANSI(f"""
@@ -75,12 +54,66 @@ title = ANSI(f"""
 {S.BRIGHT}{F.YELLOW}╩ ╩{F.GREEN}└─┘{F.CYAN}└─┘{F.WHITE} ┴ {F.YELLOW}╚═╝{F.GREEN} ┴ {F.CYAN}┴ ┴{S.RESET_ALL}
 """.strip())
 
+
+# Detalhes dos endereços IP e instruções na tela
+ipDetails = VSplit([], height = D())
+ips = []
+def renderIPDetails():
+	global ips
+	
+	# Verifica se houve mudança de IP
+	_ips = socket.gethostbyname_ex(socket.gethostname())[-1]
+	if ips == _ips: return
+
+	# Organiza os IPs
+	ips = _ips.copy()
+	if '192.168.137.1' in _ips: _ips.insert(0, _ips.pop(_ips.index('192.168.137.1')))
+	if '192.168.56.1' in _ips: _ips.remove('192.168.56.1')
+
+	# Prepara as informações de IP e QRCode na interface
+	infos = []
+	if len(_ips) <= 0:
+		text = 'O seu computador não está conectado a nenhuma rede, por favor conecte-o para utilizar o MobyStk'
+		infos.append(Window(
+			content = FormattedTextControl(text),
+			align = WindowAlign.CENTER,
+			wrap_lines = True
+		))
+	if len(_ips) >= 1:
+		infos.append(Window(
+			content = FormattedTextControl(ANSI(getIPContent(_ips[0], HTTP_PORT, WS_PORT, 0))),
+			align = WindowAlign.CENTER,
+			ignore_content_width = True,
+			wrap_lines = True
+		))
+	if len(_ips) >= 2:
+		infos.append(Window(width = 1, char = '│'))
+		infos.append(Window(
+			content = FormattedTextControl(ANSI(getIPContent(_ips[1], HTTP_PORT, WS_PORT, 1))),
+			align = WindowAlign.CENTER,
+			ignore_content_width = True,
+			wrap_lines = True
+		))
+
+	# Atualiza a tela
+	ipDetails.children = infos
+	get_app()._on_resize()
+
+renderIPDetails()
+def renderIPDetailsLoop():
+	while True:
+		sleep(5)
+		renderIPDetails()
+
+renderIPDetailsThread = threading.Thread(target=renderIPDetailsLoop)
+renderIPDetailsThread.daemon = True
+renderIPDetailsThread.start()
+
+
 # Aplicação
 rootContainer = HSplit([
 	Label(text = title, align = WindowAlign.CENTER),
-
-	VSplit(infos, height = D()),
-
+	ipDetails,
 	VSplit([
 		Window(content = FormattedTextControl(' Desenvolvido por Jefferson Dantas \n')),
 		Button(text = 'Opções', handler = lambda: optionsDialog(rootContainer)),
