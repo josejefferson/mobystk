@@ -90,6 +90,32 @@ document.ontouchend = e => {
 
 		currentTouches.splice(i, 1);
 	}
+}; // FIM DO TOQUE
+
+
+document.ontouchcancel = e => {
+	for (const touch of e.changedTouches) {
+		const i = currentTouches.findIndex(t => {
+			return t.touch.identifier === touch.identifier;
+		});
+		if (i < 0) continue;
+
+		if (!currentTouches[i].joystick && currentTouches[i].target) {
+			var _currentTouches$i$tar2;
+
+			currentTouches[i].target.classList.remove('active');
+			const keys = (_currentTouches$i$tar2 = currentTouches[i].target.dataset.key) === null || _currentTouches$i$tar2 === void 0 ? void 0 : _currentTouches$i$tar2.split(' '); // Diagonal
+
+			keys === null || keys === void 0 ? void 0 : keys.forEach(key => {
+				if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
+					e.classList.remove('dActive');
+				});
+			});
+			sendCmd(keys, true);
+		}
+
+		currentTouches.splice(i, 1);
+	}
 }; // CLIQUE DO MOUSE
 
 

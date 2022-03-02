@@ -37,7 +37,7 @@ def setPasswordDialog(container, callback = lambda: None):
 		callback()
 
 	# Caixa de texto onde digita a senha
-	password = TextArea(multiline = False, width = D(preferred = 40))
+	password = TextArea(multiline = False, width = D(preferred = 50))
 
 	# Caixa de diálogo
 	dialog = Dialog(

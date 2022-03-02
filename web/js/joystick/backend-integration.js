@@ -1,5 +1,9 @@
 const $gameVibration = document.querySelector('.game-vibration')
 
+// Evita aparecer a tela de senha novamente
+let triedToAuthenticate = false
+
+// Comandos vindos do servidor
 const commands = {
 	'V': (data) => {
 		const [value, player] = data.toLowerCase().split(' ')
@@ -14,11 +18,13 @@ const commands = {
 		toast(data)
 	},
 	'AUTH_FAILED': () => {
+		if (triedToAuthenticate) return
 		document.body.classList.remove('connecting', 'connected')
 		document.body.classList.add('disconnected')
 		const password = prompt('O computador requer uma senha para se conectar ao MobyStk')
 		if (password === null) return
 		localStorage.setItem('joystick.password', password)
+		triedToAuthenticate = true
 		loading()
 		window.location.reload()
 	}

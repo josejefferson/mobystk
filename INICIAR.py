@@ -63,12 +63,10 @@ def renderIPDetails():
 	
 	# Verifica se houve mudança de IP
 	_ips = socket.gethostbyname_ex(socket.gethostname())[-1]
-	if ips == _ips: return
-
-	# Organiza os IPs
-	ips = _ips.copy()
 	if '192.168.137.1' in _ips: _ips.insert(0, _ips.pop(_ips.index('192.168.137.1')))
 	if '192.168.56.1' in _ips: _ips.remove('192.168.56.1')
+	if ips == _ips: return
+	ips = _ips.copy()
 
 	# Prepara as informações de IP e QRCode na interface
 	infos = []
@@ -105,7 +103,7 @@ def renderIPDetails():
 
 	# Atualiza a tela
 	ipDetails.children = infos
-	get_app()._on_resize()
+	if not DEBUG: get_app()._on_resize()
 
 renderIPDetails()
 def renderIPDetailsLoop():

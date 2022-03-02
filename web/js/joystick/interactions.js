@@ -96,6 +96,29 @@ document.ontouchend = e => {
 	}
 }
 
+// FIM DO TOQUE
+document.ontouchcancel = e => {
+	for (const touch of e.changedTouches) {
+		const i = currentTouches.findIndex(t => {
+			return t.touch.identifier === touch.identifier
+		})
+		if (i < 0) continue
+		if (!currentTouches[i].joystick && currentTouches[i].target) {
+			currentTouches[i].target.classList.remove('active')
+
+			const keys = currentTouches[i].target.dataset.key?.split(' ')
+			// Diagonal
+			keys?.forEach(key => {
+				if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
+					e.classList.remove('dActive')
+				})
+			})
+			sendCmd(keys, true)
+		}
+		currentTouches.splice(i, 1)
+	}
+}
+
 // CLIQUE DO MOUSE
 document.onmousedown = e => {
 	if ('ontouchstart' in document.documentElement) return
