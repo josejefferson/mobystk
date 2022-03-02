@@ -1,3 +1,4 @@
+window.toast = alert // temporário
 const ls = localStorage
 const form = document.forms[0]
 const formEls = form.elements
@@ -24,6 +25,16 @@ document.querySelectorAll('.start').forEach(e => {
 		scrollToY(document.body.scrollHeight, 400)
 		return false
 	})
+})
+
+const $forgetPassword = document.querySelector('.forgetPassword')
+if (localStorage.getItem('joystick.password') !== null) {
+	$forgetPassword.classList.remove('hidden')
+}
+$forgetPassword.addEventListener('click', () => {
+	localStorage.removeItem('joystick.password')
+	$forgetPassword.classList.add('hidden')
+	toast('A senha do MobyStk foi esquecida')
 })
 
 const $loading = document.querySelector('.loadingScreen')

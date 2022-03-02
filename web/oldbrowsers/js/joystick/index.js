@@ -20,11 +20,14 @@ if (!String.prototype.padStart) {
 
 var _ls$joystickLocked, _ls$joystickHidden;
 
+window.toast = alert; // temporário
+
 const ls = localStorage;
 const options = {
 	ip: ls['joystick.code'] || 'localhost:5000',
 	layout: ls['joystick.layout'],
 	player: parseInt(ls['joystick.player']) - 1,
+	password: ls['joystick.password'] || '',
 	debug: ls['joystick.debug'] === 'true',
 	locked: (_ls$joystickLocked = ls['joystick.locked']) === null || _ls$joystickLocked === void 0 ? void 0 : _ls$joystickLocked.split(','),
 	hidden: (_ls$joystickHidden = ls['joystick.hidden']) === null || _ls$joystickHidden === void 0 ? void 0 : _ls$joystickHidden.split(','),

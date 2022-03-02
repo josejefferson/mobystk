@@ -1,9 +1,11 @@
+window.toast = alert // temporário
 const ls = localStorage
 
 const options = {
 	ip: ls['joystick.code'] || 'localhost:5000',
 	layout: ls['joystick.layout'],
 	player: parseInt(ls['joystick.player']) - 1,
+	password: ls['joystick.password'] || '',
 	debug: ls['joystick.debug'] === 'true',
 	locked: ls['joystick.locked']?.split(','),
 	hidden: ls['joystick.hidden']?.split(','),

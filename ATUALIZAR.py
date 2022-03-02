@@ -10,14 +10,14 @@ try:
 	import zipfile
 except ModuleNotFoundError:
 	print('Ops! Alguns módulos estão faltando para o funcionamento desta aplicação.')
-	print('Você precisa executar os seguintes comandos no terminal para instalá-los (ou pressionar Enter):\n')
+	print('Você precisa executar os seguintes comandos no terminal para instalá-los (ou pressionar ENTER):\n')
 	commands = [
 		'python -m pip install requests',
 		'python -m pip install colorama'
 	]
 	for c in commands: print(c)
 	input('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n' + \
-				'┃ Pressione Enter para instalar os módulos inexistentes... ┃\n' + \
+				'┃ Pressione ENTER para instalar os módulos inexistentes... ┃\n' + \
 				'┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 	import os, sys
 	for c in commands: os.system(c.replace('python -m', f'"{sys.executable}" -m'))
@@ -82,7 +82,7 @@ def getUpdateMessages(response):
 		print(f'{B.RED}{F.WHITE}Ocorreu um erro ao carregar as mensagens de atualização. ' + \
 			'Veja detalhes sobre o erro abaixo:')
 		print(F.RED + str(err))
-		print(f'{F.CYAN}Deseja atualizar mesmo assim? {F.MAGENTA}Pressione Enter. ' + \
+		print(f'{F.CYAN}Deseja atualizar mesmo assim? {F.MAGENTA}Pressione ENTER. ' + \
 			'Caso contrário, feche esta janela.', end='')
 		input()
 		return None
@@ -91,7 +91,7 @@ def askForUpdates(messages, since):
 	if messages == None: return
 	if len(messages) == 0:
 		print(f'{F.GREEN}O MobyStk já está atualizado. {F.MAGENTA}' + \
-			'Pressione Enter para atualizar mesmo assim, ou feche esta janela para cancelar.', end='')
+			'Pressione ENTER para atualizar mesmo assim, ou feche esta janela para cancelar.', end='')
 		input()
 		return
 
@@ -101,7 +101,7 @@ def askForUpdates(messages, since):
 		print(f'{F.BLUE}• {F.WHITE}{message}')
 
 	print(f'\n{F.YELLOW}{S.BRIGHT}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
-	print(f'{F.YELLOW}{S.BRIGHT}┃{F.MAGENTA} Pressione Enter para atualizar... {F.YELLOW}┃')
+	print(f'{F.YELLOW}{S.BRIGHT}┃{F.MAGENTA} Pressione ENTER para atualizar... {F.YELLOW}┃')
 	print(f'{F.YELLOW}{S.BRIGHT}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛', end='')
 	input()
 
@@ -154,7 +154,7 @@ def removeOldVersion(backupFolder):
 	print(f'{F.YELLOW}Removendo versão antiga...')
 	try:
 		directories = [d for d in os.listdir('.') if os.path.isdir(d) and not d == internalFolder]
-		files = [d for d in os.listdir('.') if not os.path.isdir(d)]
+		files = [d for d in os.listdir('.') if not os.path.isdir(d) and not d == 'options.json']
 
 		for dir in directories:
 			shutil.rmtree(dir)
@@ -235,7 +235,7 @@ cleanAndFinalize(extractFolderName)
 print(f'{S.BRIGHT}\n ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
 print(f'{S.BRIGHT} ┃{F.GREEN} O MobyStk foi atualizado com sucesso!   {F.RESET}┃')
 print(f'{S.BRIGHT} ┃{F.MAGENTA} Você pode fechar esta janela agora!     {F.RESET}┃')
-if os.name == 'nt': print(f'{S.BRIGHT} ┃{F.YELLOW} Ou pressione {F.WHITE}Enter{F.YELLOW} para criar um atalho {F.RESET}┃')
+if os.name == 'nt': print(f'{S.BRIGHT} ┃{F.YELLOW} Ou pressione {F.WHITE}ENTER{F.YELLOW} para criar um atalho {F.RESET}┃')
 print(f'{S.BRIGHT} ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 input()
 if os.name == 'nt': installShortcut()

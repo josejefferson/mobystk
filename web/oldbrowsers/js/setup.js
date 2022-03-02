@@ -19,6 +19,7 @@ function socketConn() {
 	ws.onopen = e => {
 		$connectStatus.classList.remove('connecting', 'disconnected');
 		$connectStatus.classList.add('connected');
+		ws.send('PASSWORD ' + (localStorage.getItem('joystick.password') || ''));
 	};
 
 	ws.onclose = e => {
@@ -27,6 +28,19 @@ function socketConn() {
 		setTimeout(() => socket = socketConn(), 3000);
 	};
 
+	ws.addEventListener('message', e => {
+		const [cmd, ...data] = e.data.split(' ');
+
+		if (cmd.toUpperCase() === 'AUTH_FAILED') {
+			$connectStatus.classList.remove('connecting', 'connected');
+			$connectStatus.classList.add('disconnected');
+			const password = prompt('O computador requer uma senha para se conectar ao MobyStk');
+			if (password === null) return;
+			localStorage.setItem('joystick.password', password);
+			loading();
+			window.location.reload();
+		}
+	});
 	return ws;
 }
 
