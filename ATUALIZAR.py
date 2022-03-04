@@ -21,7 +21,7 @@ except ModuleNotFoundError:
 	      '┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 	import os, sys
 	for c in commands: os.system(c.replace('python -m', f'"{sys.executable}" -m'))
-	os.system(f'"{sys.executable}" {os.path.abspath(__file__)}')
+	os.system(f'{sys.executable} {os.path.abspath(__file__)}')
 	quit()
 
 
