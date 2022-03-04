@@ -37,11 +37,11 @@ except ModuleNotFoundError:
 	]
 	for c in commands: print(c)
 	input('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n' + \
-				'┃ Pressione ENTER para instalar os módulos inexistentes... ┃\n' + \
-				'┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
+	      '┃ Pressione ENTER para instalar os módulos inexistentes... ┃\n' + \
+	      '┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 	import os, sys
 	for c in commands: os.system(c.replace('python -m', f'"{sys.executable}" -m'))
-	os.system(f'{sys.executable} "{os.path.basename(__file__)}"')
+	os.system(f'"{sys.executable}" "{os.path.abspath(__file__)}"')
 	quit()
 
 coloramaInit(autoreset = True)
@@ -56,15 +56,26 @@ title = ANSI(f"""
 
 
 # Detalhes dos endereços IP e instruções na tela
+try: import netifaces
+except: pass
 ipDetails = VSplit([], height = D())
 ips = []
 def renderIPDetails():
 	global ips
-	
+
 	# Verifica se houve mudança de IP
-	_ips = socket.gethostbyname_ex(socket.gethostname())[-1]
+	if 'netifaces' in globals():
+		_ips = []
+		for interface in netifaces.interfaces():
+			for address in netifaces.ifaddresses(interface)[netifaces.AF_INET]:
+				_ips.append(address['addr'])
+	else:
+		_ips = socket.gethostbyname_ex(socket.gethostname())[-1]
+
 	if '192.168.137.1' in _ips: _ips.insert(0, _ips.pop(_ips.index('192.168.137.1')))
 	if '192.168.56.1' in _ips: _ips.remove('192.168.56.1')
+	if '127.0.0.1' in _ips: _ips.remove('127.0.0.1')
+	if '127.0.1.1' in _ips: _ips.remove('127.0.1.1')
 	if ips == _ips: return
 	ips = _ips.copy()
 

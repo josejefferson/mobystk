@@ -3,34 +3,15 @@
 
 from __main__ import DEBUG, HTTP_PORT, WS_PORT
 
-try:
-	from colorama import init as coloramaInit, Back as B, Fore as F, Style as S
-	from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
-	from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
-	from pynput.keyboard import Key, KeyCode, Controller
-	from util.options import options
-	from time import sleep
-	import os
-	import pyqrcode
-	import threading
-except ModuleNotFoundError:
-	print('Ops! Alguns módulos estão faltando para o funcionamento desta aplicação.')
-	print('Você precisa executar os seguintes comandos no terminal para instalá-los (ou pressionar ENTER):\n')
-	commands = [
-		'python -m pip install colorama',
-		'python -m pip install pynput',
-		'python -m pip install pyqrcode',
-		'python -m pip install SimpleWebSocketServer'
-	]
-	for c in commands: print(c)
-	input('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n' + \
-				'┃ Pressione ENTER para instalar os módulos inexistentes... ┃\n' + \
-				'┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
-	import os, sys
-	from __main__ import __file__ as __mainfile__
-	for c in commands: os.system(c.replace('python -m', f'"{sys.executable}" -m'))
-	os.system(f'{sys.executable} "{os.path.basename(__mainfile__)}"')
-	quit()
+from colorama import init as coloramaInit, Back as B, Fore as F, Style as S
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
+from pynput.keyboard import Key, KeyCode, Controller
+from util.options import options
+from time import sleep
+import os
+import pyqrcode
+import threading
 
 # Importa o vgamepad se tiver sido instalado
 try:
@@ -49,7 +30,7 @@ except ModuleNotFoundError:
 	pass
 except Exception as err:
 	gamepads = None
-	if DEBUG: print(F.RED + str(err))
+	if DEBUG: print(F.RED + str(err) + S.RESET_ALL)
 
 coloramaInit(autoreset=True)
 keyboard = Controller()
@@ -120,7 +101,7 @@ def keyCommand(wsClient, cmd, key, player, vpad = False):
 
 	except Exception as err:
 		if DEBUG: print(f'{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro: dados inválidos')
-		if DEBUG: print(F.RED + str(err))
+		if DEBUG: print(F.RED + str(err) + S.RESET_ALL)
 
 
 # Verifica se o usuário está autorizado com senha
@@ -193,7 +174,7 @@ class WebSocketServer(WebSocket):
 		try: message(self.data, self)
 		except Exception as err:
 			if DEBUG: print(f'{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro desconhecido')
-			if DEBUG: print(F.RED + str(err))
+			if DEBUG: print(F.RED + str(err) + S.RESET_ALL)
 
 	def handleConnected(self):
 		wsClients.append(self)

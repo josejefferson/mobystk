@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 from util.options import options
 from util.server import gamepads
 from util.tasks import afterExitTasks, installVgamepad, reloadScript
@@ -85,22 +86,23 @@ def optionsDialog(container, callback = lambda: None):
 		)
 	]
 
-	if not options.getOption('disableVgamepad') and not gamepads:
-		optionButtons.append(Button(
-			left_symbol = '*',
-			right_symbol = '',
-			width = 50,
-			text = 'Instalar "vgamepad"',
-			handler = addTaskInstallVgamepad
-		))
-	else:
-		optionButtons.append(Button(
-			left_symbol = '*',
-			right_symbol = '',
-			width = 50,
-			text = 'Ativar "vgamepad"' if options.getOption('disableVgamepad') else 'Desativar "vgamepad"',
-			handler = toggleVgamepad
-		))
+	if os.name == 'nt':
+		if not options.getOption('disableVgamepad') and not gamepads:
+			optionButtons.append(Button(
+				left_symbol = '*',
+				right_symbol = '',
+				width = 50,
+				text = 'Instalar "vgamepad"',
+				handler = addTaskInstallVgamepad
+			))
+		else:
+			optionButtons.append(Button(
+				left_symbol = '*',
+				right_symbol = '',
+				width = 50,
+				text = 'Ativar "vgamepad"' if options.getOption('disableVgamepad') else 'Desativar "vgamepad"',
+				handler = toggleVgamepad
+			))
 
 	# Caixa de diálogo
 	dialog = Dialog(

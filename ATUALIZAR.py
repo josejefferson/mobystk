@@ -17,11 +17,11 @@ except ModuleNotFoundError:
 	]
 	for c in commands: print(c)
 	input('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n' + \
-				'┃ Pressione ENTER para instalar os módulos inexistentes... ┃\n' + \
-				'┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
+	      '┃ Pressione ENTER para instalar os módulos inexistentes... ┃\n' + \
+	      '┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 	import os, sys
 	for c in commands: os.system(c.replace('python -m', f'"{sys.executable}" -m'))
-	os.system(f'{sys.executable} {os.path.basename(__file__)}')
+	os.system(f'"{sys.executable}" {os.path.abspath(__file__)}')
 	quit()
 
 
