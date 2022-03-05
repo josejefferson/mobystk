@@ -17,6 +17,11 @@ document.querySelectorAll('.lock').forEach(el => {
 	}
 })
 
+// TELA CHEIA
+document.querySelector('.deviceInfo').addEventListener('dblclick', () => {
+	document.documentElement.requestFullscreen()
+})
+
 // CARREGAR E SALVAR
 const $load = document.querySelector('.load')
 $load.addEventListener(options.dblClickLoadSave ? 'dblclick' : 'click', () => {
