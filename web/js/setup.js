@@ -9,7 +9,7 @@ const $cancel = $progress.querySelector('.cancel')
 const $ip = document.querySelector('.ip')
 const $connectStatus = document.querySelector('.connectStatus')
 
-const ip = localStorage.getItem('joystick.code') || window.location.hostname + ':5000'
+const ip = localStorage.getItem('joystick.options.code') || window.location.hostname + ':5000'
 $ip.innerText = ip
 let socket = socketConn()
 function socketConn() {
