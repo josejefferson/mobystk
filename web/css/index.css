@@ -466,54 +466,58 @@
 }
 
 .popup-background {
-	position: fixed;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 10001;
-	display: flex;
 	align-items: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	height: 100%;
 	justify-content: center;
+	left: 0;
 	opacity: 0;
-	transition: opacity .3s ease;
 	pointer-events: none;
+	position: fixed;
+	top: 0;
+	transition: opacity .3s ease;
+	width: 100%;
+	z-index: 10001;
 }
 
 .popup-background.show {
-	pointer-events: all;
 	opacity: 1;
+	pointer-events: all;
 }
 
 .popup {
 	background-color: var(--gray-800);
-	overflow: auto;
-	max-width: 320px;
-	max-height: calc(100% - 20px);
-	width: calc(100% - 20px);
-	padding: 10px;
 	border-radius: 20px;
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	max-height: calc(100% - 20px);
+	max-width: 320px;
+	overflow: auto;
+	padding: 10px;
 	position: relative;
 	transform: translateY(100%) scale(0);
 	transition: transform .3s ease;
+	width: calc(100% - 20px);
 }
 
 .popup .close-popup {
+	align-items: center;
+	background-color: transparent;
+	border-radius: 50%;
+	border: none;
+	color: var(--gray-500);
+	cursor: pointer;
+	display: flex;
+	font-size: 24px;
+	height: 40px;
+	justify-content: center;
+	outline: none;
+	padding: 0;
 	position: absolute;
 	right: 0;
 	top: 0;
-	font-size: 24px;
-	display: flex;
-	width: 40px;
-	height: 40px;
-	align-items: center;
-	justify-content: center;
-	border-radius: 50%;
-	color: var(--gray-500);
-	background-color: transparent;
 	transition: background-color 0.15s ease;
+	width: 40px;
 }
 
 .popup .close-popup:active {
@@ -521,17 +525,17 @@
 }
 
 .popup .title {
+	font-size: 24px;
+	margin-bottom: 10px;
 	padding-bottom: 5px;
 	padding-top: 5px;
-	margin-bottom: 10px;
-	font-size: 24px;
 	text-align: center;
 }
 
 .popup .description {
-	text-align: center;
-	margin-top: 0;
 	margin-bottom: 10px;
+	margin-top: 0;
+	text-align: center;
 }
 
 .popup-background.show .popup {
@@ -540,20 +544,23 @@
 
 .popup img,
 .popup video {
-	width: 100%;
 	border-radius: 10px;
 	border: var(--gray-600) 2px solid;
+	width: 100%;
 }
 
 .pcr-app {
+	box-shadow:
+		0 0.15em 1.5em 0 rgba(0, 0, 0, 0.1),
+		0 0 1em 0 rgba(0, 0, 0, 0.03),
+		rgba(0, 0, 0, 0.5) 0 0 0 10000px;
+	height: calc(100% - 40px) !important;
 	left: 50% !important;
+	max-height: 320px !important;
+	max-width: 680px !important;
 	top: 50% !important;
 	transform: translate(-50%, -50%);
 	width: calc(100% - 40px) !important;
-	height: calc(100% - 40px) !important;
-	max-width: 680px !important;
-	max-height: 320px !important;
-	box-shadow: 0 0.15em 1.5em 0 rgba(0, 0, 0, 0.1), 0 0 1em 0 rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.5) 0 0 0 10000px;
 }
 
 .pcr-color-palette {
