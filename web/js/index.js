@@ -27,6 +27,7 @@ document.querySelectorAll('.start').forEach(e => {
 	})
 })
 
+// Esquecer senha do MobyStk
 const $forgetPassword = document.querySelector('.forgetPassword')
 if (localStorage.getItem('joystick.password') !== null) {
 	$forgetPassword.classList.remove('hidden')
@@ -37,9 +38,32 @@ $forgetPassword.addEventListener('click', () => {
 	toast('A senha do MobyStk foi esquecida')
 })
 
+// Tela de carregamento
 const $loading = document.querySelector('.loadingScreen')
 function loading() {
 	$loading.classList.add('visible')
+}
+
+// Popup "Adicionar à tela inicial"
+const $athPopup = document.querySelector('.addToHomescreenPopup')
+const $athPopupClose = $athPopup.querySelector('.close-popup')
+const $athPopupDSA = $athPopup.querySelector('.dontShowAgainAddToHomescreenPopup')
+$athPopupClose.addEventListener('click', () => {
+	$athPopup.classList.remove('show')
+	if (!$athPopupDSA.checked) return
+	ls.setItem('joystick.events.addToHomescreenPopup', true)
+})
+
+if (!ls.getItem('joystick.events.addToHomescreenPopup')) {
+	setTimeout(() => {
+		const $video = document.createElement('video')
+		$video.src = 'video/add-to-homescreen-tutorial.mp4'
+		$video.loop = true
+		$video.muted = true
+		$athPopup.querySelector('.content').appendChild($video)
+		$video.play()
+		$athPopup.classList.add('show')
+	}, 10000)
 }
 
 // Carregar opções
