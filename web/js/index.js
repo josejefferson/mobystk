@@ -4,9 +4,9 @@ const form = document.forms[0]
 const formEls = form.elements
 
 // Contador de visitas
-let hits = parseInt(ls.getItem('joystick.data.hits.home'))
+let hits = parseInt(ls.getItem('joystick.stats.hits.home'))
 if (isNaN(hits)) hits = 0
-ls.setItem('joystick.data.hits.home', ++hits)
+ls.setItem('joystick.stats.hits.home', ++hits)
 
 // Eventos
 window.addEventListener('load', () => {
@@ -59,7 +59,7 @@ $athPopupClose.addEventListener('click', () => {
 	ls.setItem('joystick.events.addToHomescreenPopup', true)
 })
 
-if (!ls.getItem('joystick.events.addToHomescreenPopup') && hits % 3 === 0) {
+if (!ls.getItem('joystick.events.addToHomescreenPopup') && (hits === 3 || hits % 10 === 0)) {
 	window.addEventListener('load', () => {
 		const $video = document.createElement('video')
 		$video.src = 'video/add-to-homescreen-tutorial.mp4'

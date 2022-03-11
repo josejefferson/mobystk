@@ -10,8 +10,10 @@ document.ontouchstart = e => {
 		const joystick = target?.classList.contains('joystick') ? true : false
 		currentTouches.push({ target, touch, joystick })
 		if (!target) continue
-		navigator.vibrate(options.vibrate)
-		if (joystick) continue
+		if (joystick) {
+			navigator.vibrate(options.vibrate * 3)
+			continue
+		}
 		target.classList.add('active')
 
 		const keys = target.dataset.key?.split(' ')
@@ -22,6 +24,12 @@ document.ontouchstart = e => {
 			})
 		})
 		sendCmd(keys)
+
+		if (target.classList.contains('diag')) {
+			navigator.vibrate(options.vibrate * 3)
+		} else {
+			navigator.vibrate(options.vibrate)
+		}
 	}
 }
 
