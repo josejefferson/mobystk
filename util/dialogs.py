@@ -3,22 +3,29 @@
 
 import os
 from util.options import options
-from util.server import gamepads
-from util.tasks import afterExitTasks, installVgamepad, reloadScript
+from util.server import vgamepadInstalled, vgamepadError
+from util.tasks import afterExitTasks, installVgamepad, uninstallVgamepad, reloadScript
 from prompt_toolkit.application.current import get_app
+from prompt_toolkit.layout.controls import FormattedTextControl
 from prompt_toolkit.layout.containers import Float, HSplit
 from prompt_toolkit.layout.dimension import D
 from prompt_toolkit.widgets import Button, Dialog, Label, TextArea
+from prompt_toolkit.layout.containers import Window, WindowAlign
 
-# Instala o vgamepad
+# Instala o controle virtual
 def addTaskInstallVgamepad():
 	afterExitTasks.append(installVgamepad)
+	get_app().exit()
+
+# Desinstala o controle virtual
+def addTaskUninstallVgamepad():
+	afterExitTasks.append(uninstallVgamepad)
 	get_app().exit()
 
 def toggleVgamepad():
 	state = options.getOption('disableVgamepad')
 	options.setOption('disableVgamepad', not state)
-	afterExitTasks.append(lambda: reloadScript('O status do vgamepad foi alterado'))
+	afterExitTasks.append(lambda: reloadScript('O status do controle virtual foi alterado'))
 	get_app().exit()
 
 def setPassword(ok = False, value = None):
@@ -87,12 +94,18 @@ def optionsDialog(container, callback = lambda: None):
 	]
 
 	if os.name == 'nt':
-		if not options.getOption('disableVgamepad') and not gamepads:
+		if vgamepadError:
+			optionButtons.append(Window(
+				content= FormattedTextControl('\nAVISO: O controle virtual está com problemas\n'),
+				align = WindowAlign.CENTER
+			))
+
+		if not vgamepadInstalled:
 			optionButtons.append(Button(
 				left_symbol = '*',
 				right_symbol = '',
 				width = 50,
-				text = 'Instalar "vgamepad"',
+				text = 'Instalar controle virtual',
 				handler = addTaskInstallVgamepad
 			))
 		else:
@@ -100,7 +113,14 @@ def optionsDialog(container, callback = lambda: None):
 				left_symbol = '*',
 				right_symbol = '',
 				width = 50,
-				text = 'Ativar "vgamepad"' if options.getOption('disableVgamepad') else 'Desativar "vgamepad"',
+				text = 'Desinstalar controle virtual',
+				handler = addTaskUninstallVgamepad
+			))
+			optionButtons.append(Button(
+				left_symbol = '*',
+				right_symbol = '',
+				width = 50,
+				text = 'Ativar controle virtual' if options.getOption('disableVgamepad') else 'Desativar controle virtual',
 				handler = toggleVgamepad
 			))
 

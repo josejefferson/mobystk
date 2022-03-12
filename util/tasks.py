@@ -16,7 +16,7 @@ def runAfterExitTasks():
 	quit()
 
 # Reabre o programa
-def reloadScript(message):
+def reloadScript(message, error = False):
 	clearConsole()
 	terminalSize = os.get_terminal_size()
 	terminalWidth = terminalSize[0]
@@ -24,8 +24,9 @@ def reloadScript(message):
 
 	text = ''
 	if message:
+		color = F.RED if error else F.GREEN
 		text += ((terminalWidth - len(message)) // 2) * ' '
-		text += (S.BRIGHT + F.GREEN + message + S.RESET_ALL)
+		text += (S.BRIGHT + color + message + S.RESET_ALL)
 		text += '\n\n'
 
 	spaces = ((terminalWidth - 36) // 2) * ' '
@@ -55,9 +56,19 @@ def reloadScript(message):
 
 # Instala o vgamepad
 def installVgamepad():
-	print('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n' + \
-				'┃ Instalando o "vgamepad", aguarde... ┃\n' + \
-				'┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
+	print('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n' + \
+	      '┃ Instalando o controle virtual, aguarde... ┃\n' + \
+	      '┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 	command = 'python -m pip install vgamepad'
+	code = os.system(command.replace('python -m', f'"{sys.executable}" -m'))
+	if code == 0: reloadScript('O controle virtual foi instalado!')
+	else: reloadScript('Falha ao instalar o controle virtual!', True)
+
+# Desinstala o vgamepad
+def uninstallVgamepad():
+	print('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n' + \
+	      '┃ Desinstalando o controle virtual, aguarde... ┃\n' + \
+	      '┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
+	command = 'python -m pip uninstall vgamepad'
 	os.system(command.replace('python -m', f'"{sys.executable}" -m'))
-	reloadScript('O vgamepad foi instalado!')
+	reloadScript('O controle virtual foi desinstalado!')

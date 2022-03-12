@@ -76,7 +76,12 @@ function resizeJoystick() {
 			} else {
 				updateJoystick($el, id, d?.angle?.degree, d?.direction)
 			}
-			navigator.vibrate(options.vibrateJoystick * (45 - d?.distance) / 45)
+
+			if (d?.distance < 20) {
+				navigator.vibrate(options.vibrateJoystick * 2)
+			} else if (d?.distance < 45) {
+				navigator.vibrate(options.vibrateJoystick)
+			}
 		})
 	})
 

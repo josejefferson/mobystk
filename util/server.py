@@ -14,9 +14,12 @@ import pyqrcode
 import threading
 
 # Importa o vgamepad se tiver sido instalado
+vgamepadInstalled = True
+vgamepadError = False
+class VgamepadDisabled(Exception): pass
 try:
 	if options.getOption('disableVgamepad'):
-		raise Exception('Vgamepad desativado manualmente')
+		raise VgamepadDisabled('Vgamepad desativado manualmente')
 
 	from vgamepad import VX360Gamepad, XUSB_BUTTON
 	gamepads = [
@@ -27,9 +30,12 @@ try:
 	]
 except ModuleNotFoundError:
 	gamepads = None
-	pass
+	vgamepadInstalled = False
+except VgamepadDisabled:
+	gamepads = None
 except Exception as err:
 	gamepads = None
+	vgamepadError = True
 	if DEBUG: print(F.RED + str(err) + S.RESET_ALL)
 
 coloramaInit(autoreset=True)
@@ -63,9 +69,9 @@ def keyCommand(wsClient, cmd, key, player, vpad = False):
 			# Se o vgamepad não estiver instalado ou ativado
 			if not gamepads:
 				if options.getOption('disableVgamepad'):
-					wsClient.sendMessage('INFO O vgamepad está desativado no computador, ative-o nas opções do MobyStk')
+					wsClient.sendMessage('INFO O controle virtual está desativado no computador, ative-o nas opções do MobyStk')
 				else:
-					wsClient.sendMessage('INFO O vgamepad não está instalado no computador, instale-o nas opções do MobyStk')
+					wsClient.sendMessage('INFO O controle virtual não está instalado no computador, instale-o nas opções do MobyStk')
 				return
 
 			# Pressiona um botão do gamepad

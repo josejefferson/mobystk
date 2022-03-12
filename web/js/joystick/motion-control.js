@@ -83,7 +83,7 @@ function toggleDriveMode(e) {
 
 			lastDirections = [...directions]
 		} else {
-			// Usando VGamepad
+			// Usando controle virtual
 			let x = Math.round(32767 / SENSITIVITY * driveY)
 			if ((x < 10923 * PRECISION) && (x > -10923 * PRECISION)) x = 0
 			if (x > 32767) x = 32767
