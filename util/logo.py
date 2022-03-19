@@ -17,7 +17,7 @@ logo = """
 Iniciando...""".strip('\n')
 
 terminalSize = os.get_terminal_size()
-terminalWidth = terminalSize[0]
+terminalWidth = terminalSize[0] - 1
 terminalHeight = terminalSize[1]
 
 lines = logo.split('\n')

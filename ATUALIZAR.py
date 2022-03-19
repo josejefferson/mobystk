@@ -90,7 +90,7 @@ def getUpdateMessages(response):
 def askForUpdates(messages, since):
 	if messages == None: return
 	if len(messages) == 0:
-		print(f'{F.GREEN}O MobyStk já está atualizado. {F.MAGENTA}' + \
+		print(f'{F.GREEN}{S.BRIGHT}O MobyStk já está atualizado. {S.RESET_ALL}{F.MAGENTA}' + \
 			'Pressione ENTER para atualizar mesmo assim, ou feche esta janela para cancelar.', end='')
 		input()
 		return
