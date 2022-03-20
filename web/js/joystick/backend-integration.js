@@ -1,5 +1,35 @@
 const $gameVibration = document.querySelector('.game-vibration')
 
+// Evita aparecer a tela de senha novamente
+let triedToAuthenticate = false
+
+// Comandos vindos do servidor
+const commands = {
+	'V': (data) => {
+		const [value, player] = data.toLowerCase().split(' ')
+		if (options.vibrationFromGame/* && parseInt(player) === options.player*/) {
+			const n = parseInt(value.split('|')[0])
+			navigator.vibrate(n ? 3000 : 0, true)
+			$gameVibration.classList[n ? 'remove' : 'add']('mdi-google-controller')
+			$gameVibration.classList[n ? 'add' : 'remove']('mdi-vibrate')
+		}
+	},
+	'INFO': (data) => {
+		toast(data)
+	},
+	'AUTH_FAILED': () => {
+		if (triedToAuthenticate) return
+		document.body.classList.remove('connecting', 'connected')
+		document.body.classList.add('disconnected')
+		const password = prompt('O computador requer uma senha para se conectar ao MobyStk')
+		if (password === null) return
+		localStorage.setItem('joystick.password', password)
+		triedToAuthenticate = true
+		loading()
+		window.location.reload()
+	}
+}
+
 // CONEXÃO DO SOCKET
 let socket = socketConnect()
 function socketConnect() {
@@ -10,6 +40,7 @@ function socketConnect() {
 	ws.addEventListener('open', () => {
 		document.body.classList.remove('connecting', 'disconnected')
 		document.body.classList.add('connected')
+		ws.send('PASSWORD ' + (options.password || ''))
 	})
 	// Socket desconectado
 	ws.addEventListener('close', () => {
@@ -19,13 +50,10 @@ function socketConnect() {
 	})
 	// Mensagem do Socket
 	ws.addEventListener('message', (e) => {
-		const [cmd, value, player] = e.data.toLowerCase().split(' ')
-		if (options.vibrationFromGame && cmd === 'v'/* && parseInt(player) === options.player*/) {
-			const n = parseInt(value.split('|')[0])
-			navigator.vibrate(n ? 3000 : 0, true)
-			$gameVibration.classList[n ? 'remove' : 'add']('mdi-google-controller')
-			$gameVibration.classList[n ? 'add' : 'remove']('mdi-vibrate')
-		}
+		const [cmd, ...data] = e.data.split(' ')
+		const command = commands[cmd]
+		if (typeof command !== 'function') return
+		command(data.join(' '))
 	})
 	return ws
 }

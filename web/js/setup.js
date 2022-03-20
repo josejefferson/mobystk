@@ -9,7 +9,7 @@ const $cancel = $progress.querySelector('.cancel')
 const $ip = document.querySelector('.ip')
 const $connectStatus = document.querySelector('.connectStatus')
 
-const ip = localStorage.getItem('joystick.code') || window.location.hostname + ':5000'
+const ip = localStorage.getItem('joystick.options.code') || window.location.hostname + ':5000'
 $ip.innerText = ip
 let socket = socketConn()
 function socketConn() {
@@ -24,7 +24,21 @@ function socketConn() {
 		$connectStatus.classList.remove('connecting', 'connected')
 		$connectStatus.classList.add('disconnected')
 		setTimeout(() => socket = socketConn(), 3000)
+		ws.send('PASSWORD ' + (localStorage.getItem('joystick.password') || ''))
 	})
+	ws.addEventListener('message', (e) => {
+		const [cmd, ...data] = e.data.split(' ')
+		if (cmd.toUpperCase() === 'AUTH_FAILED') {
+			$connectStatus.classList.remove('connecting', 'connected')
+			$connectStatus.classList.add('disconnected')
+			const password = prompt('O computador requer uma senha para se conectar ao MobyStk')
+			if (password === null) return
+			localStorage.setItem('joystick.password', password)
+			loading()
+			window.location.reload()
+		}
+	})
+
 	return ws
 }
 

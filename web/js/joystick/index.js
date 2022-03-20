@@ -3,6 +3,7 @@ const options = {
 	ip: getOpt('code', 'localhost:5000'),
 	layout: getOpt('layout'),
 	player: getOpt('player', 1) - 1,
+	password: getOpt('password'),
 	debug: getOpt('debug', false),
 	locked: getOpt('locked', []),
 	hidden: getOpt('hidden', []),

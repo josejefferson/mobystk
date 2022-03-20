@@ -75,3 +75,20 @@ document.addEventListener('touchend', (e) => {
 		Controller.currentTouches.splice(i, 1)
 	}
 })
+
+// CANCELAMENTO DO TOQUE
+document.addEventListener('touchcancel', (e) => {
+	if (window.layoutEditor?.opened) return
+
+	for (const touch of e.changedTouches) {
+		const i = Controller.currentTouches.findIndex(t => {
+			return t.touch.identifier === touch.identifier
+		})
+		if (i < 0) continue
+
+		if (Controller.currentTouches[i].target?.instance instanceof Controller.Button) {
+			Controller.currentTouches[i].target.instance.release()
+		}
+		Controller.currentTouches.splice(i, 1)
+	}
+})

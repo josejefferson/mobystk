@@ -52,4 +52,9 @@ function loadElementActions() {
 		playMacroBtn.release()
 		playingMacro = false
 	})
+
+	// TELA CHEIA
+	document.querySelector('.deviceInfo').addEventListener('dblclick', () => {
+		document.documentElement.requestFullscreen()
+	})
 }

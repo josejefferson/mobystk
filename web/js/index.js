@@ -1,6 +1,12 @@
 window.ls = store.namespace('joystick')
+window.toast = alert // temporário
 const form = document.forms[0]
 const formEls = form.elements
+
+// Contador de visitas
+let hits = parseInt(ls('stats.hits.home'))
+if (isNaN(hits)) hits = 0
+ls('stats.hits.home', ++hits)
 
 // Eventos
 window.addEventListener('load', () => {
@@ -29,9 +35,43 @@ document.querySelectorAll('.start').forEach(e => {
 	})
 })
 
+// Esquecer senha do MobyStk
+const $forgetPassword = document.querySelector('.forgetPassword')
+if (ls('password') !== null) {
+	$forgetPassword.classList.remove('hidden')
+}
+$forgetPassword.addEventListener('click', () => {
+	ls.remove('password')
+	$forgetPassword.classList.add('hidden')
+	toast('A senha do MobyStk foi esquecida')
+})
+
+// Tela de carregamento
 const $loading = document.querySelector('.loadingScreen')
 function loading() {
 	$loading.classList.add('visible')
+}
+
+// Popup "Adicionar à tela inicial"
+const $athPopup = document.querySelector('.addToHomescreenPopup')
+const $athPopupClose = $athPopup.querySelector('.close-popup')
+const $athPopupDSA = $athPopup.querySelector('.dontShowAgainAddToHomescreenPopup')
+$athPopupClose.addEventListener('click', () => {
+	$athPopup.classList.remove('show')
+	if (!$athPopupDSA.checked) return
+	ls('events.addToHomescreenPopup', true)
+})
+
+if (!ls('events.addToHomescreenPopup') && (hits === 3 || hits % 10 === 0)) {
+	window.addEventListener('load', () => {
+		const $video = document.createElement('video')
+		$video.src = 'video/add-to-homescreen-tutorial.mp4'
+		$video.loop = true
+		$video.muted = true
+		$athPopup.querySelector('.content').appendChild($video)
+		$video.play()
+		$athPopup.classList.add('show')
+	})
 }
 
 // Carregar elementos

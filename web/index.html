@@ -29,12 +29,6 @@
 						<span>Conf. Emuladores</span>
 					</a>
 				</li>
-				<li>
-					<a href="oldbrowsers/index.html">
-						<i class="mdi mdi-earth"></i>
-						<span>Antigo</span>
-					</a>
-				</li>
 			</ul>
 		</nav>
 	</header>
@@ -114,11 +108,14 @@
 				</label>
 				<label class="option">
 					<input type="checkbox" name="vgamepad">
-					<div class="label">Usar&nbsp;<i>vgamepad</i></div>
+					<div class="label">Usar controle virtual</div>
 				</label>
 				<label class="option">
 					<input type="checkbox" name="vibrationFromGame" checked>
 					<div class="label">Vibração vinda do jogo</div>
+				</label>
+				<label class="option forgetPassword hidden">
+					<div class="label">Esquecer senha do MobyStk</div>
 				</label>
 				<label class="option range">
 					<div class="label">
@@ -299,6 +296,21 @@
 			</button>
 		</div>
 	</form>
+
+	<div class="addToHomescreenPopup popup-background">
+		<div class="popup">
+			<button class="close-popup">
+				<i class="mdi mdi-close"></i>
+			</button>
+			<div class="title">Adicionar à tela inicial</div>
+			<p class="description">Adicione o MobyStk à tela inicial do seu aparelho para acessá-lo com 1 clique</p>
+			<div class="content"></div>
+			<label class="option">
+				<input type="checkbox" class="dontShowAgainAddToHomescreenPopup" checked>
+				<div class="label">Não mostrar novamente</div>
+			</label>
+		</div>
+	</div>
 
 	<div class="loadingScreen">
 		<div class="text">Aguarde</div>
