@@ -13,6 +13,7 @@ body {
 body.debug .joystick.group,
 body.debug .diag {
 	border: var(--color) 1px solid;
+	background-color: rgba(255, 255, 255, 0.1);
 }
 
 .backgroundImage {
@@ -54,33 +55,41 @@ body.preload * {
 	width: 50%;
 }
 
-.diag {
+/*.diag {
 	--external-radius: 75px;
 	--internal-radius: 30px;
-}
+}*/
 
 .diag.dLT {
 	left: 0;
 	top: 0;
-	border-radius: var(--external-radius) 0 var(--internal-radius) 0;
+	clip-path: ellipse(25% 40% at 70% 50%);
+	transform: rotate(45deg);
+	/*border-radius: var(--external-radius) 0 var(--internal-radius) 0;*/
 }
 
 .diag.dRT {
 	right: 0;
 	top: 0;
-	border-radius: 0 var(--external-radius) 0 var(--internal-radius);
+	clip-path: ellipse(25% 40% at 30% 50%);
+	transform: rotate(-45deg);
+	/*border-radius: 0 var(--external-radius) 0 var(--internal-radius);*/
 }
 
 .diag.dLB {
 	left: 0;
 	bottom: 0;
-	border-radius: 0 var(--internal-radius) 0 var(--external-radius);
+	clip-path: ellipse(25% 40% at 70% 50%);
+	transform: rotate(-45deg);
+	/*border-radius: 0 var(--internal-radius) 0 var(--external-radius);*/
 }
 
 .diag.dRB {
 	right: 0;
 	bottom: 0;
-	border-radius: var(--internal-radius) 0 var(--external-radius) 0;
+	clip-path: ellipse(25% 40% at 30% 50%);
+	transform: rotate(45deg);
+	/*border-radius: var(--internal-radius) 0 var(--external-radius) 0;*/
 }
 
 /* Botões */
