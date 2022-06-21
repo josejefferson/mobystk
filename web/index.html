@@ -450,9 +450,21 @@
 					<input type="checkbox" name="debug" value="true">
 					<div class="label">Modo depuração</div>
 				</label>
+
 				<button type="button" class="resetSettings" onclick="localStorage.clear();loading();location.reload()">
 					Redefinir configurações
 				</button>
+
+				<section class="advanced customJS">
+					<header>
+						<div class="title">Plugins</div>
+						<div class="subtitle">AVISO: Plugins podem conter códigos maliciosos, use apenas plugins oficiais ou de alguém de confiança</div>
+					</header>
+
+					<main>
+						<textarea name="customJS" placeholder="JS personalizado"></textarea>
+					</main>
+				</section>
 			</main>
 		</section>
 

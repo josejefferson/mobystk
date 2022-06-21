@@ -402,6 +402,19 @@
 	border-color: var(--red-300);
 }
 
+.container section.customJS main {
+	padding: 0 20px 20px 20px;
+}
+
+.container section.customJS main textarea {
+	height: 90px !important;
+	border-color: var(--orange-400);
+}
+
+.container section.customJS main textarea:focus {
+	border-color: var(--orange-300);
+}
+
 .container section.advanced.hiddenOptions main {
 	padding-bottom: 20px;
 }

@@ -26,6 +26,7 @@ const options = {
 	colorsBorder: ls['joystick.options.border'],
 	colorsActive: ls['joystick.options.active'],
 	customCSS: ls['joystick.options.customCSS'],
+	customJS: ls['joystick.options.customJS'],
 	driveSensitivity: parseFloat(ls['joystick.options.driveSensitivity'] || 2),
 	drivePrecision: parseFloat(ls['joystick.options.drivePrecision'] || 1)
 }

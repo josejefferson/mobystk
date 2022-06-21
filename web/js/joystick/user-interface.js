@@ -56,6 +56,13 @@ const $customCSS = document.createElement('style')
 $customCSS.textContent = options.customCSS
 document.body.append($customCSS)
 
+// JS PERSONALIZADO
+if (options.customJS && options.customJS.trim()) {
+	if (confirm('Deseja executar os plugins?')) {
+		new Function(options.customJS.trim())()
+	}
+}
+
 // INFORMAÇÕES - BATERIA
 navigator.getBattery()?.then(b => {
 	updateBattery(b)

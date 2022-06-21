@@ -92,6 +92,7 @@ formEls.bgImage.value = ls.getItem('joystick.options.bgImage')
 formEls.bgOpacity.value = ls.getItem('joystick.options.bgOpacity') || '0.5'
 formEls.bgBlur.value = ls.getItem('joystick.options.bgBlur') || '0'
 formEls.customCSS.value = ls.getItem('joystick.options.customCSS')
+formEls.customJS.value = ls.getItem('joystick.options.customJS')
 formEls.driveSensitivity.value = ls.getItem('joystick.options.driveSensitivity') || '2'
 formEls.drivePrecision.value = ls.getItem('joystick.options.drivePrecision') || '1'
 if (ls.getItem('joystick.options.locked') !== null)
@@ -153,6 +154,7 @@ document.forms[0].addEventListener('submit', function (e) {
 	ls.setItem('joystick.options.bgOpacity', elems.bgOpacity.value)
 	ls.setItem('joystick.options.bgBlur', elems.bgBlur.value)
 	ls.setItem('joystick.options.customCSS', elems.customCSS.value)
+	ls.setItem('joystick.options.customJS', elems.customJS.value)
 	ls.setItem('joystick.options.driveSensitivity', elems.driveSensitivity.value)
 	ls.setItem('joystick.options.drivePrecision', elems.drivePrecision.value)
 	ls.setItem('joystick.options.locked', lockedBtns.join(','))
