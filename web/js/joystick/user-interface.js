@@ -59,7 +59,11 @@ document.body.append($customCSS)
 // JS PERSONALIZADO
 if (options.customJS && options.customJS.trim()) {
 	if (confirm('Deseja executar os plugins?')) {
-		new Function(options.customJS.trim())()
+		try {
+			new Function(options.customJS.trim())()
+		} catch (err) {
+			alert('Ocorreu um erro ao executar os plugins\n\n' + (err.message || ''))
+		}
 	}
 }
 
