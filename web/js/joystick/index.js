@@ -14,6 +14,7 @@ const options = {
 	disJoyXAxis: ls['joystick.options.disJoyXAxis'] === 'true',
 	disJoyYAxis: ls['joystick.options.disJoyYAxis'] === 'true',
 	dblClickLoadSave: ls['joystick.options.dblClickLoadSave'] === 'true',
+	changeKeyOnDrag: !(ls['joystick.options.changeKeyOnDrag'] === 'false'),
 	vibrate: Number(ls['joystick.options.vibrate'] || 15),
 	vibrateJoystick: Number(ls['joystick.options.vibrateJoystick'] || 5),
 	vibrationFromGame: !(ls['joystick.options.vibrationFromGame'] === 'false'),

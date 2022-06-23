@@ -43,6 +43,7 @@ document.ontouchmove = e => {
 
 		const oldtouch = currentTouches[i]
 		if (oldtouch.joystick) continue
+		if (!options.changeKeyOnDrag && oldtouch.target) continue
 		oldtouch.touch = touch
 
 		let target = document.elementFromPoint(touch.clientX, touch.clientY)

@@ -80,6 +80,7 @@ formEls.invertR.checked = ls.getItem('joystick.options.invertR') === 'true'
 formEls.disJoyXAxis.checked = ls.getItem('joystick.options.disJoyXAxis') === 'true'
 formEls.disJoyYAxis.checked = ls.getItem('joystick.options.disJoyYAxis') === 'true'
 formEls.dblClickLoadSave.checked = ls.getItem('joystick.options.dblClickLoadSave') === 'true'
+formEls.changeKeyOnDrag.checked = !(ls.getItem('joystick.options.changeKeyOnDrag') === 'false')
 formEls.vibrate.value = ls.getItem('joystick.options.vibrate') || '15'
 formEls.vibrateJoystick.value = ls.getItem('joystick.options.vibrateJoystick') || '5'
 formEls.vibrationFromGame.checked = !(ls.getItem('joystick.options.vibrationFromGame') === 'false')
@@ -142,6 +143,7 @@ document.forms[0].addEventListener('submit', function (e) {
 	ls.setItem('joystick.options.disJoyXAxis', elems.disJoyXAxis.checked)
 	ls.setItem('joystick.options.disJoyYAxis', elems.disJoyYAxis.checked)
 	ls.setItem('joystick.options.dblClickLoadSave', elems.dblClickLoadSave.checked)
+	ls.setItem('joystick.options.changeKeyOnDrag', elems.changeKeyOnDrag.checked)
 	ls.setItem('joystick.options.vibrate', elems.vibrate.value)
 	ls.setItem('joystick.options.vibrateJoystick', elems.vibrateJoystick.value)
 	ls.setItem('joystick.options.vibrationFromGame', elems.vibrationFromGame.checked)
