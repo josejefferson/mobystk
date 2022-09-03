@@ -35,9 +35,10 @@ Controller.Button = class extends Controller.Element {
 		} else {
 			if (!this.active && !this.customAction) this.emit('press', this.key)
 			if (this.scalable && !this.active && !diagonal) {
-				this.element.style.transform = this._transform + ' scale(1.2)'
+				this.element.classList.add('controller-button-scale')
 			} else if (!this.active && diagonal) {
-				this.element.style.transform = this._transform + ' scale(0.8)'
+				this.element.classList.add('controller-button-active-diagonal')
+				this.element.classList.add('controller-button-scale-diagonal')
 			}
 			this.active = true
 			this.element.classList.add('controller-button-active')
@@ -50,11 +51,11 @@ Controller.Button = class extends Controller.Element {
 			for (const target of targets) target.release(true)
 		} else {
 			if (this.active && !this.customAction) this.emit('release', this.key)
-			if (this.scalable && this.active) {
-				this.element.style.transform = this._transform
-			}
 			this.active = false
 			this.element.classList.remove('controller-button-active')
+			this.element.classList.remove('controller-button-scale')
+			this.element.classList.remove('controller-button-active-diagonal')
+			this.element.classList.remove('controller-button-scale-diagonal')
 		}
 	}
 

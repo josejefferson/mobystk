@@ -52,7 +52,7 @@ if (options.customJS && options.customJS.trim()) {
 }
 
 // INFORMAÇÕES - BATERIA
-navigator.getBattery()?.then(b => {
+navigator.getBattery?.()?.then(b => {
 	updateBattery(b)
 	b.addEventListener('chargingchange', e => updateBattery(e.target))
 	b.addEventListener('levelchange', e => updateBattery(e.target))
@@ -65,7 +65,7 @@ function updateBattery(b) {
 	const charging = b.charging
 	const level = b.level * 100
 	const roundLevel = Math.round(level / 10) * 10
-	$DIBatteryLevel.innerText = Math.round(level) + '%'
+	$DIBatteryLevel.innerText = Math.round(level) + '% •'
 	if (roundLevel === 0) {
 		$DIBatteryIcon.classList.add('mdi-battery-outline')
 	} else if (roundLevel === 100) {

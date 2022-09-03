@@ -14,7 +14,7 @@ const options = {
 	disJoyXAxis: getOpt('disJoyXAxis', false),
 	disJoyYAxis: getOpt('disJoyYAxis', false),
 	dblClickLoadSave: getOpt('dblClickLoadSave', false),
-	changeKeyOnDrag: getOpt('changeKeyOnDrag', false),
+	changeKeyOnDrag: getOpt('changeKeyOnDrag', true),
 	vibrate: getOpt('vibrate', 15),
 	vibrateJoystick: getOpt('vibrateJoystick', 5),
 	vibrationFromGame: getOpt('vibrationFromGame', true),
