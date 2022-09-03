@@ -1,0 +1,14 @@
+import './backend-integration'
+import './element-actions'
+import './interactions'
+import './joystick'
+import './layout'
+import './motion-control'
+import './user-interface'
+
+document.addEventListener('contextmenu', (e) => e.preventDefault())
+window.addEventListener('load', () => {
+	document.body.classList.remove('preload')
+})
+
+export {}

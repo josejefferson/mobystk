@@ -1,0 +1,392 @@
+* {
+	-webkit-tap-highlight-color: transparent;
+	box-sizing: border-box;
+	user-select: none;
+}
+
+:root {
+	--background: #000000;
+	--btn-background: transparent;
+	--color: rgba(255, 255, 255, 0.53);
+	--active: rgba(255, 255, 255, 0.2);
+	--border: var(--color);
+	--font-family: Arial, sans-serif;
+	--border-size: 2.5px;
+	--border-style: solid;
+}
+
+.hidden {
+	display: none !important;
+}
+
+body {
+	background-color: var(--background);
+	color: var(--color);
+	font-family: Roboto, Arial, sans-serif;
+	height: 100vh;
+	margin: 0;
+	overflow: hidden;
+	overscroll-behavior: contain;
+}
+
+body.debug .controller-joystick,
+body.debug .controller-group,
+body.debug .controller-button-diagonal {
+	border: var(--color) 1px solid !important;
+}
+
+body.debug .controller-group {
+	border-style: dashed !important;
+}
+
+body.debug .controller-joystick {
+	border-style: dotted !important;
+}
+
+/* Desativa as transições enquanto carrega a página */
+body.preload * {
+	transition: none !important;
+}
+
+a {
+	color: inherit;
+}
+
+svg {
+	height: 32px;
+	width: 32px;
+}
+
+i.mdi {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.center-x {
+	left: 50%;
+	/* transform: translateX(-50%); */
+	--translateX: -50% !important;
+}
+
+.center-y {
+	top: 50%;
+	/* transform: translateY(-50%); */
+	--translateY: -50% !important;
+}
+
+.center-x.center-y {
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+/* ==========================================================================
+   Elementos do controle
+   ========================================================================== */
+
+/* Imagem de fundo */
+.backgroundImage {
+	background-position: center center;
+	background-size: cover;
+	height: 100vh;
+	pointer-events: none;
+	width: 100vw;
+}
+
+/* Elementos */
+.controller-button,
+.controller-group,
+.controller-joystick {
+	display: flex;
+	position: absolute;
+	--translate: 0,0;
+	--translate3d: 0,0,0;
+	--translateX: 0;
+	--translateY: 0;
+	--translateZ: 0;
+	--scale: 1,1;
+	--scale3d: 1,1,1;
+	--scaleX: 1;
+	--scaleY: 1;
+	--scaleZ: 1;
+	--rotate: 0;
+	--rotate3d: 0,0,0,0;
+	--rotateX: 0;
+	--rotateY: 0;
+	--rotateZ: 0;
+	transform:
+		translate(var(--translate))
+		translate3d(var(--translate3d))
+		translateX(var(--translateX))
+		translateY(var(--translateY))
+		translateZ(var(--translateZ))
+		scale(var(--scale))
+		scale3d(var(--scale3d))
+		scaleX(var(--scaleX))
+		scaleY(var(--scaleY))
+		scaleZ(var(--scaleZ))
+		rotate(var(--rotate))
+		rotate3d(var(--rotate3d))
+		rotateX(var(--rotateX))
+		rotateY(var(--rotateY))
+		rotateZ(var(--rotateZ));
+}
+
+/* Botões */
+.controller-button {
+	align-items: center;
+	background-color: var(--btn-background);
+	border: var(--border) var(--border-size) var(--border-style);
+	color: inherit;
+	cursor: pointer;
+	font-family: var(--font-family);
+	font-size: 12.5px;
+	font-size: 20px;
+	justify-content: center;
+	outline: none;
+	padding: 0;
+	position: absolute;
+	transition:
+		border-color 1s ease,
+		color 1s ease;
+}
+
+.controller-button.controller-button-lockable {
+	border-style: dashed;
+}
+
+.controller-button.controller-button-active {
+	background-color: var(--active);
+}
+
+.controller-button.controller-button-scale {
+	--scale: 1.2;
+}
+
+.controller-button.controller-button-active.controller-button-active-diagonal {
+	background-color: var(--active);
+}
+
+.controller-button.controller-button-scale-diagonal {
+	--scale: 0.8;
+}
+
+/* Ícones dos botões */
+.controller-button .mdi {
+	color: inherit;
+	font-size: inherit !important;
+	transition: color 1s ease;
+	pointer-events: none;
+}
+
+.controller-button svg {
+	fill: var(--color);
+	pointer-events: none;
+	transition: fill 1s ease;
+	z-index: -1;
+}
+
+.controller-button i {
+	font-family: initial;
+}
+
+/* Botão de editar */
+.controller-button.edit {
+	border-radius: 0 0 30px 30px;
+	border-top: none;
+	font-size: 16px;
+	height: 30px;
+	left: 50%;
+	top: 0;
+	transform: translateX(-50%);
+	width: 60px;
+}
+
+/* Botões dentro de um grupo */
+.controller-group .controller-button {
+	z-index: 2;
+}
+
+/* Joysticks */
+.controller-joystick {
+	border-radius: 50%;
+}
+
+.nipple,
+.nipple .back,
+.nipple .front {
+	cursor: move;
+	opacity: 1 !important;
+}
+
+/* Joystick back */
+.nipple .back {
+	background-color: var(--btn-background) !important;
+	border: var(--border) var(--border-size) var(--border-style);
+	transition:
+		border-color 1s ease,
+		border-top-width .2s ease,
+		border-left-width .2s ease,
+		border-right-width .2s ease,
+		border-bottom-width .2s ease !important;
+}
+
+/* Joystick front */
+.nipple .front {
+	background-color: var(--color) !important;
+	border: var(--border) var(--border-size) var(--border-style);
+	transition: border-color 1s ease, background-color 1s ease !important;
+}
+
+/* ==========================================================================
+   Informações do dispositivo
+   ========================================================================== */
+.deviceInfo {
+	color: inherit;
+	font-family: var(--font-family);
+	font-size: 20px;
+	left: 50%;
+	position: absolute;
+	text-align: center;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	transition: 1s ease;
+}
+
+/* Status */
+.deviceInfo .status {
+	align-items: center;
+	display: flex;
+	font-size: 14px;
+	height: 20px;
+	justify-content: center;
+	opacity: 1;
+	overflow: hidden;
+	transition:
+		height .15s ease,
+		opacity 1s ease .15s;
+}
+
+.deviceInfo .status::before {
+	font-family: 'Material Design Icons';
+	margin-bottom: 2px;
+	margin-right: 10px;
+}
+
+body.connecting .deviceInfo .status::before {
+	content: '\F0772';
+	animation: mdi-spin 2s infinite linear;
+}
+
+body.connecting .deviceInfo .status::after {
+	content: 'Conectando';
+}
+
+body.connected .deviceInfo .status {
+	opacity: 0;
+	height: 0;
+	transition:
+		opacity 1s ease 3s,
+		height .15s ease 4s;
+}
+
+body.connected .deviceInfo .status::before {
+	content: '\F05E1';
+}
+
+body.connected .deviceInfo .status::after {
+	content: 'Conectado';
+}
+
+body.disconnected .deviceInfo .status::before {
+	content: '\F015A';
+}
+
+body.disconnected .deviceInfo .status::after {
+	content: 'Desconectado';
+}
+
+/* ==========================================================================
+   Debug
+   ========================================================================== */
+.debugLog {
+	color: white;
+	font-family: monospace;
+	height: 100%;
+	left: 0;
+	pointer-events: none;
+	position: fixed;
+	top: 0;
+	user-select: none;
+	white-space: pre;
+	width: 100%;
+	z-index: 5;
+}
+
+/* ==========================================================================
+   Tela de carregamento
+   ========================================================================== */
+.loadingScreen {
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	display: flex;
+	flex-direction: column;
+	font-family: Roboto, Arial, sans-serif;
+	height: 100%;
+	justify-content: center;
+	left: 0;
+	opacity: 0;
+	pointer-events: none;
+	position: fixed;
+	top: 0;
+	transition: opacity 0.15s ease;
+	width: 100%;
+	z-index: 10100;
+}
+
+.loadingScreen.visible {
+	display: flex;
+	opacity: 1;
+}
+
+.loadingScreen.visible .mdi {
+	animation: sandClock 3s ease infinite;
+}
+
+.loadingScreen .text {
+	font-size: 8vmin;
+	margin-bottom: 20px;
+}
+
+.loadingScreen .mdi {
+	align-items: center;
+	border-radius: 50%;
+	border: white 2vmin solid;
+	display: flex;
+	font-size: 25vmin;
+	height: 40vmin;
+	justify-content: center;
+	width: 40vmin;
+}
+
+/* ==========================================================================
+   Animações
+   ========================================================================== */
+@keyframes rotate {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes sandClock {
+	from {
+		transform: rotate(0deg);
+	}
+
+	50%,
+	to {
+		transform: rotate(360deg);
+	}
+}

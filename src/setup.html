@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=0">
+	<link rel="shortcut icon" href="favicon.png" type="image/png">
+	<link rel="manifest" href="manifest.json">
+	<title>MobyStk</title>
+	<link rel="stylesheet" href="lib/css/materialdesignicons.min.css">
+	<link rel="stylesheet" href="lib/css/pickr.classic.min.css">
+	<link rel="stylesheet" href="css/colors.css">
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/setup.css">
+</head>
+
+<body class="preload">
+	<header>
+		<a href="index.html" class="return">
+			<i class="mdi mdi-arrow-left"></i>
+		</a>
+		<div class="title">Configurar emuladores</div>
+
+		<nav>
+			<ul></ul>
+		</nav>
+	</header>
+
+	<main>
+		<p>O MobyStk pode configurar as teclas automaticamente para alguns emuladores. Siga as instruções de cada
+			emulador para configurá-lo. Prepare o emulador e clique no botão vermelho para iniciar.</p>
+
+		<p>
+			O IP está definido como <span class="ip">...</span> (status: <span class="connectStatus connecting"></span>).<br>
+			Para mudar o IP, volte à tela inicial, altere e abra o Joystick, depois volte aqui.
+		</p>
+		
+		<div class="apps">
+			<div class="app">
+				<div class="name">PPSSPP</div>
+				<p class="instructions">
+					Entre em <u>Configurações > Controles > Mapear controles</u>
+				</p>
+				<div class="actions">
+					<button class="start" data-app="psp" data-player="1">Controles</button>
+				</div>
+			</div>
+
+			<div class="app">
+				<div class="name">Snes9x</div>
+				<p class="instructions">
+					Entre em <u>Input > Input Configuration... > (Selecione a opção Up)</u>
+				</p>
+				<div class="actions">
+					<button class="start" data-app="snes" data-player="1">Joypad #1</button>
+					<button class="start" data-app="snes" data-player="2">Joypad #2</button>
+					<button class="start" data-app="snesSave" data-player="1">Save 0</button>
+					<button class="start" data-app="snesLoad" data-player="1">Load 0</button>
+				</div>
+			</div>
+
+			<div class="app">
+				<div class="name">PCSX2</div>
+				<p class="instructions">
+					Entre em <u>Configuração > Comandos (PAD) > Configurações do plug-in... > Pad (1 ou 2) > Quick setup</u>
+				</p>
+				<div class="actions">
+					<button class="start" data-app="ps2" data-player="1">Pad 1A</button>
+					<button class="start" data-app="ps2" data-player="2">Pad 1B</button>
+					<button class="start" data-app="ps2" data-player="3">Pad 1C</button>
+					<button class="start" data-app="ps2" data-player="4">Pad 1D</button>
+					<button class="start" data-app="ps2" data-player="2">Pad 2</button>
+				</div>
+			</div>
+	</main>
+
+	<div class="progress hidden">
+		<div class="cancel"><i class="mdi mdi-close"></i></div>
+		<div class="bar"></div>
+	</div>
+
+	<div class="loadingScreen">
+		<div class="text">Aguarde</div>
+		<i class="mdi mdi-timer-sand"></i>
+	</div>
+
+	<!-- <script src="js/keymappings.js"></script>
+	<script src="js/setupmap.js"></script>
+	<script src="js/setup.js"></script> -->
+</body>
+
+</html>
