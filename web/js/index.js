@@ -1,25 +1,28 @@
+window.ls = store.namespace('joystick')
 window.toast = alert // temporário
-const ls = localStorage
 const form = document.forms[0]
 const formEls = form.elements
 
 // Contador de visitas
-let hits = parseInt(ls.getItem('joystick.stats.hits.home'))
+let hits = parseInt(ls('stats.hits.home'))
 if (isNaN(hits)) hits = 0
-ls.setItem('joystick.stats.hits.home', ++hits)
+ls('stats.hits.home', ++hits)
 
 // Eventos
 window.addEventListener('load', () => {
 	document.body.classList.remove('preload')
 })
 
-window.addEventListener('scroll', () => {
+window.addEventListener('load', updateStartButton)
+window.addEventListener('scroll', updateStartButton)
+
+function updateStartButton() {
 	if (document.scrollingElement.scrollTop > window.innerHeight) {
 		document.querySelector('.start.floating').classList.remove('hidden')
 	} else {
 		document.querySelector('.start.floating').classList.add('hidden')
 	}
-})
+}
 
 document.addEventListener('contextmenu', () => false)
 document.querySelectorAll('a').forEach(e => e.addEventListener('click', loading))
@@ -34,11 +37,11 @@ document.querySelectorAll('.start').forEach(e => {
 
 // Esquecer senha do MobyStk
 const $forgetPassword = document.querySelector('.forgetPassword')
-if (localStorage.getItem('joystick.password') !== null) {
+if (ls('password') !== null) {
 	$forgetPassword.classList.remove('hidden')
 }
 $forgetPassword.addEventListener('click', () => {
-	localStorage.removeItem('joystick.password')
+	ls.remove('password')
 	$forgetPassword.classList.add('hidden')
 	toast('A senha do MobyStk foi esquecida')
 })
@@ -56,10 +59,10 @@ const $athPopupDSA = $athPopup.querySelector('.dontShowAgainAddToHomescreenPopup
 $athPopupClose.addEventListener('click', () => {
 	$athPopup.classList.remove('show')
 	if (!$athPopupDSA.checked) return
-	ls.setItem('joystick.events.addToHomescreenPopup', true)
+	ls('events.addToHomescreenPopup', true)
 })
 
-if (!ls.getItem('joystick.events.addToHomescreenPopup') && (hits === 3 || hits % 10 === 0)) {
+if (!ls('events.addToHomescreenPopup') && (hits === 3 || hits % 10 === 0)) {
 	window.addEventListener('load', () => {
 		const $video = document.createElement('video')
 		$video.src = 'video/add-to-homescreen-tutorial.mp4'
@@ -71,41 +74,85 @@ if (!ls.getItem('joystick.events.addToHomescreenPopup') && (hits === 3 || hits %
 	})
 }
 
+// Carregar elementos
+const $selectLayout = document.querySelector('.selectLayout')
+for (const layout of Controller.layouts) {
+	$selectLayout.innerHTML += `
+		<label class="chip">
+			<input type="radio" name="layout" value="${escapeHTML(layout.id)}">
+			<div class="label">${escapeHTML(layout.name)}</div>
+		</label>`
+}
+
+const $lockableKeys = document.querySelector('.lockableKeysList')
+for (const button of Controller.buttons) {
+	if (!button.content || button.customAction || button.diagonal) continue
+	let content = ''
+	if (button.content.type === 'mobystk:text') content += escapeHTML(button.content.value)
+	else if (button.content.type === 'mobystk:icon') content += `<i class="mdi mdi-${escapeHTML(button.content.value)}"></i>`
+	$lockableKeys.innerHTML += `
+		<label class="chip">
+			<input type="checkbox" name="lock" data-id="${escapeHTML(button.id)}" value="${escapeHTML(button.id)}">
+			<div class="label">${content}</div>
+		</label>`
+}
+
+const $hiddenItems = document.querySelector('.hiddenItemsList')
+for (const element of [...Controller.buttons, ...Controller.groups, ...Controller.joysticks]) {
+	let content = ''
+	if (element.type === 'mobystk:group') content += '<i class="mdi mdi-group"></i>&nbsp;'
+	if (element.type === 'mobystk:joystick') content += '<i class="mdi mdi-gamepad"></i>&nbsp;'
+	if (element.content?.type === 'mobystk:text') content += escapeHTML(element.content.value)
+	else if (element.content?.type === 'mobystk:icon') content += `<i class="mdi mdi-${escapeHTML(element.content.value)}"></i>`
+	else if (element.name) content += escapeHTML(element.name)
+
+	$hiddenItems.innerHTML += `
+		<label class="chip"">
+			<input type="checkbox" name="hide" data-id="${escapeHTML(element.id)}" value="${escapeHTML(element.id)}">
+			<div class="label">${content}</div>
+		</label>`
+}
+
 // Carregar opções
-formEls.code.value = ls.getItem('joystick.options.code') || window.location.hostname + ':5000'
-formEls.layout.value = ls.getItem('joystick.options.layout')
-formEls.player.value = ls.getItem('joystick.options.player')
-formEls.invertL.checked = ls.getItem('joystick.options.invertL') === 'true'
-formEls.invertR.checked = ls.getItem('joystick.options.invertR') === 'true'
-formEls.disJoyXAxis.checked = ls.getItem('joystick.options.disJoyXAxis') === 'true'
-formEls.disJoyYAxis.checked = ls.getItem('joystick.options.disJoyYAxis') === 'true'
-formEls.dblClickLoadSave.checked = ls.getItem('joystick.options.dblClickLoadSave') === 'true'
-formEls.changeKeyOnDrag.checked = !(ls.getItem('joystick.options.changeKeyOnDrag') === 'false')
-formEls.vibrate.value = ls.getItem('joystick.options.vibrate') || '15'
-formEls.vibrateJoystick.value = ls.getItem('joystick.options.vibrateJoystick') || '5'
-formEls.vibrationFromGame.checked = !(ls.getItem('joystick.options.vibrationFromGame') === 'false')
-formEls.vgamepad.checked = ls.getItem('joystick.options.vgamepad') === 'true'
-formEls.background.value = ls.getItem('joystick.options.background') || 'rgba(0, 0, 0, 1)'
-formEls.color.value = ls.getItem('joystick.options.color') || 'rgba(255, 255, 255, 0.53)'
-formEls.border.value = ls.getItem('joystick.options.border') || 'rgba(255, 255, 255, 0.53)'
-formEls.active.value = ls.getItem('joystick.options.active') || 'rgba(255, 255, 255, 0.2)'
-formEls.bgImage.value = ls.getItem('joystick.options.bgImage')
-formEls.bgOpacity.value = ls.getItem('joystick.options.bgOpacity') || '0.5'
-formEls.bgBlur.value = ls.getItem('joystick.options.bgBlur') || '0'
-formEls.customCSS.value = ls.getItem('joystick.options.customCSS')
-formEls.customJS.value = ls.getItem('joystick.options.customJS')
-formEls.driveSensitivity.value = ls.getItem('joystick.options.driveSensitivity') || '2'
-formEls.drivePrecision.value = ls.getItem('joystick.options.drivePrecision') || '1'
-if (ls.getItem('joystick.options.locked') !== null)
-	document.querySelectorAll('[name=lock]').forEach(e => e.checked = false)
-ls.getItem('joystick.options.locked')?.split(',')?.forEach(e => {
-	if (e) document.querySelector(`[name=lock][value="${e}"]`).checked = true
-})
-if (ls.getItem('joystick.options.hidden') !== null)
-	document.querySelectorAll('[name=hide]').forEach(e => e.checked = false)
-ls.getItem('joystick.options.hidden')?.split(',')?.forEach(e => {
-	if (e) document.querySelector(`[name=hide][value="${e}"]`).checked = true
-})
+formEls.code.value = getOpt('code', window.location.hostname + ':5000')
+formEls.layout.value = getOpt('layout', Controller.layouts[0]?.id)
+formEls.player.value = getOpt('player', '1')
+formEls.invertL.checked = getOpt('invertL', false)
+formEls.invertR.checked = getOpt('invertR', false)
+formEls.disJoyXAxis.checked = getOpt('disJoyXAxis', false)
+formEls.disJoyYAxis.checked = getOpt('disJoyYAxis', false)
+formEls.dblClickLoadSave.checked = getOpt('dblClickLoadSave', false)
+formEls.changeKeyOnDrag.checked = getOpt('changeKeyOnDrag', false)
+formEls.vibrate.value = getOpt('vibrate', '15')
+formEls.vibrateJoystick.value = getOpt('vibrateJoystick', '5')
+formEls.vibrationFromGame.checked = getOpt('vibrationFromGame', true)
+formEls.vgamepad.checked = getOpt('vgamepad', false)
+formEls.background.value = getOpt('background', 'rgba(0, 0, 0, 1)')
+formEls.color.value = getOpt('color', 'rgba(255, 255, 255, 0.53)')
+formEls.border.value = getOpt('border', 'rgba(255, 255, 255, 0.53)')
+formEls.active.value = getOpt('active', 'rgba(255, 255, 255, 0.2)')
+formEls.bgImage.value = getOpt('bgImage', '')
+formEls.bgOpacity.value = getOpt('bgOpacity', '0.5')
+formEls.bgBlur.value = getOpt('bgBlur', '0')
+formEls.customCSS.value = getOpt('customCSS', '')
+formEls.customJS.value = getOpt('customJS', '')
+formEls.driveSensitivity.value = getOpt('driveSensitivity', '2')
+formEls.drivePrecision.value = getOpt('drivePrecision', '1')
+const locked = getOpt('locked', [])
+const hidden = getOpt('hidden', ['mobystk:macro_record', 'mobystk:macro_play', 'mobystk:fast_forward'])
+for (const item of locked) {
+	const $input = document.querySelector(`[name=lock][data-id="${escapeHTML(item)}"]`)
+	if ($input) $input.checked = true
+}
+for (const item of hidden) {
+	const $input = document.querySelector(`[name=hide][data-id="${escapeHTML(item)}"]`)
+	if ($input) $input.checked = true
+}
+
+function getOpt(name, defaultValue) {
+	const value = ls(name)
+	return value === null ? defaultValue : value
+}
 
 document.querySelectorAll('input[type="range"] + .value').forEach($value => {
 	const $range = $value.parentElement.querySelector('input[type="range"]')
@@ -134,33 +181,33 @@ document.forms[0].addEventListener('submit', function (e) {
 		if (e.checked) hiddenItems.push(e.value)
 	})
 
-	ls.setItem('joystick.options.code', elems.code.value)
-	ls.setItem('joystick.options.layout', elems.layout.value)
-	ls.setItem('joystick.options.player', elems.player.value)
-	ls.setItem('joystick.options.debug', elems.debug.checked)
-	ls.setItem('joystick.options.invertL', elems.invertL.checked)
-	ls.setItem('joystick.options.invertR', elems.invertR.checked)
-	ls.setItem('joystick.options.disJoyXAxis', elems.disJoyXAxis.checked)
-	ls.setItem('joystick.options.disJoyYAxis', elems.disJoyYAxis.checked)
-	ls.setItem('joystick.options.dblClickLoadSave', elems.dblClickLoadSave.checked)
-	ls.setItem('joystick.options.changeKeyOnDrag', elems.changeKeyOnDrag.checked)
-	ls.setItem('joystick.options.vibrate', elems.vibrate.value)
-	ls.setItem('joystick.options.vibrateJoystick', elems.vibrateJoystick.value)
-	ls.setItem('joystick.options.vibrationFromGame', elems.vibrationFromGame.checked)
-	ls.setItem('joystick.options.vgamepad', elems.vgamepad.checked)
-	ls.setItem('joystick.options.background', elems.background.value)
-	ls.setItem('joystick.options.color', elems.color.value)
-	ls.setItem('joystick.options.border', elems.border.value)
-	ls.setItem('joystick.options.active', elems.active.value)
-	ls.setItem('joystick.options.bgImage', elems.bgImage.value)
-	ls.setItem('joystick.options.bgOpacity', elems.bgOpacity.value)
-	ls.setItem('joystick.options.bgBlur', elems.bgBlur.value)
-	ls.setItem('joystick.options.customCSS', elems.customCSS.value)
-	ls.setItem('joystick.options.customJS', elems.customJS.value)
-	ls.setItem('joystick.options.driveSensitivity', elems.driveSensitivity.value)
-	ls.setItem('joystick.options.drivePrecision', elems.drivePrecision.value)
-	ls.setItem('joystick.options.locked', lockedBtns.join(','))
-	ls.setItem('joystick.options.hidden', hiddenItems.join(','))
+	ls('code', elems.code.value)
+	ls('layout', elems.layout.value)
+	ls('player', Number(elems.player.value))
+	ls('debug', elems.debug.checked)
+	ls('invertL', elems.invertL.checked)
+	ls('invertR', elems.invertR.checked)
+	ls('disJoyXAxis', elems.disJoyXAxis.checked)
+	ls('disJoyYAxis', elems.disJoyYAxis.checked)
+	ls('dblClickLoadSave', elems.dblClickLoadSave.checked)
+	ls('changeKeyOnDrag', elems.changeKeyOnDrag.checked)
+	ls('vibrate', Number(elems.vibrate.value))
+	ls('vibrateJoystick', Number(elems.vibrateJoystick.value))
+	ls('vibrationFromGame', elems.vibrationFromGame.checked)
+	ls('vgamepad', elems.vgamepad.checked)
+	ls('background', elems.background.value)
+	ls('color', elems.color.value)
+	ls('border', elems.border.value)
+	ls('active', elems.active.value)
+	ls('bgImage', elems.bgImage.value)
+	ls('bgOpacity', Number(elems.bgOpacity.value))
+	ls('bgBlur', Number(elems.bgBlur.value))
+	ls('customCSS', elems.customCSS.value)
+	ls('customJS', elems.customJS.value)
+	ls('driveSensitivity', Number(elems.driveSensitivity.value))
+	ls('drivePrecision', Number(elems.drivePrecision.value))
+	ls('locked', lockedBtns)
+	ls('hidden', hiddenItems)
 
 	loading()
 	location.href = 'joystick.html'
@@ -185,7 +232,7 @@ function createPickr(el, defaultColor, opacity) {
 	return Pickr.create({
 		el: `.pickr-${el}`,
 		theme: 'classic',
-		default: ls['joystick.options.' + el] || defaultColor,
+		default: ls(el) || defaultColor,
 		defaultRepresentation: 'HEXA',
 		comparison: false,
 		autoReposition: true,
@@ -199,7 +246,7 @@ function createPickr(el, defaultColor, opacity) {
 			}
 		},
 		i18n: {
-			'btn:save': 'Fechar',
+			'btn:save': 'Fechar'
 		},
 		swatches: [
 			'#F44336',
@@ -247,18 +294,13 @@ function importSettings() {
 		try {
 			const file = this.files[0]
 			if (!file) return
-			let content = await new Promise((resolve, reject) => {
-				let reader = new FileReader()
-				reader.onload = () => {
-					resolve(reader.result)
-				}
+			const content = await new Promise((resolve, reject) => {
+				const reader = new FileReader()
+				reader.onload = () => resolve(reader.result)
 				reader.onerror = reject
 				reader.readAsText(file)
 			})
-			content = JSON.parse(content)
-			for (option in content) {
-				ls.setItem(option, content[option])
-			}
+			ls(JSON.parse(content))
 			loading()
 			location.reload()
 		} catch (err) {
@@ -272,12 +314,12 @@ const $export = document.querySelector('.exportSettings')
 $export.addEventListener('click', exportSettings)
 
 function exportSettings() {
-	const content = JSON.stringify(ls)
+	const content = JSON.stringify(ls())
 	const el = document.createElement('a')
 	const blob = new Blob([content], { type: 'application/json' })
 	const url = URL.createObjectURL(blob)
 	el.href = url
-	el.download = `mobyStk-settings-${Date.now()}.json`
+	el.download = `mobyStk-settings-${new Date().toISOString()}.json`
 	el.click()
 }
 
@@ -302,4 +344,13 @@ function getPrecision(num) {
 	const str = Number(num).toString()
 	const arr = str.indexOf('.') + 1
 	return !arr ? 0 : str.length - arr
+}
+
+function escapeHTML(unsafe) {
+	return unsafe
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#039;')
 }

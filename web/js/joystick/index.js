@@ -2,34 +2,39 @@ window.toast = alert // temporário
 const ls = localStorage
 
 const options = {
-	ip: ls['joystick.options.code'] || 'localhost:5000',
-	layout: ls['joystick.options.layout'],
-	player: parseInt(ls['joystick.options.player']) - 1,
-	password: ls['joystick.password'] || '',
-	debug: ls['joystick.options.debug'] === 'true',
-	locked: ls['joystick.options.locked']?.split(','),
-	hidden: ls['joystick.options.hidden']?.split(','),
-	invertL: ls['joystick.options.invertL'] === 'true',
-	invertR: ls['joystick.options.invertR'] === 'true',
-	disJoyXAxis: ls['joystick.options.disJoyXAxis'] === 'true',
-	disJoyYAxis: ls['joystick.options.disJoyYAxis'] === 'true',
-	dblClickLoadSave: ls['joystick.options.dblClickLoadSave'] === 'true',
-	changeKeyOnDrag: !(ls['joystick.options.changeKeyOnDrag'] === 'false'),
-	vibrate: Number(ls['joystick.options.vibrate'] || 15),
-	vibrateJoystick: Number(ls['joystick.options.vibrateJoystick'] || 5),
-	vibrationFromGame: !(ls['joystick.options.vibrationFromGame'] === 'false'),
-	vgamepad: ls['joystick.options.vgamepad'] === 'true',
-	bgImage: ls['joystick.options.bgImage'],
-	bgOpacity: ls['joystick.options.bgOpacity'],
-	bgBlur: ls['joystick.options.bgBlur'],
-	colorsBackground: ls['joystick.options.background'],
-	colorsColor: ls['joystick.options.color'],
-	colorsBorder: ls['joystick.options.border'],
-	colorsActive: ls['joystick.options.active'],
-	customCSS: ls['joystick.options.customCSS'],
-	customJS: ls['joystick.options.customJS'],
-	driveSensitivity: parseFloat(ls['joystick.options.driveSensitivity'] || 2),
-	drivePrecision: parseFloat(ls['joystick.options.drivePrecision'] || 1)
+	ip: getOpt('code', 'localhost:5000'),
+	layout: getOpt('layout'),
+	player: getOpt('player', 1) - 1,
+	password: getOpt('password'),
+	debug: getOpt('debug', false),
+	locked: getOpt('locked', []),
+	hidden: getOpt('hidden', []),
+	invertL: getOpt('invertL', false),
+	invertR: getOpt('invertR', false),
+	disJoyXAxis: getOpt('disJoyXAxis', false),
+	disJoyYAxis: getOpt('disJoyYAxis', false),
+	dblClickLoadSave: getOpt('dblClickLoadSave', false),
+	changeKeyOnDrag: getOpt('changeKeyOnDrag', false),
+	vibrate: getOpt('vibrate', 15),
+	vibrateJoystick: getOpt('vibrateJoystick', 5),
+	vibrationFromGame: getOpt('vibrationFromGame', true),
+	vgamepad: getOpt('vgamepad', false),
+	bgImage: getOpt('bgImage', ''),
+	bgOpacity: getOpt('bgOpacity', 0.5),
+	bgBlur: getOpt('bgBlur', 0),
+	colorsBackground: getOpt('background', 'rgba(0, 0, 0, 1)'),
+	colorsColor: getOpt('color', 'rgba(255, 255, 255, 0.53)'),
+	colorsBorder: getOpt('border', 'rgba(255, 255, 255, 0.53)'),
+	colorsActive: getOpt('active', 'rgba(255, 255, 255, 0.2)'),
+	customCSS: getOpt('customCSS', ''),
+	customJS: getOpt('customJS', ''),
+	driveSensitivity: getOpt('driveSensitivity', 2),
+	drivePrecision: getOpt('drivePrecision', 1)
+}
+
+function getOpt(name, defaultValue) {
+	const value = ls(name)
+	return value === null ? defaultValue : value
 }
 
 // EVENTOS DA PÁGINA
@@ -67,4 +72,13 @@ navigator.vibrate = function (pattern, force = false) {
 		return navigator._vibrate(pattern)
 	}
 	return false
+}
+
+function escapeHTML(unsafe) {
+	return unsafe
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#039;')
 }

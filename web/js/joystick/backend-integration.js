@@ -1,4 +1,6 @@
-const $gameVibration = document.querySelector('.game-vibration')
+const $controllerIndicator = document.querySelector('.controller-indicator')
+const controllerIndicatorClass = options.vgamepad ? 'mdi-google-controller' : 'mdi-keyboard'
+$controllerIndicator.classList.add(controllerIndicatorClass)
 
 // Evita aparecer a tela de senha novamente
 let triedToAuthenticate = false
@@ -10,8 +12,8 @@ const commands = {
 		if (options.vibrationFromGame/* && parseInt(player) === options.player*/) {
 			const n = parseInt(value.split('|')[0])
 			navigator.vibrate(n ? 3000 : 0, true)
-			$gameVibration.classList[n ? 'remove' : 'add']('mdi-google-controller')
-			$gameVibration.classList[n ? 'add' : 'remove']('mdi-vibrate')
+			$controllerIndicator.classList[n ? 'remove' : 'add'](controllerIndicatorClass)
+			$controllerIndicator.classList[n ? 'add' : 'remove']('mdi-vibrate')
 		}
 	},
 	'INFO': (data) => {

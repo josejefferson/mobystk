@@ -1,165 +1,95 @@
 // INÍCIO DO TOQUE
-document.ontouchstart = e => {
+document.addEventListener('touchstart', (e) => {
+	if (window.layoutEditor?.opened) return
+
 	for (const touch of e.changedTouches) {
 		let target = document.elementFromPoint(touch.clientX, touch.clientY)
-		if (!target.classList.contains('joystick') &&
-			(!target.classList.contains('touch') ||
-				target.classList.contains('active') ||
-				target.classList.contains('lock'))) target = null
+		while (target !== null &&
+			!((target.instance instanceof Controller.Button && !target.instance.customAction) ||
+				target.instance instanceof Controller.Joystick)) {
+			target = target.parentElement
+		}
 
-		const joystick = target?.classList.contains('joystick') ? true : false
-		currentTouches.push({ target, touch, joystick })
-		if (!target) continue
-		if (joystick) {
-			navigator.vibrate(options.vibrate * 3)
+		if (target?.instance.lockable) {
+			navigator.vibrate(options.vibrate)
+			if (target.instance.active) target.instance.release()
+			else target.instance.press()
 			continue
 		}
-		target.classList.add('active')
 
-		const keys = target.dataset.key?.split(' ')
-		// Diagonal
-		keys?.forEach(key => {
-			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
-				e.classList.add('dActive')
-			})
-		})
-		sendCmd(keys)
-
-		if (target.classList.contains('diag')) {
-			navigator.vibrate(options.vibrate * 3)
-		} else {
-			navigator.vibrate(options.vibrate)
-		}
+		const joystick = target?.instance instanceof Controller.Joystick
+		Controller.currentTouches.push({ target, touch, joystick })
+		if (!target) continue
+		navigator.vibrate(options.vibrate)
+		if (joystick) continue
+		target.instance.press()
 	}
-}
+})
 
 // MOVIMENTO DO TOQUE
-document.ontouchmove = e => {
+document.addEventListener('touchmove', (e) => {
+	if (window.layoutEditor?.opened) return
+
 	for (const touch of e.changedTouches) {
-		const i = currentTouches.findIndex(t => {
+		const i = Controller.currentTouches.findIndex(t => {
 			return t.touch.identifier === touch.identifier
 		})
 		if (i < 0) continue
 
-		const oldtouch = currentTouches[i]
+		const oldtouch = Controller.currentTouches[i]
 		if (oldtouch.joystick) continue
 		if (!options.changeKeyOnDrag && oldtouch.target) continue
 		oldtouch.touch = touch
 
 		let target = document.elementFromPoint(touch.clientX, touch.clientY)
-		if (!target?.classList.contains('touch') ||
-			target.classList.contains('joystick')) target = null
+		// todo: colocar lockable aqui
+		while (target !== null &&
+			!((target.instance instanceof Controller.Button && !target.instance.customAction) &&
+				!target.instance.lockable)) {
+			target = target.parentElement
+		}
 
 		if (oldtouch.target === target) continue
-		oldtouch.target?.classList.remove('active')
+		oldtouch.target?.instance.release()
 
-		let keys = oldtouch?.target?.dataset?.key?.split(' ')
-		// Diagonal
-		keys?.forEach(key => {
-			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
-				e.classList.remove('dActive')
-			})
-		})
-		sendCmd(keys, true)
-
-		if (target && (!target.classList.contains('touch') ||
-			target.classList.contains('active') ||
-			target.classList.contains('lock'))) target = null
+		if (!target || target.instance?.active) target = null
 		oldtouch.target = target
 		if (!target) continue
-		target.classList.add('active')
-
-		keys = target.dataset.key?.split(' ')
-		keys?.forEach(key => {
-			// Diagonal
-			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
-				e.classList.add('dActive')
-			})
-		})
-		sendCmd(keys)
-
+		target.instance.press()
 		navigator.vibrate(options.vibrate)
 	}
-}
+})
 
 // FIM DO TOQUE
-document.ontouchend = e => {
+document.addEventListener('touchend', (e) => {
+	if (window.layoutEditor?.opened) return
+
 	for (const touch of e.changedTouches) {
-		const i = currentTouches.findIndex(t => {
+		const i = Controller.currentTouches.findIndex(t => {
 			return t.touch.identifier === touch.identifier
 		})
 		if (i < 0) continue
-		if (!currentTouches[i].joystick && currentTouches[i].target) {
-			currentTouches[i].target.classList.remove('active')
 
-			const keys = currentTouches[i].target.dataset.key?.split(' ')
-			// Diagonal
-			keys?.forEach(key => {
-				if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
-					e.classList.remove('dActive')
-				})
-			})
-			sendCmd(keys, true)
+		if (Controller.currentTouches[i].target?.instance instanceof Controller.Button) {
+			Controller.currentTouches[i].target.instance.release()
 		}
-		currentTouches.splice(i, 1)
+		Controller.currentTouches.splice(i, 1)
 	}
-}
+})
 
-// FIM DO TOQUE
-document.ontouchcancel = e => {
+// CANCELAMENTO DO TOQUE
+document.addEventListener('touchcancel', (e) => {
+	if (window.layoutEditor?.opened) return
+
 	for (const touch of e.changedTouches) {
-		const i = currentTouches.findIndex(t => {
+		const i = Controller.currentTouches.findIndex(t => {
 			return t.touch.identifier === touch.identifier
 		})
 		if (i < 0) continue
-		if (!currentTouches[i].joystick && currentTouches[i].target) {
-			currentTouches[i].target.classList.remove('active')
 
-			const keys = currentTouches[i].target.dataset.key?.split(' ')
-			// Diagonal
-			keys?.forEach(key => {
-				if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
-					e.classList.remove('dActive')
-				})
-			})
-			sendCmd(keys, true)
+		if (Controller.currentTouches[i].target?.instance instanceof Controller.Button) {
+			Controller.currentTouches[i].target.instance.release()
 		}
-		currentTouches.splice(i, 1)
+		Controller.currentTouches.splice(i, 1)
 	}
-}
-
-// CLIQUE DO MOUSE
-document.onmousedown = e => {
-	if ('ontouchstart' in document.documentElement) return
-	let target = e.target
-	if (!target.classList.contains('joystick') &&
-		(!target.classList.contains('touch') ||
-			target.classList.contains('active') ||
-			target.classList.contains('lock'))) target = null
-	if (!target) return
-	target.classList.add('active')
-
-	const keys = target.dataset.key?.split(' ')
-	// Diagonal
-	keys?.forEach(key => {
-		if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
-			e.classList.add('dActive')
-		})
-	})
-	sendCmd(keys)
-
-	// Fim do clique
-	document.onmouseup = (e) => {
-		target.classList.remove('active')
-
-		const keys = target.dataset.key?.split(' ')
-		// Diagonal
-		keys?.forEach(key => {
-			if (keys.length) document.querySelectorAll(`[data-key="${key}"]`).forEach(e => {
-				e.classList.remove('dActive')
-			})
-		})
-		sendCmd(keys, true)
-		document.onmouseup = null
-	}
-}
+})

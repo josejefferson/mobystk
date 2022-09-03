@@ -16,16 +16,16 @@ function socketConn() {
 	const ws = new WebSocket('ws://' + ip)
 	$connectStatus.classList.remove('connected', 'disconnected')
 	$connectStatus.classList.add('connecting')
-	ws.onopen = e => {
+	ws.addEventListener('open', (e) => {
 		$connectStatus.classList.remove('connecting', 'disconnected')
 		$connectStatus.classList.add('connected')
-		ws.send('PASSWORD ' + (localStorage.getItem('joystick.password') || ''))
-	}
-	ws.onclose = e => {
+	})
+	ws.addEventListener('close', (e) => {
 		$connectStatus.classList.remove('connecting', 'connected')
 		$connectStatus.classList.add('disconnected')
 		setTimeout(() => socket = socketConn(), 3000)
-	}
+		ws.send('PASSWORD ' + (localStorage.getItem('joystick.password') || ''))
+	})
 	ws.addEventListener('message', (e) => {
 		const [cmd, ...data] = e.data.split(' ')
 		if (cmd.toUpperCase() === 'AUTH_FAILED') {
@@ -38,18 +38,19 @@ function socketConn() {
 			window.location.reload()
 		}
 	})
+
 	return ws
 }
 
 document.querySelectorAll('.app .actions .start').forEach(e => {
 	const { app, player } = e.dataset
-	e.onclick = () => start(app, player)
+	e.addEventListener('click', () => start(app, player))
 })
 
 
 async function start(control, player) {
 	let interrupted = false
-	$cancel.onclick = () => interrupted = true
+	$cancel.addEventListener('click', () => interrupted = true)
 	const { sequence, pause } = KEY_SEQUENCE[control]
 	updateProgress(1)
 	setButtonsDisabled(true)

@@ -42,20 +42,7 @@
 
 				<!-- Layouts -->
 				<div class="explanation">Selecione o videogame</div>
-				<div class="chipsGroup selectLayout">
-					<label class="chip">
-						<input type="radio" name="layout" value="psp" checked>
-						<div class="label">PSP</div>
-					</label>
-					<label class="chip">
-						<input type="radio" name="layout" value="ps2">
-						<div class="label">PS2</div>
-					</label>
-					<label class="chip">
-						<input type="radio" name="layout" value="snes">
-						<div class="label">SNES</div>
-					</label>
-				</div>
+				<div class="chipsGroup selectLayout"></div>
 			</main>
 
 			<footer>
@@ -173,77 +160,7 @@
 			</header>
 
 			<main>
-				<div class="chipsGroup">
-					<label class="chip"><input type="checkbox" name="lock" value="l">
-						<div class="label">L</div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="l1">
-						<div class="label">L1</div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="l2">
-						<div class="label">L2</div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="l3">
-						<div class="label">L3</div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="r">
-						<div class="label">R</div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="r1">
-						<div class="label">R1</div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="r2">
-						<div class="label">R2</div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="r3">
-						<div class="label">R3</div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="fast">
-						<div class="label"><i class="mdi mdi-fast-forward"></i></div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="up">
-						<div class="label"><i class="mdi mdi-menu-up-outline"></i></div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="left">
-						<div class="label"><i class="mdi mdi-menu-left-outline"></i></div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="right">
-						<div class="label"><i class="mdi mdi-menu-right-outline"></i></div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="down">
-						<div class="label"><i class="mdi mdi-menu-down-outline"></i></div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="actUp">
-						<div class="label"><i class="mdi mdi-triangle-outline"></i></div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="actLeft">
-						<div class="label"><i class="mdi mdi-square-outline"></i></div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="actRight">
-						<div class="label"><i class="mdi mdi-circle-outline"></i></div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="actDown">
-						<div class="label"><i class="mdi mdi-close"></i></div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="snesActUp">
-						<div class="label">X</div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="snesActLeft">
-						<div class="label">Y</div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="snesActRight">
-						<div class="label">A</div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="snesActDown">
-						<div class="label">B</div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="select">
-						<div class="label">SELECT</div>
-					</label>
-					<label class="chip"><input type="checkbox" name="lock" value="start">
-						<div class="label">START</div>
-					</label>
-				</div>
+				<div class="chipsGroup lockableKeysList"></div>
 			</main>
 		</section>
 
@@ -255,93 +172,10 @@
 			</header>
 
 			<main>
-				<div class="chipsGroup">
-					<label class="chip hide"><input type="checkbox" name="hide" value="deviceInfo">
+				<div class="chipsGroup hiddenItemsList">
+					<label class="chip hide">
+						<input type="checkbox" name="hide" data-id="mobystk:deviceInfo" value="mobystk:deviceInfo">
 						<div class="label">Informações</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="drive">
-						<div class="label">Volante</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="recordMacro playMacro" checked>
-						<div class="label">Macro</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="joystickL">
-						<div class="label">Joystick Esq.</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="joystickR">
-						<div class="label">Joystick Dir.</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="joystickA">
-						<div class="label">Joystick Setas</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="select">
-						<div class="label">SELECT</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="start">
-						<div class="label">START</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="l">
-						<div class="label">L</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="l1">
-						<div class="label">L1</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="l2">
-						<div class="label">L2</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="l3">
-						<div class="label">L3</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="r">
-						<div class="label">R</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="r1">
-						<div class="label">R1</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="r2">
-						<div class="label">R2</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="r3">
-						<div class="label">R3</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="volumeDown volumeUp">
-						<div class="label">
-							<i class="mdi mdi-volume-high"></i>
-						</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="load">
-						<div class="label"><i class="mdi mdi-file-download"></i></div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="save">
-						<div class="label"><i class="mdi mdi-content-save"></i></div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="pause">
-						<div class="label"><i class="mdi mdi-pause"></i></div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="toggleInvert" checked>
-						<div class="label"><i class="mdi mdi-swap-vertical"></i></div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="fast" checked>
-						<div class="label"><i class="mdi mdi-fast-forward"></i></div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="arrows">
-						<div class="label">
-							<i class="mdi mdi-menu-up-outline"></i>
-							<i class="mdi mdi-menu-left-outline"></i>
-							<i class="mdi mdi-menu-right-outline"></i>
-							<i class="mdi mdi-menu-down-outline"></i>
-						</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="actions">
-						<div class="label">
-							<i class="mdi mdi-triangle-outline"></i>
-							<i class="mdi mdi-square-outline"></i>
-							<i class="mdi mdi-circle-outline"></i>
-							<i class="mdi mdi-close"></i>
-						</div>
-					</label>
-					<label class="chip hide"><input type="checkbox" name="hide" value="diag">
-						<div class="label">Diagonais</div>
 					</label>
 				</div>
 			</main>
@@ -500,6 +334,13 @@
 	</div>
 
 	<script src="lib/js/pickr.es5.min.js"></script>
+	<script src="lib/js/store2.min.js"></script>
+	<script src="js/toast.js"></script>
+	<script src="js/classes/Controller.js"></script>
+	<script src="layouts/buttons.js"></script>
+	<script src="layouts/groups.js"></script>
+	<script src="layouts/joysticks.js"></script>
+	<script src="layouts/layouts.js"></script>
 	<script src="js/index.js"></script>
 </body>
 
