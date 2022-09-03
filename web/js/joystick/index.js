@@ -1,5 +1,5 @@
 window.toast = alert // temporário
-const ls = localStorage
+window.ls = store.namespace('joystick')
 
 const options = {
 	ip: getOpt('code', 'localhost:5000'),
