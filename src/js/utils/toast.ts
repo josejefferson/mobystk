@@ -25,9 +25,9 @@ export default class Toast {
 	 * Prepara um novo toast para ser exibido na tela
 	 * @param {string} message - Mensagem que será exibida no toast
 	 * @param {number} [time=2000] - Tempo que o toast estará visível
-	 * @returns {Object} Instância do objeto Toast
+	 * @returns {Toast} Instância do objeto Toast
 	 */
-	show(message, time = 2000, html = false) {
+	show(message: string, time: number = 2000, html = false): Toast {
 		this.toasts.push({ message, time, html })
 		if (!this.showing) {
 			this.start()

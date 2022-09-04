@@ -11,12 +11,7 @@ export default class Button extends Element implements IButton {
 		type: string
 		value: string
 	}
-	radius: [
-		[number, string],
-		[number, string],
-		[number, string],
-		[number, string]
-	]
+	radius: [[number, string], [number, string], [number, string], [number, string]]
 	lockable?: boolean
 	scalable?: boolean
 	customAction?: string
@@ -79,9 +74,7 @@ export default class Button extends Element implements IButton {
 
 	release() {
 		if (this.diagonal) {
-			const targets = Controller.elements.buttons.filter((e) =>
-				this.targets.includes(e.id)
-			)
+			const targets = Controller.elements.buttons.filter((e) => this.targets.includes(e.id))
 			for (const target of targets) target.release(true)
 		} else {
 			if (this.active && !this.customAction) this.emit('release', this.key)
@@ -125,9 +118,7 @@ export default class Button extends Element implements IButton {
 		}
 
 		// Botão com ação personalizada
-		el.classList[this.customAction ? 'add' : 'remove'](
-			'controller-custom-action'
-		)
+		el.classList[this.customAction ? 'add' : 'remove']('controller-custom-action')
 		el.dataset.action = this.customAction || null
 	}
 }

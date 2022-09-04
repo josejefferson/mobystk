@@ -2,29 +2,33 @@ import Button from '../classes/Button'
 import Controller from '../classes/Controller'
 import { Group } from '../classes/Group'
 import Joystick from '../classes/Joystick'
-import { IElement } from '../types/Element'
-import options from './options'
-import { $DILayout } from './user-interface'
-import loadElementActions from './element-actions'
-import loadDriveMode from './motion-control'
-import updateJoystick from './joystick'
+import { IButton } from '../types/Button'
+import { IElement, IImport } from '../types/Element'
+import { IGroup } from '../types/Group'
+import { IJoystick } from '../types/Joystick'
+import { ILayout } from '../types/Layout'
 import { sendCmd } from './backend-integration'
+import loadElementActions from './element-actions'
+import { $DILayout, $layout } from './elements'
+import updateJoystick from './joystick'
+import loadDriveMode from './motion-control'
+import options from './options'
 
-// Carrega o layout no controle
-const $layout = document.querySelector('.controller-layout')
-export function loadLayout(layout) {
-	layout.content = layout.content.map(parseElement).filter((e) => e)
-	const allElements = getAllElements(layout)
+/**
+ * Carrega o layout
+ */
+export function loadLayout(layout: ILayout) {
+	const parsedLayout = { ...layout, content: layout.content.map(parseElement).filter((e) => e) }
+	const allElements = getAllElements(parsedLayout)
 
 	$layout.innerHTML = ''
-	for (const object of layout.content) {
+	for (const object of parsedLayout.content) {
 		if (!object) continue
 		$layout.appendChild(object.element)
 		object.render()
-		// if (object instanceof Joystick) object.render()
 	}
 
-	Controller.currentLayout = layout
+	Controller.currentLayout = parsedLayout
 	Controller.elements.all = allElements
 	Controller.elements.buttons = allElements.filter((e) => e instanceof Button)
 	Controller.elements.groups = allElements.filter((e) => e instanceof Group)
@@ -37,8 +41,10 @@ export function loadLayout(layout) {
 	return layout
 }
 
-// Retorna todos os elementos (botões, grupos e joysticks) de um objeto
-export function getAllElements(object: IElement, elements: IElement[] = []) {
+/**
+ * Retorna todos os elementos (botões, grupos e joysticks) de um objeto
+ */
+export function getAllElements(object: IElement | ILayout, elements: (IElement | ILayout)[] = []) {
 	if (object.type === 'mobystk:layout' || object.type === 'mobystk:group') {
 		if (object.type !== 'mobystk:layout') elements.push(object)
 		for (const obj of object.content) getAllElements(obj, elements)
@@ -48,7 +54,9 @@ export function getAllElements(object: IElement, elements: IElement[] = []) {
 	return elements
 }
 
-// Converte os elementos em JSON para objetos
+/**
+ * Converte os elementos em JSON para objetos
+ */
 export function parseElement(object) {
 	if (options.hidden?.includes(object.import || object.id)) return
 	if (object.import) object = importElement(object)
@@ -67,8 +75,10 @@ export function parseElement(object) {
 	}
 }
 
-// Reutiliza um elemento
-export function importElement(object) {
+/**
+ * Reutiliza um elemento
+ */
+export function importElement(object: IImport): (IButton | IGroup | IJoystick) & IImport {
 	const allElements = [...Controller.buttons, ...Controller.groups, ...Controller.joysticks]
 	const element = allElements.find((e) => e.id === object.import)
 	if (element) return { ...element, ...object }

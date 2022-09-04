@@ -1,3 +1,5 @@
+import getOpt from '../utils/getOpt'
+
 export interface IOptions {
 	ip: string
 	layout: string
@@ -28,9 +30,6 @@ export interface IOptions {
 	driveSensitivity: number
 	drivePrecision: number
 }
-
-import store from 'store2'
-const ls = store.namespace('joystick')
 
 const options: IOptions = {
 	ip: getOpt('code', 'localhost:5000'),
@@ -63,9 +62,6 @@ const options: IOptions = {
 	drivePrecision: getOpt('drivePrecision', 1)
 }
 
-export function getOpt(name: string, defaultValue?: any): any {
-	const value = ls(name)
-	return value === null ? defaultValue : value
-}
+window.options = options
 
 export default options

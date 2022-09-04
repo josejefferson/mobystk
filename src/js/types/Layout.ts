@@ -1,5 +1,5 @@
 import { IButton } from './Button'
-import { IImport } from './Element'
+import { IElement, IImport } from './Element'
 import { IGroup } from './Group'
 import { IJoystick } from './Joystick'
 

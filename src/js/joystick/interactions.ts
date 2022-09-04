@@ -1,19 +1,23 @@
-import options from './options'
-import vibrate from '../utils/vibrate'
-import loading from '../utils/loading'
-import { IElementNode } from '../types/Element'
-import Controller from '../classes/Controller'
 import Button from '../classes/Button'
+import Controller from '../classes/Controller'
 import Joystick from '../classes/Joystick'
+import { IElementNode } from '../types/Element'
+import vibrate from '../utils/vibrate'
+import options from './options'
 
-// INÍCIO DO TOQUE
-document.addEventListener('touchstart', (e) => {
+document.addEventListener('touchstart', touchStart)
+document.addEventListener('touchmove', touchMove)
+document.addEventListener('touchend', touchEnd)
+document.addEventListener('touchcancel', touchEnd)
+
+/**
+ * Início do toque
+ */
+function touchStart(e: TouchEvent) {
 	// if (window.layoutEditor?.opened) return
 
 	for (const touch of Array.from(e.changedTouches)) {
-		let target = <IElementNode<any, any>>(
-			document.elementFromPoint(touch.clientX, touch.clientY)
-		)
+		let target = <IElementNode<any, any>>document.elementFromPoint(touch.clientX, touch.clientY)
 		while (
 			target !== null &&
 			!(
@@ -38,10 +42,12 @@ document.addEventListener('touchstart', (e) => {
 		if (joystick) continue
 		target.instance.press()
 	}
-})
+}
 
-// MOVIMENTO DO TOQUE
-document.addEventListener('touchmove', (e) => {
+/**
+ * Movimento do toque
+ */
+function touchMove(e: TouchEvent) {
 	// if (window.layoutEditor?.opened) return
 
 	for (const touch of Array.from(e.changedTouches)) {
@@ -55,9 +61,7 @@ document.addEventListener('touchmove', (e) => {
 		if (!options.changeKeyOnDrag && oldtouch.target) continue
 		oldtouch.touch = touch
 
-		let target = <IElementNode<any, any>>(
-			document.elementFromPoint(touch.clientX, touch.clientY)
-		)
+		let target = <IElementNode<any, any>>document.elementFromPoint(touch.clientX, touch.clientY)
 		// todo: colocar lockable aqui
 		while (
 			target !== null &&
@@ -79,10 +83,12 @@ document.addEventListener('touchmove', (e) => {
 		target.instance.press()
 		vibrate(options.vibrate)
 	}
-})
+}
 
-// FIM DO TOQUE
-document.addEventListener('touchend', (e) => {
+/**
+ * Fim do toque
+ */
+function touchEnd(e: TouchEvent) {
 	// if (window.layoutEditor?.opened) return
 
 	for (const touch of Array.from(e.changedTouches)) {
@@ -96,23 +102,6 @@ document.addEventListener('touchend', (e) => {
 		}
 		Controller.currentTouches.splice(i, 1)
 	}
-})
-
-// CANCELAMENTO DO TOQUE
-document.addEventListener('touchcancel', (e) => {
-	// if (window.layoutEditor?.opened) return
-
-	for (const touch of Array.from(e.changedTouches)) {
-		const i = Controller.currentTouches.findIndex((t) => {
-			return t.touch.identifier === touch.identifier
-		})
-		if (i < 0) continue
-
-		if (Controller.currentTouches[i].target?.instance instanceof Button) {
-			Controller.currentTouches[i].target.instance.release()
-		}
-		Controller.currentTouches.splice(i, 1)
-	}
-})
+}
 
 export {}

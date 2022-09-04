@@ -1,10 +1,9 @@
-import store from 'store2'
 import Pickr from '@simonwep/pickr'
 import Controller from '../classes/Controller'
 import { IElement } from '../types/Element'
 import loading from '../utils/loading'
+import getOpt, { ls } from '../utils/getOpt'
 
-const ls = store.namespace('joystick')
 const toast = alert // temporário
 const form = document.forms[0]
 const formEls: FormElements = <FormElements>form.elements
@@ -212,11 +211,6 @@ for (const item of hidden) {
 		`[name=hide][data-id="${escapeHTML(item)}"]`
 	)
 	if ($input) $input.checked = true
-}
-
-function getOpt(name, defaultValue) {
-	const value = ls(name)
-	return value === null ? defaultValue : value
 }
 
 document

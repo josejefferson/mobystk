@@ -1,5 +1,6 @@
 import keymappings from '../keymappings'
 import KEY_SEQUENCE from '../setup/setupmap'
+import getOpt from '../utils/getOpt'
 
 window.addEventListener('load', () => {
 	document.body.classList.remove('preload')
@@ -14,9 +15,8 @@ const $cancel = $progress.querySelector<HTMLElement>('.cancel')
 const $ip = document.querySelector<HTMLElement>('.ip')
 const $connectStatus = document.querySelector<HTMLElement>('.connectStatus')
 
-const ip =
-	localStorage.getItem('joystick.options.code') ||
-	window.location.hostname + ':5000'
+const ip = getOpt('code', window.location.hostname + ':5000')
+
 $ip.innerText = ip
 let socket = socketConn()
 function socketConn() {

@@ -1,30 +1,37 @@
-import options from './options'
-import vibrate from '../utils/vibrate'
-import loading from '../utils/loading'
 import keymappings from '../keymappings'
-import { recordingMacro, lastMacro } from './element-actions'
+import loading from '../utils/loading'
+import vibrate from '../utils/vibrate'
+import { lastMacro, recordingMacro } from './element-actions'
+import { $controllerIndicator } from './elements'
+import options from './options'
 
-const $controllerIndicator = document.querySelector('.controller-indicator')
 const controllerIndicatorClass = options.vgamepad ? 'mdi-google-controller' : 'mdi-keyboard'
 $controllerIndicator.classList.add(controllerIndicatorClass)
 
 // Evita aparecer a tela de senha novamente
 let triedToAuthenticate = false
 
+type Commands = 'V' | 'INFO' | 'AUTH_FAILED'
+
 // Comandos vindos do servidor
 const commands = {
-	V: (data) => {
-		const [value, player] = data.toLowerCase().split(' ')
-		if (options.vibrationFromGame /* && parseInt(player) === options.player*/) {
+	/** Vibrar */
+	V: (data: string) => {
+		const [value] = data.toLowerCase().split(' ')
+		if (options.vibrationFromGame) {
 			const n = parseInt(value.split('|')[0])
 			vibrate(n ? 3000 : 0, true)
 			$controllerIndicator.classList[n ? 'remove' : 'add'](controllerIndicatorClass)
 			$controllerIndicator.classList[n ? 'add' : 'remove']('mdi-vibrate')
 		}
 	},
-	INFO: (data) => {
+
+	/** Exibe informações na tela */
+	INFO: (data: string) => {
 		toast(data)
 	},
+
+	/** Falha ao autenticar */
 	AUTH_FAILED: () => {
 		if (triedToAuthenticate) return
 		document.body.classList.remove('connecting', 'connected')
@@ -38,36 +45,52 @@ const commands = {
 	}
 }
 
-// CONEXÃO DO SOCKET
+/** Conexão do socket */
 export let socket = socketConnect()
+
+/**
+ * Tenta conectar ao socket
+ */
 function socketConnect() {
 	const ws = new WebSocket('ws://' + options.ip)
+	ws.addEventListener('open', opened)
+	ws.addEventListener('close', closed)
+	ws.addEventListener('message', message)
 	document.body.classList.remove('connected', 'disconnected')
 	document.body.classList.add('connecting')
-	// Socket conectado
-	ws.addEventListener('open', () => {
+
+	/** Socket conectado */
+	function opened() {
 		document.body.classList.remove('connecting', 'disconnected')
 		document.body.classList.add('connected')
 		ws.send('PASSWORD ' + (options.password || ''))
-	})
-	// Socket desconectado
-	ws.addEventListener('close', () => {
+	}
+
+	/** Socket desconectado */
+	function closed() {
 		document.body.classList.remove('connecting', 'connected')
 		document.body.classList.add('disconnected')
 		setTimeout(() => (socket = socketConnect()), 3000)
-	})
-	// Mensagem do Socket
-	ws.addEventListener('message', (e) => {
-		const [cmd, ...data] = e.data.split(' ')
+	}
+
+	/** Mensagem do socket */
+	function message(e: MessageEvent<any>) {
+		const [cmd, ...data]: [Commands, string[]] = e.data.split(' ')
 		const command = commands[cmd]
 		if (typeof command !== 'function') return
 		command(data.join(' '))
-	})
+	}
+
 	return ws
 }
 
-// ENVIA COMANDOS PARA O SERVIDOR
-export function sendCmd(keys: string | string[], release = false, custom?) {
+/**
+ * Envia comandos para o servidor
+ * @param keys Tecla(s) que será(ão) pressionada(s) de acordo com o KeyMapping
+ * @param release Boolean indicando se a tecla está sendo solta
+ * @param custom Comando personalizado para enviar ao servidor
+ */
+export function sendCmd(keys: string | string[], release = false, custom?: string) {
 	if (!keys || !keys.length) return
 	if (typeof keys === 'string') keys = [keys]
 
@@ -90,4 +113,4 @@ export function sendCmd(keys: string | string[], release = false, custom?) {
 	else socket.send(`${release ? 'R' : 'P'} ${keys} ${options.player}`)
 }
 
-export {}
+window.sendCmd = sendCmd
