@@ -2,6 +2,10 @@ interface IKeyMappings {
 	[key: string]: [string, string, string, string, string?]
 }
 
+/**
+ * Mapas de teclas
+ * [Player1, Player2, Player3, Player4, VGamepad]
+ */
 const keymappings: IKeyMappings = {
 	joyLUp: ['W', 'T', '058', '195'],
 	joyLLeft: ['A', 'F', '063', '196'],

@@ -1,3 +1,6 @@
+/**
+ * Transforma os caracteres especiais do HTML
+ */
 export function escapeHTML(unsafe: string) {
 	return unsafe
 		.replace(/&/g, '&amp;')

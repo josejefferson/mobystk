@@ -22,9 +22,7 @@ const layouts: ILayout[] = [
 			{ import: 'mobystk:pause' },
 			{ import: 'mobystk:start' },
 			{ import: 'mobystk:fast_forward' },
-			options.invertL
-				? { import: 'mobystk:arrows' }
-				: { import: 'mobystk:arrows_top' },
+			options.invertL ? { import: 'mobystk:arrows' } : { import: 'mobystk:arrows_top' },
 			{ import: 'mobystk:ps_actions' },
 			{
 				import: 'mobystk:joystick_left',
@@ -53,12 +51,8 @@ const layouts: ILayout[] = [
 			{ import: 'mobystk:select', width: [130, 'px'] },
 			{ import: 'mobystk:start', width: [130, 'px'] },
 			{ import: 'mobystk:fast_forward' },
-			options.invertL
-				? { import: 'mobystk:arrows' }
-				: { import: 'mobystk:arrows_top' },
-			options.invertR
-				? { import: 'mobystk:ps_actions_top' }
-				: { import: 'mobystk:ps_actions' },
+			options.invertL ? { import: 'mobystk:arrows' } : { import: 'mobystk:arrows_top' },
+			options.invertR ? { import: 'mobystk:ps_actions_top' } : { import: 'mobystk:ps_actions' },
 			{
 				import: 'mobystk:joystick_left',
 				x: [30, 'px'],
@@ -89,9 +83,7 @@ const layouts: ILayout[] = [
 			{ import: 'mobystk:select' },
 			{ import: 'mobystk:start' },
 			{ import: 'mobystk:fast_forward' },
-			options.invertL
-				? { import: 'mobystk:joystick_arrow' }
-				: { import: 'mobystk:arrows' },
+			options.invertL ? { import: 'mobystk:joystick_arrow' } : { import: 'mobystk:arrows' },
 			{ import: 'mobystk:xbox_actions' }
 		]
 	}

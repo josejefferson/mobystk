@@ -6,9 +6,7 @@ window.addEventListener('load', () => {
 	document.body.classList.remove('preload')
 })
 
-document
-	.querySelectorAll('a')
-	.forEach((e) => e.addEventListener('click', loading))
+document.querySelectorAll('a').forEach((e) => e.addEventListener('click', loading))
 const $progress = document.querySelector<HTMLElement>('.progress')
 const $bar = $progress.querySelector<HTMLElement>('.bar')
 const $cancel = $progress.querySelector<HTMLElement>('.cancel')
@@ -38,9 +36,7 @@ function socketConn() {
 		if (cmd.toUpperCase() === 'AUTH_FAILED') {
 			$connectStatus.classList.remove('connecting', 'connected')
 			$connectStatus.classList.add('disconnected')
-			const password = prompt(
-				'O computador requer uma senha para se conectar ao MobyStk'
-			)
+			const password = prompt('O computador requer uma senha para se conectar ao MobyStk')
 			if (password === null) return
 			localStorage.setItem('joystick.password', password)
 			loading()
@@ -71,12 +67,7 @@ async function start(control, player) {
 	updateProgress(2)
 }
 
-function updateProgress(
-	status: number,
-	pr?: string,
-	max?: number,
-	pause?: number
-) {
+function updateProgress(status: number, pr?: string, max?: number, pause?: number) {
 	if (status > 0) {
 		$progress.classList.remove('hidden')
 		switch (status) {
@@ -113,11 +104,9 @@ function updateProgress(
 }
 
 function setButtonsDisabled(disabled = false) {
-	document
-		.querySelectorAll<HTMLButtonElement>('.app .actions button')
-		.forEach((el) => {
-			el.disabled = disabled
-		})
+	document.querySelectorAll<HTMLButtonElement>('.app .actions button').forEach((el) => {
+		el.disabled = disabled
+	})
 }
 
 function sendKey(key, player) {

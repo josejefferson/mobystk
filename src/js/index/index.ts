@@ -1,10 +1,10 @@
 import Pickr from '@simonwep/pickr'
 import Controller from '../classes/Controller'
 import { IElement } from '../types/Element'
-import loading from '../utils/loading'
 import getOpt, { ls } from '../utils/getOpt'
+import loading from '../utils/loading'
+import { toast } from '../utils/toast'
 
-const toast = alert // temporário
 const form = document.forms[0]
 const formEls: FormElements = <FormElements>form.elements
 
@@ -53,20 +53,14 @@ window.addEventListener('scroll', updateStartButton)
 
 function updateStartButton() {
 	if (document.scrollingElement.scrollTop > window.innerHeight) {
-		document
-			.querySelector<HTMLElement>('.start.floating')
-			.classList.remove('hidden')
+		document.querySelector<HTMLElement>('.start.floating').classList.remove('hidden')
 	} else {
-		document
-			.querySelector<HTMLElement>('.start.floating')
-			.classList.add('hidden')
+		document.querySelector<HTMLElement>('.start.floating').classList.add('hidden')
 	}
 }
 
 document.addEventListener('contextmenu', () => false)
-document
-	.querySelectorAll('a')
-	.forEach((e) => e.addEventListener('click', loading))
+document.querySelectorAll('a').forEach((e) => e.addEventListener('click', loading))
 document.querySelectorAll('.start').forEach((e) => {
 	e.addEventListener('contextmenu', (e) => {
 		e.preventDefault()
@@ -88,14 +82,9 @@ $forgetPassword.addEventListener('click', () => {
 })
 
 // Popup "Adicionar à tela inicial"
-const $athPopup = document.querySelector<HTMLDivElement>(
-	'.addToHomescreenPopup'
-)
-const $athPopupClose =
-	$athPopup.querySelector<HTMLButtonElement>('.close-popup')
-const $athPopupDSA = $athPopup.querySelector<HTMLInputElement>(
-	'.dontShowAgainAddToHomescreenPopup'
-)
+const $athPopup = document.querySelector<HTMLDivElement>('.addToHomescreenPopup')
+const $athPopupClose = $athPopup.querySelector<HTMLButtonElement>('.close-popup')
+const $athPopupDSA = $athPopup.querySelector<HTMLInputElement>('.dontShowAgainAddToHomescreenPopup')
 $athPopupClose.addEventListener('click', () => {
 	$athPopup.classList.remove('show')
 	if (!$athPopupDSA.checked) return
@@ -128,43 +117,35 @@ const $lockableKeys = document.querySelector('.lockableKeysList')
 for (const button of Controller.buttons) {
 	if (!button.content || button.customAction || button.diagonal) continue
 	let content = ''
-	if (button.content.type === 'mobystk:text')
-		content += escapeHTML(button.content.value)
+	if (button.content.type === 'mobystk:text') content += escapeHTML(button.content.value)
 	else if (button.content.type === 'mobystk:icon')
 		content += `<i class="mdi mdi-${escapeHTML(button.content.value)}"></i>`
 	$lockableKeys.innerHTML += `
 		<label class="chip">
-			<input type="checkbox" name="lock" data-id="${escapeHTML(
-				button.id
-			)}" value="${escapeHTML(button.id)}">
+			<input type="checkbox" name="lock" data-id="${escapeHTML(button.id)}" value="${escapeHTML(
+		button.id
+	)}">
 			<div class="label">${content}</div>
 		</label>`
 }
 
 const $hiddenItems = document.querySelector('.hiddenItemsList')
 
-const elements: IElement[] = [
-	...Controller.buttons,
-	...Controller.groups,
-	...Controller.joysticks
-]
+const elements: IElement[] = [...Controller.buttons, ...Controller.groups, ...Controller.joysticks]
 for (const element of elements) {
 	let content = ''
-	if (element.type === 'mobystk:group')
-		content += '<i class="mdi mdi-group"></i>&nbsp;'
-	if (element.type === 'mobystk:joystick')
-		content += '<i class="mdi mdi-gamepad"></i>&nbsp;'
-	if (element.content?.type === 'mobystk:text')
-		content += escapeHTML(element.content.value)
+	if (element.type === 'mobystk:group') content += '<i class="mdi mdi-group"></i>&nbsp;'
+	if (element.type === 'mobystk:joystick') content += '<i class="mdi mdi-gamepad"></i>&nbsp;'
+	if (element.content?.type === 'mobystk:text') content += escapeHTML(element.content.value)
 	else if (element.content?.type === 'mobystk:icon')
 		content += `<i class="mdi mdi-${escapeHTML(element.content.value)}"></i>`
 	else if (element.name) content += escapeHTML(element.name)
 
 	$hiddenItems.innerHTML += `
 		<label class="chip">
-			<input type="checkbox" name="hide" data-id="${escapeHTML(
-				element.id
-			)}" value="${escapeHTML(element.id)}">
+			<input type="checkbox" name="hide" data-id="${escapeHTML(element.id)}" value="${escapeHTML(
+		element.id
+	)}">
 			<div class="label">${content}</div>
 		</label>`
 }
@@ -213,23 +194,19 @@ for (const item of hidden) {
 	if ($input) $input.checked = true
 }
 
-document
-	.querySelectorAll<HTMLInputElement>('input[type="range"] + .value')
-	.forEach(($value) => {
-		const $range = $value.parentElement.querySelector<HTMLInputElement>(
-			'input[type="range"]'
-		)
-		const precision = getPrecision($range.step || 1)
-		if ($range) {
-			$range.addEventListener('change', change)
-			$range.addEventListener('mousemove', change)
-			$range.addEventListener('touchmove', change)
-		}
-		change()
-		function change() {
-			$value.innerText = Number($range.value).toFixed(precision)
-		}
-	})
+document.querySelectorAll<HTMLInputElement>('input[type="range"] + .value').forEach(($value) => {
+	const $range = $value.parentElement.querySelector<HTMLInputElement>('input[type="range"]')
+	const precision = getPrecision($range.step || 1)
+	if ($range) {
+		$range.addEventListener('change', change)
+		$range.addEventListener('mousemove', change)
+		$range.addEventListener('touchmove', change)
+	}
+	change()
+	function change() {
+		$value.innerText = Number($range.value).toFixed(precision)
+	}
+})
 
 // Salvar opções
 document.forms[0].addEventListener('submit', function (e) {
@@ -339,9 +316,7 @@ function createPickr(el: string, defaultColor: string, opacity = '') {
 			color = color.toRGBA().toString()
 			const $input = formEls[el]
 			$input.value = color
-			$input.parentElement
-				.querySelector('.pickr button')
-				.style.setProperty('--pcr-color', color)
+			$input.parentElement.querySelector('.pickr button').style.setProperty('--pcr-color', color)
 		})
 		.on('save', (color, instance) => {
 			instance.hide()
@@ -359,14 +334,12 @@ function importSettings() {
 		try {
 			const file = this.files[0]
 			if (!file) return
-			const content: string | ArrayBuffer = await new Promise(
-				(resolve, reject) => {
-					const reader = new FileReader()
-					reader.onload = () => resolve(reader.result)
-					reader.onerror = reject
-					reader.readAsText(file)
-				}
-			)
+			const content: string | ArrayBuffer = await new Promise((resolve, reject) => {
+				const reader = new FileReader()
+				reader.onload = () => resolve(reader.result)
+				reader.onerror = reject
+				reader.readAsText(file)
+			})
 			ls(JSON.parse(String(content)))
 			loading()
 			location.reload()
@@ -399,8 +372,7 @@ function scrollToY(y, duration = 0, element = document.scrollingElement) {
 		if (oldTimestamp !== null) {
 			scrollCount += (Math.PI * (newTimestamp - oldTimestamp)) / duration
 			if (scrollCount >= Math.PI) return (element.scrollTop = y)
-			element.scrollTop =
-				cosParameter + y + cosParameter * Math.cos(scrollCount)
+			element.scrollTop = cosParameter + y + cosParameter * Math.cos(scrollCount)
 		}
 		oldTimestamp = newTimestamp
 		window.requestAnimationFrame(step)

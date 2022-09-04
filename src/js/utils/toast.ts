@@ -69,6 +69,8 @@ document.body.appendChild($toast)
 
 const $toastCSS = document.createElement('style')
 $toastCSS.innerHTML = `
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+
 .toast {
 	-webkit-box-align: center;
 	-ms-flex-align: center;
@@ -82,16 +84,17 @@ $toastCSS.innerHTML = `
 	display: -webkit-inline-box;
 	display: -ms-inline-flexbox;
 	display: inline-flex;
-	font-family: Roboto, Arial, sans-serif;
-	font-size: 14px;
+	font-family: 'Roboto Condensed', Roboto, Arial, sans-serif;
+	font-size: 15.8px;
 	left: 50%;
+	line-height: 17.6px;
 	margin: 16px;
 	max-width: 320px;
 	min-height: 44px;
 	opacity: 0;
 	padding: 13.8px 25px;
 	pointer-events: none;
-	position: absolute;
+	position: fixed;
 	text-align: left;
 	text-shadow: black 0 0 2px;
 	-webkit-transform: translateX(calc(-50% - 16px));
@@ -113,13 +116,13 @@ $toastCSS.innerHTML = `
 	transition: opacity 500ms cubic-bezier(0.11, 0, 0.5, 0);
 }
 
-.toast .toast-content {
+/*.toast .toast-content {
 	letter-spacing: -0.03px;
 	line-height: 17.6px;
 	-webkit-transform: scaleY(1.11);
 	-ms-transform: scaleY(1.11);
 	transform: scaleY(1.11);
-}
+}*/
 `
 document.body.appendChild($toastCSS)
 
@@ -127,3 +130,5 @@ const toastObj = new Toast($toast)
 export const toast = (message: string, time = 2000, html = false) => {
 	return toastObj.show(message, time, html)
 }
+
+window.toast = toast

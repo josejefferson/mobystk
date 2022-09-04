@@ -8,12 +8,7 @@ export interface IButton extends IElement {
 		type: string
 		value: string
 	}
-	radius: [
-		[number, string],
-		[number, string],
-		[number, string],
-		[number, string]
-	]
+	radius: [[number, string], [number, string], [number, string], [number, string]]
 	lockable?: boolean
 	scalable?: boolean
 	customAction?: string

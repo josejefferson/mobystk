@@ -1,5 +1,6 @@
 import keymappings from '../keymappings'
 import loading from '../utils/loading'
+import { toast } from '../utils/toast'
 import vibrate from '../utils/vibrate'
 import { lastMacro, recordingMacro } from './element-actions'
 import { $controllerIndicator } from './elements'

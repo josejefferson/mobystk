@@ -1,7 +1,7 @@
 import { IButton } from '../types/Button'
 import { IElementNode } from '../types/Element'
-import { Element } from './Element'
 import Controller from './Controller'
+import { Element } from './Element'
 
 export default class Button extends Element implements IButton {
 	key?: string
@@ -49,8 +49,6 @@ export default class Button extends Element implements IButton {
 		$button.dataset.id = this.id
 		$button.instance = this
 		this.element = $button
-
-		// this.render()
 	}
 
 	press(diagonal = false) {

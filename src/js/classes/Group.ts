@@ -21,7 +21,5 @@ export class Group extends Element implements IGroup {
 			$group.appendChild(element.element)
 			element.render()
 		}
-
-		// this.render()
 	}
 }

@@ -1,8 +1,8 @@
 import nipplejs, { JoystickManager } from 'nipplejs'
+import options from '../joystick/options'
 import { IElementNode } from '../types/Element'
 import { IJoystick } from '../types/Joystick'
 import { Element } from './Element'
-import options from '../joystick/options'
 
 export default class Joystick extends Element implements IJoystick {
 	size: [number, string]
@@ -31,8 +31,6 @@ export default class Joystick extends Element implements IJoystick {
 		$joystick.dataset.id = this.id
 		$joystick.instance = this
 		this.element = $joystick
-
-		// this.render()
 	}
 
 	render() {
