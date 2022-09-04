@@ -1,12 +1,9 @@
-import Button from '../classes/Button'
-import Controller from '../classes/Controller'
-import { Group } from '../classes/Group'
-import Joystick from '../classes/Joystick'
-import { IButton } from '../types/Button'
-import { IElement, IImport } from '../types/Element'
-import { IGroup } from '../types/Group'
-import { IJoystick } from '../types/Joystick'
-import { ILayout } from '../types/Layout'
+import ButtonComponent from '../components/Button'
+import GroupComponent from '../components/Group'
+import JoystickComponent from '../components/Joystick'
+import type { IButton, IGroup, IImport, IJoystick, ILayout, ILayoutComponent } from '../types'
+
+import Controller from '../Controller'
 import { sendCmd } from './backend-integration'
 import loadElementActions from './element-actions'
 import { $DILayout, $layout } from './elements'
@@ -18,11 +15,14 @@ import options from './options'
  * Carrega o layout
  */
 export function loadLayout(layout: ILayout) {
-	const parsedLayout = { ...layout, content: layout.content.map(parseElement).filter((e) => e) }
+	const parsedLayout: ILayoutComponent = {
+		...layout,
+		parsedContent: layout.content.map(parseElement).filter((e) => e)
+	}
 	const allElements = getAllElements(parsedLayout)
 
 	$layout.innerHTML = ''
-	for (const object of parsedLayout.content) {
+	for (const object of parsedLayout.parsedContent) {
 		if (!object) continue
 		$layout.appendChild(object.element)
 		object.render()
@@ -30,9 +30,15 @@ export function loadLayout(layout: ILayout) {
 
 	Controller.currentLayout = parsedLayout
 	Controller.elements.all = allElements
-	Controller.elements.buttons = allElements.filter((e) => e instanceof Button)
-	Controller.elements.groups = allElements.filter((e) => e instanceof Group)
-	Controller.elements.joysticks = allElements.filter((e) => e instanceof Joystick)
+	Controller.elements.buttons = allElements.filter(
+		(e) => e instanceof ButtonComponent
+	) as ButtonComponent[]
+	Controller.elements.groups = allElements.filter(
+		(e) => e instanceof GroupComponent
+	) as GroupComponent[]
+	Controller.elements.joysticks = allElements.filter(
+		(e) => e instanceof JoystickComponent
+	) as JoystickComponent[]
 	$DILayout.innerText = layout.name || '???'
 
 	loadElementActions()
@@ -44,34 +50,59 @@ export function loadLayout(layout: ILayout) {
 /**
  * Retorna todos os elementos (botões, grupos e joysticks) de um objeto
  */
-export function getAllElements(object: IElement | ILayout, elements: (IElement | ILayout)[] = []) {
+export function getAllElements(
+	object: ButtonComponent | GroupComponent | JoystickComponent | ILayoutComponent,
+	elements: (ButtonComponent | GroupComponent | JoystickComponent)[] = []
+) {
 	if (object.type === 'mobystk:layout' || object.type === 'mobystk:group') {
-		if (object.type !== 'mobystk:layout') elements.push(object)
-		for (const obj of object.content) getAllElements(obj, elements)
+		object = object as ILayoutComponent | GroupComponent
+		if (object.type !== 'mobystk:layout') elements.push(object as GroupComponent)
+		for (const obj of object.parsedContent) getAllElements(obj, elements)
 	} else {
-		elements.push(object)
+		elements.push(object as ButtonComponent | JoystickComponent)
 	}
 	return elements
 }
 
 /**
- * Converte os elementos em JSON para objetos
+ * Converte os elementos de JSON para objetos
  */
-export function parseElement(object) {
-	if (options.hidden?.includes(object.import || object.id)) return
-	if (object.import) object = importElement(object)
+export function parseElement(object: IImport | IButton | IGroup | IJoystick) {
+	const objectID = 'import' in object ? object.import : object.id
+
+	// Remove os itens ocultos
+	if (options.hidden?.includes(objectID)) return
+
+	// Importa os elementos
+	if ('import' in object) object = importElement(object)
+
+	// Descarta os objetos inválidos
 	if (!object) return
 
 	if (object.type === 'mobystk:button') {
-		if (options.locked?.includes(object.import || object.id)) object = { ...object, lockable: true }
-		return new Button(object)
+		// Botão
+		object = object as IButton
+		if (options.locked?.includes(objectID)) object = { ...object, lockable: true }
+		return new ButtonComponent(object as IButton)
 	} else if (object.type === 'mobystk:group') {
-		object.content = object.content.map(parseElement).filter((e) => e)
-		const group = new Group(object)
-		object.content = object.content.map((e) => (e.parent = group))
+		// Grupo
+		object = object as IGroup
+		object.parsedContent = object.content
+			.map(parseElement)
+			.filter((e: ButtonComponent | GroupComponent | JoystickComponent | undefined) => e) as (
+			| ButtonComponent
+			| GroupComponent
+			| JoystickComponent
+		)[]
+		const group = new GroupComponent(object as IGroup)
+		object.parsedContent = object.parsedContent.map(
+			(e: ButtonComponent | GroupComponent | JoystickComponent) => (e.parent = group)
+		)
 		return group
 	} else if (object.type === 'mobystk:joystick') {
-		return new Joystick(object)
+		// Joystick
+		object = object as IJoystick
+		return new JoystickComponent(object)
 	}
 }
 
@@ -100,10 +131,10 @@ loadLayout(layout)
 
 // Configura os eventos dos elementos
 for (const element of Controller.elements.all) {
-	if (element instanceof Button) {
+	if (element instanceof ButtonComponent) {
 		element.on('press', (key) => sendCmd(key, false))
 		element.on('release', (key) => sendCmd(key, true))
-	} else if (element instanceof Joystick) {
+	} else if (element instanceof JoystickComponent) {
 		element.on('move end', updateJoystick)
 	}
 }

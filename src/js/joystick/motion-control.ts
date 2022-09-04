@@ -1,5 +1,5 @@
-import Button from '../classes/Button'
-import Controller from '../classes/Controller'
+import ButtonComponent from '../components/Button'
+import Controller from '../Controller'
 import vibrate from '../utils/vibrate'
 import { sendCmd } from './backend-integration'
 import options from './options'
@@ -12,7 +12,7 @@ const defaultDriveHTML = `
 	</svg>`
 
 export default function loadDriveMode() {
-	const drive: Button = Controller.elements.buttons.find((e) => e.customAction === 'drive')
+	const drive: ButtonComponent = Controller.elements.buttons.find((e) => e.customAction === 'drive')
 	const driveHTML = drive ? (drive._html = defaultDriveHTML) : ''
 	drive?.render()
 	if (drive) drive.element.addEventListener('touchstart', toggleDriveMode)

@@ -52,7 +52,7 @@ document.querySelectorAll<HTMLElement>('.app .actions .start').forEach((e) => {
 	e.addEventListener('click', () => start(app, player))
 })
 
-async function start(control, player) {
+async function start(control: string, player: string) {
 	let interrupted = false
 	$cancel.addEventListener('click', () => (interrupted = true))
 	const { sequence, pause } = KEY_SEQUENCE[control]
@@ -109,15 +109,15 @@ function setButtonsDisabled(disabled = false) {
 	})
 }
 
-function sendKey(key, player) {
-	key = keymappings[key]?.[player - 1] || key
+function sendKey(key: string, player: string) {
+	key = keymappings[key]?.[Number(player) - 1] || key
 	console.log(key)
 	if (socket.readyState !== 1) return
 	if (key.startsWith('*')) socket.send(key.substr(1))
 	else socket.send('T ' + key)
 }
 
-async function wait(sec) {
+async function wait(sec: number) {
 	return new Promise((resolve) => {
 		setTimeout(resolve, sec)
 	})

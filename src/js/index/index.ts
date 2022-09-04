@@ -1,9 +1,11 @@
 import Pickr from '@simonwep/pickr'
-import Controller from '../classes/Controller'
-import { IElement } from '../types/Element'
+import Controller from '../Controller'
+import type { IButton, IGroup, IJoystick } from '../types'
 import getOpt, { ls } from '../utils/getOpt'
 import loading from '../utils/loading'
 import { toast } from '../utils/toast'
+import { escapeHTML } from '../utils/escapeHTML'
+import { scrollToY } from '../utils/scrollToY'
 
 const form = document.forms[0]
 const formEls: FormElements = <FormElements>form.elements
@@ -131,13 +133,22 @@ for (const button of Controller.buttons) {
 
 const $hiddenItems = document.querySelector('.hiddenItemsList')
 
-const elements: IElement[] = [...Controller.buttons, ...Controller.groups, ...Controller.joysticks]
+const elements: (IButton | IGroup | IJoystick)[] = [
+	...Controller.buttons,
+	...Controller.groups,
+	...Controller.joysticks
+]
 for (const element of elements) {
 	let content = ''
 	if (element.type === 'mobystk:group') content += '<i class="mdi mdi-group"></i>&nbsp;'
 	if (element.type === 'mobystk:joystick') content += '<i class="mdi mdi-gamepad"></i>&nbsp;'
-	if (element.content?.type === 'mobystk:text') content += escapeHTML(element.content.value)
-	else if (element.content?.type === 'mobystk:icon')
+	if ('content' in element && 'type' in element.content && element.content.type === 'mobystk:text')
+		content += escapeHTML(element.content.value)
+	else if (
+		'content' in element &&
+		'type' in element.content &&
+		element.content.type === 'mobystk:icon'
+	)
 		content += `<i class="mdi mdi-${escapeHTML(element.content.value)}"></i>`
 	else if (element.name) content += escapeHTML(element.name)
 
@@ -212,8 +223,8 @@ document.querySelectorAll<HTMLInputElement>('input[type="range"] + .value').forE
 document.forms[0].addEventListener('submit', function (e) {
 	e.preventDefault()
 	const elems: FormElements = <FormElements>this.elements
-	const lockedBtns = []
-	const hiddenItems = []
+	const lockedBtns: string[] = []
+	const hiddenItems: string[] = []
 	elems.lock.forEach((e: HTMLInputElement) => {
 		if (e.checked) lockedBtns.push(e.value)
 	})
@@ -312,13 +323,15 @@ function createPickr(el: string, defaultColor: string, opacity = '') {
 			'#000000'
 		].map((e) => e + opacity)
 	})
-		.on('change', (color) => {
-			color = color.toRGBA().toString()
-			const $input = formEls[el]
-			$input.value = color
-			$input.parentElement.querySelector('.pickr button').style.setProperty('--pcr-color', color)
+		.on('change', (color: Pickr.HSVaColor) => {
+			const colorStr = color.toRGBA().toString()
+			const $input = <HTMLInputElement>formEls[el as any]
+			$input.value = colorStr
+			$input.parentElement
+				.querySelector<HTMLElement>('.pickr button')
+				.style.setProperty('--pcr-color', colorStr)
 		})
-		.on('save', (color, instance) => {
+		.on('save', (_color: Pickr.HSVaColor, instance: Pickr) => {
 			instance.hide()
 		})
 }
@@ -363,34 +376,8 @@ function exportSettings() {
 	el.click()
 }
 
-function scrollToY(y, duration = 0, element = document.scrollingElement) {
-	if (element.scrollTop === y) return
-	const cosParameter = (element.scrollTop - y) / 2
-	let scrollCount = 0,
-		oldTimestamp = null
-	function step(newTimestamp) {
-		if (oldTimestamp !== null) {
-			scrollCount += (Math.PI * (newTimestamp - oldTimestamp)) / duration
-			if (scrollCount >= Math.PI) return (element.scrollTop = y)
-			element.scrollTop = cosParameter + y + cosParameter * Math.cos(scrollCount)
-		}
-		oldTimestamp = newTimestamp
-		window.requestAnimationFrame(step)
-	}
-	window.requestAnimationFrame(step)
-}
-
-function getPrecision(num) {
+function getPrecision(num: number | string) {
 	const str = Number(num).toString()
 	const arr = str.indexOf('.') + 1
 	return !arr ? 0 : str.length - arr
-}
-
-function escapeHTML(unsafe) {
-	return unsafe
-		.replace(/&/g, '&amp;')
-		.replace(/</g, '&lt;')
-		.replace(/>/g, '&gt;')
-		.replace(/"/g, '&quot;')
-		.replace(/'/g, '&#039;')
 }

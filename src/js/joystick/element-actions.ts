@@ -1,4 +1,4 @@
-import Controller from '../classes/Controller'
+import Controller from '../Controller'
 import vibrate from '../utils/vibrate'
 import { sendCmd, socket } from './backend-integration'
 import options from './options'

@@ -1,25 +1,21 @@
-// Controller.Element.LEFT = 0
-// Controller.Element.RIGHT = 1
-// Controller.Element.TOP = 0
-// Controller.Element.BOTTOM = 1
-// Controller.Element.CENTER = 2
-// Controller.Element.MIDDLE = 2
+import type GroupComponent from './Group'
+import type { IElement, IElementComponent, ValueAndUnit } from '../types'
+import EventEmitter from '../utils/EventEmitter'
 
-import { IElement } from '../types/Element'
-import EventEmitter from './EventEmitter'
-
-export class Element extends EventEmitter implements IElement {
+export default abstract class ElementComponent extends EventEmitter implements IElementComponent {
 	type: string
 	id: string
 	name: string
-	x: [number, string]
-	y: [number, string]
+	x: ValueAndUnit
+	y: ValueAndUnit
 	anchorX: number
 	anchorY: number
-	width?: [number, string]
-	height?: [number, string]
+	width?: ValueAndUnit
+	height?: ValueAndUnit
+
 	element: HTMLElement
 	editing: boolean
+	parent?: GroupComponent
 
 	constructor(details: IElement) {
 		super()

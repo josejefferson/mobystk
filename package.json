@@ -1,25 +1,27 @@
 {
-  "name": "joystick",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/josejefferson/joystick.git",
-  "author": "Jefferson Dantas <jeffersonn.jjdaj@gmail.com>",
-  "license": "MIT",
-  "scripts": {
-    "build": "webpack",
-    "dev": "webpack --watch"
-  },
-  "devDependencies": {
-    "clean-terminal-webpack-plugin": "^3.0.0",
-    "html-webpack-plugin": "^5.5.0",
-    "ts-loader": "^9.3.1",
-    "typescript": "^4.8.2",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0"
-  },
-  "dependencies": {
-    "@simonwep/pickr": "^1.8.2",
-    "nipplejs": "^0.9.1",
-    "store2": "^2.14.2"
-  }
+	"name": "joystick",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "https://github.com/josejefferson/joystick.git",
+	"author": "Jefferson Dantas <jeffersonn.jjdaj@gmail.com>",
+	"license": "MIT",
+	"scripts": {
+		"build": "webpack",
+		"dev": "webpack --watch",
+		"format": "prettier -w ."
+	},
+	"devDependencies": {
+		"clean-terminal-webpack-plugin": "^3.0.0",
+		"html-webpack-plugin": "^5.5.0",
+		"prettier": "^2.7.1",
+		"ts-loader": "^9.3.1",
+		"typescript": "^4.8.2",
+		"webpack": "^5.74.0",
+		"webpack-cli": "^4.10.0"
+	},
+	"dependencies": {
+		"@simonwep/pickr": "^1.8.2",
+		"nipplejs": "^0.9.1",
+		"store2": "^2.14.2"
+	}
 }

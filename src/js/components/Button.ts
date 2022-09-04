@@ -1,26 +1,26 @@
-import { IButton } from '../types/Button'
-import { IElementNode } from '../types/Element'
-import Controller from './Controller'
-import { Element } from './Element'
+import type { IButton, IButtonComponent, IElementNode, ValueAndUnit } from '../types'
+import Controller from '../Controller'
+import ElementComponent from './Element'
 
-export default class Button extends Element implements IButton {
+export default class ButtonComponent extends ElementComponent implements IButtonComponent {
+	type: 'mobystk:button'
 	key?: string
 	border: [boolean, boolean, boolean, boolean]
-	fontSize?: [number, string]
+	fontSize?: ValueAndUnit
 	content?: {
-		type: string
+		type: 'mobystk:text' | 'mobystk:icon'
 		value: string
 	}
-	radius: [[number, string], [number, string], [number, string], [number, string]]
+	radius: [ValueAndUnit, ValueAndUnit, ValueAndUnit, ValueAndUnit]
 	lockable?: boolean
 	scalable?: boolean
-	customAction?: string
+	customAction?: string | false
 	diagonal?: boolean
 	targets?: string[]
 	active: boolean
 	_html?: string
 
-	constructor(details) {
+	constructor(details: IButton) {
 		super(details)
 		this.type = 'mobystk:button'
 
@@ -44,7 +44,9 @@ export default class Button extends Element implements IButton {
 		this.active = false
 		this.editing = false
 
-		const $button = <IElementNode<Button, HTMLButtonElement>>document.createElement('button')
+		const $button = <IElementNode<ButtonComponent, HTMLButtonElement>>(
+			document.createElement('button')
+		)
 		$button.classList.add('controller-button')
 		$button.dataset.id = this.id
 		$button.instance = this
@@ -73,7 +75,7 @@ export default class Button extends Element implements IButton {
 	release() {
 		if (this.diagonal) {
 			const targets = Controller.elements.buttons.filter((e) => this.targets.includes(e.id))
-			for (const target of targets) target.release(true)
+			for (const target of targets) target.release()
 		} else {
 			if (this.active && !this.customAction) this.emit('release', this.key)
 			this.active = false

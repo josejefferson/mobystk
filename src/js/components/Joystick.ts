@@ -1,11 +1,11 @@
 import nipplejs, { JoystickManager } from 'nipplejs'
 import options from '../joystick/options'
-import { IElementNode } from '../types/Element'
-import { IJoystick } from '../types/Joystick'
-import { Element } from './Element'
+import type { IElementNode, IJoystick, IJoystickComponent, ValueAndUnit } from '../types'
+import ElementComponent from './Element'
 
-export default class Joystick extends Element implements IJoystick {
-	size: [number, string]
+export default class JoystickComponent extends ElementComponent implements IJoystickComponent {
+	type: 'mobystk:joystick'
+	size: ValueAndUnit
 	padding: number
 	keys: [string, string, string, string]
 	position: {
@@ -16,7 +16,7 @@ export default class Joystick extends Element implements IJoystick {
 	}
 	nipple: JoystickManager
 
-	constructor(details) {
+	constructor(details: IJoystick) {
 		super(details)
 		this.type = 'mobystk:joystick'
 
@@ -26,7 +26,7 @@ export default class Joystick extends Element implements IJoystick {
 		this.keys = details.keys || ['joyLUp', 'joyLLeft', 'joyLDown', 'joyLRight']
 		this.position = { up: false, down: false, left: false, right: false }
 
-		const $joystick = <IElementNode<Joystick, HTMLDivElement>>document.createElement('div')
+		const $joystick = <IElementNode<JoystickComponent, HTMLDivElement>>document.createElement('div')
 		$joystick.classList.add('controller-joystick')
 		$joystick.dataset.id = this.id
 		$joystick.instance = this

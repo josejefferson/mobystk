@@ -1,6 +1,6 @@
 import { EventData, JoystickOutputData } from 'nipplejs'
-import Controller from '../classes/Controller'
-import type Joystick from '../classes/Joystick'
+import Controller from '../Controller'
+import type JoystickComponent from '../components/Joystick'
 import vibrate from '../utils/vibrate'
 import { sendCmd } from './backend-integration'
 import { $viewport } from './elements'
@@ -13,7 +13,11 @@ const joysticks = ['mobystk:joystick_left', 'mobystk:joystick_right']
 /**
  * Atualiza os dados dos joysticks e pressiona as teclas do computador
  */
-export default function updateJoystick(target: Joystick, _e: EventData, d: JoystickOutputData) {
+export default function updateJoystick(
+	target: JoystickComponent,
+	_e: EventData,
+	d: JoystickOutputData
+) {
 	vibrate((options.vibrateJoystick * d?.distance) / 45)
 
 	// Se estiver usando o vgamepad

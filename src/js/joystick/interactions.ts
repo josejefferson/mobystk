@@ -1,6 +1,6 @@
-import Button from '../classes/Button'
-import Controller from '../classes/Controller'
-import Joystick from '../classes/Joystick'
+import ButtonComponent from '../components/Button'
+import Controller from '../Controller'
+import JoystickComponent from '../components/Joystick'
 import { IElementNode } from '../types/Element'
 import vibrate from '../utils/vibrate'
 import options from './options'
@@ -21,8 +21,8 @@ function touchStart(e: TouchEvent) {
 		while (
 			target !== null &&
 			!(
-				(target.instance instanceof Button && !target.instance.customAction) ||
-				target.instance instanceof Joystick
+				(target.instance instanceof ButtonComponent && !target.instance.customAction) ||
+				target.instance instanceof JoystickComponent
 			)
 		) {
 			target = <IElementNode<any, any>>(<unknown>target.parentElement)
@@ -35,7 +35,7 @@ function touchStart(e: TouchEvent) {
 			continue
 		}
 
-		const joystick = target?.instance instanceof Joystick
+		const joystick = target?.instance instanceof JoystickComponent
 		Controller.currentTouches.push({ target, touch, joystick })
 		if (!target) continue
 		vibrate(options.vibrate)
@@ -66,7 +66,7 @@ function touchMove(e: TouchEvent) {
 		while (
 			target !== null &&
 			!(
-				target.instance instanceof Button &&
+				target.instance instanceof ButtonComponent &&
 				!target.instance.customAction &&
 				!target.instance.lockable
 			)
@@ -75,7 +75,7 @@ function touchMove(e: TouchEvent) {
 		}
 
 		if (oldtouch.target === target) continue
-		oldtouch.target?.instance.release()
+		;(oldtouch.target as IElementNode<any, any>)?.instance.release()
 
 		if (!target || target.instance?.active) target = null
 		oldtouch.target = target
@@ -97,8 +97,11 @@ function touchEnd(e: TouchEvent) {
 		})
 		if (i < 0) continue
 
-		if (Controller.currentTouches[i].target?.instance instanceof Button) {
-			Controller.currentTouches[i].target.instance.release()
+		if (
+			(Controller.currentTouches[i].target as IElementNode<any, any>)?.instance instanceof
+			ButtonComponent
+		) {
+			;(Controller.currentTouches[i].target as IElementNode<any, any>).instance.release()
 		}
 		Controller.currentTouches.splice(i, 1)
 	}
