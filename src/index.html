@@ -86,41 +86,69 @@
 				<main>
 					<label class="option">
 						<input type="checkbox" name="invertL" />
-						<div class="label">Inverter joystick esquerdo/setas</div>
+						<div class="label">
+							<div class="icon"><i class="mdi mdi-arrow-split-horizontal"></i></div>
+							<div class="text">Inverter joystick esquerdo/setas</div>
+						</div>
 					</label>
 					<label class="option">
 						<input type="checkbox" name="invertR" />
-						<div class="label">Inverter joystick direito/botões</div>
+						<div class="label">
+							<div class="icon"><i class="mdi mdi-arrow-split-horizontal"></i></div>
+							<div class="text">Inverter joystick direito/botões</div>
+						</div>
 					</label>
 					<label class="option">
 						<input type="checkbox" name="disJoyXAxis" />
-						<div class="label">Desativar eixo X do joystick</div>
+						<div class="label">
+							<div class="icon"><i class="mdi mdi-axis-x-arrow-lock"></i></div>
+							<div class="text">Desativar eixo X do joystick</div>
+						</div>
 					</label>
 					<label class="option">
 						<input type="checkbox" name="disJoyYAxis" />
-						<div class="label">Desativar eixo Y do joystick</div>
+						<div class="label">
+							<div class="icon"><i class="mdi mdi-axis-y-arrow-lock"></i></div>
+							<div class="text">Desativar eixo Y do joystick</div>
+						</div>
 					</label>
 					<label class="option">
 						<input type="checkbox" name="dblClickLoadSave" />
-						<div class="label">Duplo clique para carregar/salvar</div>
+						<div class="label">
+							<div class="icon"><i class="mdi mdi-gesture-tap-hold"></i></div>
+							<div class="text">Duplo clique para carregar/salvar</div>
+						</div>
 					</label>
 					<label class="option">
 						<input type="checkbox" name="changeKeyOnDrag" checked />
-						<div class="label">Trocar de tecla ao arrastar</div>
+						<div class="label">
+							<div class="icon"><i class="mdi mdi-gesture-tap-button"></i></div>
+							<div class="text">Trocar de tecla ao arrastar</div>
+						</div>
 					</label>
 					<label class="option">
 						<input type="checkbox" name="vgamepad" />
-						<div class="label">Usar controle virtual</div>
+						<div class="label">
+							<div class="icon"><i class="mdi mdi-google-controller"></i></div>
+							<div class="text">Usar controle virtual</div>
+						</div>
 					</label>
 					<label class="option">
 						<input type="checkbox" name="vibrationFromGame" checked />
-						<div class="label">Vibração vinda do jogo</div>
+						<div class="label">
+							<div class="icon"><i class="mdi mdi-vibrate"></i></div>
+							<div class="text">Vibração vinda do jogo</div>
+						</div>
 					</label>
 					<label class="option forgetPassword hidden">
-						<div class="label">Esquecer senha do MobyStk</div>
+						<div class="label">
+							<div class="icon"><i class="mdi mdi-lock-alert"></i></div>
+							<div class="text">Esquecer senha do MobyStk</div>
+						</div>
 					</label>
 					<label class="option range">
 						<div class="label">
+							<div class="icon"><i class="mdi mdi-vibrate"></i></div>
 							<div class="text">Vibração dos botões</div>
 							<input type="range" name="vibrate" min="0" max="100" step="1" value="15" />
 							<div class="value">-</div>
@@ -128,6 +156,7 @@
 					</label>
 					<label class="option range">
 						<div class="label">
+							<div class="icon"><i class="mdi mdi-vibrate"></i></div>
 							<div class="text">Vibrar ao mover joystick</div>
 							<input type="range" name="vibrateJoystick" min="0" max="50" step="1" value="5" />
 							<div class="value">-</div>
@@ -135,6 +164,7 @@
 					</label>
 					<label class="option range">
 						<div class="label">
+							<div class="icon"><i class="mdi mdi-car"></i></div>
 							<div class="text">Sensibilidade do volante</div>
 							<input type="range" name="driveSensitivity" min="1" max="5" step="0.5" value="2" />
 							<div class="value">-</div>
@@ -142,6 +172,7 @@
 					</label>
 					<label class="option range">
 						<div class="label">
+							<div class="icon"><i class="mdi mdi-car"></i></div>
 							<div class="text">Precisão do volante</div>
 							<input type="range" name="drivePrecision" min="0" max="3" step="0.5" value="1" />
 							<div class="value">-</div>
@@ -196,6 +227,7 @@
 					<div class="optionsGroup">
 						<label class="option color">
 							<div class="label">
+								<div class="icon"><i class="mdi mdi-format-color-fill"></i></div>
 								<div class="text">Fundo</div>
 								<div class="pickr-background"></div>
 							</div>
@@ -203,6 +235,7 @@
 						</label>
 						<label class="option color">
 							<div class="label">
+								<div class="icon"><i class="mdi mdi-palette"></i></div>
 								<div class="text">Cor do botão</div>
 								<div class="pickr-color"></div>
 							</div>
@@ -210,6 +243,7 @@
 						</label>
 						<label class="option color">
 							<div class="label">
+								<div class="icon"><i class="mdi mdi-border-outside"></i></div>
 								<div class="text">Borda do botão</div>
 								<div class="pickr-border"></div>
 							</div>
@@ -217,6 +251,7 @@
 						</label>
 						<label class="option color">
 							<div class="label">
+								<div class="icon"><i class="mdi mdi-format-color-fill"></i></div>
 								<div class="text">Fundo ativo</div>
 								<div class="pickr-active"></div>
 							</div>
@@ -241,6 +276,7 @@
 					<div class="optionsGroup">
 						<label class="option range">
 							<div class="label">
+								<div class="icon"><i class="mdi mdi-opacity"></i></div>
 								<div class="text">Opacidade</div>
 								<input type="range" name="bgOpacity" min="0" max="1" step="0.1" value="0.5" />
 								<div class="value">-</div>
@@ -249,6 +285,7 @@
 
 						<label class="option range">
 							<div class="label">
+								<div class="icon"><i class="mdi mdi-blur"></i></div>
 								<div class="text">Borrado</div>
 								<input type="range" name="bgBlur" min="0" max="10" step="1" value="0" />
 								<div class="value">-</div>
@@ -290,7 +327,10 @@
 				<main>
 					<label class="option">
 						<input type="checkbox" name="debug" value="true" />
-						<div class="label">Modo depuração</div>
+						<div class="label">
+							<div class="icon"><i class="mdi mdi-bug"></i></div>
+							<div class="text">Modo depuração</div>
+						</div>
 					</label>
 
 					<button

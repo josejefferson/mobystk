@@ -42,9 +42,15 @@
 .chipsGroup .chip .label {
 	padding: 5px 20px;
 	display: flex;
+	flex-direction: column;
 	font-size: 18px;
 	white-space: nowrap;
 	width: 100%;
+}
+
+.chipsGroup .chip .label-subtitle {
+	font-size: 10px;
+	white-space: nowrap;
 }
 
 .chipsGroup .chip>input:checked+.label {
@@ -373,15 +379,16 @@
 }
 
 .container section.advanced.customBG main {
-	padding: 0 20px;
+	/*padding: 0 20px;*/
 }
 
-.container section.advanced.customBG main input {
-	width: 100%;
+.container section.advanced.customBG main input[type="text"] {
+	width: calc(100% - 40px);
 	border-color: var(--yellow-400);
+	margin: auto;
 }
 
-.container section.advanced.customBG main input:focus {
+.container section.advanced.customBG main input[type="text"]:focus {
 	border-color: var(--yellow-300);
 }
 
@@ -462,6 +469,12 @@
 
 .option .label:active {
 	background-color: var(--gray-700);
+}
+
+.option .label .icon {
+	margin-right: 10px;
+	font-size: 18px;
+	opacity: 0.7;
 }
 
 .option input[type=checkbox]+.label::before {

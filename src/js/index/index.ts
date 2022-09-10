@@ -108,11 +108,34 @@ if (!ls('events.addToHomescreenPopup') && (hits === 3 || hits % 10 === 0)) {
 // Carregar elementos
 const $selectLayout = document.querySelector('.selectLayout')
 for (const layout of Controller.layouts) {
-	$selectLayout.innerHTML += `
-		<label class="chip">
-			<input type="radio" name="layout" value="${escapeHTML(layout.id)}">
-			<div class="label">${escapeHTML(layout.name)}</div>
-		</label>`
+	const $button = document.createElement('label')
+	$button.classList.add('chip')
+	
+	const $input = document.createElement('input')
+	$input.type = 'radio'
+	$input.name = 'layout'
+	$input.value = layout.id
+
+	const $label = document.createElement('div')
+	$label.classList.add('label')
+
+	const $labelTitle = document.createElement('div')
+	$labelTitle.classList.add('label-title')
+	$labelTitle.innerText = layout.name
+
+	const $labelSubtitle = document.createElement('div')
+	$labelSubtitle.classList.add('label-subtitle')
+	$labelSubtitle.innerText = layout.subtitle
+
+	if (layout.warning) $label.addEventListener('click', (e) => {
+		toast(layout.warning)
+	})
+
+	$label.appendChild($labelTitle)
+	$label.appendChild($labelSubtitle)
+	$button.appendChild($input)
+	$button.appendChild($label)
+	$selectLayout.appendChild($button)
 }
 
 const $lockableKeys = document.querySelector('.lockableKeysList')

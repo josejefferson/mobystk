@@ -8,6 +8,7 @@ const layouts: ILayout[] = [
 		type: 'mobystk:layout',
 		id: 'mobystk:psp',
 		name: 'PSP',
+		subtitle: 'PPSSPP',
 		content: [
 			{ import: 'mobystk:drive' },
 			{ import: 'mobystk:macro_record' },
@@ -36,6 +37,7 @@ const layouts: ILayout[] = [
 		type: 'mobystk:layout',
 		id: 'mobystk:ps2',
 		name: 'PS2',
+		subtitle: 'PCSX2',
 		content: [
 			{ import: 'mobystk:drive' },
 			{ import: 'mobystk:macro_record' },
@@ -71,6 +73,7 @@ const layouts: ILayout[] = [
 		type: 'mobystk:layout',
 		id: 'mobystk:snes',
 		name: 'SNES',
+		subtitle: 'Snes9x',
 		content: [
 			{ import: 'mobystk:macro_record' },
 			{ import: 'mobystk:macro_play' },
@@ -85,6 +88,30 @@ const layouts: ILayout[] = [
 			{ import: 'mobystk:fast_forward' },
 			options.invertL ? { import: 'mobystk:joystick_arrow' } : { import: 'mobystk:arrows' },
 			{ import: 'mobystk:xbox_actions' }
+		]
+	},
+
+	// N64
+	{
+		type: 'mobystk:layout',
+		id: 'mobystk:n64',
+		name: 'N64',
+		subtitle: 'Project64',
+		warning: 'Talvez este layout só funcione com o Controle Virtual ativado',
+		content: [
+			// { import: 'mobystk:macro_record' },
+			// { import: 'mobystk:macro_play' },
+			// { import: 'mobystk:volume_up' },
+			// { import: 'mobystk:volume_down' },
+			// { import: 'mobystk:left' },
+			// { import: 'mobystk:right' },
+			// { import: 'mobystk:load_state' },
+			// { import: 'mobystk:save_state' },
+			// { import: 'mobystk:select' },
+			// { import: 'mobystk:start' },
+			// { import: 'mobystk:fast_forward' },
+			// options.invertL ? { import: 'mobystk:joystick_arrow' } : { import: 'mobystk:arrows' },
+			// { import: 'mobystk:xbox_actions' }
 		]
 	}
 ]

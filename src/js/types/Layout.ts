@@ -16,6 +16,12 @@ export interface ILayout {
 	/** Nome do layout */
 	name: string
 
+	/** Nome do emulador ou subtítulo */
+	subtitle?: string
+
+	/** Aviso que será exibido ao clicar no layout */
+	warning?: string
+
 	/** Elementos do layout */
 	content: (IButton | IGroup | IJoystick | IImport)[]
 }
