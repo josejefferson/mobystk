@@ -95,7 +95,7 @@ function getKeyAndBorder(keys: [string, string, string, string], dir: Direction)
 /**
  * Reinicia os joysticks para evitar bugs
  */
-function resizeJoystick() {
+export function resizeJoystick() {
 	// Ajusta os tamanhos do controle
 	let width: number
 	if (window.outerHeight > window.outerWidth / 1.7777777777777777) width = 640

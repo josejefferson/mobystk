@@ -13,6 +13,13 @@ export default abstract class ElementComponent extends EventEmitter implements I
 	width?: ValueAndUnit
 	height?: ValueAndUnit
 
+	_imaginaryX?: number
+	_imaginaryY?: number
+	_imaginaryWidth?: number
+	_imaginaryHeight?: number
+	_imaginarySize?: number
+	_imaginaryPadding?: number
+
 	element: HTMLElement
 	editing: boolean
 	parent?: GroupComponent

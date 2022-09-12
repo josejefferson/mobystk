@@ -126,7 +126,7 @@ $toastCSS.innerHTML = `
 `
 document.body.appendChild($toastCSS)
 
-const toastObj = new Toast($toast)
+export const toastObj = new Toast($toast)
 export const toast = (message: string, time = 2000, html = false) => {
 	return toastObj.show(message, time, html)
 }

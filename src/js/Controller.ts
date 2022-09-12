@@ -42,4 +42,5 @@ const Controller: IController = {
 	}
 }
 
+window.Controller = Controller
 export default Controller

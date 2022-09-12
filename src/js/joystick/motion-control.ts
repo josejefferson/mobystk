@@ -18,13 +18,13 @@ export default function loadDriveMode() {
 	if (drive) drive.element.addEventListener('touchstart', toggleDriveMode)
 
 	// Desativa o ícone de volante, caso não esteja em HTTPS
-	if (!isHTTPS()) drive.element.style.display = 'none'
+	if (!isHTTPS() && drive && drive.element) drive.element.style.display = 'none'
 
 	/**
 	 * Liga/desliga o sensor
 	 */
 	function toggleDriveMode() {
-		// if (window.layoutEditor?.opened) return
+		if (window.layoutEditor?.opened) return
 
 		// Inicia/para o sensor
 		drive.active ? stopSensor() : startSensor()

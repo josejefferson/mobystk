@@ -11,7 +11,7 @@ export interface IGroup extends IElement {
 	type: 'mobystk:group'
 
 	/** Conteúdo não processado do grupo */
-	content: (IButton | IGroup | IJoystick | IElement | IImport)[]
+	content: (IButton | IGroup | IJoystick | IImport)[]
 
 	/** Conteúdo do grupo em componentes */
 	parsedContent?: (ButtonComponent | GroupComponent | JoystickComponent)[]

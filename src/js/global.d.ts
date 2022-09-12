@@ -8,4 +8,8 @@ declare global {
 	interface Navigator {
 		getBattery?: () => Promise<any>
 	}
+
+	interface Event {
+		path: Element[]
+	}
 }

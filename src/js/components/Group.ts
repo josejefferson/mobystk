@@ -13,8 +13,14 @@ import type JoystickComponent from './Joystick'
 
 export default class GroupComponent extends ElementComponent implements IGroupComponent {
 	type: 'mobystk:group'
-	content: (IButton | IGroup | IJoystick | IElement | IImport)[]
+	content: (IButton | IGroup | IJoystick | IImport)[]
 	parsedContent?: (ButtonComponent | GroupComponent | JoystickComponent)[]
+	_imaginaryX?: number
+	_imaginaryY?: number
+	_imaginaryWidth?: number
+	_imaginaryHeight?: number
+	_imaginarySize?: number
+	_imaginaryPadding?: number
 
 	constructor(details: IGroup) {
 		super(details)

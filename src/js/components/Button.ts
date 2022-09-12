@@ -19,6 +19,12 @@ export default class ButtonComponent extends ElementComponent implements IButton
 	targets?: string[]
 	active: boolean
 	_html?: string
+	_imaginaryX?: number
+	_imaginaryY?: number
+	_imaginaryWidth?: number
+	_imaginaryHeight?: number
+	_imaginarySize?: number
+	_imaginaryPadding?: number
 
 	constructor(details: IButton) {
 		super(details)

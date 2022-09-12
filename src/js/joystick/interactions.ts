@@ -14,7 +14,7 @@ document.addEventListener('touchcancel', touchEnd)
  * Início do toque
  */
 function touchStart(e: TouchEvent) {
-	// if (window.layoutEditor?.opened) return
+	if (window.layoutEditor?.opened) return
 
 	for (const touch of Array.from(e.changedTouches)) {
 		let target = <IElementNode<any, any>>document.elementFromPoint(touch.clientX, touch.clientY)
@@ -48,7 +48,7 @@ function touchStart(e: TouchEvent) {
  * Movimento do toque
  */
 function touchMove(e: TouchEvent) {
-	// if (window.layoutEditor?.opened) return
+	if (window.layoutEditor?.opened) return
 
 	for (const touch of Array.from(e.changedTouches)) {
 		const i = Controller.currentTouches.findIndex((t) => {
@@ -89,7 +89,7 @@ function touchMove(e: TouchEvent) {
  * Fim do toque
  */
 function touchEnd(e: TouchEvent) {
-	// if (window.layoutEditor?.opened) return
+	if (window.layoutEditor?.opened) return
 
 	for (const touch of Array.from(e.changedTouches)) {
 		const i = Controller.currentTouches.findIndex((t) => {

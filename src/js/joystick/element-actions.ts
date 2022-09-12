@@ -9,7 +9,7 @@ export let lastMacro: string[] = []
 
 /** Carrega o estado do jogo */
 function loadState() {
-	// if (window.layoutEditor?.opened) return
+	if (window.layoutEditor?.opened) return
 	sendCmd('load')
 	sendCmd('load', true)
 	vibrate(options.vibrate * 3)
@@ -17,7 +17,7 @@ function loadState() {
 
 /** Salva o estado do jogo */
 function saveState() {
-	// if (window.layoutEditor?.opened) return
+	if (window.layoutEditor?.opened) return
 	sendCmd('save')
 	sendCmd('save', true)
 	vibrate(options.vibrate * 3)
@@ -25,7 +25,7 @@ function saveState() {
 
 /** Inicia/para a gravação de uma macro */
 function recordMacro() {
-	// if (window.layoutEditor?.opened) return
+	if (window.layoutEditor?.opened) return
 	if (playingMacro) return
 	if (this.instance) this.instance[this.instance.active ? 'release' : 'press']()
 	if (!recordingMacro) lastMacro = []
@@ -34,7 +34,7 @@ function recordMacro() {
 
 /** Executa a macro gravada */
 async function playMacro() {
-	// if (window.layoutEditor?.opened) return
+	if (window.layoutEditor?.opened) return
 	if (recordingMacro) return
 	playingMacro = !playingMacro
 	if (this.instance) this.instance.press()

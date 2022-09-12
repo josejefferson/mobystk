@@ -6,6 +6,7 @@ const pages = ['index', 'setup', 'joystick']
 
 module.exports = {
 	mode: 'production',
+	devtool: 'source-map',
 	entry: pages.reduce((config, page) => {
 		config[page] = `./src/js/${page}/index.ts`
 		return config

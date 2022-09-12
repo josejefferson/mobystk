@@ -18,9 +18,9 @@ if (options.hidden.includes('mobystk:deviceInfo')) {
 
 // CARREGAMENTO DAS OPÇÕES
 $edit.addEventListener('click', loading)
-// $edit.addEventListener('contextmenu', () => {
-// 	layoutEditor.opened ? layoutEditor.end() : layoutEditor.start()
-// })
+$edit.addEventListener('contextmenu', () => {
+	window.layoutEditor.opened ? window.layoutEditor.end() : window.layoutEditor.start()
+})
 if (!options.layout) location.href = 'index.html'
 if (options.debug) document.body.classList.add('debug')
 if (options.invertL) document.body.classList.add('invertL')

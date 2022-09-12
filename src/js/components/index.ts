@@ -10,4 +10,5 @@ const Components = {
 	Joystick: JoystickComponent
 }
 
+export type AnyComponent = ButtonComponent | GroupComponent | JoystickComponent
 export default Components
