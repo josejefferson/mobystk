@@ -1,10 +1,5 @@
-import type ButtonComponent from '../components/Button'
-import type GroupComponent from '../components/Group'
-import type JoystickComponent from '../components/Joystick'
-import type { IButton } from './Button'
-import type { IGroup } from './Group'
-import type { IImport } from './Import'
-import type { IJoystick } from './Joystick'
+import type { IElementsOrImport } from '.'
+import type { AnyComponent } from '../components'
 
 export interface ILayout {
 	/** Tipo de elemento */
@@ -23,10 +18,10 @@ export interface ILayout {
 	warning?: string
 
 	/** Elementos do layout */
-	content: (IButton | IGroup | IJoystick | IImport)[]
+	content: IElementsOrImport[]
 }
 
 export interface ILayoutComponent extends ILayout {
 	/** Elementos processados do layout */
-	parsedContent: (GroupComponent | ButtonComponent | JoystickComponent)[]
+	parsedContent: AnyComponent[]
 }

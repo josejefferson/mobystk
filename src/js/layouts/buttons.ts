@@ -1,4 +1,4 @@
-import { IButton } from '../types/Button'
+import type { IButton } from '../types/Button'
 
 const buttons: IButton[] = [
 	// L

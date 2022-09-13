@@ -1,20 +1,11 @@
-import type {
-	IButton,
-	IElement,
-	IElementNode,
-	IGroup,
-	IGroupComponent,
-	IImport,
-	IJoystick
-} from '../types'
-import type ButtonComponent from './Button'
+import type { AnyComponent } from '.'
+import type { IElementNode, IElementsOrImport, IGroup, IGroupComponent } from '../types'
 import ElementComponent from './Element'
-import type JoystickComponent from './Joystick'
 
 export default class GroupComponent extends ElementComponent implements IGroupComponent {
 	type: 'mobystk:group'
-	content: (IButton | IGroup | IJoystick | IImport)[]
-	parsedContent?: (ButtonComponent | GroupComponent | JoystickComponent)[]
+	content: IElementsOrImport[]
+	parsedContent?: AnyComponent[]
 	_imaginaryX?: number
 	_imaginaryY?: number
 	_imaginaryWidth?: number

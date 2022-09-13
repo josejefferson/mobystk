@@ -3,6 +3,7 @@ import groups from './layouts/groups'
 import joysticks from './layouts/joysticks'
 import layouts from './layouts/layouts'
 
+import type { AnyComponent } from './components'
 import type ButtonComponent from './components/Button'
 import type GroupComponent from './components/Group'
 import type JoystickComponent from './components/Joystick'
@@ -20,7 +21,7 @@ interface IController {
 		joystick: boolean
 	}[]
 	elements: {
-		all: (ButtonComponent | GroupComponent | JoystickComponent)[]
+		all: AnyComponent[]
 		buttons: ButtonComponent[]
 		groups: GroupComponent[]
 		joysticks: JoystickComponent[]

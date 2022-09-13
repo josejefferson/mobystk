@@ -1,11 +1,11 @@
 import Pickr from '@simonwep/pickr'
 import Controller from '../Controller'
-import type { IButton, IGroup, IJoystick } from '../types'
+import type { IElements } from '../types'
+import { escapeHTML } from '../utils/escapeHTML'
 import getOpt, { ls } from '../utils/getOpt'
 import loading from '../utils/loading'
-import { toast } from '../utils/toast'
-import { escapeHTML } from '../utils/escapeHTML'
 import { scrollToY } from '../utils/scrollToY'
+import { toast } from '../utils/toast'
 
 const form = document.forms[0]
 const formEls: FormElements = <FormElements>form.elements
@@ -157,11 +157,7 @@ for (const button of Controller.buttons) {
 
 const $hiddenItems = document.querySelector('.hiddenItemsList')
 
-const elements: (IButton | IGroup | IJoystick)[] = [
-	...Controller.buttons,
-	...Controller.groups,
-	...Controller.joysticks
-]
+const elements: IElements[] = [...Controller.buttons, ...Controller.groups, ...Controller.joysticks]
 for (const element of elements) {
 	let content = ''
 	if (element.type === 'mobystk:group') content += '<i class="mdi mdi-group"></i>&nbsp;'

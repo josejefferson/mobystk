@@ -1,4 +1,4 @@
-import { ILayout } from '../types/Layout'
+import type { ILayout } from '../types/Layout'
 
 const options: any = {}
 

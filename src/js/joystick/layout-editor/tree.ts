@@ -2,7 +2,15 @@ import ButtonComponent from '../../components/Button'
 import GroupComponent from '../../components/Group'
 import JoystickComponent from '../../components/Joystick'
 import Controller from '../../Controller'
-import { IButton, IElementNode, IGroup, IJoystick, ILayout, ILayoutComponent } from '../../types'
+import type {
+	IButton,
+	IElementNode,
+	IElements,
+	IGroup,
+	IJoystick,
+	ILayout,
+	ILayoutComponent
+} from '../../types'
 import { escapeHTML } from '../../utils/escapeHTML'
 import { editingElement } from './interactions'
 
@@ -51,7 +59,7 @@ export class Tree {
 		}
 
 		for (let el of (element as ILayoutComponent).parsedContent || element.content) {
-			el = el as IButton | IGroup | IJoystick
+			el = el as IElements
 			if ('content' in el && Array.isArray(el.content)) {
 				el = el as IGroup
 				$groupContent.appendChild(this._html(el, false))

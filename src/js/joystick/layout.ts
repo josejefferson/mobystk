@@ -1,9 +1,18 @@
+import type { AnyComponent } from '../components'
 import ButtonComponent from '../components/Button'
 import GroupComponent from '../components/Group'
 import JoystickComponent from '../components/Joystick'
-import type { IButton, IGroup, IImport, IJoystick, ILayout, ILayoutComponent } from '../types'
-
 import Controller from '../Controller'
+import type {
+	IButton,
+	IElements,
+	IElementsOrImport,
+	IGroup,
+	IImport,
+	IJoystick,
+	ILayout,
+	ILayoutComponent
+} from '../types'
 import { sendCmd } from './backend-integration'
 import loadElementActions from './element-actions'
 import { $DILayout, $layout } from './elements'
@@ -51,8 +60,8 @@ export function loadLayout(layout: ILayout) {
  * Retorna todos os elementos (botões, grupos e joysticks) de um objeto
  */
 export function getAllElements(
-	object: ButtonComponent | GroupComponent | JoystickComponent | ILayoutComponent,
-	elements: (ButtonComponent | GroupComponent | JoystickComponent)[] = []
+	object: AnyComponent | ILayoutComponent,
+	elements: AnyComponent[] = []
 ) {
 	if (object.type === 'mobystk:layout' || object.type === 'mobystk:group') {
 		object = object as ILayoutComponent | GroupComponent
@@ -67,7 +76,7 @@ export function getAllElements(
 /**
  * Converte os elementos de JSON para objetos
  */
-export function parseElement(object: IImport | IButton | IGroup | IJoystick) {
+export function parseElement(object: IElementsOrImport) {
 	const objectID = 'import' in object ? object.import : object.id
 
 	// Remove os itens ocultos
@@ -89,15 +98,9 @@ export function parseElement(object: IImport | IButton | IGroup | IJoystick) {
 		object = object as IGroup
 		object.parsedContent = object.content
 			.map(parseElement)
-			.filter((e: ButtonComponent | GroupComponent | JoystickComponent | undefined) => e) as (
-			| ButtonComponent
-			| GroupComponent
-			| JoystickComponent
-		)[]
+			.filter((e: AnyComponent | undefined) => e) as AnyComponent[]
 		const group = new GroupComponent(object as IGroup)
-		object.parsedContent = object.parsedContent.map(
-			(e: ButtonComponent | GroupComponent | JoystickComponent) => (e.parent = group)
-		)
+		object.parsedContent = object.parsedContent.map((e: AnyComponent) => (e.parent = group))
 		return group
 	} else if (object.type === 'mobystk:joystick') {
 		// Joystick
@@ -109,7 +112,7 @@ export function parseElement(object: IImport | IButton | IGroup | IJoystick) {
 /**
  * Reutiliza um elemento
  */
-export function importElement(object: IImport): (IButton | IGroup | IJoystick) & IImport {
+export function importElement(object: IImport): IElements & IImport {
 	const allElements = [...Controller.buttons, ...Controller.groups, ...Controller.joysticks]
 	const element = allElements.find((e) => e.id === object.import)
 	if (element) return { ...element, ...object }

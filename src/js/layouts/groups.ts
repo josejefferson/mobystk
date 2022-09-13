@@ -1,4 +1,4 @@
-import { IGroup } from '../types/Group'
+import type { IGroup } from '../types/Group'
 
 const groups: IGroup[] = [
 	// Setas

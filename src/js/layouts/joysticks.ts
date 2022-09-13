@@ -1,4 +1,4 @@
-import { IJoystick } from '../types/Joystick'
+import type { IJoystick } from '../types/Joystick'
 
 const joysticks: IJoystick[] = [
 	// Joystick esquerdo
