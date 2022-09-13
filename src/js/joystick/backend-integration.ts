@@ -53,7 +53,15 @@ export let socket = socketConnect()
  * Tenta conectar ao socket
  */
 function socketConnect() {
-	const ws = new WebSocket('ws://' + options.ip)
+	let ws: WebSocket
+	try {
+		ws = new WebSocket('httpssws://' + options.ip)
+	} catch (err) {
+		console.error(err)
+		closed()
+		return
+	}
+
 	ws.addEventListener('open', opened)
 	ws.addEventListener('close', closed)
 	ws.addEventListener('message', message)
@@ -107,7 +115,7 @@ export function sendCmd(keys: string | string[], release = false, custom?: strin
 	if (recordingMacro) return lastMacro.push(`${release ? 'R' : 'P'} ${keys} ${options.player}`)
 
 	// Se não tiver conectado, não faz nada
-	if (socket.readyState !== 1) return
+	if (!socket || socket.readyState !== 1) return
 
 	// Envia o comando para o servidor
 	if (custom) socket.send(`${custom} ${keys} ${options.player}`)

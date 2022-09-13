@@ -26,7 +26,7 @@ export function elementClick(element: IElementNode<any, HTMLElement>) {
 	toolbar.render()
 }
 
-export let touch: Touch|MouseEvent
+export let touch: Touch | MouseEvent
 export function touchStart(e: TouchEvent | MouseEvent) {
 	touch = 'changedTouches' in e ? e.changedTouches[0] : e
 }
@@ -115,5 +115,4 @@ export function touchMove(e: TouchEvent | MouseEvent) {
 	}
 }
 
-export function touchEnd(e:TouchEvent | MouseEvent) {
-}
+export function touchEnd(e: TouchEvent | MouseEvent) {}

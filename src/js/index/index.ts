@@ -110,7 +110,7 @@ const $selectLayout = document.querySelector('.selectLayout')
 for (const layout of Controller.layouts) {
 	const $button = document.createElement('label')
 	$button.classList.add('chip')
-	
+
 	const $input = document.createElement('input')
 	$input.type = 'radio'
 	$input.name = 'layout'
@@ -127,9 +127,10 @@ for (const layout of Controller.layouts) {
 	$labelSubtitle.classList.add('label-subtitle')
 	$labelSubtitle.innerText = layout.subtitle
 
-	if (layout.warning) $label.addEventListener('click', (e) => {
-		toast(layout.warning)
-	})
+	if (layout.warning)
+		$label.addEventListener('click', (e) => {
+			toast(layout.warning)
+		})
 
 	$label.appendChild($labelTitle)
 	$label.appendChild($labelSubtitle)
