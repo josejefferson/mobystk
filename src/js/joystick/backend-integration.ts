@@ -55,7 +55,7 @@ export let socket = socketConnect()
 function socketConnect() {
 	let ws: WebSocket
 	try {
-		ws = new WebSocket('httpssws://' + options.ip)
+		ws = new WebSocket('ws://' + options.ip)
 	} catch (err) {
 		console.error(err)
 		closed()
