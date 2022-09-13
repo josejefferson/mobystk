@@ -37,6 +37,15 @@ module.exports = {
 			(page) =>
 				new HtmlWebpackPlugin({
 					inject: true,
+					minify: {
+						collapseWhitespace: true,
+						keepClosingSlash: true,
+						removeComments: true,
+						removeRedundantAttributes: false,
+						removeScriptTypeAttributes: true,
+						removeStyleLinkTypeAttributes: true,
+						useShortDoctype: true
+					},
 					template: `./src/${page}.html`,
 					filename: `${page}.html`,
 					chunks: [page]

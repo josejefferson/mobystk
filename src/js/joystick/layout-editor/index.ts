@@ -1,4 +1,4 @@
-window.onload = () => layoutEditor.start() //temp
+// window.onload = () => layoutEditor.start() //temp
 
 import { IElementNode } from '../../types'
 import { toast } from '../../utils/toast'
