@@ -1,5 +1,5 @@
 import nipplejs, { JoystickManager } from 'nipplejs'
-import options from '../joystick/options'
+import options from '../shared/options'
 import type { IElementNode, IJoystick, IJoystickComponent, ValueAndUnit } from '../types'
 import ElementComponent from './Element'
 

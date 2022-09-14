@@ -8,7 +8,7 @@
 	"scripts": {
 		"build": "rimraf ./dist/js ./dist/*.html && webpack",
 		"dev": "webpack --watch",
-		"serve": "live-server ./dist",
+		"serve": "live-server ./dist --no-browser",
 		"format": "prettier -w ."
 	},
 	"devDependencies": {

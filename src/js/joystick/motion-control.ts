@@ -1,8 +1,8 @@
 import ButtonComponent from '../components/Button'
-import Controller from '../shared/Controller'
+import Controller from '../shared/controller'
 import vibrate from '../utils/vibrate'
 import { sendCmd } from './backend-integration'
-import options from './options'
+import options from '../shared/options'
 
 type Direction = 'joyLUp' | 'joyLLeft' | 'joyLRight'
 

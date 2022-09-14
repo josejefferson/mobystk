@@ -1,10 +1,10 @@
 import { EventData, JoystickOutputData } from 'nipplejs'
-import Controller from '../shared/Controller'
+import Controller from '../shared/controller'
 import type JoystickComponent from '../components/Joystick'
 import vibrate from '../utils/vibrate'
 import { sendCmd } from './backend-integration'
 import { $viewport } from './elements'
-import options from './options'
+import options from '../shared/options'
 
 type Direction = 'up' | 'left' | 'down' | 'right'
 type Border = 'Top' | 'Left' | 'Bottom' | 'Right'
@@ -67,28 +67,16 @@ export default function updateJoystick(
  * Retorna a tecla que será pressionada e a borda
  */
 function getKeyAndBorder(keys: [string, string, string, string], dir: Direction) {
-	let key: string
-	let border: Border
-
-	switch (dir) {
-		case 'up':
-			key = keys[0]
-			border = 'Top'
-			break
-		case 'left':
-			key = keys[1]
-			border = 'Left'
-			break
-		case 'down':
-			key = keys[2]
-			border = 'Bottom'
-			break
-		case 'right':
-			key = keys[3]
-			border = 'Right'
-			break
+	const keysAndBorders: {
+		[key: string]: [string, Border]
+	} = {
+		up: [keys[0], 'Top'],
+		left: [keys[1], 'Left'],
+		down: [keys[2], 'Bottom'],
+		right: [keys[3], 'Right']
 	}
 
+	const [key, border] = keysAndBorders[dir]
 	return { key, border }
 }
 

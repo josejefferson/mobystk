@@ -1,4 +1,4 @@
-import { ls } from '../utils/getOpt'
+import { ls } from '../utils/get-option'
 import loading from '../utils/loading'
 import { toast } from '../utils/toast'
 import { $export, $import } from './elements'

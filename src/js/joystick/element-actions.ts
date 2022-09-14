@@ -1,8 +1,8 @@
-import Controller from '../shared/Controller'
+import Controller from '../shared/controller'
 import vibrate from '../utils/vibrate'
 import { sendCmd } from './backend-integration'
 import { socket } from '../shared/socket'
-import options from './options'
+import options from '../shared/options'
 
 export let recordingMacro = false
 export let playingMacro = false

@@ -4,7 +4,7 @@ import './interface'
 import './options'
 import './types'
 import loading from '../utils/loading'
-import { scrollToY } from '../utils/scrollToY'
+import { scrollToY } from '../utils/scroll-to-y'
 
 window.addEventListener('load', () => {
 	document.body.classList.remove('preload')

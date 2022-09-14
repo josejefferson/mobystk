@@ -1,4 +1,4 @@
-import getOpt from '../utils/getOpt'
+import getOpt from '../utils/get-option'
 
 export interface IOptions {
 	ip: string

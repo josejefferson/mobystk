@@ -2,7 +2,7 @@ import type { AnyComponent } from '../components'
 import ButtonComponent from '../components/Button'
 import GroupComponent from '../components/Group'
 import JoystickComponent from '../components/Joystick'
-import Controller from '../shared/Controller'
+import Controller from '../shared/controller'
 import type {
 	IButton,
 	IElements,
@@ -18,7 +18,7 @@ import loadElementActions from './element-actions'
 import { $DILayout, $layout } from './elements'
 import updateJoystick from './joystick'
 import loadDriveMode from './motion-control'
-import options from './options'
+import options from '../shared/options'
 
 /**
  * Carrega o layout

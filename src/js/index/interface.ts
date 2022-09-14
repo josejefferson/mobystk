@@ -1,7 +1,8 @@
-import Controller from '../shared/Controller'
+import Controller from '../shared/controller'
 import type { IElements } from '../types'
-import { escapeHTML } from '../utils/escapeHTML'
-import { ls } from '../utils/getOpt'
+import { escapeHTML } from '../utils/escape-html'
+import { ls } from '../utils/get-option'
+import getPrecision from '../utils/get-precision'
 import { toast } from '../utils/toast'
 import {
 	$athPopup,
@@ -92,6 +93,7 @@ for (const layout of Controller.layouts) {
 	$selectLayout.appendChild($button)
 }
 
+// Botões para travar
 for (const button of Controller.buttons) {
 	if (!button.content || button.customAction || button.diagonal) continue
 	let content = ''
@@ -107,6 +109,7 @@ for (const button of Controller.buttons) {
 		</label>`
 }
 
+// Elementos para ocultar
 const elements: IElements[] = [...Controller.buttons, ...Controller.groups, ...Controller.joysticks]
 for (const element of elements) {
 	let content = ''
@@ -131,6 +134,7 @@ for (const element of elements) {
 		</label>`
 }
 
+// Valores dos inputs range
 $inputsRange.forEach(($value) => {
 	const $range = $value.parentElement.querySelector<HTMLInputElement>('input[type="range"]')
 	const precision = getPrecision($range.step || 1)
@@ -144,9 +148,3 @@ $inputsRange.forEach(($value) => {
 		$value.innerText = Number($range.value).toFixed(precision)
 	}
 })
-
-function getPrecision(num: number | string) {
-	const str = Number(num).toString()
-	const arr = str.indexOf('.') + 1
-	return !arr ? 0 : str.length - arr
-}

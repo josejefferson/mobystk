@@ -1,6 +1,6 @@
 import type GroupComponent from './Group'
 import type { IElement, IElementComponent, ValueAndUnit } from '../types'
-import EventEmitter from '../utils/EventEmitter'
+import EventEmitter from '../utils/event-emitter'
 
 export default abstract class ElementComponent extends EventEmitter implements IElementComponent {
 	type: string

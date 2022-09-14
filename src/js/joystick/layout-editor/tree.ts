@@ -1,7 +1,7 @@
 import ButtonComponent from '../../components/Button'
 import GroupComponent from '../../components/Group'
 import JoystickComponent from '../../components/Joystick'
-import Controller from '../../shared/Controller'
+import Controller from '../../shared/controller'
 import type {
 	IButton,
 	IElementNode,
@@ -11,7 +11,7 @@ import type {
 	ILayout,
 	ILayoutComponent
 } from '../../types'
-import { escapeHTML } from '../../utils/escapeHTML'
+import { escapeHTML } from '../../utils/escape-html'
 import { editingElement } from './interactions'
 
 export class Tree {

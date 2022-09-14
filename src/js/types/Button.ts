@@ -9,7 +9,7 @@ export interface IButton extends IElement {
 	key?: string
 
 	/**
-	 * Exibe ou ocultar bordas
+	 * Exibir ou ocultar bordas
 	 * [borderTop, borderRight, borderBottom, borderLeft]
 	 */
 	border: [boolean, boolean, boolean, boolean]

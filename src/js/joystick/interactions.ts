@@ -1,9 +1,9 @@
 import ButtonComponent from '../components/Button'
-import Controller from '../shared/Controller'
+import Controller from '../shared/controller'
 import JoystickComponent from '../components/Joystick'
 import { IElementNode } from '../types/Element'
 import vibrate from '../utils/vibrate'
-import options from './options'
+import options from '../shared/options'
 
 document.addEventListener('touchstart', touchStart)
 document.addEventListener('touchmove', touchMove)

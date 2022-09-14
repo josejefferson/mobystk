@@ -1,6 +1,6 @@
 import keymappings from '../shared/keymappings'
 import KEY_SEQUENCE from '../setup/setupmap'
-import getOpt from '../utils/getOpt'
+import getOpt from '../utils/get-option'
 import loading from '../utils/loading'
 import { $ip, $connectStatus, $cancel, $progress, $bar } from './elements'
 import { socket } from '../shared/socket'

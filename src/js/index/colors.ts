@@ -1,5 +1,5 @@
 import Pickr from '@simonwep/pickr'
-import { ls } from '../utils/getOpt'
+import { ls } from '../utils/get-option'
 import { $resetColors, formEls } from './elements'
 
 const DEFAULT_COLORS = [

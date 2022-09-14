@@ -9,7 +9,7 @@ import {
 	$edit,
 	$root
 } from './elements'
-import options from './options'
+import options from '../shared/options'
 
 // ELEMENTOS
 if (options.hidden.includes('mobystk:deviceInfo')) {

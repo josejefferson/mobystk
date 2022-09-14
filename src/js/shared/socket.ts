@@ -1,4 +1,4 @@
-import options from '../joystick/options'
+import options from './options'
 import loading from '../utils/loading'
 import { toast } from '../utils/toast'
 

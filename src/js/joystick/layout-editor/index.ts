@@ -3,7 +3,7 @@
 import { IElementNode } from '../../types'
 import { toast } from '../../utils/toast'
 import { resizeJoystick } from '../joystick'
-import options from '../options'
+import options from '../../shared/options'
 import { elementClick, touchEnd, touchMove, touchStart } from './interactions'
 import { toolbar } from './toolbar'
 

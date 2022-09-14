@@ -1,5 +1,5 @@
 import type { IButton, IButtonComponent, IElementNode, ValueAndUnit } from '../types'
-import Controller from '../shared/Controller'
+import Controller from '../shared/controller'
 import ElementComponent from './Element'
 
 export default class ButtonComponent extends ElementComponent implements IButtonComponent {
