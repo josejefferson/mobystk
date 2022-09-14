@@ -97,7 +97,7 @@ const layouts: ILayout[] = [
 		id: 'mobystk:n64',
 		name: 'N64',
 		subtitle: 'Project64',
-		warning: 'Talvez este layout só funcione com o Controle Virtual ativado',
+		info: 'Talvez este layout só funcione com o Controle Virtual ativado',
 		content: [
 			// { import: 'mobystk:macro_record' },
 			// { import: 'mobystk:macro_play' },

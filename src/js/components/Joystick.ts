@@ -60,4 +60,14 @@ export default class JoystickComponent extends ElementComponent implements IJoys
 		this.nipple.on('move', (e, d) => this.emit('move', this, e, d))
 		this.nipple.on('end', (e, d) => this.emit('end', this, e, d))
 	}
+
+	toObject(): IJoystick {
+		return {
+			...super.toObject(),
+			type: this.type,
+			size: this.size,
+			padding: this.padding,
+			keys: this.keys
+		}
+	}
 }

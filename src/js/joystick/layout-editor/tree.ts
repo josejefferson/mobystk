@@ -1,7 +1,7 @@
 import ButtonComponent from '../../components/Button'
 import GroupComponent from '../../components/Group'
 import JoystickComponent from '../../components/Joystick'
-import Controller from '../../Controller'
+import Controller from '../../shared/Controller'
 import type {
 	IButton,
 	IElementNode,

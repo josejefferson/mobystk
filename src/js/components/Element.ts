@@ -63,4 +63,18 @@ export default abstract class ElementComponent extends EventEmitter implements I
 		// Editando elemento
 		el.classList[this.editing ? 'add' : 'remove']('controller-editing')
 	}
+
+	toObject(): IElement {
+		return {
+			type: this.type,
+			id: this.id,
+			name: this.name,
+			x: this.x,
+			y: this.y,
+			anchorX: this.anchorX,
+			anchorY: this.anchorY,
+			width: this.width,
+			height: this.height
+		}
+	}
 }

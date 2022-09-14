@@ -1,5 +1,5 @@
 import type { IButton, IButtonComponent, IElementNode, ValueAndUnit } from '../types'
-import Controller from '../Controller'
+import Controller from '../shared/Controller'
 import ElementComponent from './Element'
 
 export default class ButtonComponent extends ElementComponent implements IButtonComponent {
@@ -126,5 +126,22 @@ export default class ButtonComponent extends ElementComponent implements IButton
 		// Botão com ação personalizada
 		el.classList[this.customAction ? 'add' : 'remove']('controller-custom-action')
 		el.dataset.action = this.customAction || null
+	}
+
+	toObject(): IButton {
+		return {
+			...super.toObject(),
+			type: this.type,
+			key: this.key,
+			border: this.border,
+			fontSize: this.fontSize,
+			content: this.content,
+			radius: this.radius,
+			lockable: this.lockable,
+			scalable: this.scalable,
+			customAction: this.customAction,
+			diagonal: this.diagonal,
+			targets: this.targets
+		}
 	}
 }

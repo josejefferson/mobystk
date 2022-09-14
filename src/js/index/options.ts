@@ -1,4 +1,4 @@
-import Controller from '../Controller'
+import Controller from '../shared/Controller'
 import { escapeHTML } from '../utils/escapeHTML'
 import getOpt, { ls } from '../utils/getOpt'
 import loading from '../utils/loading'

@@ -1,5 +1,5 @@
 import { EventData, JoystickOutputData } from 'nipplejs'
-import Controller from '../Controller'
+import Controller from '../shared/Controller'
 import type JoystickComponent from '../components/Joystick'
 import vibrate from '../utils/vibrate'
 import { sendCmd } from './backend-integration'

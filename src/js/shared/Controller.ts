@@ -1,13 +1,13 @@
-import buttons from './layouts/buttons'
-import groups from './layouts/groups'
-import joysticks from './layouts/joysticks'
-import layouts from './layouts/layouts'
+import buttons from '../elements/buttons'
+import groups from '../elements/groups'
+import joysticks from '../elements/joysticks'
+import layouts from '../elements/layouts'
 
-import type { AnyComponent } from './components'
-import type ButtonComponent from './components/Button'
-import type GroupComponent from './components/Group'
-import type JoystickComponent from './components/Joystick'
-import type { IButton, IGroup, IJoystick, ILayout } from './types'
+import type { AnyComponent } from '../components'
+import type ButtonComponent from '../components/Button'
+import type GroupComponent from '../components/Group'
+import type JoystickComponent from '../components/Joystick'
+import type { IButton, IGroup, IJoystick, ILayout } from '../types'
 
 interface IController {
 	buttons: IButton[]

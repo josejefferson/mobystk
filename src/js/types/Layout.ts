@@ -15,7 +15,7 @@ export interface ILayout {
 	subtitle?: string
 
 	/** Aviso que será exibido ao clicar no layout */
-	warning?: string
+	info?: string
 
 	/** Elementos do layout */
 	content: IElementsOrImport[]

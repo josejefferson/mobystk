@@ -1,16 +1,19 @@
 import { ls } from '../utils/getOpt'
 import loading from '../utils/loading'
+import { toast } from '../utils/toast'
 import { $export, $import } from './elements'
 
-$import.addEventListener('click', importSettings)
-$export.addEventListener('click', exportSettings)
+$import.addEventListener('click', importOptions)
+$export.addEventListener('click', exportOptions)
 
-function importSettings() {
-	const el = document.createElement('input')
-	el.type = 'file'
-	el.style.display = 'none'
-	el.click()
-	el.onchange = async function (this: HTMLInputElement) {
+function importOptions() {
+	const $el = document.createElement('input')
+	$el.type = 'file'
+	$el.style.display = 'none'
+	$el.click()
+	$el.addEventListener('change', fileChange)
+
+	async function fileChange(this: HTMLInputElement) {
 		try {
 			const file = this.files[0]
 			if (!file) return
@@ -25,17 +28,17 @@ function importSettings() {
 			location.reload()
 		} catch (err) {
 			console.error(err)
-			alert('Ocorreu um erro ao importar as configurações.')
+			toast('Ocorreu um erro ao importar as configurações')
 		}
 	}
 }
 
-function exportSettings() {
+function exportOptions() {
 	const content = JSON.stringify(ls())
-	const el = document.createElement('a')
+	const $el = document.createElement('a')
 	const blob = new Blob([content], { type: 'application/json' })
 	const url = URL.createObjectURL(blob)
-	el.href = url
-	el.download = `mobyStk-settings-${new Date().toISOString()}.json`
-	el.click()
+	$el.href = url
+	$el.download = `mobyStk-settings-${new Date().toISOString()}.json`
+	$el.click()
 }

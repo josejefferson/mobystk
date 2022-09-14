@@ -1,5 +1,5 @@
 import ButtonComponent from '../components/Button'
-import Controller from '../Controller'
+import Controller from '../shared/Controller'
 import vibrate from '../utils/vibrate'
 import { sendCmd } from './backend-integration'
 import options from './options'

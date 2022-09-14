@@ -1,4 +1,4 @@
-import Controller from '../Controller'
+import Controller from '../shared/Controller'
 import type { IElements } from '../types'
 import { escapeHTML } from '../utils/escapeHTML'
 import { ls } from '../utils/getOpt'
@@ -13,6 +13,18 @@ import {
 	$lockableKeys,
 	$selectLayout
 } from './elements'
+
+// Botão Iniciar
+window.addEventListener('load', updateStartButton)
+window.addEventListener('scroll', updateStartButton)
+
+function updateStartButton() {
+	if (document.scrollingElement.scrollTop > window.innerHeight) {
+		document.querySelector<HTMLElement>('.start.floating').classList.remove('hidden')
+	} else {
+		document.querySelector<HTMLElement>('.start.floating').classList.add('hidden')
+	}
+}
 
 // Contador de visitas
 let hits = parseInt(ls('stats.hits.home'))
@@ -69,10 +81,9 @@ for (const layout of Controller.layouts) {
 	$labelSubtitle.classList.add('label-subtitle')
 	$labelSubtitle.innerText = layout.subtitle
 
-	if (layout.warning)
-		$label.addEventListener('click', (e) => {
-			toast(layout.warning)
-		})
+	if (layout.info) {
+		$label.addEventListener('click', () => toast(layout.info))
+	}
 
 	$label.appendChild($labelTitle)
 	$label.appendChild($labelSubtitle)

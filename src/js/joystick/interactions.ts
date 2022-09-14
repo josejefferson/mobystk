@@ -1,5 +1,5 @@
 import ButtonComponent from '../components/Button'
-import Controller from '../Controller'
+import Controller from '../shared/Controller'
 import JoystickComponent from '../components/Joystick'
 import { IElementNode } from '../types/Element'
 import vibrate from '../utils/vibrate'

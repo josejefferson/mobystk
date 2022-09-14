@@ -1,51 +1,19 @@
-import keymappings from '../keymappings'
+import keymappings from '../shared/keymappings'
 import KEY_SEQUENCE from '../setup/setupmap'
 import getOpt from '../utils/getOpt'
+import loading from '../utils/loading'
+import { $ip, $connectStatus, $cancel, $progress, $bar } from './elements'
+import { socket } from '../shared/socket'
 
 window.addEventListener('load', () => {
 	document.body.classList.remove('preload')
 })
 
 document.querySelectorAll('a').forEach((e) => e.addEventListener('click', loading))
-const $progress = document.querySelector<HTMLElement>('.progress')
-const $bar = $progress.querySelector<HTMLElement>('.bar')
-const $cancel = $progress.querySelector<HTMLElement>('.cancel')
-const $ip = document.querySelector<HTMLElement>('.ip')
-const $connectStatus = document.querySelector<HTMLElement>('.connectStatus')
 
 const ip = getOpt('code', window.location.hostname + ':5000')
 
 $ip.innerText = ip
-let socket = socketConn()
-function socketConn() {
-	const ws = new WebSocket('ws://' + ip)
-	$connectStatus.classList.remove('connected', 'disconnected')
-	$connectStatus.classList.add('connecting')
-	ws.addEventListener('open', (e) => {
-		$connectStatus.classList.remove('connecting', 'disconnected')
-		$connectStatus.classList.add('connected')
-	})
-	ws.addEventListener('close', (e) => {
-		$connectStatus.classList.remove('connecting', 'connected')
-		$connectStatus.classList.add('disconnected')
-		setTimeout(() => (socket = socketConn()), 3000)
-		ws.send('PASSWORD ' + (localStorage.getItem('joystick.password') || ''))
-	})
-	ws.addEventListener('message', (e) => {
-		const [cmd, ...data] = e.data.split(' ')
-		if (cmd.toUpperCase() === 'AUTH_FAILED') {
-			$connectStatus.classList.remove('connecting', 'connected')
-			$connectStatus.classList.add('disconnected')
-			const password = prompt('O computador requer uma senha para se conectar ao MobyStk')
-			if (password === null) return
-			localStorage.setItem('joystick.password', password)
-			loading()
-			window.location.reload()
-		}
-	})
-
-	return ws
-}
 
 document.querySelectorAll<HTMLElement>('.app .actions .start').forEach((e) => {
 	const { app, player } = e.dataset
@@ -121,11 +89,6 @@ async function wait(sec: number) {
 	return new Promise((resolve) => {
 		setTimeout(resolve, sec)
 	})
-}
-
-const $loading = document.querySelector('.loadingScreen')
-function loading() {
-	$loading.classList.add('visible')
 }
 
 export {}

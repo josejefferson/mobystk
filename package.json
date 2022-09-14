@@ -6,13 +6,15 @@
 	"author": "Jefferson Dantas <jeffersonn.jjdaj@gmail.com>",
 	"license": "MIT",
 	"scripts": {
-		"build": "rimraf ./dist/js && webpack",
+		"build": "rimraf ./dist/js ./dist/*.html && webpack",
 		"dev": "webpack --watch",
+		"serve": "live-server ./dist",
 		"format": "prettier -w ."
 	},
 	"devDependencies": {
 		"clean-terminal-webpack-plugin": "^3.0.0",
 		"html-webpack-plugin": "^5.5.0",
+		"live-server": "^1.2.2",
 		"prettier": "^2.7.1",
 		"rimraf": "^3.0.2",
 		"ts-loader": "^9.3.1",

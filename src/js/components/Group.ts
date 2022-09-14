@@ -30,4 +30,12 @@ export default class GroupComponent extends ElementComponent implements IGroupCo
 			element.render()
 		}
 	}
+
+	toObject(): IGroup {
+		return {
+			...super.toObject(),
+			type: this.type,
+			content: this.content
+		}
+	}
 }

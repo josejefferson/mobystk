@@ -36,27 +36,27 @@ main button.disabled {
 	font-weight: bold;
 }
 
-.connectStatus.connecting {
+body.connecting .connectStatus {
 	color: var(--yellow-300);
 }
 
-.connectStatus.connecting::before {
+body.connecting .connectStatus::before {
 	content: "conectando";
 }
 
-.connectStatus.connected {
+body.connected .connectStatus {
 	color: var(--green-300);
 }
 
-.connectStatus.connected::before {
+body.connected .connectStatus::before {
 	content: "conectado";
 }
 
-.connectStatus.disconnected {
+body.disconnected .connectStatus {
 	color: var(--red-300);
 }
 
-.connectStatus.disconnected::before {
+body.disconnected .connectStatus::before {
 	content: "desconectado";
 }
 
