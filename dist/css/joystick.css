@@ -307,6 +307,18 @@ body.disconnected .deviceInfo .status::after {
 	content: 'Desconectado';
 }
 
+.ping {
+	color: rgba(255, 255, 255, 0.5);
+	right: 5px;
+	font-size: 12px;
+	pointer-events: none;
+	position: fixed;
+	bottom: 5px;
+	user-select: none;
+	white-space: pre;
+	z-index: 5;
+}
+
 /* ==========================================================================
    Debug
    ========================================================================== */

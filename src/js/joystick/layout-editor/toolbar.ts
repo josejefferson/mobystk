@@ -1,4 +1,4 @@
-import { updateAnchorLines } from './guides'
+import { anchorLines } from './guides'
 import { editingElement } from './interactions'
 import { tree } from './tree'
 
@@ -74,7 +74,7 @@ export class Toolbar {
 			if (editingElement.anchorX > 2) editingElement.anchorX = 0
 			this.render()
 			editingElement.render()
-			updateAnchorLines()
+			anchorLines.update()
 		})
 
 		this.$anchorY = document.querySelector('.anchor-y')
@@ -83,7 +83,7 @@ export class Toolbar {
 			if (editingElement.anchorY > 2) editingElement.anchorY = 0
 			this.render()
 			editingElement.render()
-			updateAnchorLines()
+			anchorLines.update()
 		})
 
 		this.render()

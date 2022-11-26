@@ -1,26 +1,37 @@
 import { GRID_SIZE } from '.'
+import { AnyComponent } from '../../components'
 import ButtonComponent from '../../components/Button'
 import GroupComponent from '../../components/Group'
 import JoystickComponent from '../../components/Joystick'
 import { IElementNode } from '../../types'
 import { toast, toastObj } from '../../utils/toast'
-import { addAnchorLines, removeAnchorLines, updateAnchorLines } from './guides'
+import { anchorLines } from './guides'
 import { toolbar } from './toolbar'
 import { tree } from './tree'
 
-export let editingElement: GroupComponent | ButtonComponent | JoystickComponent = null
+// export class EditingElement {
+// 	editingElement?: AnyComponent
+// 	constructor(element: IElementNode<any, HTMLElement>) {
+// 		this.editingElement = element?.instance
+// 	}
+// }
+
+export let editingElement: AnyComponent = null
+export function setEditingElement(element: AnyComponent) {
+	editingElement = element
+}
 export function elementClick(element: IElementNode<any, HTMLElement>) {
 	if (editingElement) {
 		editingElement.editing = false
 		editingElement.render()
-		removeAnchorLines(editingElement)
+		anchorLines.remove(editingElement)
 	}
 	editingElement = element?.instance
 	if (editingElement) {
 		editingElement.editing = true
 		editingElement.render()
-		addAnchorLines(editingElement)
-		updateAnchorLines()
+		anchorLines.add(editingElement)
+		anchorLines.update()
 	}
 	tree.render()
 	toolbar.render()
@@ -64,7 +75,7 @@ export function touchMove(e: TouchEvent | MouseEvent) {
 		if (el instanceof JoystickComponent) resizeJoystick()
 		else resize()
 	el.render()
-	updateAnchorLines()
+	anchorLines.update()
 
 	function percentageX() {
 		gridX = (gridX * 100) / parentWidth

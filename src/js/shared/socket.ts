@@ -2,8 +2,13 @@ import options from './options'
 import loading from '../utils/loading'
 import { toast } from '../utils/toast'
 
+const $ping = document.querySelector<HTMLElement>('.ping')
+
 // Evita aparecer a tela de senha novamente
 let triedToAuthenticate = false
+
+let pingID: number
+let pingTime = Date.now()
 
 interface ICommands {
 	[key: string]: Function
@@ -27,6 +32,13 @@ export const commands: ICommands = {
 		triedToAuthenticate = true
 		loading()
 		window.location.reload()
+	},
+
+	pong: (id: string) => {
+		if (Number(id) === pingID) {
+			if ($ping) $ping.innerText = String(Date.now() - pingTime) + 'ms'
+			pingID = undefined
+		}
 	}
 }
 
@@ -74,3 +86,15 @@ export function socketConnect() {
 
 	return ws
 }
+
+window.socket = socket
+window.socketConnect = socketConnect
+
+function ping() {
+	if (pingID && $ping) $ping.innerText = '+999ms'
+	pingID = Math.floor(Math.random() * 1000000)
+	pingTime = Date.now()
+	socket.send(`ping ${pingID}`)
+}
+
+setInterval(ping, 1000)

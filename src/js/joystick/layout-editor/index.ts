@@ -1,44 +1,81 @@
-// window.onload = () => layoutEditor.start() //temp
+window.onload = () => layoutEditor.start() //temp
 
+export const GRID_SIZE = 10
 import { IElementNode } from '../../types'
 import { toast } from '../../utils/toast'
 import { resizeJoystick } from '../joystick'
 import options from '../../shared/options'
-import { elementClick, touchEnd, touchMove, touchStart } from './interactions'
+import {
+	editingElement,
+	elementClick,
+	setEditingElement,
+	touchEnd,
+	touchMove,
+	touchStart
+} from './interactions'
 import { toolbar } from './toolbar'
+import { anchorLines } from './guides'
+import debug from '../../utils/debug'
 
-interface ILayoutEditor {
-	opened?: boolean
-	start?: () => void
-	end?: () => void
+export class LayoutEditor {
+	opened: boolean
+	_optionDisJoyXAxis: boolean
+	_optionDisJoyYAxis: boolean
+
+	constructor() {
+		this.opened = false
+		this._optionDisJoyXAxis = options.disJoyXAxis
+		this._optionDisJoyYAxis = options.disJoyYAxis
+	}
+
+	start() {
+		this.opened = true
+		options.disJoyXAxis = true
+		options.disJoyYAxis = true
+		document.body.classList.add('layout-editor-opened')
+		document.body.style.setProperty('--grid-size', GRID_SIZE + 'px')
+		resizeJoystick()
+
+		document.addEventListener('click', click)
+		document.addEventListener('touchstart', touchStart)
+		document.addEventListener('touchmove', touchMove)
+		document.addEventListener('touchend', touchEnd)
+		document.addEventListener('mousedown', touchStart)
+		document.addEventListener('mouseup', touchMove)
+		document.addEventListener('mousemove', touchEnd)
+
+		toast('Modo edição ativado')
+		toast('Clique em algum elemento para editar')
+	}
+
+	end() {
+		this.opened = false
+		document.body.classList.remove('layout-editor-opened')
+		options.disJoyXAxis = this._optionDisJoyXAxis
+		options.disJoyYAxis = this._optionDisJoyYAxis
+		resizeJoystick()
+
+		if (editingElement) {
+			editingElement.editing = false
+			editingElement.render()
+			anchorLines.remove(editingElement)
+			setEditingElement(null)
+		}
+
+		document.removeEventListener('click', click)
+		document.removeEventListener('touchstart', touchStart)
+		document.removeEventListener('touchmove', touchMove)
+		document.removeEventListener('touchend', touchEnd)
+		document.removeEventListener('mousedown', mouseDown)
+		document.removeEventListener('mouseup', mouseMove)
+		document.removeEventListener('mousemove', mouseUp)
+
+		toast('Modo edição desativado')
+	}
 }
 
-export const layoutEditor: ILayoutEditor = {}
+export const layoutEditor = new LayoutEditor()
 window.layoutEditor = layoutEditor
-
-layoutEditor.opened = false
-
-export const GRID_SIZE = 10
-layoutEditor.start = () => {
-	layoutEditor.opened = true
-	options.disJoyXAxis = true
-	options.disJoyYAxis = true
-	resizeJoystick()
-	document.body.classList.add('layout-editor-opened')
-	document.addEventListener('click', click)
-
-	document.body.style.setProperty('--grid-size', GRID_SIZE + 'px')
-	document.addEventListener('touchstart', touchStart)
-	document.addEventListener('touchmove', touchMove)
-	document.addEventListener('touchend', touchEnd)
-
-	document.addEventListener('mousedown', touchStart)
-	document.addEventListener('mouseup', touchMove)
-	document.addEventListener('mousemove', touchEnd)
-
-	toast('Modo edição ativado')
-	toast('Clique em algum elemento para editar')
-}
 
 function click(e: MouseEvent) {
 	if (e.path.includes(toolbar.element)) return
@@ -67,21 +104,4 @@ function mouseUp(e: MouseEvent) {
 
 function mouseMove(e: MouseEvent) {
 	if (mousePressed) touchMove(e)
-}
-
-layoutEditor.end = () => {
-	layoutEditor.opened = false
-	document.body.classList.remove('layout-editor-opened')
-	options.disJoyXAxis = false // default
-	options.disJoyYAxis = false // default
-	resizeJoystick()
-	document.removeEventListener('click', click)
-	document.removeEventListener('touchstart', touchStart)
-	document.removeEventListener('touchmove', touchMove)
-	document.removeEventListener('touchend', touchEnd)
-	document.removeEventListener('mousedown', mouseDown)
-	document.removeEventListener('mouseup', mouseMove)
-	document.removeEventListener('mousemove', mouseUp)
-
-	toast('Modo edição desativado')
 }

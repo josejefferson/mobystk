@@ -140,6 +140,11 @@ def message(msg, client):
 		return
 	if cmd == 'password': return
 
+	if cmd == 'ping':
+		pingID = msg[1]
+		client.sendMessage(f'pong {pingID}')
+		return
+
 	keys = msg[1].split(',')
 	player = int(msg[2]) if len(msg) >= 3 else 0
 	for key in keys:

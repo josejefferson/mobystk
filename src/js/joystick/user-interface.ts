@@ -6,6 +6,7 @@ import {
 	$DIBatteryLevel,
 	$DIClock,
 	$DIPlayerNumber,
+	$ping,
 	$edit,
 	$root
 } from './elements'
@@ -14,6 +15,9 @@ import options from '../shared/options'
 // ELEMENTOS
 if (options.hidden.includes('mobystk:deviceInfo')) {
 	$deviceInfo.classList.add('hidden')
+}
+if (options.hidden.includes('mobystk:ping')) {
+	$ping.classList.add('hidden')
 }
 
 // CARREGAMENTO DAS OPÇÕES
