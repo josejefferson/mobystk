@@ -42,16 +42,19 @@ export const commands: ICommands = {
 	}
 }
 
+window.socketConnect = _socketConnect
+export const socketConnect = (): ReturnType<typeof _socketConnect> => window.socketConnect()
+
 /** Conexão do socket */
 export let socket = socketConnect()
 
 /** Tenta conectar ao socket */
-export function socketConnect() {
+export function _socketConnect(): WebSocket | undefined {
 	let ws: WebSocket
 	try {
 		ws = new WebSocket('ws://' + options.ip)
 	} catch (err) {
-		console.error(err)
+		if (options.debug) console.error(err)
 		closed()
 		return
 	}
@@ -88,13 +91,13 @@ export function socketConnect() {
 }
 
 window.socket = socket
-window.socketConnect = socketConnect
 
 function ping() {
 	if (pingID && $ping) $ping.innerText = '+999ms'
 	pingID = Math.floor(Math.random() * 1000000)
 	pingTime = Date.now()
-	socket.send(`ping ${pingID}`)
+	socket?.send(`ping ${pingID}`)
 }
 
 setInterval(ping, 1000)
+

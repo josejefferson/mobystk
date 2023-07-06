@@ -11,6 +11,7 @@ import {
 	$root
 } from './elements'
 import options from '../shared/options'
+import { toast } from '../utils/toast'
 
 // ELEMENTOS
 if (options.hidden.includes('mobystk:deviceInfo')) {
@@ -56,7 +57,7 @@ if (options.customJS && options.customJS.trim()) {
 // PLUGIN MOBYSTK MOBILE
 if (options.pluginMobile) {
 	const $script = document.createElement('script')
-	$script.src = 'js/plugins/mobile.js'
+	$script.src = 'lib/plugins/mobile.js'
 	$script.onerror = () => toast('Erro ao carregar plugin MobyStk Mobile')
 	document.body.appendChild($script)
 }

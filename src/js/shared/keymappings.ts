@@ -52,4 +52,6 @@ const keymappings: IKeyMappings = {
 	]
 }
 
+window.keymappings = keymappings
+
 export default keymappings

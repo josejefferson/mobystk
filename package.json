@@ -9,7 +9,8 @@
 		"build": "rimraf ./dist/js ./dist/*.html && webpack",
 		"dev": "webpack --watch",
 		"serve": "live-server ./dist --no-browser",
-		"format": "prettier -w ."
+		"format": "prettier -w .",
+		"check-types": "tsc --noEmit"
 	},
 	"devDependencies": {
 		"clean-terminal-webpack-plugin": "^3.0.0",

@@ -31,6 +31,8 @@ function recordMacro() {
 	if (this.instance) this.instance[this.instance.active ? 'release' : 'press']()
 	if (!recordingMacro) lastMacro = []
 	recordingMacro = !recordingMacro
+	window.recordingMacro = recordingMacro
+	window.lastMacro = lastMacro
 }
 
 /** Executa a macro gravada */
@@ -38,16 +40,18 @@ async function playMacro() {
 	if (window.layoutEditor?.opened) return
 	if (recordingMacro) return
 	playingMacro = !playingMacro
+	window.playingMacro = playingMacro
 	if (this.instance) this.instance.press()
 	for (const command of lastMacro) {
 		if (!playingMacro) break
 		// TODO: toast desconectado
-		if (socket.readyState !== 1) break
-		socket.send(command)
+		if (socket?.readyState !== 1) break
+		socket?.send(command)
 		await new Promise((r) => setTimeout(r, 50))
 	}
 	if (this.instance) this.instance.release()
 	playingMacro = false
+	window.playingMacro = playingMacro
 }
 
 /** Entra em tela cheia */
@@ -75,6 +79,9 @@ export default function loadElementActions() {
 	recordingMacro = false
 	playingMacro = false
 	lastMacro = []
+	window.recordingMacro = recordingMacro
+	window.playingMacro = playingMacro
+	window.lastMacro = lastMacro
 
 	// Iniciar/parar gravação da macro
 	const recordMacroBtn = Controller.elements.buttons.find((e) => e.customAction === 'macro-record')

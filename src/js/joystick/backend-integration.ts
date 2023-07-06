@@ -24,7 +24,7 @@ commands.V = (data: string) => {
  * @param release Boolean indicando se a tecla está sendo solta
  * @param custom Comando personalizado para enviar ao servidor
  */
-export function sendCmd(keys: string | string[], release = false, custom?: string) {
+function _sendCmd(keys: string | string[], release = false, custom?: string) {
 	if (!keys || !keys.length) return
 	if (typeof keys === 'string') keys = [keys]
 
@@ -47,4 +47,8 @@ export function sendCmd(keys: string | string[], release = false, custom?: strin
 	else socket.send(`${release ? 'R' : 'P'} ${keys} ${options.player}`)
 }
 
-window.sendCmd = sendCmd
+window.sendCmd = _sendCmd
+
+export const sendCmd = (...args: Parameters<typeof _sendCmd>): ReturnType<typeof _sendCmd> => {
+	return window.sendCmd(...args)
+}
