@@ -5,7 +5,7 @@ import './joystick'
 import './layout'
 import './motion-control'
 import './user-interface'
-import './layout-editor'
+// import './layout-editor'
 
 document.addEventListener('contextmenu', (e) => e.preventDefault())
 window.addEventListener('load', () => {
