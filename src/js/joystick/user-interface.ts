@@ -53,6 +53,14 @@ if (options.customJS && options.customJS.trim()) {
 	}
 }
 
+// PLUGIN MOBYSTK MOBILE
+if (options.pluginMobile) {
+	const $script = document.createElement('script')
+	$script.src = 'js/plugins/mobile.js'
+	$script.onerror = () => toast('Erro ao carregar plugin MobyStk Mobile')
+	document.body.appendChild($script)
+}
+
 // INFORMAÇÕES - BATERIA
 navigator
 	.getBattery?.()

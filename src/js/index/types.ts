@@ -21,6 +21,7 @@ export interface FormElements extends HTMLCollection {
 	bgBlur: HTMLInputElement
 	customCSS: HTMLInputElement
 	customJS: HTMLInputElement
+	pluginMobile: HTMLInputElement
 	driveSensitivity: HTMLInputElement
 	drivePrecision: HTMLInputElement
 	debug: HTMLInputElement

@@ -27,6 +27,7 @@ body {
 	margin: 0;
 	overflow: hidden;
 	overscroll-behavior: contain;
+	touch-action: none;
 }
 
 body.debug .controller-joystick,

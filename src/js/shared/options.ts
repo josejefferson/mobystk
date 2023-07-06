@@ -27,6 +27,7 @@ export interface IOptions {
 	colorsActive: string
 	customCSS: string
 	customJS: string
+	pluginMobile: boolean
 	driveSensitivity: number
 	drivePrecision: number
 }
@@ -58,6 +59,7 @@ const options: IOptions = {
 	colorsActive: getOpt('active', 'rgba(255, 255, 255, 0.2)'),
 	customCSS: getOpt('customCSS', ''),
 	customJS: getOpt('customJS', ''),
+	pluginMobile: getOpt('pluginMobile', false),
 	driveSensitivity: getOpt('driveSensitivity', 2),
 	drivePrecision: getOpt('drivePrecision', 1)
 }
