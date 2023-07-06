@@ -458,10 +458,15 @@
 	align-items: center;
 	padding: 0 20px;
 	transition: 0.15s ease;
+	white-space: normal;
 }
 
 .option .label:active {
 	background-color: var(--gray-700);
+}
+
+.option .label .description {
+	font-size: 10px;
 }
 
 .option input[type=checkbox]+.label::before {
