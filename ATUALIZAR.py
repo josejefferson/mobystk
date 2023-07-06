@@ -206,8 +206,8 @@ def cleanAndFinalize(extractFolderName):
 def installShortcut():
 	print(f'{F.YELLOW}Criando atalho, aguarde...')
 	try:
-		os.system(f"powershell \"$s=(New-Object -COM WScript.Shell).CreateShortcut('%userprofile%\\Desktop\\MobyStk.lnk');$s.TargetPath='{os.getcwd()}\\INICIAR.py';$s.Description='Use seu smartphone como controle de videogame para PC';$s.IconLocation='{os.getcwd()}\\web\\img\\icon.ico';$s.Save()\"")
-		os.system(f"powershell \"$s=(New-Object -COM WScript.Shell).CreateShortcut('%appdata%\\Microsoft\\Windows\\Start Menu\\MobyStk.lnk');$s.TargetPath='{os.getcwd()}\\INICIAR.py';$s.IconLocation='{os.getcwd()}\\web\\img\\icon.ico';$s.Save()\"")
+		os.system(f"powershell \"$s=(New-Object -COM WScript.Shell).CreateShortcut('%userprofile%\\Desktop\\MobyStk.lnk');$s.TargetPath='{os.getcwd()}\\INICIAR.py';$s.Description='Use seu smartphone como controle de videogame para PC';$s.IconLocation='{os.getcwd()}\\dist\\img\\icon.ico';$s.Save()\"")
+		os.system(f"powershell \"$s=(New-Object -COM WScript.Shell).CreateShortcut('%appdata%\\Microsoft\\Windows\\Start Menu\\MobyStk.lnk');$s.TargetPath='{os.getcwd()}\\INICIAR.py';$s.IconLocation='{os.getcwd()}\\dist\\img\\icon.ico';$s.Save()\"")
 		print(f'{F.GREEN}O atalho para o MobyStk foi criado na área de trabalho! {S.BRIGHT}Pode fechar esta janela agora!')
 		input()
 	except Exception as err:

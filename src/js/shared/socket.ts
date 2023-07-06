@@ -100,4 +100,3 @@ function ping() {
 }
 
 setInterval(ping, 1000)
-

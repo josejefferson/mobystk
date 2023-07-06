@@ -4,7 +4,6 @@
 	"main": "index.js",
 	"repository": "https://github.com/josejefferson/joystick.git",
 	"author": "Jefferson Dantas <jeffersonn.jjdaj@gmail.com>",
-	"license": "MIT",
 	"scripts": {
 		"build": "rimraf ./dist/js ./dist/*.html && webpack",
 		"dev": "webpack --watch",

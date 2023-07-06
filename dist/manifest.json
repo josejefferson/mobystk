@@ -1,7 +1,7 @@
 {
 	"name": "MobyStk",
 	"short_name": "MobyStk",
-	"description": "",
+	"description": "Use seu smartphone como controle de videogame para PC",
 	"icons": [{
 			"src": "img/icon.png",
 			"type": "image/png",

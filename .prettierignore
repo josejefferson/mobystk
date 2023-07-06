@@ -1,5 +1,4 @@
 node_modules
-web
 dist
 util
 *.py
