@@ -27,7 +27,7 @@ except ModuleNotFoundError:
 
 coloramaInit(autoreset=True)
 
-token = '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'
+token = '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'
 user = 'josejefferson'
 repository = 'joystick'
 commitsURL = f'https://api.github.com/repos/{user}/{repository}/commits'
