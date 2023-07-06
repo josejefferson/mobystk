@@ -29,9 +29,9 @@ coloramaInit(autoreset=True)
 
 token = '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'
 user = 'josejefferson'
-repository = 'joystick'
+repository = 'mobystk'
 commitsURL = f'https://api.github.com/repos/{user}/{repository}/commits'
-zipURL = f'https://api.github.com/repos/{user}/{repository}/zipball/master'
+zipURL = f'https://api.github.com/repos/{user}/{repository}/zipball/main'
 headers = {'Authorization': 'token ' + token if token else None}
 downloadedZIPName = 'update.zip'
 updateFolderName = f'{user}-{repository}-'
