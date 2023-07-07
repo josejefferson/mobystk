@@ -27,6 +27,7 @@ body {
 	margin: 0;
 	overflow: hidden;
 	overscroll-behavior: contain;
+	touch-action: none;
 }
 
 body.debug .controller-joystick,
@@ -308,7 +309,7 @@ body.disconnected .deviceInfo .status::after {
 }
 
 .ping {
-	color: rgba(255, 255, 255, 0.5);
+	color: inherit;
 	right: 5px;
 	font-size: 12px;
 	pointer-events: none;
