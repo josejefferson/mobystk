@@ -48,8 +48,8 @@ if (options.customJS && options.customJS.trim()) {
 	if (confirm('Deseja executar os plugins?')) {
 		try {
 			new Function(options.customJS.trim())()
-		} catch (err) {
-			alert('Ocorreu um erro ao executar os plugins\n\n' + (err.message || ''))
+		} catch (err: any) {
+			alert('Ocorreu um erro ao executar os plugins\n\n' + (err?.message || ''))
 		}
 	}
 }

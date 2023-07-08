@@ -14,7 +14,7 @@ export default class JoystickComponent extends ElementComponent implements IJoys
 		left: boolean
 		right: boolean
 	}
-	nipple: JoystickManager
+	nipple?: JoystickManager
 
 	constructor(details: IJoystick) {
 		super(details)

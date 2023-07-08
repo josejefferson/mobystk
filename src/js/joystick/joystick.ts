@@ -51,7 +51,7 @@ export default function updateJoystick(
 		const { key, border } = getKeyAndBorder(target.keys, dir)
 
 		// Efeito da borda
-		const $back = target.element.querySelector<HTMLElement>('.back')
+		const $back = target.element!.querySelector<HTMLElement>('.back')!
 		$back.style[`border${border}Width`] = value ? '7px' : ''
 
 		if (!(options.vgamepad && joysticks.includes(target.id))) {

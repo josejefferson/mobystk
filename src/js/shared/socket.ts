@@ -7,7 +7,7 @@ const $ping = document.querySelector<HTMLElement>('.ping')
 // Evita aparecer a tela de senha novamente
 let triedToAuthenticate = false
 
-let pingID: number
+let pingID: number | undefined
 let pingTime = Date.now()
 
 interface ICommands {

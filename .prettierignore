@@ -3,3 +3,5 @@ dist
 util
 *.py
 *.html
+*.min.*
+lib/**/*

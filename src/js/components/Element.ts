@@ -10,8 +10,8 @@ export default abstract class ElementComponent extends EventEmitter implements I
 	y: ValueAndUnit
 	anchorX: number
 	anchorY: number
-	width?: ValueAndUnit
-	height?: ValueAndUnit
+	width: ValueAndUnit
+	height: ValueAndUnit
 
 	_imaginaryX?: number
 	_imaginaryY?: number
@@ -20,8 +20,8 @@ export default abstract class ElementComponent extends EventEmitter implements I
 	_imaginarySize?: number
 	_imaginaryPadding?: number
 
-	element: HTMLElement
-	editing: boolean
+	element?: HTMLElement
+	editing?: boolean
 	parent?: GroupComponent
 
 	constructor(details: IElement) {
@@ -41,13 +41,14 @@ export default abstract class ElementComponent extends EventEmitter implements I
 
 	render() {
 		const el = this.element
+		if (!el) return
 
 		// Reseta os estilos
-		el.style.left = null
-		el.style.right = null
-		el.style.top = null
-		el.style.bottom = null
-		el.style.transform = null
+		el.style.left = ''
+		el.style.right = ''
+		el.style.top = ''
+		el.style.bottom = ''
+		el.style.transform = ''
 
 		// Aplica os estilos
 		el.style.width = this.width.join('')

@@ -1,4 +1,4 @@
-const $loading = document.querySelector('.loadingScreen')
+const $loading = document.querySelector('.loadingScreen')!
 
 /**
  * Exibe a tela de loading

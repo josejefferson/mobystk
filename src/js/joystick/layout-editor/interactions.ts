@@ -16,8 +16,8 @@ import { tree } from './tree'
 // 	}
 // }
 
-export let editingElement: AnyComponent = null
-export function setEditingElement(element: AnyComponent) {
+export let editingElement: AnyComponent | null = null
+export function setEditingElement(element: AnyComponent | null) {
 	editingElement = element
 }
 export function elementClick(element: IElementNode<any, HTMLElement>) {
@@ -46,7 +46,7 @@ export function touchMove(e: TouchEvent | MouseEvent) {
 	if (toolbar.interacting) return
 	if (tree.interacting) return
 
-	const el = editingElement
+	const el = editingElement!
 	if (!el) return
 
 	const { clientX, clientY } = 'changedTouches' in e ? e.changedTouches[0] : e

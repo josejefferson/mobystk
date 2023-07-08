@@ -42,10 +42,10 @@ export interface IElement {
 
 export interface IElementComponent extends IElement {
 	/** Elemento HTML */
-	element: HTMLElement
+	element?: HTMLElement
 
 	/** Editando elemento */
-	editing: boolean
+	editing?: boolean
 
 	/** Grupo a que pertence o elemento */
 	parent?: GroupComponent

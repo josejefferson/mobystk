@@ -17,7 +17,7 @@ $ip.innerText = ip
 
 document.querySelectorAll<HTMLElement>('.app .actions .start').forEach((e) => {
 	const { app, player } = e.dataset
-	e.addEventListener('click', () => start(app, player))
+	e.addEventListener('click', () => start(app!, player!))
 })
 
 async function start(control: string, player: string) {
@@ -27,7 +27,7 @@ async function start(control: string, player: string) {
 	updateProgress(1)
 	setButtonsDisabled(true)
 	for (const i in sequence) {
-		if (socket.readyState !== 1 || interrupted) return updateProgress(3)
+		if (socket?.readyState !== 1 || interrupted) return updateProgress(3)
 		sendKey(sequence[i], player)
 		updateProgress(1, i, sequence.length, pause)
 		await wait(pause)
@@ -79,10 +79,9 @@ function setButtonsDisabled(disabled = false) {
 
 function sendKey(key: string, player: string) {
 	key = keymappings[key]?.[Number(player) - 1] || key
-	console.log(key)
-	if (socket.readyState !== 1) return
-	if (key.startsWith('*')) socket.send(key.substr(1))
-	else socket.send('T ' + key)
+	if (socket?.readyState !== 1) return
+	if (key.startsWith('*')) socket?.send(key.substring(1))
+	else socket?.send('T ' + key)
 }
 
 async function wait(sec: number) {

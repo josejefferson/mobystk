@@ -37,5 +37,5 @@ export interface IJoystickComponent extends IJoystick, IElementComponent {
 		/** Direita */
 		right: boolean
 	}
-	nipple: JoystickManager
+	nipple?: JoystickManager
 }

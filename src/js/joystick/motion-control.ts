@@ -12,10 +12,12 @@ const defaultDriveHTML = `
 	</svg>`
 
 export default function loadDriveMode() {
-	const drive: ButtonComponent = Controller.elements.buttons.find((e) => e.customAction === 'drive')
+	const drive: ButtonComponent = Controller.elements.buttons.find(
+		(e) => e.customAction === 'drive'
+	)!
 	const driveHTML = drive ? (drive._html = defaultDriveHTML) : ''
 	drive?.render()
-	if (drive) drive.element.addEventListener('touchstart', toggleDriveMode)
+	if (drive) drive.element!.addEventListener('touchstart', toggleDriveMode)
 
 	// Desativa o ícone de volante, caso não esteja em HTTPS
 	if (!isHTTPS() && drive && drive.element) drive.element.style.display = 'none'
@@ -34,7 +36,7 @@ export default function loadDriveMode() {
 		 */
 		function startSensor() {
 			drive.press()
-			drive.element.innerHTML = '<i class="driveArrow mdi mdi-arrow-up"></i>'
+			drive.element!.innerHTML = '<i class="driveArrow mdi mdi-arrow-up"></i>'
 			let driveY = 0
 			let driveAngle = 0
 			let lastDirections: Direction[] = []
@@ -42,11 +44,11 @@ export default function loadDriveMode() {
 			// Detecta os movimentos
 			window.ondevicemotion = (e: DeviceMotionEvent) => {
 				const land = window.outerWidth > window.outerHeight
-				const inverted = e.accelerationIncludingGravity[land ? 'x' : 'y'] >= 0 ? 1 : -1
-				driveY = parseFloat(e.accelerationIncludingGravity[land ? 'y' : 'x'].toFixed(1))
+				const inverted = e.accelerationIncludingGravity![land ? 'x' : 'y']! >= 0 ? 1 : -1
+				driveY = parseFloat(e.accelerationIncludingGravity![land ? 'y' : 'x']!.toFixed(1))
 				driveY *= inverted * (land ? 1 : -1)
 
-				const $steeringWheel = drive.element.children[0] as HTMLElement
+				const $steeringWheel = drive.element!.children[0] as HTMLElement
 				if (!options.vgamepad) {
 					// Define a direção (ângulo)
 					const angle = getArrowAngle(
@@ -86,7 +88,7 @@ export default function loadDriveMode() {
 		 */
 		function stopSensor() {
 			drive.release()
-			drive.element.innerHTML = driveHTML
+			drive.element!.innerHTML = driveHTML
 			window.ondevicemotion = null
 			if (!options.vgamepad) {
 				sendCmd('joyLUp', true)

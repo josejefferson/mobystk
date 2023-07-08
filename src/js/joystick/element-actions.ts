@@ -3,6 +3,8 @@ import vibrate from '../utils/vibrate'
 import { sendCmd } from './backend-integration'
 import { socket } from '../shared/socket'
 import options from '../shared/options'
+import { IElementNode } from '../types'
+import ButtonComponent from '../components/Button'
 
 export let recordingMacro = false
 export let playingMacro = false
@@ -25,7 +27,7 @@ function saveState() {
 }
 
 /** Inicia/para a gravação de uma macro */
-function recordMacro() {
+function recordMacro(this: IElementNode<ButtonComponent, HTMLElement>) {
 	if (window.layoutEditor?.opened) return
 	if (playingMacro) return
 	if (this.instance) this.instance[this.instance.active ? 'release' : 'press']()
@@ -36,7 +38,7 @@ function recordMacro() {
 }
 
 /** Executa a macro gravada */
-async function playMacro() {
+async function playMacro(this: IElementNode<ButtonComponent, HTMLElement>) {
 	if (window.layoutEditor?.opened) return
 	if (recordingMacro) return
 	playingMacro = !playingMacro
@@ -63,14 +65,14 @@ export default function loadElementActions() {
 	// CARREGAR E SALVAR
 	const loadStateBtn = Controller.elements.buttons.find((e) => e.customAction === 'load-state')
 	if (loadStateBtn)
-		loadStateBtn.element.addEventListener(
+		loadStateBtn.element!.addEventListener(
 			options.dblClickLoadSave ? 'dblclick' : 'click',
 			loadState
 		)
 
 	const saveStateBtn = Controller.elements.buttons.find((e) => e.customAction === 'save-state')
 	if (saveStateBtn)
-		saveStateBtn.element.addEventListener(
+		saveStateBtn.element!.addEventListener(
 			options.dblClickLoadSave ? 'dblclick' : 'click',
 			saveState
 		)
@@ -85,14 +87,14 @@ export default function loadElementActions() {
 
 	// Iniciar/parar gravação da macro
 	const recordMacroBtn = Controller.elements.buttons.find((e) => e.customAction === 'macro-record')
-	if (recordMacroBtn) recordMacroBtn.element.addEventListener('click', recordMacro)
+	if (recordMacroBtn) recordMacroBtn.element!.addEventListener('click', recordMacro)
 
 	// Executar macro
 	const playMacroBtn = Controller.elements.buttons.find((e) => e.customAction === 'macro-play')
-	if (playMacroBtn) playMacroBtn.element.addEventListener('click', playMacro)
+	if (playMacroBtn) playMacroBtn.element!.addEventListener('click', playMacro)
 
 	// TELA CHEIA
-	document.querySelector('.deviceInfo').addEventListener('dblclick', fullScreen)
+	document.querySelector('.deviceInfo')!.addEventListener('dblclick', fullScreen)
 }
 
 window.playingMacro = playingMacro

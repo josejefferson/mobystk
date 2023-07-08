@@ -20,10 +20,10 @@ window.addEventListener('load', updateStartButton)
 window.addEventListener('scroll', updateStartButton)
 
 function updateStartButton() {
-	if (document.scrollingElement.scrollTop > window.innerHeight) {
-		document.querySelector<HTMLElement>('.start.floating').classList.remove('hidden')
+	if (document.scrollingElement!.scrollTop > window.innerHeight) {
+		document.querySelector<HTMLElement>('.start.floating')!.classList.remove('hidden')
 	} else {
-		document.querySelector<HTMLElement>('.start.floating').classList.add('hidden')
+		document.querySelector<HTMLElement>('.start.floating')!.classList.add('hidden')
 	}
 }
 
@@ -55,7 +55,7 @@ if (!ls('events.addToHomescreenPopup') && (hits === 3 || hits % 10 === 0)) {
 		$video.src = 'video/add-to-homescreen-tutorial.mp4'
 		$video.loop = true
 		$video.muted = true
-		$athPopup.querySelector('.content').appendChild($video)
+		$athPopup.querySelector('.content')!.appendChild($video)
 		$video.play()
 		$athPopup.classList.add('show')
 	})
@@ -80,10 +80,10 @@ for (const layout of Controller.layouts) {
 
 	const $labelSubtitle = document.createElement('div')
 	$labelSubtitle.classList.add('label-subtitle')
-	$labelSubtitle.innerText = layout.subtitle
+	$labelSubtitle.innerText = layout.subtitle || ''
 
 	if (layout.info) {
-		$label.addEventListener('click', () => toast(layout.info))
+		$label.addEventListener('click', () => toast(layout.info || ''))
 	}
 
 	$label.appendChild($labelTitle)
@@ -115,11 +115,11 @@ for (const element of elements) {
 	let content = ''
 	if (element.type === 'mobystk:group') content += '<i class="mdi mdi-group"></i>&nbsp;'
 	if (element.type === 'mobystk:joystick') content += '<i class="mdi mdi-gamepad"></i>&nbsp;'
-	if ('content' in element && 'type' in element.content && element.content.type === 'mobystk:text')
+	if ('content' in element && 'type' in element.content! && element.content.type === 'mobystk:text')
 		content += escapeHTML(element.content.value)
 	else if (
 		'content' in element &&
-		'type' in element.content &&
+		'type' in element.content! &&
 		element.content.type === 'mobystk:icon'
 	)
 		content += `<i class="mdi mdi-${escapeHTML(element.content.value)}"></i>`
@@ -136,7 +136,7 @@ for (const element of elements) {
 
 // Valores dos inputs range
 $inputsRange.forEach(($value) => {
-	const $range = $value.parentElement.querySelector<HTMLInputElement>('input[type="range"]')
+	const $range = $value.parentElement!.querySelector<HTMLInputElement>('input[type="range"]')!
 	const precision = getPrecision($range.step || 1)
 	if ($range) {
 		$range.addEventListener('change', change)

@@ -26,14 +26,14 @@ import options from '../shared/options'
 export function loadLayout(layout: ILayout) {
 	const parsedLayout: ILayoutComponent = {
 		...layout,
-		parsedContent: layout.content.map(parseElement).filter((e) => e)
+		parsedContent: layout.content.map(parseElement).filter((e): e is AnyComponent => !!e)
 	}
 	const allElements = getAllElements(parsedLayout)
 
 	$layout.innerHTML = ''
 	for (const object of parsedLayout.parsedContent) {
 		if (!object) continue
-		$layout.appendChild(object.element)
+		$layout.appendChild(object.element!)
 		object.render()
 	}
 
@@ -66,7 +66,7 @@ export function getAllElements(
 	if (object.type === 'mobystk:layout' || object.type === 'mobystk:group') {
 		object = object as ILayoutComponent | GroupComponent
 		if (object.type !== 'mobystk:layout') elements.push(object as GroupComponent)
-		for (const obj of object.parsedContent) getAllElements(obj, elements)
+		for (const obj of object.parsedContent!) getAllElements(obj, elements)
 	} else {
 		elements.push(object as ButtonComponent | JoystickComponent)
 	}
@@ -83,7 +83,7 @@ export function parseElement(object: IElementsOrImport) {
 	if (options.hidden?.includes(objectID)) return
 
 	// Importa os elementos
-	if ('import' in object) object = importElement(object)
+	if ('import' in object) object = importElement(object)!
 
 	// Descarta os objetos inválidos
 	if (!object) return
@@ -112,7 +112,7 @@ export function parseElement(object: IElementsOrImport) {
 /**
  * Reutiliza um elemento
  */
-export function importElement(object: IImport): IElements & IImport {
+export function importElement(object: IImport): (IElements & IImport) | undefined {
 	const allElements = [...Controller.buttons, ...Controller.groups, ...Controller.joysticks]
 	const element = allElements.find((e) => e.id === object.import)
 	if (element) return { ...element, ...object }

@@ -31,8 +31,8 @@ function _sendCmd(keys: string | string[], release = false, custom?: string) {
 	// Mapeia as teclas
 	if (!custom)
 		keys = keys.map((key) => {
-			if (options.vgamepad) return keymappings[key]?.[4]
-			else return keymappings[key]?.[options.player]
+			if (options.vgamepad) return keymappings[key]?.[4]!
+			else return keymappings[key]?.[options.player]!
 		})
 
 	// Salva no macro ao invés de enviar para o servidor

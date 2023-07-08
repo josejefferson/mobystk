@@ -26,7 +26,7 @@ export default class GroupComponent extends ElementComponent implements IGroupCo
 		this.element = $group
 
 		for (const element of this.parsedContent) {
-			$group.appendChild(element.element)
+			$group.appendChild(element.element!)
 			element.render()
 		}
 	}

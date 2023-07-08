@@ -56,11 +56,13 @@ $form.addEventListener('submit', function (e) {
 	const elems: FormElements = <FormElements>this.elements
 	const lockedBtns: string[] = []
 	const hiddenItems: string[] = []
-	elems.lock.forEach((e: HTMLInputElement) => {
-		if (e.checked) lockedBtns.push(e.value)
+	elems.lock.forEach((e) => {
+		const el = e as HTMLInputElement
+		if (el.checked) lockedBtns.push(el.value)
 	})
-	elems.hide.forEach((e: HTMLInputElement) => {
-		if (e.checked) hiddenItems.push(e.value)
+	elems.hide.forEach((e) => {
+		const el = e as HTMLInputElement
+		if (el.checked) hiddenItems.push(el.value)
 	})
 
 	ls('code', elems.code.value)

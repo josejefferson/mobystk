@@ -1,4 +1,4 @@
-export function scrollToY(y: number, duration = 0, element = document.scrollingElement) {
+export function scrollToY(y: number, duration = 0, element = document.scrollingElement!) {
 	if (element.scrollTop === y) return
 	const cosParameter = (element.scrollTop - y) / 2
 	let scrollCount = 0

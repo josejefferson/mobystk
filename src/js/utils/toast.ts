@@ -16,7 +16,7 @@ export default class Toast {
 	 */
 	constructor(element: HTMLElement) {
 		this.element = element
-		this.content = element.querySelector('.toast-content')
+		this.content = element.querySelector('.toast-content')!
 		this.toasts = []
 		this.showing = false
 	}
@@ -56,7 +56,7 @@ export default class Toast {
 	 */
 	run() {
 		this.element.classList.add('show')
-		const toast = this.toasts.shift()
+		const toast = this.toasts.shift()!
 		this.content[toast.html ? 'innerHTML' : 'innerText'] = toast.message
 		setTimeout(this.start.bind(this), toast.time || 2000)
 	}

@@ -72,8 +72,8 @@ function colorPickerChange(el: string) {
 		const colorStr = color.toRGBA().toString()
 		const $input = <HTMLInputElement>formEls[el as any]
 		$input.value = colorStr
-		$input.parentElement
-			.querySelector<HTMLElement>('.pickr button')
+		$input
+			.parentElement!.querySelector<HTMLElement>('.pickr button')!
 			.style.setProperty('--pcr-color', colorStr)
 	}
 }

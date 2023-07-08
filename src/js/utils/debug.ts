@@ -1,4 +1,4 @@
-const $debug = document.querySelector<HTMLElement>('.debugLog')
+const $debug = document.querySelector<HTMLElement>('.debugLog')!
 
 /**
  * Exibe um texto na tela

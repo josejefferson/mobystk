@@ -33,7 +33,7 @@ export class Tree {
 	render() {
 		this.element.classList[this.opened ? 'add' : 'remove']('opened')
 		this.element.innerHTML = ''
-		this.element.appendChild(this._html(Controller.currentLayout))
+		this.element.appendChild(this._html(Controller.currentLayout!))
 	}
 
 	_html(element: ILayout | IGroup | GroupComponent, root = true) {
@@ -59,10 +59,8 @@ export class Tree {
 		}
 
 		for (let el of (element as ILayoutComponent).parsedContent || element.content) {
-			el = el as IElements
 			if ('content' in el && Array.isArray(el.content)) {
-				el = el as IGroup
-				$groupContent.appendChild(this._html(el, false))
+				$groupContent.appendChild(this._html(el as IGroup, false))
 			} else {
 				const $element = document.createElement('div')
 				const type =
@@ -89,8 +87,8 @@ export class Tree {
 	_getIcon(element: IButton | IGroup | IJoystick) {
 		switch (element.type) {
 			case 'mobystk:button':
-				return element.content.type === 'mobystk:icon'
-					? element.content.value
+				return element.content!.type === 'mobystk:icon'
+					? element.content!.value
 					: 'checkbox-intermediate'
 			case 'mobystk:group':
 				return 'group'
@@ -100,4 +98,4 @@ export class Tree {
 	}
 }
 
-export const tree = new Tree(document.querySelector('.layout-tree'))
+export const tree = new Tree(document.querySelector('.layout-tree')!)

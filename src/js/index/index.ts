@@ -14,7 +14,7 @@ document.querySelectorAll('a').forEach((e) => e.addEventListener('click', loadin
 document.querySelectorAll('.start').forEach((e) => {
 	e.addEventListener('contextmenu', (e) => {
 		e.preventDefault()
-		document.querySelector<HTMLElement>('.hiddenOptions').style.display = 'flex'
+		document.querySelector<HTMLElement>('.hiddenOptions')!.style.display = 'flex'
 		scrollToY(document.body.scrollHeight, 400)
 		return false
 	})

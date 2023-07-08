@@ -62,39 +62,40 @@ export default class ButtonComponent extends ElementComponent implements IButton
 	press(diagonal = false) {
 		if (this.diagonal) {
 			const targets = Controller.elements.buttons.filter(
-				(e) => this.targets.includes(e.id) && !e.lockable
+				(e) => this.targets!.includes(e.id) && !e.lockable
 			)
 			for (const target of targets) target.press(true)
 		} else {
 			if (!this.active && !this.customAction) this.emit('press', this.key)
 			if (this.scalable && !this.active && !diagonal) {
-				this.element.classList.add('controller-button-scale')
+				this.element?.classList.add('controller-button-scale')
 			} else if (!this.active && diagonal) {
-				this.element.classList.add('controller-button-active-diagonal')
-				this.element.classList.add('controller-button-scale-diagonal')
+				this.element?.classList.add('controller-button-active-diagonal')
+				this.element?.classList.add('controller-button-scale-diagonal')
 			}
 			this.active = true
-			this.element.classList.add('controller-button-active')
+			this.element?.classList.add('controller-button-active')
 		}
 	}
 
 	release() {
 		if (this.diagonal) {
-			const targets = Controller.elements.buttons.filter((e) => this.targets.includes(e.id))
+			const targets = Controller.elements.buttons.filter((e) => this.targets!.includes(e.id))
 			for (const target of targets) target.release()
 		} else {
 			if (this.active && !this.customAction) this.emit('release', this.key)
 			this.active = false
-			this.element.classList.remove('controller-button-active')
-			this.element.classList.remove('controller-button-scale')
-			this.element.classList.remove('controller-button-active-diagonal')
-			this.element.classList.remove('controller-button-scale-diagonal')
+			this.element?.classList.remove('controller-button-active')
+			this.element?.classList.remove('controller-button-scale')
+			this.element?.classList.remove('controller-button-active-diagonal')
+			this.element?.classList.remove('controller-button-scale-diagonal')
 		}
 	}
 
 	render() {
 		super.render()
 		const el = this.element
+		if (!el) return
 
 		// Aplica os estilos
 		if (!this.border[0]) el.style.borderTop = '0'
@@ -104,7 +105,7 @@ export default class ButtonComponent extends ElementComponent implements IButton
 
 		const radius = this.radius.map((e) => e.join('')).join(' ')
 		el.style.borderRadius = radius
-		el.style.fontSize = this.fontSize.join('')
+		el.style.fontSize = this.fontSize!.join('')
 
 		// Botões de diagonal e bloqueáveis e editando
 		el.classList[this.diagonal ? 'add' : 'remove']('controller-button-diagonal')
@@ -112,11 +113,11 @@ export default class ButtonComponent extends ElementComponent implements IButton
 
 		// Conteúdo do botão
 		el.innerHTML = ''
-		if (this.content.type === 'mobystk:text') {
-			el.innerText = this.content.value
-		} else if (this.content.type === 'mobystk:icon') {
+		if (this.content!.type === 'mobystk:text') {
+			el.innerText = this.content!.value
+		} else if (this.content!.type === 'mobystk:icon') {
 			const $icon = document.createElement('i')
-			$icon.classList.add('mdi', 'mdi-' + this.content.value)
+			$icon.classList.add('mdi', 'mdi-' + this.content!.value)
 			el.appendChild($icon)
 		}
 		if (this._html) {
@@ -125,7 +126,7 @@ export default class ButtonComponent extends ElementComponent implements IButton
 
 		// Botão com ação personalizada
 		el.classList[this.customAction ? 'add' : 'remove']('controller-custom-action')
-		el.dataset.action = this.customAction || null
+		el.dataset.action = this.customAction || undefined
 	}
 
 	toObject(): IButton {

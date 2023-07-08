@@ -15,11 +15,11 @@ function importOptions() {
 
 	async function fileChange(this: HTMLInputElement) {
 		try {
-			const file = this.files[0]
+			const file = this.files![0]
 			if (!file) return
 			const content: string | ArrayBuffer = await new Promise((resolve, reject) => {
 				const reader = new FileReader()
-				reader.onload = () => resolve(reader.result)
+				reader.onload = () => resolve(reader.result as string)
 				reader.onerror = reject
 				reader.readAsText(file)
 			})
