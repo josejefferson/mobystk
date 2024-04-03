@@ -3,4 +3,4 @@
 
 yarn pretty-quick --staged
 yarn build
-git add dist
+git add public

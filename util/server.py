@@ -43,7 +43,7 @@ keyboard = Controller()
 
 
 # Define o diretório atual
-os.chdir(os.path.join(os.path.dirname(__file__), '../dist'))
+os.chdir(os.path.join(os.path.dirname(__file__), '../public'))
 
 
 # Retorna a tecla do teclado pelo nome

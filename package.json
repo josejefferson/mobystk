@@ -4,29 +4,22 @@
 	"main": "index.js",
 	"repository": "https://github.com/josejefferson/joystick.git",
 	"author": "Jefferson Dantas <jeffersonn.jjdaj@gmail.com>",
+	"type": "module",
 	"scripts": {
-		"dev": "webpack serve",
-		"build": "rimraf dist && webpack",
-		"build:watch": "webpack --watch",
-		"serve": "live-server ./dist --no-browser",
+		"dev": "node esbuild.config.js --watch",
+		"build": "node esbuild.config.js",
 		"format": "prettier -w .",
-		"check-types": "tsc --noEmit",
+		"test": "tsc --noEmit",
 		"prepare": "husky install"
 	},
 	"devDependencies": {
-		"clean-terminal-webpack-plugin": "^3.0.0",
-		"copy-webpack-plugin": "^11.0.0",
-		"html-webpack-plugin": "^5.5.0",
+		"esbuild": "^0.20.2",
+		"esbuild-plugin-clean": "^1.0.1",
 		"husky": "^8.0.3",
-		"live-server": "^1.2.2",
 		"prettier": "^2.7.1",
 		"pretty-quick": "^3.1.3",
 		"rimraf": "^3.0.2",
-		"ts-loader": "^9.3.1",
-		"typescript": "^4.8.2",
-		"webpack": "^5.74.0",
-		"webpack-cli": "^4.10.0",
-		"webpack-dev-server": "^4.15.1"
+		"typescript": "^4.8.2"
 	},
 	"dependencies": {
 		"@simonwep/pickr": "^1.8.2",

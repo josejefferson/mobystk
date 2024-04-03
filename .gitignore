@@ -4,3 +4,4 @@ backgrounds
 __pycache__
 options.json
 MobyStk.lnk
+tsconfig.tsbuildinfo

@@ -1,7 +1,7 @@
 node_modules
-dist
 util
 *.py
 *.html
 *.min.*
 lib/**/*
+src/js
