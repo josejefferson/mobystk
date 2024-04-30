@@ -27,7 +27,7 @@ except ModuleNotFoundError:
 
 coloramaInit(autoreset=True)
 
-token = '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'
+token = None
 user = 'josejefferson'
 repository = 'mobystk'
 commitsURL = f'https://api.github.com/repos/{user}/{repository}/commits'
