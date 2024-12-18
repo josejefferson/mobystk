@@ -16,7 +16,7 @@ const ctx = await esbuild.context({
 if (process.argv.includes('--watch')) {
 	// Watch mode
 	await ctx.watch()
-	const { host, port } = await ctx.serve({ servedir: 'src' })
+	const { host, port } = await ctx.serve({ servedir: 'public' })
 	console.log(
 		`- ${bgCyan.open}[INFO]${bgCyan.close} ${bold.open}Server running at ${yellow.open}${host}:${port}${reset.open}`
 	)

@@ -1,6 +1,7 @@
 import { GRID_SIZE } from '.'
 import { AnyComponent } from '../../components'
 import ButtonComponent from '../../components/Button'
+import { AnchorX, AnchorY } from '../../components/Element'
 import GroupComponent from '../../components/Group'
 import JoystickComponent from '../../components/Joystick'
 import { IElementNode } from '../../types'
@@ -54,8 +55,8 @@ export function touchMove(e: TouchEvent | MouseEvent) {
 	let deltaY = clientY - (touch?.clientY || clientY)
 
 	if (
-		(el.anchorX === 2 && (deltaX < -20 || deltaX > 20) && !toastObj.showing) ||
-		(el.anchorY === 2 && (deltaY < -20 || deltaY > 20) && !toastObj.showing)
+		(el.anchorX === AnchorX.CENTER && (deltaX < -20 || deltaX > 20) && !toastObj.showing) ||
+		(el.anchorY === AnchorY.CENTER && (deltaY < -20 || deltaY > 20) && !toastObj.showing)
 	) {
 		toast(
 			'Não é possível mover o elemento centralizado\nMude a posição do elemento para movimentá-lo'
@@ -63,8 +64,8 @@ export function touchMove(e: TouchEvent | MouseEvent) {
 	}
 
 	touch = 'changedTouches' in e ? e.changedTouches[0] : e
-	if (el.anchorX === 1) deltaX = -deltaX
-	if (el.anchorY === 1) deltaY = -deltaY
+	if (el.anchorX === AnchorX.RIGHT) deltaX = -deltaX
+	if (el.anchorY === AnchorY.BOTTOM) deltaY = -deltaY
 
 	let gridX = GRID_SIZE
 	let gridY = GRID_SIZE
@@ -90,8 +91,8 @@ export function touchMove(e: TouchEvent | MouseEvent) {
 	function move() {
 		if (el.x[1] === '%') percentageX()
 		if (el.y[1] === '%') percentageY()
-		if (el.anchorX === 2) deltaX = 0
-		if (el.anchorY === 2) deltaY = 0
+		if (el.anchorX === AnchorX.CENTER) deltaX = 0
+		if (el.anchorY === AnchorY.CENTER) deltaY = 0
 		const x = el._imaginaryX || el.x[0]
 		const y = el._imaginaryY || el.y[0]
 		el.x[0] = Math.round((x + deltaX) / gridX) * gridX

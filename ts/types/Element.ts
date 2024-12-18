@@ -1,3 +1,4 @@
+import { AnchorX, AnchorY } from '../components/Element'
 import type GroupComponent from '../components/Group'
 import type { ValueAndUnit } from './types'
 
@@ -23,7 +24,7 @@ export interface IElement {
 	 * 1 = Direita;
 	 * 2 = Centro
 	 */
-	anchorX: number
+	anchorX: AnchorX
 
 	/**
 	 * Âncora Y do elemento:
@@ -31,7 +32,7 @@ export interface IElement {
 	 * 1 = Baixo;
 	 * 2 = Centro
 	 */
-	anchorY: number
+	anchorY: AnchorY
 
 	/** Largura do elemento */
 	width?: ValueAndUnit

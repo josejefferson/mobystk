@@ -1,3 +1,4 @@
+import { AnchorX } from '../components/Element'
 import type { ILayout } from '../types/Layout'
 
 const options: any = {}
@@ -17,7 +18,7 @@ const layouts: ILayout[] = [
 			{ import: 'mobystk:volume_down' },
 			{ import: 'mobystk:left' },
 			{ import: 'mobystk:right' },
-			{ import: 'mobystk:load_state', anchorX: 1, x: [128, 'px'] },
+			{ import: 'mobystk:load_state', anchorX: AnchorX.RIGHT, x: [128, 'px'] },
 			{ import: 'mobystk:save_state' },
 			{ import: 'mobystk:select' },
 			{ import: 'mobystk:pause' },
