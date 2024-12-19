@@ -7,7 +7,6 @@ export const $DIBatteryIcon = $DIBattery.querySelector<HTMLElement>('.battery-ic
 export const $DIBatteryLevel = $DIBattery.querySelector<HTMLElement>('.battery-level')!
 export const $DIClock = $deviceInfo.querySelector<HTMLElement>('.clock')!
 export const $DIPlayerNumber = $deviceInfo.querySelector<HTMLElement>('.player .player-number')!
-export const $DILayout = $deviceInfo.querySelector<HTMLElement>('.layout')!
 export const $DIStatus = $deviceInfo.querySelector<HTMLElement>('.status')!
 export const $ping = document.querySelector<HTMLElement>('.ping')!
 export const $controllerIndicator = document.querySelector('.controller-indicator')!

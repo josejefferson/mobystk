@@ -41,8 +41,10 @@
 				<input type="text" name="code" class="code" autocomplete="off" required />
 
 				<!-- Layouts -->
-				<div class="explanation">Selecione o videogame</div>
-				<div class="chipsGroup selectLayout"></div>
+				<div hidden>
+					<div class="explanation">Selecione o tipo de controle</div>
+					<div class="chipsGroup selectLayout"></div>
+				</div>
 			</main>
 
 			<footer>
@@ -86,6 +88,13 @@
 				<div class="title">Opções comuns</div>
 			</header>
 			<main>
+				<label class="option">
+					<input type="checkbox" name="useXbox" />
+					<div class="label">
+						<div class="icon"><i class="mdi mdi-microsoft-xbox"></i></div>
+						<div class="text">Usar teclas do Xbox</div>
+					</div>
+				</label>
 				<label class="option">
 					<input type="checkbox" name="invertL" />
 					<div class="label">
@@ -152,7 +161,7 @@
 					<div class="label">
 						<div class="icon"><i class="mdi mdi-vibrate"></i></div>
 						<div class="text">Vibração dos botões</div>
-						<input type="range" name="vibrate" min="0" max="100" step="1" value="15" />
+						<input type="range" name="vibrate" min="0" max="100" step="1" value="60" />
 						<div class="value">-</div>
 					</div>
 				</label>
@@ -160,7 +169,7 @@
 					<div class="label">
 						<div class="icon"><i class="mdi mdi-vibrate"></i></div>
 						<div class="text">Vibrar ao mover joystick</div>
-						<input type="range" name="vibrateJoystick" min="0" max="50" step="1" value="5" />
+						<input type="range" name="vibrateJoystick" min="0" max="50" step="1" value="0" />
 						<div class="value">-</div>
 					</div>
 				</label>

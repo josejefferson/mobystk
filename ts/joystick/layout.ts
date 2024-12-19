@@ -3,6 +3,7 @@ import ButtonComponent from '../components/Button'
 import GroupComponent from '../components/Group'
 import JoystickComponent from '../components/Joystick'
 import Controller from '../shared/controller'
+import options from '../shared/options'
 import type {
 	IButton,
 	IElements,
@@ -15,10 +16,9 @@ import type {
 } from '../types'
 import { sendCmd } from './backend-integration'
 import loadElementActions from './element-actions'
-import { $DILayout, $layout } from './elements'
+import { $layout } from './elements'
 import updateJoystick from './joystick'
 import loadDriveMode from './motion-control'
-import options from '../shared/options'
 
 /**
  * Carrega o layout
@@ -48,7 +48,6 @@ export function loadLayout(layout: ILayout) {
 	Controller.elements.joysticks = allElements.filter(
 		(e) => e instanceof JoystickComponent
 	) as JoystickComponent[]
-	$DILayout.innerText = layout.name || '???'
 
 	loadElementActions()
 	loadDriveMode()

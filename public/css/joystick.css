@@ -289,7 +289,7 @@ body.disconnected .deviceInfo .status::after {
 
 .ping {
 	color: inherit;
-	right: 5px;
+	left: 5px;
 	font-size: 12px;
 	pointer-events: none;
 	position: fixed;

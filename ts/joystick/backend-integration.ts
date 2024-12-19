@@ -40,7 +40,7 @@ function _sendCmd(keys: string | string[], release = false, custom?: string) {
 	if (recordingMacro) return lastMacro.push(`${release ? 'R' : 'P'} ${keys} ${options.player}`)
 
 	// Se não tiver conectado, não faz nada
-	if (!socket || socket.readyState !== 1) return
+	if (!socket || socket.readyState !== socket.OPEN) return
 
 	// Envia o comando para o servidor
 	if (custom) socket.send(`${custom} ${keys} ${options.player}`)

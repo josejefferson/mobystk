@@ -9,14 +9,15 @@ import { FormElements } from './types'
 formEls.code.value = getOpt('code', window.location.hostname + ':5000')
 formEls.layout.value = getOpt('layout', Controller.layouts[0]?.id)
 formEls.player.value = getOpt('player', '1')
+formEls.useXbox.checked = getOpt('useXbox', false)
 formEls.invertL.checked = getOpt('invertL', false)
 formEls.invertR.checked = getOpt('invertR', false)
 formEls.disJoyXAxis.checked = getOpt('disJoyXAxis', false)
 formEls.disJoyYAxis.checked = getOpt('disJoyYAxis', false)
 formEls.dblClickLoadSave.checked = getOpt('dblClickLoadSave', false)
 formEls.changeKeyOnDrag.checked = getOpt('changeKeyOnDrag', true)
-formEls.vibrate.value = getOpt('vibrate', '15')
-formEls.vibrateJoystick.value = getOpt('vibrateJoystick', '5')
+formEls.vibrate.value = getOpt('vibrate', '60')
+formEls.vibrateJoystick.value = getOpt('vibrateJoystick', '0')
 formEls.vibrationFromGame.checked = getOpt('vibrationFromGame', true)
 formEls.vgamepad.checked = getOpt('vgamepad', false)
 formEls.background.value = getOpt('background', 'rgba(0, 0, 0, 1)')
@@ -35,7 +36,11 @@ const locked = getOpt('locked', [])
 const hidden = getOpt('hidden', [
 	'mobystk:macro_record',
 	'mobystk:macro_play',
-	'mobystk:fast_forward'
+	'mobystk:fast_forward',
+	'mobystk:diag_left_up',
+	'mobystk:diag_right_up',
+	'mobystk:diag_left_down',
+	'mobystk:diag_right_down'
 ])
 for (const item of locked) {
 	const $input = document.querySelector<HTMLInputElement>(
@@ -69,6 +74,7 @@ $form.addEventListener('submit', function (e) {
 	ls('layout', elems.layout.value)
 	ls('player', Number(elems.player.value))
 	ls('debug', elems.debug.checked)
+	ls('useXbox', elems.useXbox.checked)
 	ls('invertL', elems.invertL.checked)
 	ls('invertR', elems.invertR.checked)
 	ls('disJoyXAxis', elems.disJoyXAxis.checked)

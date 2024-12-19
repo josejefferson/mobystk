@@ -67,8 +67,10 @@ export default abstract class ElementComponent extends EventEmitter implements I
 		el.style.height = this.height.join('')
 		if (this.anchorX === AnchorX.LEFT) el.style.left = this.x.join('')
 		if (this.anchorX === AnchorX.RIGHT) el.style.right = this.x.join('')
+		if (this.anchorX === AnchorX.CENTER) el.style.left = `calc(50% + ${this.x.join('')})`
 		if (this.anchorY === AnchorY.TOP) el.style.top = this.y.join('')
 		if (this.anchorY === AnchorY.BOTTOM) el.style.bottom = this.y.join('')
+		if (this.anchorY === AnchorY.CENTER) el.style.top = `calc(50% + ${this.y.join('')})`
 
 		el.classList[this.anchorX === AnchorX.CENTER ? 'add' : 'remove']('center-x')
 		el.classList[this.anchorY === AnchorY.CENTER ? 'add' : 'remove']('center-y')

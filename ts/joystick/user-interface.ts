@@ -101,7 +101,8 @@ function updateClock() {
 }
 
 // INFORMAÇÕES - Nº JOGADOR E NOME DO LAYOUT
-$DIPlayerNumber.innerText = String(options.player + 1)
+$DIPlayerNumber.innerText =
+	(options.vgamepad ? 'Controle ' : 'Teclado ') + String(options.player + 1)
 
 // ATUALIZA O JOGADOR DO CONTROLE NO MODO DEBUG
 if (options.debug)

@@ -8,6 +8,7 @@ export interface IOptions {
 	debug: boolean
 	locked: string[]
 	hidden: string[]
+	useXbox: boolean
 	invertL: boolean
 	invertR: boolean
 	disJoyXAxis: boolean
@@ -40,14 +41,15 @@ const options: IOptions = {
 	debug: getOpt('debug', false),
 	locked: getOpt('locked', []),
 	hidden: getOpt('hidden', []),
+	useXbox: getOpt('useXbox', false),
 	invertL: getOpt('invertL', false),
 	invertR: getOpt('invertR', false),
 	disJoyXAxis: getOpt('disJoyXAxis', false),
 	disJoyYAxis: getOpt('disJoyYAxis', false),
 	dblClickLoadSave: getOpt('dblClickLoadSave', false),
 	changeKeyOnDrag: getOpt('changeKeyOnDrag', true),
-	vibrate: getOpt('vibrate', 15),
-	vibrateJoystick: getOpt('vibrateJoystick', 5),
+	vibrate: getOpt('vibrate', 60),
+	vibrateJoystick: getOpt('vibrateJoystick', 0),
 	vibrationFromGame: getOpt('vibrationFromGame', true),
 	vgamepad: getOpt('vgamepad', false),
 	bgImage: getOpt('bgImage', ''),

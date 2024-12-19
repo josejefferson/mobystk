@@ -2,6 +2,7 @@ export interface FormElements extends HTMLCollection {
 	code: HTMLInputElement
 	layout: HTMLInputElement
 	player: HTMLInputElement
+	useXbox: HTMLInputElement
 	invertL: HTMLInputElement
 	invertR: HTMLInputElement
 	disJoyXAxis: HTMLInputElement

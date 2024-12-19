@@ -80,14 +80,17 @@ function getKeyAndBorder(keys: [string, string, string, string], dir: Direction)
 	return { key, border }
 }
 
+const IDEAL_WIDTH = 720
+const IDEAL_HEIGHT = 400
+
 /**
  * Reinicia os joysticks para evitar bugs
  */
 export function resizeJoystick() {
 	// Ajusta os tamanhos do controle
 	let width: number
-	if (window.outerHeight > window.outerWidth / 1.7777777777777777) width = 640
-	else width = (window.outerWidth / window.outerHeight) * 360
+	if (window.outerHeight > window.outerWidth / (IDEAL_WIDTH / IDEAL_HEIGHT)) width = IDEAL_WIDTH
+	else width = (window.outerWidth / window.outerHeight) * IDEAL_HEIGHT
 	$viewport.setAttribute('content', `width=${width}, user-scalable=0`)
 
 	// Reconstrói os joysticks

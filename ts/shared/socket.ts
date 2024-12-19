@@ -93,6 +93,9 @@ export function _socketConnect(): WebSocket | undefined {
 window.socket = socket
 
 function ping() {
+	// Se não tiver conectado, não faz nada
+	if (!socket || socket.readyState !== socket.OPEN) return
+
 	if (pingID && $ping) $ping.innerText = '+999ms'
 	pingID = Math.floor(Math.random() * 1000000)
 	pingTime = Date.now()
