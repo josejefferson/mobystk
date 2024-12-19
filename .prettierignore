@@ -1,7 +1,6 @@
 node_modules
 util
 *.py
-*.html
 *.min.*
 lib/**/*
 src/js

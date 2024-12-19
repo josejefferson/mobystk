@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="notranslate" translate="no">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, user-scalable=0" />
+		<link rel="shortcut icon" href="favicon.png" type="image/png" />
+		<link rel="manifest" href="manifest.json" />
+		<title>MobyStk</title>
+		<link rel="stylesheet" href="lib/css/materialdesignicons.min.css" />
+		<link rel="stylesheet" href="css/joystick.css" />
+		<!-- <link rel="stylesheet" href="css/layout-editor.css" /> -->
+		<script type="module" src="js/joystick/index.js"></script>
+	</head>
 
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, user-scalable=0" />
-	<link rel="shortcut icon" href="favicon.png" type="image/png" />
-	<link rel="manifest" href="manifest.json" />
-	<title>MobyStk</title>
-	<link rel="stylesheet" href="lib/css/materialdesignicons.min.css" />
-	<link rel="stylesheet" href="css/joystick.css" />
-	<!-- <link rel="stylesheet" href="css/layout-editor.css" /> -->
-	<script type="module" src="js/joystick/index.js"></script>
-</head>
+	<body class="connecting preload">
+		<div class="backgroundImage"></div>
+		<div class="debugLog"></div>
 
-<body class="connecting preload">
-	<div class="backgroundImage"></div>
-	<div class="debugLog"></div>
+		<!-- Battery and Clock -->
+		<div class="deviceInfo">
+			<span class="battery">
+				<span class="battery-icon"></span>
+				<span class="battery-level"></span>
+			</span>
+			<span class="clock"></span>
+			<br />
+			<span class="player">
+				<i class="mdi controller-indicator"></i>
+				<span class="player-number"></span>
+			</span>
+			<br />
+			<span class="status"></span>
+		</div>
 
-	<!-- Battery and Clock -->
-	<div class="deviceInfo">
-		<span class="battery">
-			<span class="battery-icon"></span>
-			<span class="battery-level"></span>
-		</span>
-		<span class="clock"></span>
-		<br />
-		<span class="player">
-			<i class="mdi controller-indicator"></i>
-			<span class="player-number"></span>
-		</span>
-		<br />
-		<span class="status"></span>
-	</div>
+		<div class="ping"></div>
 
-	<div class="ping"></div>
+		<!-- Edit button -->
+		<a href="index.html">
+			<button class="controller-button edit">
+				<i class="mdi mdi-cog"></i>
+			</button>
+		</a>
 
-	<!-- Edit button -->
-	<a href="index.html">
-		<button class="controller-button edit">
-			<i class="mdi mdi-cog"></i>
-		</button>
-	</a>
+		<div class="controller-layout"></div>
 
-	<div class="controller-layout"></div>
-
-	<!-- <div class="layout-editor-toolbar showing-more" tabindex="0">
+		<!-- <div class="layout-editor-toolbar showing-more" tabindex="0">
 		<div class="drag"><i class="mdi mdi-drag-vertical"></i></div>
 		<button class="layout-info"><i class="mdi mdi-information-outline"></i></button>
 		<button class="show-layout-tree"><i class="mdi mdi-file-tree"></i></button>
@@ -68,12 +67,11 @@
 		</div>
 	</div> -->
 
-	<!-- <div class="layout-tree"></div> -->
+		<!-- <div class="layout-tree"></div> -->
 
-	<div class="loadingScreen">
-		<div class="text">Aguarde</div>
-		<i class="mdi mdi-timer-sand"></i>
-	</div>
-</body>
-
+		<div class="loadingScreen">
+			<div class="text">Aguarde</div>
+			<i class="mdi mdi-timer-sand"></i>
+		</div>
+	</body>
 </html>

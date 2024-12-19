@@ -1,4 +1,5 @@
 # MobyStk
+
 Transforme seu Smartphone em um Gamepad para o PC.
 
 Com o MobyStk, seu smartphone se converte em um gamepad versátil e personalizável, oferecendo uma alternativa útil para aqueles que não possuem um controle físico para PC.
@@ -10,37 +11,37 @@ Com o MobyStk, seu smartphone se converte em um gamepad versátil e personalizá
 ## Funcionalidades
 
 - **Layouts Personalizados**\
-_Escolha entre layouts de PSP, PS2 e SNES, com a possibilidade de adicionar mais no futuro_
+  _Escolha entre layouts de PSP, PS2 e SNES, com a possibilidade de adicionar mais no futuro_
 
 ![Layouts](https://github.com/josejefferson/mobystk/assets/52979246/0a32fdcd-106a-44fb-bb84-34c9da9c040a)
 
 - **Suporte a Múltiplos Toques**\
-_Capacidade de reconhecer até vários toques simultâneos_
+  _Capacidade de reconhecer até vários toques simultâneos_
 
 ![Múltiplos toques](https://github.com/josejefferson/mobystk/assets/52979246/7a0d1b3c-7a2a-430c-abdb-dccf4154aa9f)
 
 - **Conecte até 4 Controles**\
-_Permite conectar até 4 smartphones ao mesmo PC para jogar com amigos_
+  _Permite conectar até 4 smartphones ao mesmo PC para jogar com amigos_
 
 ![Tela de configuração do MobyStk](https://github.com/josejefferson/mobystk/assets/52979246/4ddafc98-1cdb-47de-9553-df8717d8f443)
 
 - **Configuração Flexível**\
-_Ajuste as configurações de acordo com suas preferências_
+  _Ajuste as configurações de acordo com suas preferências_
 
 - **Vibra com o Jogo**\
-_Vibrações sincronizadas com os comandos de vibração do jogo_
+  _Vibrações sincronizadas com os comandos de vibração do jogo_
 
 - **Personalização com Temas**\
-_Personalize a interface com temas de sua escolha_
+  _Personalize a interface com temas de sua escolha_
 
 - **Emulação de Controle de Xbox 360**\
-_Possibilidade de simular um controle de Xbox 360, conforme explicado na seção "[Utilizando gamepad virtual](#utilizando-gamepad-virtual)"_
+  _Possibilidade de simular um controle de Xbox 360, conforme explicado na seção "[Utilizando gamepad virtual](#utilizando-gamepad-virtual)"_
 
 - **Atualização fácil**\
-_O processo de atualização é fácil e com poucos cliques_
+  _O processo de atualização é fácil e com poucos cliques_
 
 - **Instalação automática**\
-_Use o [MobyStk Installer](#baixar-e-instalar) para baixar e instalar automaticamente a versão mais recente, incluindo todas as bibliotecas necessárias e criar atalhos no computador_
+  _Use o [MobyStk Installer](#baixar-e-instalar) para baixar e instalar automaticamente a versão mais recente, incluindo todas as bibliotecas necessárias e criar atalhos no computador_
 
 ## Tecnologias utilizadas
 
@@ -52,8 +53,6 @@ _Use o [MobyStk Installer](#baixar-e-instalar) para baixar e instalar automatica
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![esbuild](https://img.shields.io/badge/esbuild-%23ffcf00.svg?style=for-the-badge&logoColor=%23ffcf00)
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
-
-
 
 ## Instruções de uso
 
@@ -80,13 +79,9 @@ Selecione o tipo de controle desejado e clique em `JOGAR`
 > [!TIP]
 > Para alternar para o modo de tela cheia, basta dar um duplo clique no relógio do centro da tela
 
-
-
 ## Atualizar a aplicação
 
 Abra a pasta `MobyStk` e execute o arquivo `ATUALIZAR.py` para atualizar o MobyStk. Após isto, siga as instruções da tela.
-
-
 
 ## Utilizando gamepad virtual
 
