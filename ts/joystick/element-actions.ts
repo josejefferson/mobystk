@@ -61,6 +61,14 @@ function fullScreen() {
 	document.documentElement.requestFullscreen()
 }
 
+// Detecta quando o modo de tela cheia é ativado/desativado e mostra/oculta o botão de tela cheia
+document.addEventListener('fullscreenchange', (event) => {
+	const fullScreenBtn = Controller.elements.buttons.find((e) => e.customAction === 'fullscreen')
+	if (!fullScreenBtn) return
+	if (document.fullscreenElement) fullScreenBtn.element!.classList.add('hidden')
+	else fullScreenBtn.element!.classList.remove('hidden')
+})
+
 export default function loadElementActions() {
 	// CARREGAR E SALVAR
 	const loadStateBtn = Controller.elements.buttons.find((e) => e.customAction === 'load-state')
@@ -94,7 +102,8 @@ export default function loadElementActions() {
 	if (playMacroBtn) playMacroBtn.element!.addEventListener('click', playMacro)
 
 	// TELA CHEIA
-	document.querySelector('.deviceInfo')!.addEventListener('dblclick', fullScreen)
+	const fullScreenBtn = Controller.elements.buttons.find((e) => e.customAction === 'fullscreen')
+	if (fullScreenBtn) fullScreenBtn.element!.addEventListener('click', fullScreen)
 }
 
 window.playingMacro = playingMacro

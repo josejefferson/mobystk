@@ -594,6 +594,29 @@ const buttons: IButton[] = [
 		]
 	},
 
+	// Tela cheia
+	{
+		type: 'mobystk:button',
+		id: 'mobystk:fullscreen',
+		name: 'Tela cheia',
+		customAction: 'fullscreen',
+		anchorX: AnchorX.CENTER,
+		anchorY: AnchorY.CENTER,
+		x: [0, 'px'],
+		y: [-50, 'px'],
+		width: [70, 'px'],
+		height: [20, 'px'],
+		content: { type: 'mobystk:text', value: 'Tela cheia' },
+		border: [true, true, true, true],
+		fontSize: [12, 'px'],
+		radius: [
+			[1000, 'px'],
+			[1000, 'px'],
+			[1000, 'px'],
+			[1000, 'px']
+		]
+	},
+
 	// Diagonal esquerda cima
 	{
 		type: 'mobystk:button',

@@ -2,6 +2,7 @@ import options from '../shared/options'
 import type { ILayout } from '../types/Layout'
 
 const commonItems = [
+	{ import: 'mobystk:fullscreen' },
 	{ import: 'mobystk:volume_up' },
 	{ import: 'mobystk:volume_down' },
 	{ import: 'mobystk:macro_record' },
