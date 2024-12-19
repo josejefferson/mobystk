@@ -2,7 +2,7 @@
  * PLUGIN - MobyStk Mobile
  * @author Jefferson Dantas
  */
-options.vgamepad = false
+options.useKeyboard = true
 let seq = 0
 
 /** Envia o comando para o servidor */

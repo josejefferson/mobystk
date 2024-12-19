@@ -1,6 +1,7 @@
-import options from './options'
+import { updateInfo } from '../joystick/user-interface'
 import loading from '../utils/loading'
 import { toast } from '../utils/toast'
+import options from './options'
 
 const $ping = document.querySelector<HTMLElement>('.ping')
 
@@ -34,6 +35,15 @@ export const commands: ICommands = {
 		window.location.reload()
 	},
 
+	/** Suporta VGamepad */
+	VGAMEPAD: (value: 'true' | 'false') => {
+		if (value === 'false') {
+			options.useKeyboard = true
+			updateInfo()
+		}
+	},
+
+	/** Resposta do ping */
 	pong: (id: string) => {
 		if (Number(id) === pingID) {
 			if ($ping) $ping.innerText = String(Date.now() - pingTime) + 'ms'

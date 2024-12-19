@@ -83,8 +83,8 @@ def keyCommand(wsClient, cmd, key, player, vpad = False):
 
 			# Direciona um joystick do gamepad
 			def joystick(side, key):
-				x,y = list(map(int, key.split('|')))
-				getattr(gamepads[player], f'{side}_joystick')(x_value=x, y_value=y)
+				x,y = list(map(float, key.split('|')))
+				getattr(gamepads[player], f'{side}_joystick_float')(x_value_float=x, y_value_float=y)
 
 			if cmd == 'vjl': joystick('left', key)
 			elif cmd == 'vjr': joystick('right', key)
@@ -190,6 +190,7 @@ class WebSocketServer(WebSocket):
 	def handleConnected(self):
 		wsClients.append(self)
 		if DEBUG: print(f'{F.YELLOW}[WEBSOCKET]{S.RESET_ALL} Usuário conectado ({self.address})')
+		self.sendMessage('VGAMEPAD ' + ('true' if gamepads else 'false'))
 
 	def handleClose(self):
 		wsClients.remove(self)

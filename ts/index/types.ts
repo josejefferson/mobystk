@@ -12,7 +12,7 @@ export interface FormElements extends HTMLCollection {
 	vibrate: HTMLInputElement
 	vibrateJoystick: HTMLInputElement
 	vibrationFromGame: HTMLInputElement
-	vgamepad: HTMLInputElement
+	useKeyboard: HTMLInputElement
 	background: HTMLInputElement
 	color: HTMLInputElement
 	border: HTMLInputElement

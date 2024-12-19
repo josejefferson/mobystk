@@ -5,15 +5,14 @@ import vibrate from '../utils/vibrate'
 import { lastMacro, recordingMacro } from './element-actions'
 import { $controllerIndicator } from './elements'
 
-const controllerIndicatorClass = options.vgamepad ? 'mdi-google-controller' : 'mdi-keyboard'
-$controllerIndicator.classList.add(controllerIndicatorClass)
-
 commands.V = (data: string) => {
 	const [value] = data.toLowerCase().split(' ')
 	if (options.vibrationFromGame) {
 		const n = parseInt(value.split('|')[0])
 		vibrate(n ? 3000 : 0, true)
-		$controllerIndicator.classList[n ? 'remove' : 'add'](controllerIndicatorClass)
+		$controllerIndicator.classList[n ? 'remove' : 'add'](
+			options.useKeyboard ? 'mdi-keyboard' : 'mdi-google-controller'
+		)
 		$controllerIndicator.classList[n ? 'add' : 'remove']('mdi-vibrate')
 	}
 }
@@ -31,8 +30,8 @@ function _sendCmd(keys: string | string[], release = false, custom?: string) {
 	// Mapeia as teclas
 	if (!custom)
 		keys = keys.map((key) => {
-			if (options.vgamepad) return keymappings[key]?.[4]!
-			else return keymappings[key]?.[options.player]!
+			if (options.useKeyboard) return keymappings[key]?.[options.player]!
+			else return keymappings[key]?.[4]!
 		})
 
 	// Salva no macro ao invés de enviar para o servidor

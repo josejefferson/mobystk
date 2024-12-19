@@ -49,7 +49,7 @@ export default function loadDriveMode() {
 				driveY *= inverted * (land ? 1 : -1)
 
 				const $steeringWheel = drive.element!.children[0] as HTMLElement
-				if (!options.vgamepad) {
+				if (options.useKeyboard) {
 					// Define a direção (ângulo)
 					const angle = getArrowAngle(
 						driveAngle,
@@ -90,7 +90,7 @@ export default function loadDriveMode() {
 			drive.release()
 			drive.element!.innerHTML = driveHTML
 			window.ondevicemotion = null
-			if (!options.vgamepad) {
+			if (options.useKeyboard) {
 				sendCmd('joyLUp', true)
 				sendCmd('joyLLeft', true)
 				sendCmd('joyLRight', true)

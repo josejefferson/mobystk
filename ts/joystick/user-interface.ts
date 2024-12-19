@@ -1,17 +1,18 @@
+import options from '../shared/options'
 import loading from '../utils/loading'
+import { toast } from '../utils/toast'
 import {
 	$bgImage,
+	$controllerIndicator,
 	$deviceInfo,
 	$DIBatteryIcon,
 	$DIBatteryLevel,
 	$DIClock,
 	$DIPlayerNumber,
-	$ping,
 	$edit,
+	$ping,
 	$root
 } from './elements'
-import options from '../shared/options'
-import { toast } from '../utils/toast'
 
 // ELEMENTOS
 if (options.hidden.includes('mobystk:deviceInfo')) {
@@ -92,6 +93,7 @@ function updateBattery(battery: any) {
 // INFORMAÇÕES - RELÓGIO
 window.setInterval(updateClock, 1000)
 updateClock()
+updateInfo()
 
 // Atualiza as horas do relógio
 function updateClock() {
@@ -101,15 +103,19 @@ function updateClock() {
 }
 
 // INFORMAÇÕES - Nº JOGADOR E NOME DO LAYOUT
-$DIPlayerNumber.innerText =
-	(options.vgamepad ? 'Controle ' : 'Teclado ') + String(options.player + 1)
+export function updateInfo() {
+	const controllerIndicatorClass = options.useKeyboard ? 'mdi-keyboard' : 'mdi-google-controller'
+	$controllerIndicator.classList.add(controllerIndicatorClass)
+	$DIPlayerNumber.innerText =
+		(options.useKeyboard ? 'Teclado ' : 'Controle ') + String(options.player + 1)
+}
 
 // ATUALIZA O JOGADOR DO CONTROLE NO MODO DEBUG
 if (options.debug)
 	$deviceInfo.addEventListener('click', () => {
 		options.player += 1
 		if (options.player > 3) options.player = 0
-		$DIPlayerNumber.innerText = String(options.player + 1)
+		updateInfo()
 	})
 
 export {}

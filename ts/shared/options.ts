@@ -18,7 +18,7 @@ export interface IOptions {
 	vibrate: number
 	vibrateJoystick: number
 	vibrationFromGame: boolean
-	vgamepad: boolean
+	useKeyboard: boolean
 	bgImage: string
 	bgOpacity: number
 	bgBlur: number
@@ -51,7 +51,7 @@ const options: IOptions = {
 	vibrate: getOpt('vibrate', 60),
 	vibrateJoystick: getOpt('vibrateJoystick', 0),
 	vibrationFromGame: getOpt('vibrationFromGame', true),
-	vgamepad: getOpt('vgamepad', false),
+	useKeyboard: getOpt('useKeyboard', false),
 	bgImage: getOpt('bgImage', ''),
 	bgOpacity: getOpt('bgOpacity', 0.5),
 	bgBlur: getOpt('bgBlur', 0),

@@ -8,7 +8,12 @@ import options from '../shared/options'
 
 type Direction = 'up' | 'left' | 'down' | 'right'
 type Border = 'Top' | 'Left' | 'Bottom' | 'Right'
-const joysticks = ['mobystk:joystick_left', 'mobystk:joystick_right']
+const joysticks = [
+	'mobystk:joystick_left_bottom',
+	'mobystk:joystick_left_top',
+	'mobystk:joystick_right_top',
+	'mobystk:joystick_right_bottom'
+]
 
 /**
  * Atualiza os dados dos joysticks e pressiona as teclas do computador
@@ -20,13 +25,12 @@ export default function updateJoystick(
 ) {
 	vibrate((options.vibrateJoystick * d?.distance) / 45)
 
-	// Se estiver usando o vgamepad
-	if (options.vgamepad && joysticks.includes(target.id)) {
-		let x = Math.round(-32768 + (65534 / 90) * (45 + d?.distance * Math.cos(d?.angle?.radian)))
-		let y = Math.round(-32768 + (65534 / 90) * (45 + d?.distance * Math.sin(d?.angle?.radian)))
-		if (isNaN(x) || isNaN(y)) x = y = 0
-		if (target.id === 'mobystk:joystick_left') sendCmd(`${x}|${y}`, false, 'VJL')
-		if (target.id === 'mobystk:joystick_right') sendCmd(`${x}|${y}`, false, 'VJR')
+	// Se estiver usando o controle virtual
+	if (!options.useKeyboard && joysticks.includes(target.id)) {
+		const x = d?.vector?.x
+		const y = d?.vector?.y
+		if (target.id.startsWith('mobystk:joystick_left')) sendCmd(`${x || 0}|${y || 0}`, false, 'VJL')
+		if (target.id.startsWith('mobystk:joystick_right')) sendCmd(`${x || 0}|${y || 0}`, false, 'VJR')
 	}
 
 	// Se o joystick estiver em repouso, desapertar teclas
@@ -54,7 +58,7 @@ export default function updateJoystick(
 		const $back = target.element!.querySelector<HTMLElement>('.back')!
 		$back.style[`border${border}Width`] = value ? '7px' : ''
 
-		if (!(options.vgamepad && joysticks.includes(target.id))) {
+		if (!(!options.useKeyboard && joysticks.includes(target.id))) {
 			if (target.position[dir] === value) return
 			sendCmd([key], !value)
 		}
