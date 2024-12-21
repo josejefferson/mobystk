@@ -8,7 +8,7 @@ const leftJoystickBottom: IJoystick = {
 	name: 'Joystick esquerdo na parte inferior',
 	anchorX: AnchorX.LEFT,
 	anchorY: AnchorY.BOTTOM,
-	x: [30, 'px'],
+	x: [60, 'px'],
 	y: [20, 'px'],
 	size: [120, 'px'],
 	padding: 30,

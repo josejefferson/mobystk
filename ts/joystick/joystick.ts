@@ -23,7 +23,9 @@ export default function updateJoystick(
 	_e: EventData,
 	d: JoystickOutputData
 ) {
-	vibrate((options.vibrateJoystick * d?.distance) / 45)
+	if (options.vibrateJoystick) {
+		vibrate((options.vibrateJoystick * d?.distance) / 45)
+	}
 
 	// Se estiver usando o controle virtual
 	if (!options.useKeyboard && joysticks.includes(target.id)) {
