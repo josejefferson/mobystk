@@ -9,7 +9,7 @@ commands.V = (data: string) => {
 	const [value] = data.toLowerCase().split(' ')
 	if (options.vibrationFromGame) {
 		const n = parseInt(value.split('|')[0])
-		vibrate(n ? 3000 : 0, true)
+		vibrate(n ? 3000 : 1, true)
 		$controllerIndicator.classList[n ? 'remove' : 'add'](
 			options.useKeyboard ? 'mdi-keyboard' : 'mdi-google-controller'
 		)
