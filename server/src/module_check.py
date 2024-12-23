@@ -1,15 +1,15 @@
 from .helpers import clearConsole
 
-modules = [
-    "colorama",
-    "prompt_toolkit",
-    "pyqrcode",
-    "pynput",
-    "SimpleWebSocketServer",
-    "vgamepad",
-]
+modules = (
+    ("colorama", "0.4.6"),
+    ("prompt_toolkit", "3.0.48"),
+    ("pyqrcode", "1.2.1"),
+    ("pynput", "1.7.7"),
+    ("SimpleWebSocketServer", "0.1.2"),
+    ("vgamepad", "0.1.0"),
+)
 
-optionalModules = ["vgamepad"]
+optionalModules = "vgamepad"
 
 
 # Verifica se os módulos necessários do Python estão instalados
@@ -18,11 +18,11 @@ def checkModules():
 
     missingModules = []
 
-    for module in modules:
+    for module, version in modules:
         try:
             importlib.import_module(module)
         except ModuleNotFoundError:
-            missingModules.append(module)
+            missingModules.append((module, version))
         except Exception as err:
             if module in optionalModules:
                 continue
@@ -37,8 +37,8 @@ def askInstallModules(missingModules):
     clearConsole()
     print("Algumas bibliotecas necessárias para executar esta aplicação estão ausentes")
     print("\nAs seguintes bibliotecas precisam ser instaladas:")
-    for module in missingModules:
-        print(f"  - {module}")
+    for module, version in missingModules:
+        print(f"  - {module} (v{version})")
     input(
         "\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n"
         + "┃ Pressione ENTER para instalar as bibliotecas necessárias... ┃\n"
@@ -53,11 +53,11 @@ def installMissingModules(missingModules):
 
     errors = []
 
-    for module in missingModules:
+    for module, version in missingModules:
         try:
             print(f'\nInstalando o módulo "{module}"...')
-            print(f"$ python -m pip install {module}\n")
-            exitCode = subprocess.call([sys.executable, '-m', 'pip', 'install', module])
+            print(f"$ python -m pip install {module}=={version}\n")
+            exitCode = subprocess.call([sys.executable, "-m", "pip", "install", f"{module}=={version}"])
             if exitCode != 0:
                 raise Exception(f"O comando retornou o código de saída {exitCode}")
         except Exception as err:

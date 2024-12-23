@@ -7,4 +7,3 @@ import os
 
 # Inicializa o colorama
 coloramaInit(autoreset=True)
-

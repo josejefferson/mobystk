@@ -29,6 +29,7 @@ class Gamepad:
         # Tenta inicializar o Gamepad virtual, caso não consiga, utiliza o teclado
         try:
             from vgamepad import VX360Gamepad
+
             self.vgamepad = VX360Gamepad()
             self.disconnect()
             self.vgamepad.register_notification(callback_function=self.gamepadNotification)
