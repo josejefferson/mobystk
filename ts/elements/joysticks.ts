@@ -12,7 +12,7 @@ const leftJoystickBottom: IJoystick = {
 	y: [20, 'px'],
 	size: [120, 'px'],
 	padding: 30,
-	keys: ['joyLUp', 'joyLLeft', 'joyLDown', 'joyLRight']
+	keys: ['JOYSTICK_1_UP', 'JOYSTICK_1_LEFT', 'JOYSTICK_1_DOWN', 'JOYSTICK_1_RIGHT']
 }
 
 // Joystick esquerdo na parte superior
@@ -32,7 +32,7 @@ const rightJoystickTop: IJoystick = {
 	id: 'mobystk:joystick_right_top',
 	name: 'Joystick direito na parte superior',
 	anchorX: AnchorX.RIGHT,
-	keys: ['joyRUp', 'joyRLeft', 'joyRDown', 'joyRRight']
+	keys: ['JOYSTICK_2_UP', 'JOYSTICK_2_LEFT', 'JOYSTICK_2_DOWN', 'JOYSTICK_2_RIGHT']
 }
 
 // Joystick direito na parte inferior
@@ -41,7 +41,7 @@ const rightJoystickBottom: IJoystick = {
 	id: 'mobystk:joystick_right_bottom',
 	name: 'Joystick direito na parte inferior',
 	anchorX: AnchorX.RIGHT,
-	keys: ['joyRUp', 'joyRLeft', 'joyRDown', 'joyRRight']
+	keys: ['JOYSTICK_2_UP', 'JOYSTICK_2_LEFT', 'JOYSTICK_2_DOWN', 'JOYSTICK_2_RIGHT']
 }
 
 const joysticks: IJoystick[] = [

@@ -3,7 +3,7 @@
 
 from __main__ import __file__ as __mainfile__
 import os, re, sys
-from util.helpers import clearConsole
+from .helpers import clearConsole
 from colorama import Back as B, Fore as F, Style as S
 
 afterExitTasks = []

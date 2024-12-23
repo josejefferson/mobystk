@@ -1,10 +1,11 @@
 import { EventData, JoystickOutputData } from 'nipplejs'
-import Controller from '../shared/controller'
 import type JoystickComponent from '../components/Joystick'
-import vibrate from '../utils/vibrate'
-import { sendCmd } from './backend-integration'
-import { $viewport } from './elements'
+import Controller from '../shared/controller'
 import options from '../shared/options'
+import { socket } from '../shared/socket'
+import { Key } from '../types/socket'
+import vibrate from '../utils/vibrate'
+import { $viewport } from './elements'
 
 type Direction = 'up' | 'left' | 'down' | 'right'
 type Border = 'Top' | 'Left' | 'Bottom' | 'Right'
@@ -31,8 +32,8 @@ export default function updateJoystick(
 	if (!options.useKeyboard && joysticks.includes(target.id)) {
 		const x = d?.vector?.x
 		const y = d?.vector?.y
-		if (target.id.startsWith('mobystk:joystick_left')) sendCmd(`${x || 0}|${y || 0}`, false, 'VJL')
-		if (target.id.startsWith('mobystk:joystick_right')) sendCmd(`${x || 0}|${y || 0}`, false, 'VJR')
+		if (target.id.startsWith('mobystk:joystick_left')) socket.sendJoystickPos('JOYSTICK_1', x, y)
+		if (target.id.startsWith('mobystk:joystick_right')) socket.sendJoystickPos('JOYSTICK_2', x, y)
 	}
 
 	// Se o joystick estiver em repouso, desapertar teclas
@@ -53,28 +54,28 @@ export default function updateJoystick(
 	/**
 	 * Pressiona as teclas
 	 */
-	function update(dir: Direction, value: boolean) {
+	function update(dir: Direction, press: boolean) {
 		const { key, border } = getKeyAndBorder(target.keys, dir)
 
 		// Efeito da borda
 		const $back = target.element!.querySelector<HTMLElement>('.back')!
-		$back.style[`border${border}Width`] = value ? '7px' : ''
+		$back.style[`border${border}Width`] = press ? '7px' : ''
 
 		if (!(!options.useKeyboard && joysticks.includes(target.id))) {
-			if (target.position[dir] === value) return
-			sendCmd([key], !value)
+			if (target.position[dir] === press) return
+			socket.sendKey(key, press ? 'press' : 'release')
 		}
 
-		target.position[dir] = value
+		target.position[dir] = press
 	}
 }
 
 /**
  * Retorna a tecla que será pressionada e a borda
  */
-function getKeyAndBorder(keys: [string, string, string, string], dir: Direction) {
+function getKeyAndBorder(keys: [Key, Key, Key, Key], dir: Direction) {
 	const keysAndBorders: {
-		[key: string]: [string, Border]
+		[key: string]: [Key, Border]
 	} = {
 		up: [keys[0], 'Top'],
 		left: [keys[1], 'Left'],

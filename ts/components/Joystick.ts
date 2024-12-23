@@ -2,12 +2,13 @@ import nipplejs, { JoystickManager } from 'nipplejs'
 import options from '../shared/options'
 import type { IElementNode, IJoystick, IJoystickComponent, ValueAndUnit } from '../types'
 import ElementComponent from './Element'
+import { Key } from '../types/socket'
 
 export default class JoystickComponent extends ElementComponent implements IJoystickComponent {
 	type: 'mobystk:joystick'
 	size: ValueAndUnit
 	padding: number
-	keys: [string, string, string, string]
+	keys: [Key, Key, Key, Key]
 	position: {
 		up: boolean
 		down: boolean
@@ -23,7 +24,9 @@ export default class JoystickComponent extends ElementComponent implements IJoys
 		this.size = details.size || [90, 'px']
 		this.padding = details.padding || 60
 
-		this.keys = details.keys || ['joyLUp', 'joyLLeft', 'joyLDown', 'joyLRight']
+		this.keys =
+			details.keys ||
+			(['JOYSTICK_1_UP', 'JOYSTICK_1_LEFT', 'JOYSTICK_1_DOWN', 'JOYSTICK_1_RIGHT'] as Key[])
 		this.position = { up: false, down: false, left: false, right: false }
 
 		const $joystick = <IElementNode<JoystickComponent, HTMLDivElement>>document.createElement('div')

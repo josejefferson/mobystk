@@ -4,7 +4,7 @@ import { clean } from 'esbuild-plugin-clean'
 const { bgCyan, bold, yellow, reset } = styles
 
 const ctx = await esbuild.context({
-	entryPoints: ['ts/index/index.ts', 'ts/joystick/index.ts', 'ts/setup/index.ts'],
+	entryPoints: ['ts/index/index.ts', 'ts/joystick/index.ts'],
 	outdir: './public/js',
 	bundle: true,
 	minify: true,

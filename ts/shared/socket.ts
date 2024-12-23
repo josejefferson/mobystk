@@ -1,115 +1,154 @@
+import { lastMacro, recordingMacro } from '../joystick/element-actions'
+import { $controllerIndicator } from '../joystick/elements'
 import { updateInfo } from '../joystick/user-interface'
-import loading from '../utils/loading'
+import { Joystick, Key, SocketMessages } from '../types/socket'
 import { toast } from '../utils/toast'
+import vibrate from '../utils/vibrate'
 import options from './options'
 
 const $ping = document.querySelector<HTMLElement>('.ping')
 
-// Evita aparecer a tela de senha novamente
-let triedToAuthenticate = false
+class MobyStkSocket {
+	instance!: WebSocket
+	pingID: number | undefined
+	pingTime = Date.now()
 
-let pingID: number | undefined
-let pingTime = Date.now()
-
-interface ICommands {
-	[key: string]: Function
-}
-
-// Comandos vindos do servidor
-export const commands: ICommands = {
-	/** Exibe informações na tela */
-	INFO: (data: string) => {
-		toast(data)
-	},
-
-	/** Falha ao autenticar */
-	AUTH_FAILED: () => {
-		if (triedToAuthenticate) return
-		document.body.classList.remove('connecting', 'connected')
-		document.body.classList.add('disconnected')
-		const password = prompt('O computador requer uma senha para se conectar ao MobyStk')
-		if (password === null) return
-		localStorage.setItem('joystick.password', password)
-		triedToAuthenticate = true
-		loading()
-		window.location.reload()
-	},
-
-	/** Suporta VGamepad */
-	VGAMEPAD: (value: 'true' | 'false') => {
-		if (value === 'false') {
-			options.useKeyboard = true
-			updateInfo()
-		}
-	},
-
-	/** Resposta do ping */
-	pong: (id: string) => {
-		if (Number(id) === pingID) {
-			if ($ping) $ping.innerText = String(Date.now() - pingTime) + 'ms'
-			pingID = undefined
-		}
-	}
-}
-
-window.socketConnect = _socketConnect
-export const socketConnect = (): ReturnType<typeof _socketConnect> => window.socketConnect()
-
-/** Conexão do socket */
-export let socket = socketConnect()
-
-/** Tenta conectar ao socket */
-export function _socketConnect(): WebSocket | undefined {
-	let ws: WebSocket
-	try {
-		ws = new WebSocket('ws://' + options.ip)
-	} catch (err) {
-		if (options.debug) console.error(err)
-		closed()
-		return
+	constructor() {
+		this.connect()
+		setInterval(() => this.sendPing(), 1000)
 	}
 
-	ws.addEventListener('open', opened)
-	ws.addEventListener('close', closed)
-	ws.addEventListener('message', message)
-	document.body.classList.remove('connected', 'disconnected')
-	document.body.classList.add('connecting')
+	connect() {
+		try {
+			this.instance = new WebSocket('ws://' + options.ip)
+		} catch (err) {
+			if (options.debug) console.error(err)
+			this.onClose()
+			return
+		}
 
-	/** Socket conectado */
-	function opened() {
+		this.instance.addEventListener('open', this.onOpen.bind(this))
+		this.instance.addEventListener('close', this.onClose.bind(this))
+		this.instance.addEventListener('message', this.onMessage.bind(this))
+		document.body.classList.remove('connected', 'disconnected')
+		document.body.classList.add('connecting')
+	}
+
+	onOpen() {
 		document.body.classList.remove('connecting', 'disconnected')
 		document.body.classList.add('connected')
-		ws.send('PASSWORD ' + (options.password || ''))
 	}
 
-	/** Socket desconectado */
-	function closed() {
+	onClose() {
 		document.body.classList.remove('connecting', 'connected')
 		document.body.classList.add('disconnected')
-		setTimeout(() => (socket = socketConnect()), 3000)
+		setTimeout(() => this.connect(), 3000)
 	}
 
-	/** Mensagem do socket */
-	function message(e: MessageEvent<any>) {
-		const [cmd, ...data]: [string, string[]] = e.data.split(' ')
-		const command = commands[cmd]
-		if (typeof command !== 'function') return
-		command(data.join(' '))
+	onMessage(e: MessageEvent<any>) {
+		const [command, data] = JSON.parse(e.data) as SocketMessages.Server.ServerMessage
+
+		if (command === 'welcome') this.onWelcome(data)
+		if (command === 'handshakeOK') this.onHandshakeOK(data)
+		if (command === 'handshakeFailed') this.onHandshakeFailed(data)
+		if (command === 'pong') this.onPong(data)
+		if (command === 'vibrate') this.onVibrate(data)
 	}
 
-	return ws
+	sendCommand(
+		command: SocketMessages.Client.ClientMessage[0],
+		data: SocketMessages.Client.ClientMessage[1]
+	) {
+		if (recordingMacro) return void lastMacro.push([command, data])
+		if (this.instance.readyState !== this.instance.OPEN) return
+		const messageJSON = [command, data]
+		const message = JSON.stringify(messageJSON)
+		this.instance.send(message)
+	}
+
+	sendPing() {
+		if (this.instance.readyState !== this.instance.OPEN) return
+		if (this.pingID && $ping) $ping.innerText = '+999ms'
+		this.pingID = Math.floor(Math.random() * 1000000)
+		this.pingTime = Date.now()
+		this.sendCommand('ping', { id: this.pingID })
+	}
+
+	sendKey(key: Key, action: 'press' | 'release') {
+		this.sendCommand('key', { key, action })
+	}
+
+	sendJoystickPos(key: Joystick, x: number = 0, y: number = 0) {
+		this.sendCommand('key', { key, action: 'press', x: x || 0, y: y || 0 })
+	}
+
+	onWelcome(data: SocketMessages.Server.Welcome) {
+		// Verifica se precisa de senha para conectar e obtém a senha
+		let password: string | null = null
+		if (data.needPassword) {
+			password = options.password || this.askPassword() || null
+			if (!password) return
+		}
+
+		// Envia o handshake
+		this.sendCommand('handshake', {
+			player: options.player,
+			password,
+			useKeyboard: options.useKeyboard
+		})
+	}
+
+	onHandshakeOK(data: SocketMessages.Server.HandshakeOK) {
+		if (data.otherPlayerConnected) {
+			toast('Outro jogador já está conectado neste controle')
+		}
+
+		if (data.vGamepadDisabled) {
+			toast(
+				'O controle virtual está desativado, você pode ativá-lo nas opções do MobyStk no computador, utilizando o teclado'
+			)
+		}
+
+		if (data.vGamepadError) {
+			toast('Não foi possível criar um controle virtual, utilizando o teclado')
+		}
+
+		// Atualiza a interface informando se está usando o teclado
+		options.useKeyboard = data.useKeyboard
+		updateInfo()
+	}
+
+	onHandshakeFailed(data: SocketMessages.Server.HandshakeFailed) {
+		if (data.passwordIncorrect) {
+			alert('Senha incorreta')
+			options.password = undefined
+			localStorage.removeItem('joystick.password')
+			this.onWelcome({ needPassword: true })
+		}
+	}
+
+	onPong(data: SocketMessages.Server.Pong) {
+		if (Number(data.id) === this.pingID) {
+			if ($ping) $ping.innerText = String(Date.now() - this.pingTime) + 'ms'
+			this.pingID = undefined
+		}
+	}
+
+	onVibrate(data: SocketMessages.Server.Vibrate) {
+		vibrate(data.largeMotor ? 3000 : 1, true)
+		$controllerIndicator.classList[data.largeMotor ? 'remove' : 'add'](
+			options.useKeyboard ? 'mdi-keyboard' : 'mdi-google-controller'
+		)
+		$controllerIndicator.classList[data.largeMotor ? 'add' : 'remove']('mdi-vibrate')
+	}
+
+	askPassword() {
+		const password = prompt('O computador requer uma senha para se conectar ao MobyStk')
+		if (!password) return void toast('Você precisa informar a senha para se conectar')
+		options.password = password
+		localStorage.setItem('joystick.password', JSON.stringify(password))
+		return password
+	}
 }
 
-window.socket = socket
-
-function ping() {
-	// Se não tiver conectado, não faz nada
-	if (!socket || socket.readyState !== socket.OPEN) return
-
-	if (pingID && $ping) $ping.innerText = '+999ms'
-	pingID = Math.floor(Math.random() * 1000000)
-	pingTime = Date.now()
-	socket?.send(`ping ${pingID}`)
-}
-
-setInterval(ping, 1000)
+export const socket = new MobyStkSocket()

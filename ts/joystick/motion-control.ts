@@ -1,10 +1,10 @@
 import ButtonComponent from '../components/Button'
 import Controller from '../shared/controller'
-import vibrate from '../utils/vibrate'
-import { sendCmd } from './backend-integration'
 import options from '../shared/options'
+import { socket } from '../shared/socket'
+import vibrate from '../utils/vibrate'
 
-type Direction = 'joyLUp' | 'joyLLeft' | 'joyLRight'
+type Direction = 'JOYSTICK_1_UP' | 'JOYSTICK_1_LEFT' | 'JOYSTICK_1_RIGHT'
 
 const defaultDriveHTML = `
 	<svg viewBox="0 0 32 32">
@@ -66,8 +66,9 @@ export default function loadDriveMode() {
 					const directions = getDirections(angle)
 					const pressKeys = directions.filter((e) => !lastDirections.includes(e))
 					const unpressKeys = lastDirections.filter((e) => !directions.includes(e))
-					sendCmd(pressKeys)
-					sendCmd(unpressKeys, true)
+
+					for (const key of pressKeys) socket.sendKey(key, 'press')
+					for (const key of unpressKeys) socket.sendKey(key, 'release')
 
 					lastDirections = [...directions]
 				} else {
@@ -78,7 +79,7 @@ export default function loadDriveMode() {
 					if (x < -32767) x = -32767
 					const angle = (90 * x) / 32767
 					$steeringWheel.style.transform = `rotate(${angle}deg)`
-					sendCmd(`${x}|0`, false, 'VJL')
+					socket.sendJoystickPos('JOYSTICK_1', x)
 				}
 			}
 		}
@@ -91,11 +92,11 @@ export default function loadDriveMode() {
 			drive.element!.innerHTML = driveHTML
 			window.ondevicemotion = null
 			if (options.useKeyboard) {
-				sendCmd('joyLUp', true)
-				sendCmd('joyLLeft', true)
-				sendCmd('joyLRight', true)
+				socket.sendKey('JOYSTICK_1_UP', 'release')
+				socket.sendKey('JOYSTICK_1_LEFT', 'release')
+				socket.sendKey('JOYSTICK_1_RIGHT', 'release')
 			} else {
-				sendCmd('0|0', false, 'VJL')
+				socket.sendJoystickPos('JOYSTICK_1')
 			}
 		}
 	}
@@ -144,19 +145,19 @@ function getDirections(angle: number) {
 	let directions: Direction[]
 	switch (angle) {
 		case -90:
-			directions = ['joyLLeft']
+			directions = ['JOYSTICK_1_LEFT']
 			break
 		case -45:
-			directions = ['joyLUp', 'joyLLeft']
+			directions = ['JOYSTICK_1_UP', 'JOYSTICK_1_LEFT']
 			break
 		case 45:
-			directions = ['joyLUp', 'joyLRight']
+			directions = ['JOYSTICK_1_UP', 'JOYSTICK_1_RIGHT']
 			break
 		case 90:
-			directions = ['joyLRight']
+			directions = ['JOYSTICK_1_RIGHT']
 			break
 		default:
-			directions = ['joyLUp']
+			directions = ['JOYSTICK_1_UP']
 	}
 
 	return directions

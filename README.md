@@ -64,7 +64,7 @@ A maneira mais simples e conveniente de obter o MobyStk é utilizando o [MobyStk
 
 ### Iniciar a aplicação
 
-Para abrir o MobyStk, abra o arquivo `INICIAR.py`.
+Para abrir o MobyStk, abra o arquivo `INICIAR.bat`.
 
 Abra a câmera do seu celular e escaneie o QRCode na tela ou digite o link fornecido.
 

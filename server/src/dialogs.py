@@ -2,15 +2,18 @@
 # -*- coding: utf-8 -*-
 
 import os
-from util.options import options
-from util.server import vgamepadInstalled, vgamepadError
-from util.tasks import afterExitTasks, installVgamepad, uninstallVgamepad, reloadScript
+from .options import options
+# from .server import vgamepadInstalled, vgamepadError
+from .tasks import afterExitTasks, installVgamepad, uninstallVgamepad, reloadScript
 from prompt_toolkit.application.current import get_app
 from prompt_toolkit.layout.controls import FormattedTextControl
 from prompt_toolkit.layout.containers import Float, HSplit
 from prompt_toolkit.layout.dimension import D
 from prompt_toolkit.widgets import Button, Dialog, Label, TextArea
 from prompt_toolkit.layout.containers import Window, WindowAlign
+
+vgamepadInstalled = True # temp
+vgamepadError = False # temp
 
 # Instala o controle virtual
 def addTaskInstallVgamepad():

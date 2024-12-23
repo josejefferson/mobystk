@@ -4,6 +4,7 @@ import GroupComponent from '../components/Group'
 import JoystickComponent from '../components/Joystick'
 import Controller from '../shared/controller'
 import options from '../shared/options'
+import { socket } from '../shared/socket'
 import type {
 	IButton,
 	IElements,
@@ -14,7 +15,6 @@ import type {
 	ILayout,
 	ILayoutComponent
 } from '../types'
-import { sendCmd } from './backend-integration'
 import loadElementActions from './element-actions'
 import { $layout } from './elements'
 import updateJoystick from './joystick'
@@ -134,8 +134,8 @@ loadLayout(layout)
 // Configura os eventos dos elementos
 for (const element of Controller.elements.all) {
 	if (element instanceof ButtonComponent) {
-		element.on('press', (key) => sendCmd(key, false))
-		element.on('release', (key) => sendCmd(key, true))
+		element.on('press', (key) => socket.sendKey(key, 'press'))
+		element.on('release', (key) => socket.sendKey(key, 'release'))
 	} else if (element instanceof JoystickComponent) {
 		element.on('move end', updateJoystick)
 	}

@@ -1,9 +1,10 @@
+import { Player } from '../types/socket'
 import getOpt from '../utils/get-option'
 
 export interface IOptions {
 	ip: string
 	layout: string
-	player: number
+	player: Player
 	password?: string
 	debug: boolean
 	locked: string[]
@@ -36,7 +37,7 @@ export interface IOptions {
 const options: IOptions = {
 	ip: getOpt('code', 'localhost:5000'),
 	layout: getOpt('layout'),
-	player: getOpt('player', 1) - 1,
+	player: (getOpt('player', 1) - 1) as Player,
 	password: getOpt('password'),
 	debug: getOpt('debug', false),
 	locked: getOpt('locked', []),

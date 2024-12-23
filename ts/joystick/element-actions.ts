@@ -1,28 +1,31 @@
-import Controller from '../shared/controller'
-import vibrate from '../utils/vibrate'
-import { sendCmd } from './backend-integration'
-import { socket } from '../shared/socket'
-import options from '../shared/options'
-import { IElementNode } from '../types'
 import ButtonComponent from '../components/Button'
+import Controller from '../shared/controller'
+import options from '../shared/options'
+import { socket } from '../shared/socket'
+import { IElementNode } from '../types'
+import { SocketMessages } from '../types/socket'
+import vibrate from '../utils/vibrate'
 
 export let recordingMacro = false
 export let playingMacro = false
-export let lastMacro: string[] = []
+export let lastMacro: [
+	SocketMessages.Client.ClientMessage[0],
+	SocketMessages.Client.ClientMessage[1]
+][] = []
 
 /** Carrega o estado do jogo */
 function loadState() {
 	if (window.layoutEditor?.opened) return
-	sendCmd('load')
-	sendCmd('load', true)
+	socket.sendKey('LOAD', 'press') // TODO: tap
+	socket.sendKey('LOAD', 'release')
 	vibrate(options.vibrate * 3)
 }
 
 /** Salva o estado do jogo */
 function saveState() {
 	if (window.layoutEditor?.opened) return
-	sendCmd('save')
-	sendCmd('save', true)
+	socket.sendKey('SAVE', 'press')
+	socket.sendKey('SAVE', 'release')
 	vibrate(options.vibrate * 3)
 }
 
@@ -47,8 +50,8 @@ async function playMacro(this: IElementNode<ButtonComponent, HTMLElement>) {
 	for (const command of lastMacro) {
 		if (!playingMacro) break
 		// TODO: toast desconectado
-		if (socket?.readyState !== 1) break
-		socket?.send(command)
+		if (socket.instance.readyState !== WebSocket.OPEN) break
+		socket?.sendCommand(command[0], command[1])
 		await new Promise((r) => setTimeout(r, 50))
 	}
 	if (this.instance) this.instance.release()
