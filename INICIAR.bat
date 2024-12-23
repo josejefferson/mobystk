@@ -1,4 +1,4 @@
 @echo off
 
 cd server
-python main.py
+python main.py %*

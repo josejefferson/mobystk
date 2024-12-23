@@ -117,3 +117,42 @@ def getArch():
             arch = "x86"
 
     return arch or "x86"
+
+
+# Cria atalhos na área de trabalho e menu iniciar
+def createShortcuts():
+    import subprocess
+
+    currentDir = os.getcwd()  # Diretório atual é "dist"
+    rootDir = os.path.abspath(os.path.join(currentDir, ".."))
+
+    desktopShortcutCommand = [
+        "powershell",
+        "-Command",
+        (
+            "$desktop = [System.Environment]::GetFolderPath('Desktop');"
+            "$s = (New-Object -COM WScript.Shell).CreateShortcut($desktop + '\\MobyStk.lnk');"
+            f"$s.TargetPath = '{rootDir}\\INICIAR.bat';"
+            f"$s.WorkingDirectory = '{rootDir}';"
+            f"$s.Description = 'Use seu smartphone como controle de videogame para PC';"
+            f"$s.IconLocation = '{currentDir}\\img\\icon.ico';"
+            "$s.Save();"
+        ),
+    ]
+
+    subprocess.call(desktopShortcutCommand)
+
+    startMenuShortcutCommand = [
+        "powershell",
+        "-Command",
+        (
+            "$startMenu = [System.Environment]::GetFolderPath('StartMenu');"
+            "$s = (New-Object -COM WScript.Shell).CreateShortcut($startMenu + '\\MobyStk.lnk');"
+            f"$s.TargetPath = '{rootDir}\\INICIAR.bat';"
+            f"$s.WorkingDirectory = '{rootDir}';"
+            f"$s.IconLocation = '{currentDir}\\img\\icon.ico';"
+            "$s.Save();"
+        ),
+    ]
+
+    subprocess.call(startMenuShortcutCommand)

@@ -56,7 +56,7 @@ class WebSocketServer(SimpleWebSocketServer):
 
             # Verifica se a senha está correta
             if needPassword:
-                if data.get("password") != options.getOption("password"):
+                if not options.checkPassword(data.get("password")):
                     self.sendCommand("handshakeFailed", {"passwordIncorrect": True})
                     return
 

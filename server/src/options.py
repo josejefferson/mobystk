@@ -7,6 +7,15 @@ import hashlib
 from __main__ import __file__ as __mainfile__
 
 
+# Caminho do arquivo de opções do MobyStk
+if os.name == "nt":  # Windows
+    optionsPath = os.path.join(os.environ["APPDATA"], "MobyStk", "options.json")
+else:  # Linux
+    optionsPath = os.path.expanduser("~/.config/MobyStk/options.json")
+
+os.makedirs(os.path.dirname(optionsPath), exist_ok=True)
+
+
 class Options:
     def __init__(self, opt):
         if "password" not in opt:
@@ -45,7 +54,7 @@ class Options:
         Salva as opções no arquivo JSON
         """
         j = json.dumps(self.options, indent=4)
-        f = open("../options.json", "w")
+        f = open(optionsPath, "w")
         f.write(j)
         f.close()
 
@@ -60,8 +69,7 @@ class Options:
 
 
 try:
-    path = os.path.join(os.path.dirname(__mainfile__), "options.json")
-    file = open(path)
+    file = open(optionsPath)
     opts = json.load(file)
 except Exception as err:
     opts = json.loads("{}")

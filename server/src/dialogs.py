@@ -2,14 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import os
+from .helpers import createShortcuts
 from .options import options
 from .tasks import afterExitTasks, installVgamepad, reloadScript
 from prompt_toolkit.application.current import get_app
-from prompt_toolkit.layout.controls import FormattedTextControl
 from prompt_toolkit.layout.containers import Float, HSplit
 from prompt_toolkit.layout.dimension import D
 from prompt_toolkit.widgets import Button, Dialog, Label, TextArea
-from prompt_toolkit.layout.containers import Window, WindowAlign
 
 
 # Instala o controle virtual
@@ -114,6 +113,16 @@ def optionsDialog(container, callback=lambda: None):
                     handler=toggleVgamepad,
                 )
             )
+
+        optionButtons.append(
+            Button(
+                left_symbol="*",
+                right_symbol="",
+                width=50,
+                text=("Criar atalhos"),
+                handler=createShortcuts,
+            )
+        )
 
     # Caixa de diálogo
     dialog = Dialog(
