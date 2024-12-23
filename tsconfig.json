@@ -9,13 +9,13 @@
 		"moduleResolution": "node",
 		"noEmit": false,
 		"noImplicitAny": true,
-		"outDir": "./public/js",
+		"outDir": "dist/js",
 		"resolveJsonModule": true,
-		"rootDir": "./ts",
+		"rootDir": "./src",
 		"skipLibCheck": true,
 		"strict": true,
 		"target": "ES2017"
 	},
-	"include": ["ts/**/*"],
+	"include": ["src/**/*"],
 	"exclude": ["node_modules"]
 }

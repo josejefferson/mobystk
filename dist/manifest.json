@@ -1,0 +1,23 @@
+{
+	"name": "MobyStk",
+	"short_name": "MobyStk",
+	"description": "Use seu smartphone como controle de videogame para PC",
+	"icons": [
+		{
+			"src": "img/icon.png",
+			"type": "image/png",
+			"sizes": "256x256"
+		},
+		{
+			"src": "img/icon_maskable.png",
+			"type": "image/png",
+			"sizes": "256x256",
+			"purpose": "maskable"
+		}
+	],
+	"start_url": "joystick.html",
+	"display": "fullscreen",
+	"orientation": "landscape",
+	"background_color": "#000000",
+	"theme_color": "#000000"
+}

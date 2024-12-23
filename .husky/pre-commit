@@ -3,4 +3,4 @@
 
 npx pretty-quick --staged
 npm run build
-git add public
+git add dist

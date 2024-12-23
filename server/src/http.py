@@ -38,7 +38,7 @@ class HTTPServer(ThreadingHTTPServer):
 # Inicia o servidor HTTP
 def startHTTPServer():
     # Define o diretório onde estão localizados os arquivos que serão servidos
-    os.chdir(os.path.join(os.path.dirname(__file__), "../../public"))
+    os.chdir(os.path.join(os.path.dirname(__file__), "../../dist"))
 
     # Inicia o servidor HTTP
     httpServer = HTTPServer()
