@@ -93,3 +93,27 @@ def clearConsole():
     if os.name in ("nt", "dos"):
         command = "cls"
     os.system(command)
+
+
+# Classe de fallback
+class Fallback:
+    def __getattr__(self, name):
+        return None
+
+
+# Obtém a arquitetura do sistema
+def getArch():
+    import platform
+
+    archstr = platform.machine()
+    if archstr.endswith("64"):
+        arch = "x64"
+    elif archstr.endswith("86"):
+        arch = "x86"
+    else:
+        if platform.architecture()[0] == "64bit":
+            arch = "x64"
+        else:
+            arch = "x86"
+
+    return arch or "x86"

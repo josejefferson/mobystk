@@ -3,8 +3,7 @@
 
 import os
 from .options import options
-# from .server import vgamepadInstalled, vgamepadError
-from .tasks import afterExitTasks, installVgamepad, uninstallVgamepad, reloadScript
+from .tasks import afterExitTasks, installVgamepad, reloadScript
 from prompt_toolkit.application.current import get_app
 from prompt_toolkit.layout.controls import FormattedTextControl
 from prompt_toolkit.layout.containers import Float, HSplit
@@ -12,17 +11,9 @@ from prompt_toolkit.layout.dimension import D
 from prompt_toolkit.widgets import Button, Dialog, Label, TextArea
 from prompt_toolkit.layout.containers import Window, WindowAlign
 
-vgamepadInstalled = True # temp
-vgamepadError = False # temp
-
 # Instala o controle virtual
 def addTaskInstallVgamepad():
 	afterExitTasks.append(installVgamepad)
-	get_app().exit()
-
-# Desinstala o controle virtual
-def addTaskUninstallVgamepad():
-	afterExitTasks.append(uninstallVgamepad)
 	get_app().exit()
 
 def toggleVgamepad():
@@ -97,18 +88,18 @@ def optionsDialog(container, callback = lambda: None):
 	]
 
 	if os.name == 'nt':
-		if vgamepadError:
-			optionButtons.append(Window(
-				content= FormattedTextControl('\nAVISO: O controle virtual está com problemas\n'),
-				align = WindowAlign.CENTER
-			))
+		try:
+			import vgamepad
+			vgamepadError = False
+		except:
+			vgamepadError = True
 
-		if not vgamepadInstalled:
+		if vgamepadError:
 			optionButtons.append(Button(
 				left_symbol = '*',
 				right_symbol = '',
 				width = 50,
-				text = 'Instalar controle virtual',
+				text = 'Instalar driver de Controle de XBOX',
 				handler = addTaskInstallVgamepad
 			))
 		else:
@@ -116,14 +107,7 @@ def optionsDialog(container, callback = lambda: None):
 				left_symbol = '*',
 				right_symbol = '',
 				width = 50,
-				text = 'Desinstalar controle virtual',
-				handler = addTaskUninstallVgamepad
-			))
-			optionButtons.append(Button(
-				left_symbol = '*',
-				right_symbol = '',
-				width = 50,
-				text = 'Ativar controle virtual' if options.getOption('disableVgamepad') else 'Desativar controle virtual',
+				text = 'Ativar Controle de XBOX' if options.getOption('disableVgamepad') else 'Desativar Controle de XBOX',
 				handler = toggleVgamepad
 			))
 

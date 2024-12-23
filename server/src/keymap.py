@@ -1,5 +1,10 @@
-from vgamepad import XUSB_BUTTON
 from pynput.keyboard import Key, KeyCode
+
+try:
+    from vgamepad import XUSB_BUTTON
+except:
+    from .helpers import Fallback
+    XUSB_BUTTON = Fallback()
 
 # (Keyboard 1, Keyboard 2, Keyboard 3, Keyboard 4, VGamepad)
 KEYMAP = {

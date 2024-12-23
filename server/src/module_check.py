@@ -6,7 +6,10 @@ modules = [
     "pyqrcode",
     "pynput",
     "SimpleWebSocketServer",
+    "vgamepad",
 ]
+
+optionalModules = ["vgamepad"]
 
 
 # Verifica se os módulos necessários do Python estão instalados
@@ -21,6 +24,8 @@ def checkModules():
         except ModuleNotFoundError:
             missingModules.append(module)
         except Exception as err:
+            if module in optionalModules:
+                continue
             print(f"(!) Erro ao importar o módulo {module}: {err}")
 
     if len(missingModules) > 0:
@@ -44,17 +49,17 @@ def askInstallModules(missingModules):
 
 # Instala os módulos ausentes
 def installMissingModules(missingModules):
-    import os, sys
+    import subprocess, sys
 
     errors = []
 
     for module in missingModules:
         try:
-            print(f'Instalando o módulo "{module}"...')
+            print(f'\nInstalando o módulo "{module}"...')
             print(f"$ python -m pip install {module}\n")
-            exit_code = os.system(f"{sys.executable} -m pip install {module}")
-            if exit_code != 0:
-                raise Exception(f"O comando retornou o código de saída {exit_code}")
+            exitCode = subprocess.call([sys.executable, '-m', 'pip', 'install', module])
+            if exitCode != 0:
+                raise Exception(f"O comando retornou o código de saída {exitCode}")
         except Exception as err:
             errors.append(err)
             print(f'\n(!) Erro ao instalar o módulo "{module}": {err}')
