@@ -1,0 +1,32 @@
+on:
+  push:
+    tags:
+      - 'v*'
+
+name: Build Executable
+
+jobs:
+  build-release:
+    name: Build Windows Executable
+    runs-on: windows-latest
+    steps:
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+          architecture: x64
+
+      - name: Bypass VGamepad setup.py
+        run: reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Nefarius Virtual Gamepad Emulation Bus Driver" /v DisplayName /t REG_SZ /d "Nefarius Virtual Gamepad Emulation Bus Driver" /f
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: .\build.bat
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: Versão ${{ github.ref }}
+          files: bin/MobyStk.exe
