@@ -28,5 +28,6 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          body: Versão ${{ github.ref }}
-          files: bin/MobyStk.exe
+          body: ''
+          files: bin/MobyStk ${{github.ref_name}}.exe
+          prerelease: ${{ endsWith(github.ref_name, '-beta') }}

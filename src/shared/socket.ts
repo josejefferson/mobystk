@@ -135,7 +135,8 @@ class MobyStkSocket {
 	}
 
 	onVibrate(data: SocketMessages.Server.Vibrate) {
-		vibrate(data.largeMotor ? 3000 : 1, true)
+		if (!options.vibrationFromGame) return
+		vibrate(data.largeMotor ? 1000 : 1, true)
 		$controllerIndicator.classList[data.largeMotor ? 'remove' : 'add'](
 			options.useKeyboard ? 'mdi-keyboard' : 'mdi-google-controller'
 		)

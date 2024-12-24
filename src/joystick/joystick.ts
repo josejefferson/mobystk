@@ -96,9 +96,10 @@ const IDEAL_HEIGHT = 400
 export function resizeJoystick() {
 	// Ajusta os tamanhos do controle
 	let width: number
-	if (window.outerHeight > window.outerWidth / (IDEAL_WIDTH / IDEAL_HEIGHT)) width = IDEAL_WIDTH
-	else width = (window.outerWidth / window.outerHeight) * IDEAL_HEIGHT
-	$viewport.setAttribute('content', `width=${width}, user-scalable=0`)
+	if (window.innerHeight > window.innerWidth / (IDEAL_WIDTH / IDEAL_HEIGHT)) width = IDEAL_WIDTH
+	else width = (window.innerWidth / window.innerHeight) * IDEAL_HEIGHT
+
+	document.body.style.zoom = `${window.innerWidth / width}`
 
 	// Reconstrói os joysticks
 	Controller.currentTouches = Controller.currentTouches.filter((el) => !el.joystick)

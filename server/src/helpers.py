@@ -43,7 +43,7 @@ def getIPs():
     ips = []
 
     # Se o módulo netifaces estiver instalado, obter os IPs através dele
-    if "netifaces" in globals():
+    if "netifaces" in locals():
         for interface in netifaces.interfaces():
             for address in netifaces.ifaddresses(interface)[netifaces.AF_INET]:
                 ips.append(address["addr"])
