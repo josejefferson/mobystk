@@ -5,3 +5,5 @@ __pycache__
 options.json
 MobyStk.lnk
 tsconfig.tsbuildinfo
+build
+bin

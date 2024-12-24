@@ -3,6 +3,7 @@
 
 from __main__ import __file__ as __mainfile__
 import os, re
+from sys import exit
 import subprocess
 import importlib.util
 from .helpers import clearConsole, getArch
@@ -16,7 +17,7 @@ def runAfterExitTasks():
     clearConsole()
     for task in afterExitTasks:
         task()
-    quit()
+    exit()
 
 
 # Reabre o programa
@@ -69,7 +70,7 @@ def reloadScript(message, error=False):
         input()
     except:
         pass
-    quit()
+    exit()
 
 
 # Instala o vgamepad
@@ -88,9 +89,14 @@ def installVgamepad():
         if not spec:
             raise Exception("O módulo vgamepad não está instalado")
         arch = getArch()
-        vigemSetupPath = os.path.normpath(
+        vigemSetupPath1 = os.path.normpath(
             os.path.join(spec.origin, f"../win/vigem/install/{arch}/ViGEmBusSetup_{arch}.msi")
-        )
+        ) # Python
+        vigemSetupPath2 = os.path.normpath(
+            os.path.join(os.path.dirname(__file__), f"../ViGEmBusSetup_{arch}.msi")
+        ) # PyInstaller
+        vigemSetupPath = vigemSetupPath1 if os.path.isdir(vigemSetupPath1) else vigemSetupPath2
+
         exitCode = subprocess.call(["msiexec", "/i", vigemSetupPath])
         if exitCode == 0:
             reloadScript("O controle virtual foi instalado!")

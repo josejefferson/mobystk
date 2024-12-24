@@ -1,4 +1,5 @@
 import threading
+from sys import exit
 from time import sleep
 from colorama import init as coloramaInit, Style as S
 from .logo import getTitle

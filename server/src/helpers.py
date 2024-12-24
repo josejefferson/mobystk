@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
+import os, sys
 import socket
 
 
@@ -123,8 +123,16 @@ def getArch():
 def createShortcuts():
     import subprocess
 
-    currentDir = os.getcwd()  # Diretório atual é "dist"
-    rootDir = os.path.abspath(os.path.join(currentDir, ".."))
+    # Verifica se o script está sendo executado em um executável PyInstaller
+    if getattr(sys, "frozen", False):
+        rootDir = os.path.dirname(sys.executable)
+        startExecutable = sys.executable
+        iconPath = f"{sys.executable},0"
+    else:
+        currentDir = os.getcwd()  # Diretório atual é "dist"
+        rootDir = os.path.abspath(os.path.join(currentDir, ".."))
+        startExecutable = f"{rootDir}\\INICIAR.bat"
+        iconPath = f"{currentDir}\\img\\icon.ico"
 
     desktopShortcutCommand = [
         "powershell",
@@ -132,10 +140,10 @@ def createShortcuts():
         (
             "$desktop = [System.Environment]::GetFolderPath('Desktop');"
             "$s = (New-Object -COM WScript.Shell).CreateShortcut($desktop + '\\MobyStk.lnk');"
-            f"$s.TargetPath = '{rootDir}\\INICIAR.bat';"
+            f"$s.TargetPath = '{startExecutable}';"
             f"$s.WorkingDirectory = '{rootDir}';"
             f"$s.Description = 'Use seu smartphone como controle de videogame para PC';"
-            f"$s.IconLocation = '{currentDir}\\img\\icon.ico';"
+            f"$s.IconLocation = '{iconPath}';"
             "$s.Save();"
         ),
     ]
@@ -148,9 +156,9 @@ def createShortcuts():
         (
             "$startMenu = [System.Environment]::GetFolderPath('StartMenu');"
             "$s = (New-Object -COM WScript.Shell).CreateShortcut($startMenu + '\\MobyStk.lnk');"
-            f"$s.TargetPath = '{rootDir}\\INICIAR.bat';"
+            f"$s.TargetPath = '{startExecutable}';"
             f"$s.WorkingDirectory = '{rootDir}';"
-            f"$s.IconLocation = '{currentDir}\\img\\icon.ico';"
+            f"$s.IconLocation = '{iconPath}';"
             "$s.Save();"
         ),
     ]

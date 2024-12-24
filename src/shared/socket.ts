@@ -105,12 +105,12 @@ class MobyStkSocket {
 
 		if (data.vGamepadDisabled) {
 			toast(
-				'O controle virtual está desativado, você pode ativá-lo nas opções do MobyStk no computador, utilizando o teclado'
+				'O controle virtual está desativado, você pode ativá-lo nas opções do MobyStk no computador'
 			)
 		}
 
 		if (data.vGamepadError) {
-			toast('Não foi possível criar um controle virtual, utilizando o teclado')
+			toast('Não foi possível criar um controle virtual. Utilizando o teclado')
 		}
 
 		// Atualiza a interface informando se está usando o teclado

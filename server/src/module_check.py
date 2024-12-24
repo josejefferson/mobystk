@@ -1,3 +1,6 @@
+import subprocess
+import sys
+import importlib
 from .helpers import clearConsole
 
 modules = (
@@ -14,7 +17,6 @@ optionalModules = "vgamepad"
 
 # Verifica se os módulos necessários do Python estão instalados
 def checkModules():
-    import importlib
 
     missingModules = []
 
@@ -24,7 +26,8 @@ def checkModules():
         except ModuleNotFoundError:
             missingModules.append((module, version))
         except Exception as err:
-            if module in optionalModules:
+            # Ignora os módulos opcionais se não estiver em modo de depuração
+            if "--debug" not in sys.argv and module in optionalModules:
                 continue
             print(f"(!) Erro ao importar o módulo {module}: {err}")
 
@@ -49,8 +52,6 @@ def askInstallModules(missingModules):
 
 # Instala os módulos ausentes
 def installMissingModules(missingModules):
-    import subprocess, sys
-
     errors = []
 
     for module, version in missingModules:

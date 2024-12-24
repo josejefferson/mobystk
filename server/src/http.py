@@ -38,7 +38,10 @@ class HTTPServer(ThreadingHTTPServer):
 # Inicia o servidor HTTP
 def startHTTPServer():
     # Define o diretório onde estão localizados os arquivos que serão servidos
-    os.chdir(os.path.join(os.path.dirname(__file__), "../../dist"))
+    dist1 = os.path.join(os.path.dirname(__file__), "../../dist") # Python
+    dist2 = os.path.join(os.path.dirname(__file__), "../dist") # PyInstaller
+    dist = dist1 if os.path.isdir(dist1) else dist2
+    os.chdir(dist)
 
     # Inicia o servidor HTTP
     httpServer = HTTPServer()
