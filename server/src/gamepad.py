@@ -5,12 +5,6 @@ from .common import keyboard
 
 
 class Gamepad:
-    connected = True  # Gamepad virtual está conectado
-    useKeyboard = False  # Utiliza o teclado ao invés do Gamepad virtual
-    vgamepad = None  # Instância do Gamepad virtual
-    vgamepadError = False  # Indica erro ao inicializar o Gamepad virtual
-    webSockets = []  # Lista de WebSockets conectados a este Gamepad
-
     def __init__(self, player: int):
         """
         Inicializa o Gamepad virtual ou o teclado
@@ -18,6 +12,11 @@ class Gamepad:
         :param player: ID do player (0 a 3)
         """
 
+        self.connected = True  # Gamepad virtual está conectado
+        self.useKeyboard = False  # Utiliza o teclado ao invés do Gamepad virtual
+        self.vgamepad = None  # Instância do Gamepad virtual
+        self.vgamepadError = False  # Indica erro ao inicializar o Gamepad virtual
+        self.webSockets = []  # Lista de WebSockets conectados a este Gamepad
         self.player = player
         self.useKeyboard = False
 
