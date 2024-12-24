@@ -25,6 +25,9 @@ jobs:
       - name: Build
         run: .\build.bat
 
+      - name: Rename executable
+        run: mv "bin/MobyStk.exe" "bin/MobyStk ${{github.ref_name}}.exe"
+
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
