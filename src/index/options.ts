@@ -1,4 +1,4 @@
-import Controller from '../shared/controller'
+import gamepads from '../elements/gamepads'
 import { escapeHTML } from '../utils/escape-html'
 import getOpt, { ls } from '../utils/get-option'
 import loading from '../utils/loading'
@@ -7,9 +7,8 @@ import { FormElements } from './types'
 
 // Carregar opções
 formEls.code.value = getOpt('code', window.location.hostname + ':5000')
-formEls.layout.value = getOpt('layout', Controller.layouts[0]?.id)
+formEls.gamepad.value = getOpt('gamepad', gamepads[0].id)
 formEls.player.value = getOpt('player', '1')
-formEls.useXbox.checked = getOpt('useXbox', false)
 formEls.invertL.checked = getOpt('invertL', false)
 formEls.invertR.checked = getOpt('invertR', false)
 formEls.disJoyXAxis.checked = getOpt('disJoyXAxis', false)
@@ -71,10 +70,9 @@ $form.addEventListener('submit', function (e) {
 	})
 
 	ls('code', elems.code.value)
-	ls('layout', elems.layout.value)
+	ls('gamepad', elems.gamepad.value)
 	ls('player', Number(elems.player.value))
 	ls('debug', elems.debug.checked)
-	ls('useXbox', elems.useXbox.checked)
 	ls('invertL', elems.invertL.checked)
 	ls('invertR', elems.invertR.checked)
 	ls('disJoyXAxis', elems.disJoyXAxis.checked)

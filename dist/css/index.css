@@ -205,17 +205,22 @@
 	border-color: var(--purple-300);
 }
 
-.container section.main main .chipsGroup.selectLayout {
+.container section.main main .chipsGroup.selectGamepad {
 	padding: 0 15px;
 	justify-content: center;
 }
 
-.container section.main main .chipsGroup.selectLayout .chip .label {
+.container section.main main .chipsGroup.selectGamepad .chip .label {
 	border-color: var(--red-400);
 	color: var(--red-400);
+	padding: 8px 12px !important;
 }
 
-.container section.main main .chipsGroup.selectLayout .chip input:checked + .label {
+.container section.main main .chipsGroup.selectGamepad .chip .label .label-icon {
+	margin-right: 10px;
+}
+
+.container section.main main .chipsGroup.selectGamepad .chip input:checked + .label {
 	background-color: var(--red-500);
 	border-color: inherit;
 	color: inherit;

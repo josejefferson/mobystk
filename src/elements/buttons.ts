@@ -364,9 +364,7 @@ const buttons: IButton[] = [
 		y: [0, 'px'],
 		width: [70, 'px'],
 		height: [70, 'px'],
-		content: options.useXbox
-			? { type: 'mobystk:text', value: 'X' }
-			: { type: 'mobystk:icon', value: 'triangle-outline' },
+		content: { type: 'mobystk:icon', value: 'triangle-outline' },
 		scalable: true,
 		border: [true, true, true, true],
 		fontSize: [32, 'px'],
@@ -390,9 +388,7 @@ const buttons: IButton[] = [
 		y: [0, 'px'],
 		width: [70, 'px'],
 		height: [70, 'px'],
-		content: options.useXbox
-			? { type: 'mobystk:text', value: 'Y' }
-			: { type: 'mobystk:icon', value: 'square-outline' },
+		content: { type: 'mobystk:icon', value: 'square-outline' },
 		scalable: true,
 		border: [true, true, true, true],
 		fontSize: [32, 'px'],
@@ -416,9 +412,7 @@ const buttons: IButton[] = [
 		y: [0, 'px'],
 		width: [70, 'px'],
 		height: [70, 'px'],
-		content: options.useXbox
-			? { type: 'mobystk:text', value: 'B' }
-			: { type: 'mobystk:icon', value: 'circle-outline' },
+		content: { type: 'mobystk:icon', value: 'circle-outline' },
 		scalable: true,
 		border: [true, true, true, true],
 		fontSize: [32, 'px'],
@@ -442,12 +436,10 @@ const buttons: IButton[] = [
 		y: [0, 'px'],
 		width: [70, 'px'],
 		height: [70, 'px'],
-		content: options.useXbox
-			? { type: 'mobystk:text', value: 'A' }
-			: { type: 'mobystk:icon', value: 'close' },
+		content: { type: 'mobystk:icon', value: 'close' },
 		scalable: true,
 		border: [true, true, true, true],
-		fontSize: [options.useXbox ? 32 : 42, 'px'],
+		fontSize: [42, 'px'],
 		radius: [
 			[50, '%'],
 			[50, '%'],
@@ -701,5 +693,51 @@ const buttons: IButton[] = [
 		]
 	}
 ]
+
+const L1 = buttons.find((button) => button.id === 'mobystk:left_1')!
+const L2 = buttons.find((button) => button.id === 'mobystk:left_2')!
+const L3 = buttons.find((button) => button.id === 'mobystk:left_3')!
+const R1 = buttons.find((button) => button.id === 'mobystk:right_1')!
+const R2 = buttons.find((button) => button.id === 'mobystk:right_2')!
+const R3 = buttons.find((button) => button.id === 'mobystk:right_3')!
+const SELECT = buttons.find((button) => button.id === 'mobystk:select')!
+const START = buttons.find((button) => button.id === 'mobystk:start')!
+const ACTION_UP = buttons.find((button) => button.id === 'mobystk:action_up')!
+const ACTION_LEFT = buttons.find((button) => button.id === 'mobystk:action_left')!
+const ACTION_RIGHT = buttons.find((button) => button.id === 'mobystk:action_right')!
+const ACTION_DOWN = buttons.find((button) => button.id === 'mobystk:action_down')!
+
+if (options.gamepad === 'xbox') {
+	L1.content = { type: 'mobystk:text', value: 'LB' }
+	L2.content = { type: 'mobystk:text', value: 'LT' }
+	L3.content = { type: 'mobystk:text', value: 'LSB' }
+	R1.content = { type: 'mobystk:text', value: 'RB' }
+	R2.content = { type: 'mobystk:text', value: 'RT' }
+	R3.content = { type: 'mobystk:text', value: 'RSB' }
+	ACTION_UP.content = { type: 'mobystk:text', value: 'Y' }
+	ACTION_LEFT.content = { type: 'mobystk:text', value: 'X' }
+	ACTION_RIGHT.content = { type: 'mobystk:text', value: 'B' }
+	ACTION_DOWN.content = { type: 'mobystk:text', value: 'A' }
+	ACTION_DOWN.fontSize = [32, 'px']
+	SELECT.content = { type: 'mobystk:text', value: 'BACK' }
+}
+
+if (options.gamepad === 'switch') {
+	L1.content = { type: 'mobystk:text', value: 'L' }
+	L2.content = { type: 'mobystk:text', value: 'ZL' }
+	L3.content = { type: 'mobystk:text', value: 'L3' }
+	R1.content = { type: 'mobystk:text', value: 'R' }
+	R2.content = { type: 'mobystk:text', value: 'ZR' }
+	R3.content = { type: 'mobystk:text', value: 'R3' }
+	ACTION_UP.content = { type: 'mobystk:text', value: 'X' }
+	ACTION_LEFT.content = { type: 'mobystk:text', value: 'Y' }
+	ACTION_RIGHT.content = { type: 'mobystk:text', value: 'A' }
+	ACTION_DOWN.content = { type: 'mobystk:text', value: 'B' }
+	ACTION_DOWN.fontSize = [32, 'px']
+	SELECT.content = { type: 'mobystk:icon', value: 'minus' }
+	SELECT.fontSize = [32, 'px']
+	START.content = { type: 'mobystk:icon', value: 'plus' }
+	START.fontSize = [32, 'px']
+}
 
 export default buttons

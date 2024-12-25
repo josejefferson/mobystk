@@ -2,6 +2,7 @@ import type { AnyComponent } from '../components'
 import ButtonComponent from '../components/Button'
 import GroupComponent from '../components/Group'
 import JoystickComponent from '../components/Joystick'
+import layout from '../elements/layout'
 import Controller from '../shared/controller'
 import options from '../shared/options'
 import { socket } from '../shared/socket'
@@ -117,18 +118,7 @@ export function importElement(object: IImport): (IElements & IImport) | undefine
 	if (element) return { ...element, ...object }
 }
 
-// Carrega o layout selecionado
-if (!options.layout) {
-	window.location.href = 'index.html'
-	throw new Error('Layout não selecionado')
-}
-const layout = Controller.layouts.find((l) => l.id === options.layout)
-if (!layout) {
-	alert('Layout não encontrado!')
-	window.location.href = 'index.html'
-	throw new Error('Layout não encontrado')
-}
-
+// Carrega o layout do joystick
 loadLayout(layout)
 
 // Configura os eventos dos elementos

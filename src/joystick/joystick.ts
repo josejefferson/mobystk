@@ -99,6 +99,7 @@ export function resizeJoystick() {
 	if (window.innerHeight > window.innerWidth / (IDEAL_WIDTH / IDEAL_HEIGHT)) width = IDEAL_WIDTH
 	else width = (window.innerWidth / window.innerHeight) * IDEAL_HEIGHT
 
+	// @ts-ignore
 	document.body.style.zoom = `${window.innerWidth / width}`
 
 	// Reconstrói os joysticks

@@ -25,17 +25,15 @@ const commonItems = [
 	{ import: options.invertR ? 'mobystk:joystick_right_bottom' : 'mobystk:joystick_right_top' }
 ]
 
-const layouts: ILayout[] = [
-	{
-		type: 'mobystk:layout',
-		id: 'mobystk:default',
-		name: '(Padrão)',
-		subtitle: '',
-		content: [
-			...commonItems,
-			{ import: options.invertR ? 'mobystk:actions_top' : 'mobystk:actions_bottom' }
-		]
-	}
-]
+const layout: ILayout = {
+	type: 'mobystk:layout',
+	id: 'mobystk:default',
+	name: '(Padrão)',
+	subtitle: '',
+	content: [
+		...commonItems,
+		{ import: options.invertR ? 'mobystk:actions_top' : 'mobystk:actions_bottom' }
+	]
+}
 
-export default layouts
+export default layout

@@ -8,7 +8,7 @@ export const $athPopupClose = $athPopup.querySelector<HTMLButtonElement>('.close
 export const $athPopupDSA = $athPopup.querySelector<HTMLInputElement>(
 	'.dontShowAgainAddToHomescreenPopup'
 )!
-export const $selectLayout = document.querySelector('.selectLayout')!
+export const $selectGamepad = document.querySelector('.selectGamepad')!
 export const $lockableKeys = document.querySelector('.lockableKeysList')!
 export const $hiddenItems = document.querySelector('.hiddenItemsList')!
 export const $inputsRange = document.querySelectorAll<HTMLInputElement>(

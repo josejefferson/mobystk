@@ -1,3 +1,4 @@
+import gamepads from '../elements/gamepads'
 import Controller from '../shared/controller'
 import type { IElements } from '../types'
 import { escapeHTML } from '../utils/escape-html'
@@ -12,7 +13,7 @@ import {
 	$hiddenItems,
 	$inputsRange,
 	$lockableKeys,
-	$selectLayout
+	$selectGamepad
 } from './elements'
 
 // Botão Iniciar
@@ -62,35 +63,30 @@ if (!ls('events.addToHomescreenPopup') && (hits === 3 || hits % 10 === 0)) {
 }
 
 // Carregar elementos
-for (const layout of Controller.layouts) {
+for (const gamepad of gamepads) {
 	const $button = document.createElement('label')
 	$button.classList.add('chip')
 
 	const $input = document.createElement('input')
 	$input.type = 'radio'
-	$input.name = 'layout'
-	$input.value = layout.id
+	$input.name = 'gamepad'
+	$input.value = gamepad.id
 
 	const $label = document.createElement('div')
 	$label.classList.add('label')
 
+	const $labelIcon = document.createElement('i')
+	$labelIcon.classList.add('label-icon', 'mdi', `mdi-${gamepad.icon}`)
+
 	const $labelTitle = document.createElement('div')
 	$labelTitle.classList.add('label-title')
-	$labelTitle.innerText = layout.name
-
-	const $labelSubtitle = document.createElement('div')
-	$labelSubtitle.classList.add('label-subtitle')
-	$labelSubtitle.innerText = layout.subtitle || ''
-
-	if (layout.info) {
-		$label.addEventListener('click', () => toast(layout.info || ''))
-	}
+	$labelTitle.appendChild($labelIcon)
+	$labelTitle.appendChild(document.createTextNode(gamepad.name))
 
 	$label.appendChild($labelTitle)
-	$label.appendChild($labelSubtitle)
 	$button.appendChild($input)
 	$button.appendChild($label)
-	$selectLayout.appendChild($button)
+	$selectGamepad.appendChild($button)
 }
 
 // Botões para travar

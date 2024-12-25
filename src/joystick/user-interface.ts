@@ -27,7 +27,6 @@ $edit.addEventListener('click', loading)
 $edit.addEventListener('contextmenu', () => {
 	window.layoutEditor.opened ? window.layoutEditor.end() : window.layoutEditor.start()
 })
-if (!options.layout) location.href = 'index.html'
 if (options.debug) document.body.classList.add('debug')
 if (options.invertL) document.body.classList.add('invertL')
 if (options.invertR) document.body.classList.add('invertR')

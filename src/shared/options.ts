@@ -3,13 +3,12 @@ import getOpt from '../utils/get-option'
 
 export interface IOptions {
 	ip: string
-	layout: string
+	gamepad: string
 	player: Player
 	password?: string
 	debug: boolean
 	locked: string[]
 	hidden: string[]
-	useXbox: boolean
 	invertL: boolean
 	invertR: boolean
 	disJoyXAxis: boolean
@@ -36,13 +35,12 @@ export interface IOptions {
 
 const options: IOptions = {
 	ip: getOpt('code', 'localhost:5000'),
-	layout: getOpt('layout'),
+	gamepad: getOpt('gamepad'),
 	player: (getOpt('player', 1) - 1) as Player,
 	password: getOpt('password'),
 	debug: getOpt('debug', false),
 	locked: getOpt('locked', []),
 	hidden: getOpt('hidden', []),
-	useXbox: getOpt('useXbox', false),
 	invertL: getOpt('invertL', false),
 	invertR: getOpt('invertR', false),
 	disJoyXAxis: getOpt('disJoyXAxis', false),
