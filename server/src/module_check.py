@@ -2,6 +2,9 @@ import subprocess
 import sys
 import importlib
 from .helpers import clearConsole
+from .logo import printLogo
+
+DEBUG = "--debug" in sys.argv
 
 modules = (
     ("colorama", "0.4.6"),
@@ -29,12 +32,15 @@ def checkModules():
             missingModules.append((module, version))
         except Exception as err:
             # Ignora os módulos opcionais se não estiver em modo de depuração
-            if "--debug" not in sys.argv and module in optionalModules:
+            if not DEBUG and module in optionalModules:
                 continue
             print(f"(!) Erro ao importar o módulo {module}: {err}")
 
     if len(missingModules) > 0:
-        askInstallModules(missingModules)
+        if DEBUG:
+            askInstallModules(missingModules)
+        else:
+            prepareFirstRun(missingModules)
 
 
 # Pergunta ao usuário se deseja instalar os módulos ausentes
@@ -52,26 +58,52 @@ def askInstallModules(missingModules):
     installMissingModules(missingModules)
 
 
+# Instala os módulos ausentes automaticamente
+def prepareFirstRun(missingModules):
+    printLogo(
+        "Preparando o MobyStk para o primeiro uso\n"
+        + "Por favor, aguarde...\n\n"
+        + "Não feche a aplicação ou desconecte a internet"
+    )
+    installMissingModules(missingModules)
+
+
 # Instala os módulos ausentes
 def installMissingModules(missingModules):
     errors = []
 
     for module, version in missingModules:
         try:
-            print(f'\nInstalando o módulo "{module}"...')
-            print(f"$ python -m pip install {module}=={version}\n")
-            exitCode = subprocess.call([sys.executable, "-m", "pip", "install", f"{module}=={version}"])
+            if DEBUG:
+                print(f'\nInstalando o módulo "{module}"...')
+                print(f"$ python -m pip install {module}=={version}\n")
+            exitCode = subprocess.call(
+                [sys.executable, "-m", "pip", "install", f"{module}=={version}"],
+                stdout=subprocess.DEVNULL if not DEBUG else None,
+                stderr=subprocess.DEVNULL if not DEBUG else None,
+            )
             if exitCode != 0:
                 raise Exception(f"O comando retornou o código de saída {exitCode}")
         except Exception as err:
             errors.append(err)
-            print(f'\n(!) Erro ao instalar o módulo "{module}": {err}')
+            if DEBUG:
+                print(f'\n(!) Erro ao instalar o módulo "{module}": {err}')
 
     if len(errors) > 0:
         errorWhenInstallingModules()
 
+    printLogo()
+
 
 # Exibe uma mensagem de erro ao instalar os módulos
 def errorWhenInstallingModules():
-    print("\n(!) A instalação de alguns módulos falhou, deseja continuar?")
-    input("Pressione ENTER para continuar...")
+    if DEBUG:
+        print("\n(!) A instalação de alguns módulos falhou, deseja continuar?")
+        input("Pressione ENTER para continuar...")
+    else:
+        printLogo(
+            "Ocorreu um erro ao preparar o MobyStk\n"
+            + "Verifique sua conexão com a internet\n\n"
+            + "Pressione ENTER para continuar..."
+        )
+        input()

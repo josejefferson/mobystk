@@ -3,8 +3,8 @@ from .helpers import clearConsole, getVersion
 
 
 # Mostra a tela de abertura do programa
-def printLogo():
-    logo = """
+def printLogo(text="Iniciando..."):
+    logo = f"""
   ▄▄▄▄███▄▄▄▄    ▄██████▄  ▀█████████▄  ▄██   ▄      ▄████████     ███        ▄█   ▄█▄ 
 ▄██▀▀▀███▀▀▀██▄ ███    ███   ███    ███ ███   ██▄   ███    ███ ▀█████████▄   ███ ▄███▀ 
 ███   ███   ███ ███    ███   ███    ███ ███▄▄▄███   ███    █▀     ▀███▀▀██   ███▐██▀   
@@ -14,7 +14,7 @@ def printLogo():
 ███   ███   ███ ███    ███   ███    ███ ███   ███    ▄█    ███     ███       ███ ▀███▄ 
   ▀█   ███   █▀   ▀██████▀  ▄█████████▀   ▀█████▀   ▄████████▀     ▄████▀     ███   ▀█▀ 
                                                                               ▀         
-Iniciando...""".strip(
+{text}""".strip(
         "\n"
     )
 
