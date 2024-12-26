@@ -1,11 +1,14 @@
 from .common import DEBUG, WS_PORT
 import threading
 import json
+from jsonschema import validate
+from jsonschema.exceptions import ValidationError
 from colorama import Fore as F, Style as S
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 from .options import options
 from .common import gamepads
 from .helpers import getVersion
+from .validators import socketSchema
 
 
 # Verifica se é necessário senha para conectar
@@ -34,18 +37,37 @@ class WebSocketServer(SimpleWebSocketServer):
             """
             try:
                 # Decodifica a mensagem no formato de array em JSON
-                command, data = json.loads(self.data)
+                jsonMessage = json.loads(self.data)
+                validate(instance=jsonMessage, schema=socketSchema)
+                command, data = jsonMessage
 
                 if command == "handshake":
                     self.handleHandshake(data)
+
                 if command == "ping":
                     self.sendCommand("pong", {"id": data.get("id")})
+
                 if command == "key":
-                    self.gamepad.handleKey(data.get("key"), data.get("action"), data.get("x"), data.get("y"))
+                    if self.authenticated:
+                        self.gamepad.handleKey(data.get("key"), data.get("action"), data.get("x"), data.get("y"))
+                    else:
+                        self.sendCommand("error", {"message": "Ocorreu um erro, tente abrir novamente o MobyStk"})
+
+            except json.JSONDecodeError as err:
+                self.sendCommand("error", {"message": "O computador recebeu um comando formatado incorretamente"})
+                if DEBUG:
+                    print(f"{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro de decodificação JSON")
+                    print(F.RED + str(err) + S.RESET_ALL)
+
+            except ValidationError as err:
+                self.sendCommand("error", {"message": "O computador recebeu um comando inválido"})
+                if DEBUG:
+                    print(f"{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro de validação")
+                    print(F.RED + str(err) + S.RESET_ALL)
+
             except Exception as err:
                 if DEBUG:
                     print(f"{F.MAGENTA}[WEBSOCKET]{S.RESET_ALL} Erro desconhecido")
-                if DEBUG:
                     print(F.RED + str(err) + S.RESET_ALL)
 
         def handleHandshake(self, data: dict):

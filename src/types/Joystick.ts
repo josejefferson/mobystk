@@ -1,7 +1,7 @@
 import type { JoystickManager } from 'nipplejs'
 import type { IElement, IElementComponent } from './Element'
 import type { ValueAndUnit } from './types'
-import { Key } from './socket'
+import { GamepadKey } from './socket'
 
 export interface IJoystick extends IElement {
 	/** Tipo de elemento */
@@ -17,7 +17,7 @@ export interface IJoystick extends IElement {
 	 * Teclas que serão enviadas ao computador
 	 * [Cima, Esquerda, Baixo, Direita]
 	 */
-	keys: [Key, Key, Key, Key]
+	keys: [GamepadKey, GamepadKey, GamepadKey, GamepadKey]
 }
 
 export interface IJoystickComponent extends IJoystick, IElementComponent {

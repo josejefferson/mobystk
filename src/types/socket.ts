@@ -9,6 +9,7 @@ export namespace SocketMessages {
 			| ['handshakeFailed', HandshakeFailed]
 			| ['pong', Pong]
 			| ['vibrate', Vibrate]
+			| ['error', Error]
 
 		/** Mensagem de conexão */
 		export type Welcome = { version: string; needPassword: boolean }
@@ -29,6 +30,9 @@ export namespace SocketMessages {
 
 		/** Vibração do controle */
 		export type Vibrate = { largeMotor: number; smallMotor: number }
+
+		/** Erro */
+		export type Error = { message: string }
 	}
 
 	/** Mensagens enviadas pelo cliente */
@@ -45,11 +49,11 @@ export namespace SocketMessages {
 		/** Tecla pressionada/liberada ou joystick movido */
 		export type Key =
 			| { key: Joystick; action: Action; x: number; y: number }
-			| { key: string; action: Action }
+			| { key: GamepadKey; action: Action }
 	}
 }
 
-export type Key =
+export type GamepadKey =
 	| 'JOYSTICK_1_UP'
 	| 'JOYSTICK_1_LEFT'
 	| 'JOYSTICK_1_DOWN'

@@ -3,9 +3,8 @@ import type JoystickComponent from '../components/Joystick'
 import Controller from '../shared/controller'
 import options from '../shared/options'
 import { socket } from '../shared/socket'
-import { Key } from '../types/socket'
+import { GamepadKey } from '../types/socket'
 import vibrate from '../utils/vibrate'
-import { $viewport } from './elements'
 
 type Direction = 'up' | 'left' | 'down' | 'right'
 type Border = 'Top' | 'Left' | 'Bottom' | 'Right'
@@ -73,9 +72,9 @@ export default function updateJoystick(
 /**
  * Retorna a tecla que será pressionada e a borda
  */
-function getKeyAndBorder(keys: [Key, Key, Key, Key], dir: Direction) {
+function getKeyAndBorder(keys: [GamepadKey, GamepadKey, GamepadKey, GamepadKey], dir: Direction) {
 	const keysAndBorders: {
-		[key: string]: [Key, Border]
+		[key: string]: [GamepadKey, Border]
 	} = {
 		up: [keys[0], 'Top'],
 		left: [keys[1], 'Left'],

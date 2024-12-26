@@ -10,6 +10,7 @@ DEBUG = "--debug" in sys.argv
 # Módulos necessários para o funcionamento do MobyStk
 modules = [
     ("colorama", "0.4.6"),
+    ("jsonschema", "4.23.0"),
     ("prompt_toolkit", "3.0.48"),
     ("pyqrcode", "1.2.1"),
     ("pynput", "1.7.7"),

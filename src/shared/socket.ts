@@ -2,7 +2,7 @@ import semver from 'semver'
 import { lastMacro, recordingMacro } from '../joystick/element-actions'
 import { $controllerIndicator } from '../joystick/elements'
 import { updateInfo } from '../joystick/user-interface'
-import { Joystick, Key, SocketMessages } from '../types/socket'
+import { Joystick, GamepadKey, SocketMessages } from '../types/socket'
 import { toast } from '../utils/toast'
 import vibrate from '../utils/vibrate'
 import options from './options'
@@ -54,6 +54,7 @@ class MobyStkSocket {
 		if (command === 'handshakeFailed') this.onHandshakeFailed(data)
 		if (command === 'pong') this.onPong(data)
 		if (command === 'vibrate') this.onVibrate(data)
+		if (command === 'error') this.onError(data)
 	}
 
 	sendCommand(
@@ -75,7 +76,7 @@ class MobyStkSocket {
 		this.sendCommand('ping', { id: this.pingID })
 	}
 
-	sendKey(key: Key, action: 'press' | 'release') {
+	sendKey(key: GamepadKey, action: 'press' | 'release') {
 		this.sendCommand('key', { key, action })
 	}
 
@@ -152,6 +153,10 @@ class MobyStkSocket {
 			options.useKeyboard ? 'mdi-keyboard' : 'mdi-google-controller'
 		)
 		$controllerIndicator.classList[data.largeMotor ? 'add' : 'remove']('mdi-vibrate')
+	}
+
+	onError(data: SocketMessages.Server.Error) {
+		toast(data.message)
 	}
 
 	askPassword() {
