@@ -164,3 +164,19 @@ def createShortcuts():
     ]
 
     subprocess.call(startMenuShortcutCommand)
+
+
+# Obtém a versão do aplicativo
+def getVersion():
+    try:
+        packageJson1 = os.path.join(os.path.dirname(__file__), "../../package.json")  # Python
+        packageJson2 = os.path.join(os.path.dirname(__file__), "../package.json")  # PyInstaller
+        packageJson = packageJson1 if os.path.isfile(packageJson1) else packageJson2
+
+        with open(packageJson, "r") as f:
+            import json
+
+            content = json.load(f)
+            return content["version"]
+    except:
+        return "0.0.0"

@@ -1,3 +1,4 @@
+import semver from 'semver'
 import { lastMacro, recordingMacro } from '../joystick/element-actions'
 import { $controllerIndicator } from '../joystick/elements'
 import { updateInfo } from '../joystick/user-interface'
@@ -96,6 +97,16 @@ class MobyStkSocket {
 			password,
 			useKeyboard: options.useKeyboard
 		})
+
+		if (semver.compare(data.version, VERSION) >= 1) {
+			toast(
+				`Seu dispositivo está utilizando uma versão antiga do MobyStk, recomendamos atualizar a aplicação para a versão ${data.version}`
+			)
+		} else if (semver.compare(data.version, VERSION) <= -1) {
+			toast(
+				`Seu dispositivo está usando uma versão mais nova do MobyStk, atualize a aplicação no computador para a versão ${VERSION}`
+			)
+		}
 	}
 
 	onHandshakeOK(data: SocketMessages.Server.HandshakeOK) {
@@ -123,7 +134,7 @@ class MobyStkSocket {
 			alert('Senha incorreta')
 			options.password = undefined
 			localStorage.removeItem('joystick.password')
-			this.onWelcome({ needPassword: true })
+			this.onWelcome({ version: VERSION, needPassword: true })
 		}
 	}
 

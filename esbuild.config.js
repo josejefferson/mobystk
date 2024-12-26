@@ -1,7 +1,12 @@
 import styles from 'ansi-styles'
 import esbuild from 'esbuild'
 import { clean } from 'esbuild-plugin-clean'
+import { readFileSync } from 'fs'
 const { bgCyan, bold, yellow, reset } = styles
+
+const packageJsonString = readFileSync('./package.json', 'utf8')
+const packageJson = JSON.parse(packageJsonString)
+const version = packageJson.version
 
 const ctx = await esbuild.context({
 	entryPoints: ['src/index/index.ts', 'src/joystick/index.ts'],
@@ -10,7 +15,10 @@ const ctx = await esbuild.context({
 	minify: true,
 	splitting: true,
 	format: 'esm',
-	plugins: [clean({ patterns: ['./dist/js/*'] })]
+	plugins: [clean({ patterns: ['./dist/js/*'] })],
+	define: {
+		VERSION: JSON.stringify(version)
+	}
 })
 
 if (process.argv.includes('--watch')) {

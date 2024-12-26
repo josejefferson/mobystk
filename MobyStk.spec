@@ -5,7 +5,7 @@ a = Analysis(
     ['server\\main.py'],
     pathex=[],
     binaries=[('venv/Lib/site-packages/vgamepad/win/vigem/client/x64/ViGEmClient.dll', '.'), ('venv/Lib/site-packages/vgamepad/win/vigem/install/x64/ViGEmBusSetup_x64.msi', '.')],
-    datas=[('dist', 'dist')],
+    datas=[('dist', 'dist'), ('package.json', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

@@ -26,7 +26,8 @@ if not exist "venv" (
 pyinstaller ^
   server/main.py ^
   --onefile ^
-  --add-data dist:dist ^
+  --add-data "dist:dist" ^
+  --add-data "package.json:." ^
   --add-binary="venv/Lib/site-packages/vgamepad/win/vigem/client/x64/ViGEmClient.dll:." ^
   --add-binary="venv/Lib/site-packages/vgamepad/win/vigem/install/x64/ViGEmBusSetup_x64.msi:." ^
   --icon=dist/img/icon.ico ^

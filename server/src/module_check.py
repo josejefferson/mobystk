@@ -8,6 +8,8 @@ modules = (
     ("prompt_toolkit", "3.0.48"),
     ("pyqrcode", "1.2.1"),
     ("pynput", "1.7.7"),
+    ("requests", "2.32.3"),
+    ("semver", "3.0.2"),
     ("SimpleWebSocketServer", "0.1.2"),
     ("vgamepad", "0.1.0"),
 )

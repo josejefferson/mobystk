@@ -5,6 +5,7 @@ from colorama import Fore as F, Style as S
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 from .options import options
 from .common import gamepads
+from .helpers import getVersion
 
 
 # Verifica se é necessário senha para conectar
@@ -87,7 +88,7 @@ class WebSocketServer(SimpleWebSocketServer):
             Cliente conectado
             """
             WebSocketServer.clients.append(self)
-            self.sendCommand("welcome", {"needPassword": needPassword})
+            self.sendCommand("welcome", {"version": getVersion(), "needPassword": needPassword})
             if DEBUG:
                 print(f"{F.YELLOW}[WEBSOCKET]{S.RESET_ALL} Usuário conectado {self.address}")
 

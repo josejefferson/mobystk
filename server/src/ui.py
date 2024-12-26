@@ -5,8 +5,9 @@ from colorama import init as coloramaInit, Style as S
 from .logo import getTitle
 from .tasks import runAfterExitTasks
 from .dialogs import optionsDialog
-from .helpers import getIPs, getIPContent
+from .helpers import getIPs, getIPContent, getVersion
 from .common import HTTP_PORT, WS_PORT, DEBUG
+from .check_updates import startUpdateChecker
 from prompt_toolkit import ANSI
 from prompt_toolkit.application import Application
 from prompt_toolkit.application.current import get_app
@@ -32,6 +33,10 @@ ips = []
 ipDetails = VSplit([], height=D())
 
 
+# Créditos
+credits = Window(content=FormattedTextControl(" Desenvolvido por Jefferson Dantas \n"))
+
+
 # Aplicação
 rootContainer = HSplit(
     [
@@ -39,7 +44,8 @@ rootContainer = HSplit(
         ipDetails,
         VSplit(
             [
-                Window(content=FormattedTextControl(" Desenvolvido por Jefferson Dantas \n")),
+                credits,
+                Window(content=FormattedTextControl(f"v{getVersion()}  "), align=WindowAlign.RIGHT),
                 Button(text="Opções", handler=lambda: optionsDialog(rootContainer)),
                 Button(text="Sair", handler=exit),
             ],
@@ -148,6 +154,7 @@ def startUI():
         layout = Layout(rootContainer)
         app = Application(layout=layout, key_bindings=kb, mouse_support=True, full_screen=True)
         app.output.show_cursor = lambda: None
+        startUpdateChecker(credits)
         app.run()
         runAfterExitTasks()
     else:
@@ -155,6 +162,7 @@ def startUI():
         print(f"{S.BRIGHT}----- Modo DEBUG ativado -----\n")
         for i in range(len(ips)):
             print(getIPContent(ips[i], HTTP_PORT, WS_PORT, i), "\n")
+        startUpdateChecker(credits)
         try:
             while True:
                 sleep(1000)

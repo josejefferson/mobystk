@@ -1,5 +1,5 @@
 import os
-from .helpers import clearConsole
+from .helpers import clearConsole, getVersion
 
 
 # Mostra a tela de abertura do programa
@@ -37,7 +37,8 @@ Iniciando...""".strip(
     for l in lines:
         print(l)
 
-    print("\n" * lastLineBreaks, end="")
+    print("\n" * (lastLineBreaks - 1), end="")
+    print(f" v{getVersion()}")
 
 
 # Retorna o título colorido "MobyStk"

@@ -11,7 +11,8 @@ import {
 	$DIPlayerNumber,
 	$edit,
 	$ping,
-	$root
+	$root,
+	$version
 } from './elements'
 
 // ELEMENTOS
@@ -21,6 +22,12 @@ if (options.hidden.includes('mobystk:deviceInfo')) {
 if (options.hidden.includes('mobystk:ping')) {
 	$ping.classList.add('hidden')
 }
+if (options.hidden.includes('mobystk:version')) {
+	$version.classList.add('hidden')
+}
+
+// VERSÃO
+$version.innerText = `v${VERSION}`
 
 // CARREGAMENTO DAS OPÇÕES
 $edit.addEventListener('click', loading)

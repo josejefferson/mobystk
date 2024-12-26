@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import os
+import webbrowser
 from .helpers import createShortcuts
 from .options import options
 from .tasks import afterExitTasks, installVgamepad, reloadScript
+from .check_updates import getLatestVersion
 from prompt_toolkit.application.current import get_app
 from prompt_toolkit.layout.containers import Float, HSplit
 from prompt_toolkit.layout.dimension import D
@@ -122,6 +124,29 @@ def optionsDialog(container, callback=lambda: None):
                 text=("Criar atalhos"),
                 handler=createShortcuts,
             )
+        )
+
+    optionButtons.append(
+        Button(
+            left_symbol="*",
+            right_symbol="",
+            width=50,
+            text=("GitHub do projeto"),
+            handler=lambda: webbrowser.open("https://github.com/josejefferson/mobystk"),
+        )
+    )
+
+    latestVersion, hasUpdate, updateURL = getLatestVersion()
+    if hasUpdate:
+        optionButtons.insert(
+            0,
+            Button(
+                left_symbol="*",
+                right_symbol="",
+                width=50,
+                text=(f"ATUALIZAR MOBYSTK ({latestVersion})"),
+                handler=lambda: webbrowser.open(updateURL),
+            ),
         )
 
     # Caixa de diálogo

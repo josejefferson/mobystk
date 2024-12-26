@@ -1,8 +1,7 @@
 {
-	"name": "joystick",
-	"version": "1.0.0",
-	"main": "index.js",
-	"repository": "https://github.com/josejefferson/joystick.git",
+	"name": "mobystk",
+	"version": "0.0.0",
+	"repository": "https://github.com/josejefferson/mobystk",
 	"author": "Jefferson Dantas <jeffersonn.jjdaj@gmail.com>",
 	"type": "module",
 	"scripts": {
@@ -23,7 +22,9 @@
 	},
 	"dependencies": {
 		"@simonwep/pickr": "^1.8.2",
+		"@types/semver": "^7.5.8",
 		"nipplejs": "^0.9.1",
+		"semver": "^7.6.3",
 		"store2": "^2.14.2"
 	}
 }

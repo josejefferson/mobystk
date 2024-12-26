@@ -11,7 +11,7 @@ export namespace SocketMessages {
 			| ['vibrate', Vibrate]
 
 		/** Mensagem de conexão */
-		export type Welcome = { needPassword: boolean }
+		export type Welcome = { version: string; needPassword: boolean }
 
 		/** Sucesso no Handshake */
 		export type HandshakeOK = {

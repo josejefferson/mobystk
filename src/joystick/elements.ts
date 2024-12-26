@@ -9,6 +9,7 @@ export const $DIClock = $deviceInfo.querySelector<HTMLElement>('.clock')!
 export const $DIPlayerNumber = $deviceInfo.querySelector<HTMLElement>('.player .player-number')!
 export const $DIStatus = $deviceInfo.querySelector<HTMLElement>('.status')!
 export const $ping = document.querySelector<HTMLElement>('.ping')!
+export const $version = document.querySelector<HTMLElement>('.version')!
 export const $controllerIndicator = document.querySelector('.controller-indicator')!
 export const $layout = document.querySelector('.controller-layout')!
 export const $viewport = document.querySelector('meta[name="viewport"]')!

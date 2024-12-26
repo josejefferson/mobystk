@@ -287,9 +287,9 @@ body.disconnected .deviceInfo .status::after {
 	content: 'Desconectado';
 }
 
-.ping {
+.ping,
+.version {
 	color: inherit;
-	left: 5px;
 	font-size: 12px;
 	pointer-events: none;
 	position: fixed;
@@ -297,6 +297,14 @@ body.disconnected .deviceInfo .status::after {
 	user-select: none;
 	white-space: pre;
 	z-index: 5;
+}
+
+.ping {
+	left: 5px;
+}
+
+.version {
+	right: 5px;
 }
 
 /* ==========================================================================

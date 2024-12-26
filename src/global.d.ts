@@ -1,6 +1,8 @@
 export {}
 
 declare global {
+	const VERSION: string
+
 	interface Window {
 		[key: string]: any
 	}
