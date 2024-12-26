@@ -1,7 +1,7 @@
 from time import sleep
 from .keymap import KEYMAP, GLOBAL_KEYMAP
 from .options import options
-from .common import keyboard
+from .common import keyboard, DEBUG
 
 
 class Gamepad:
@@ -31,10 +31,13 @@ class Gamepad:
 
             self.vgamepad = VX360Gamepad()
             self.disconnect()
-            self.vgamepad.register_notification(callback_function=self.gamepadNotification)
-        except:
+            if hasattr(self.vgamepad, "register_notification"):
+                self.vgamepad.register_notification(callback_function=self.gamepadNotification)
+        except Exception as err:
             self.vgamepadError = True
             self.useKeyboard = True
+            if DEBUG:
+                print("Erro ao inicializar o Gamepad virtual:", err)
 
     def disconnect(self):
         """

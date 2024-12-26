@@ -90,10 +90,10 @@ def installVgamepad():
             raise Exception("O módulo vgamepad não está instalado")
         arch = getArch()
         vigemSetupPath1 = os.path.normpath(
-            os.path.join(spec.origin, f"../win/vigem/install/{arch}/ViGEmBusSetup_{arch}.msi")
+            os.path.abspath(os.path.join(spec.origin, f"../win/vigem/install/{arch}/ViGEmBusSetup_{arch}.msi"))
         ) # Python
         vigemSetupPath2 = os.path.normpath(
-            os.path.join(os.path.dirname(__file__), f"../ViGEmBusSetup_{arch}.msi")
+            os.path.abspath(os.path.join(os.path.dirname(__file__), f"../ViGEmBusSetup_{arch}.msi"))
         ) # PyInstaller
         vigemSetupPath = vigemSetupPath1 if os.path.isdir(vigemSetupPath1) else vigemSetupPath2
 

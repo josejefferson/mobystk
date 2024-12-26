@@ -45,8 +45,10 @@ def getIPs():
     # Se o módulo netifaces estiver instalado, obter os IPs através dele
     if "netifaces" in locals():
         for interface in netifaces.interfaces():
-            for address in netifaces.ifaddresses(interface)[netifaces.AF_INET]:
-                ips.append(address["addr"])
+            ifAddresses = netifaces.ifaddresses(interface)
+            if netifaces.AF_INET in ifAddresses:
+                for address in ifAddresses[netifaces.AF_INET]:
+                    ips.append(address["addr"])
 
     # Caso contrário, obter os IPs através do socket
     else:
@@ -169,8 +171,8 @@ def createShortcuts():
 # Obtém a versão do aplicativo
 def getVersion():
     try:
-        packageJson1 = os.path.join(os.path.dirname(__file__), "../../package.json")  # Python
-        packageJson2 = os.path.join(os.path.dirname(__file__), "../package.json")  # PyInstaller
+        packageJson1 = os.abspath(os.path.join(os.path.dirname(__file__), "../../package.json"))  # Python
+        packageJson2 = os.abspath(os.path.join(os.path.dirname(__file__), "../package.json"))  # PyInstaller
         packageJson = packageJson1 if os.path.isfile(packageJson1) else packageJson2
 
         with open(packageJson, "r") as f:

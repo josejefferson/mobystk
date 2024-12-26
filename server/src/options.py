@@ -9,7 +9,7 @@ from __main__ import __file__ as __mainfile__
 
 # Caminho do arquivo de opções do MobyStk
 if os.name == "nt":  # Windows
-    optionsPath = os.path.join(os.environ["APPDATA"], "MobyStk", "options.json")
+    optionsPath = os.path.abspath(os.path.join(os.environ["APPDATA"], "MobyStk", "options.json"))
 else:  # Linux
     optionsPath = os.path.expanduser("~/.config/MobyStk/options.json")
 
