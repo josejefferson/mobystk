@@ -1,3 +1,4 @@
+import os
 import subprocess
 import sys
 import importlib
@@ -6,7 +7,8 @@ from .logo import printLogo
 
 DEBUG = "--debug" in sys.argv
 
-modules = (
+# Módulos necessários para o funcionamento do MobyStk
+modules = [
     ("colorama", "0.4.6"),
     ("prompt_toolkit", "3.0.48"),
     ("pyqrcode", "1.2.1"),
@@ -15,9 +17,14 @@ modules = (
     ("semver", "3.0.2"),
     ("SimpleWebSocketServer", "0.1.2"),
     ("vgamepad", "0.1.0"),
-)
+]
 
-optionalModules = "vgamepad"
+# Adiciona módulos específicos para o sistema operacional Linux
+if os.name == "posix":
+    modules.append(("netifaces", "0.11.0"))
+
+# Módulos opcionais
+optionalModules = ["vgamepad"]
 
 
 # Verifica se os módulos necessários do Python estão instalados
