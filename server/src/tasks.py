@@ -95,7 +95,7 @@ def installVgamepad():
         vigemSetupPath2 = os.path.normpath(
             os.path.abspath(os.path.join(os.path.dirname(__file__), f"../ViGEmBusSetup_{arch}.msi"))
         ) # PyInstaller
-        vigemSetupPath = vigemSetupPath1 if os.path.isdir(vigemSetupPath1) else vigemSetupPath2
+        vigemSetupPath = vigemSetupPath1 if os.path.isfile(vigemSetupPath1) else vigemSetupPath2
 
         exitCode = subprocess.call(["msiexec", "/i", vigemSetupPath])
         if exitCode == 0:
