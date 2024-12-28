@@ -171,8 +171,8 @@ def createShortcuts():
 # Obtém a versão do aplicativo
 def getVersion():
     try:
-        packageJson1 = os.abspath(os.path.join(os.path.dirname(__file__), "../../package.json"))  # Python
-        packageJson2 = os.abspath(os.path.join(os.path.dirname(__file__), "../package.json"))  # PyInstaller
+        packageJson1 = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../package.json"))  # Python
+        packageJson2 = os.path.abspath(os.path.join(os.path.dirname(__file__), "../package.json"))  # PyInstaller
         packageJson = packageJson1 if os.path.isfile(packageJson1) else packageJson2
 
         with open(packageJson, "r") as f:
