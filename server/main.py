@@ -11,6 +11,12 @@ printLogo()
 checkModules()
 
 
+from src.helpers import setProcessPriority
+
+# Define a prioridade do processo do Python para alta
+setProcessPriority()
+
+
 from src.http import startHTTPServer
 from src.websocket import startWebSocketServer
 

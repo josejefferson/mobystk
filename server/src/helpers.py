@@ -182,3 +182,18 @@ def getVersion():
             return content["version"]
     except:
         return "0.0.0"
+
+
+# Define a prioridade do processo do Python para alta
+def setProcessPriority():
+    try:
+        import psutil
+
+        proc = psutil.Process(os.getpid())
+
+        if os.name == "nt":
+            proc.nice(psutil.HIGH_PRIORITY_CLASS)
+        else:
+            proc.nice(-10)
+    except:
+        pass
