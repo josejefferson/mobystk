@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PYTHON_CMD=$(command -v python3 || command -v python)
+
 # Configura o ambiente virtual
 if [ ! -d "venv" ]; then
   $PYTHON_CMD -m venv venv

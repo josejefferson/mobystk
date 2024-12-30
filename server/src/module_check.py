@@ -12,6 +12,7 @@ modules = [
     ("colorama", "0.4.6"),
     ("jsonschema", "4.23.0"),
     ("prompt_toolkit", "3.0.48"),
+    ("psutil", "6.1.1"),
     ("pyqrcode", "1.2.1"),
     ("pynput", "1.7.7"),
     ("requests", "2.32.3"),
