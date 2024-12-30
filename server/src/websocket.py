@@ -38,7 +38,7 @@ class WebSocketServer(SimpleWebSocketServer):
             try:
                 # Decodifica a mensagem no formato de array em JSON
                 jsonMessage = json.loads(self.data)
-                validate(instance=jsonMessage, schema=socketSchema)
+                # validate(instance=jsonMessage, schema=socketSchema)
                 command, data = jsonMessage
 
                 if command == "handshake":
