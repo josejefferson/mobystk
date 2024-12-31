@@ -197,3 +197,13 @@ def setProcessPriority():
             proc.nice(-10)
     except:
         pass
+
+
+# Permite o MobyStk no Firewall do Windows
+def allowFirewall():
+    import ctypes
+
+    deleteRuleCmd = f'advfirewall firewall delete rule program="{sys.executable}" name=all'
+    ctypes.windll.shell32.ShellExecuteW(None, "runas", "netsh.exe", deleteRuleCmd, None, 1)
+    createRuleCmd = f'advfirewall firewall add rule name="MobyStk" dir=in action=allow program="{sys.executable}" enable=yes'
+    ctypes.windll.shell32.ShellExecuteW(None, "runas", "netsh.exe", createRuleCmd, None, 1)

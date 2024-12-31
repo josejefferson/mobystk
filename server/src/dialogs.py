@@ -3,7 +3,7 @@
 
 import os
 import webbrowser
-from .helpers import createShortcuts
+from .helpers import createShortcuts, allowFirewall
 from .options import options
 from .tasks import afterExitTasks, installVgamepad, reloadScript
 from .check_updates import getLatestVersion
@@ -123,6 +123,16 @@ def optionsDialog(container, callback=lambda: None):
                 width=50,
                 text=("Criar atalhos"),
                 handler=createShortcuts,
+            )
+        )
+
+        optionButtons.append(
+            Button(
+                left_symbol="*",
+                right_symbol="",
+                width=50,
+                text=("Liberar o MobyStk no Firewall do Windows"),
+                handler=allowFirewall,
             )
         )
 
