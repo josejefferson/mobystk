@@ -29,7 +29,8 @@ export default function loadDriveMode() {
 		if (window.layoutEditor?.opened) return
 
 		// Inicia/para o sensor
-		drive.active ? stopSensor() : startSensor()
+		if (drive.active) stopSensor()
+		else startSensor()
 
 		/**
 		 * Inicia o sensor

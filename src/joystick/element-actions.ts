@@ -61,7 +61,7 @@ async function playMacro(this: IElementNode<ButtonComponent, HTMLElement>) {
 
 /** Entra em tela cheia */
 function fullScreen() {
-	document.documentElement.requestFullscreen()
+	void document.documentElement.requestFullscreen()
 }
 
 // Detecta quando o modo de tela cheia é ativado/desativado e mostra/oculta o botão de tela cheia

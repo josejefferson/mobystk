@@ -64,11 +64,10 @@ export function getAllElements(
 	elements: AnyComponent[] = []
 ) {
 	if (object.type === 'mobystk:layout' || object.type === 'mobystk:group') {
-		object = object as ILayoutComponent | GroupComponent
-		if (object.type !== 'mobystk:layout') elements.push(object as GroupComponent)
+		if (object.type !== 'mobystk:layout') elements.push(object)
 		for (const obj of object.parsedContent!) getAllElements(obj, elements)
 	} else {
-		elements.push(object as ButtonComponent | JoystickComponent)
+		elements.push(object)
 	}
 	return elements
 }
@@ -92,14 +91,14 @@ export function parseElement(object: IElementsOrImport) {
 		// Botão
 		object = object as IButton
 		if (options.locked?.includes(objectID)) object = { ...object, lockable: true }
-		return new ButtonComponent(object as IButton)
+		return new ButtonComponent(object)
 	} else if (object.type === 'mobystk:group') {
 		// Grupo
 		object = object as IGroup
 		object.parsedContent = object.content
 			.map(parseElement)
 			.filter((e: AnyComponent | undefined) => e) as AnyComponent[]
-		const group = new GroupComponent(object as IGroup)
+		const group = new GroupComponent(object)
 		object.parsedContent = object.parsedContent.map((e: AnyComponent) => (e.parent = group))
 		return group
 	} else if (object.type === 'mobystk:joystick') {

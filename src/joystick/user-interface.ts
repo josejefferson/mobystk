@@ -32,7 +32,8 @@ $version.innerText = `v${VERSION}`
 // CARREGAMENTO DAS OPÇÕES
 $edit.addEventListener('click', loading)
 $edit.addEventListener('contextmenu', () => {
-	window.layoutEditor.opened ? window.layoutEditor.end() : window.layoutEditor.start()
+	if (window.layoutEditor.opened) window.layoutEditor.end()
+	else window.layoutEditor.start()
 })
 if (options.debug) document.body.classList.add('debug')
 if (options.invertL) document.body.classList.add('invertL')
@@ -54,6 +55,7 @@ document.body.append($customCSS)
 if (options.customJS && options.customJS.trim()) {
 	if (confirm('Deseja executar os plugins?')) {
 		try {
+			// eslint-disable-next-line @typescript-eslint/no-implied-eval
 			new Function(options.customJS.trim())()
 		} catch (err: any) {
 			alert('Ocorreu um erro ao executar os plugins\n\n' + (err?.message || ''))

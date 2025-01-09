@@ -58,7 +58,7 @@ export class Tree {
 			$groupContent = $tree
 		}
 
-		for (let el of (element as ILayoutComponent).parsedContent || element.content) {
+		for (const el of (element as ILayoutComponent).parsedContent || element.content) {
 			if ('content' in el && Array.isArray(el.content)) {
 				$groupContent.appendChild(this._html(el as IGroup, false))
 			} else {

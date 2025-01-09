@@ -31,11 +31,11 @@ interface IController {
 }
 
 const Controller: IController = {
-	buttons: buttons,
-	groups: groups,
-	joysticks: joysticks,
-	gamepads: gamepads,
-	layout: layout,
+	buttons,
+	groups,
+	joysticks,
+	gamepads,
+	layout,
 	currentLayout: null,
 	currentTouches: [],
 	elements: {

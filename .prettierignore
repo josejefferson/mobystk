@@ -4,3 +4,8 @@ util
 *.min.*
 lib/**/*
 src/js
+build
+bin
+dist/js
+server
+venv

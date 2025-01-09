@@ -17,7 +17,7 @@ function importOptions() {
 		try {
 			const file = this.files![0]
 			if (!file) return
-			const content: string | ArrayBuffer = await new Promise((resolve, reject) => {
+			const content: string = await new Promise((resolve, reject) => {
 				const reader = new FileReader()
 				reader.onload = () => resolve(reader.result as string)
 				reader.onerror = reject

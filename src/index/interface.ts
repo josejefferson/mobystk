@@ -29,7 +29,7 @@ function updateStartButton() {
 }
 
 // Contador de visitas
-let hits = parseInt(ls('stats.hits.home'))
+let hits = parseInt(ls('stats.hits.home'), 10)
 if (isNaN(hits)) hits = 0
 ls('stats.hits.home', ++hits)
 
@@ -57,7 +57,7 @@ if (!ls('events.addToHomescreenPopup') && (hits === 3 || hits % 10 === 0)) {
 		$video.loop = true
 		$video.muted = true
 		$athPopup.querySelector('.content')!.appendChild($video)
-		$video.play()
+		void $video.play()
 		$athPopup.classList.add('show')
 	})
 }

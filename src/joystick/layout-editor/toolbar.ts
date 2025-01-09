@@ -63,7 +63,7 @@ export class Toolbar {
 		for (const $mode of Array.from(this.$modes)) {
 			const _this = this
 			$mode.addEventListener('click', function (e) {
-				const mode = <0 | 1>parseInt(this.dataset.mode!)
+				const mode = <0 | 1>parseInt(this.dataset.mode!, 10)
 				if (isNaN(mode)) return
 				_this.mode = mode
 				_this.render()
@@ -73,7 +73,7 @@ export class Toolbar {
 		this.$anchorX = document.querySelector('.anchor-x')!
 		this.$anchorX.addEventListener('click', (e) => {
 			editingElement!.anchorX += 1
-			if (editingElement!.anchorX > 2) editingElement!.anchorX = AnchorX.LEFT
+			if (editingElement!.anchorX > AnchorX.CENTER) editingElement!.anchorX = AnchorX.LEFT
 			this.render()
 			editingElement!.render()
 			anchorLines.update()
@@ -82,7 +82,7 @@ export class Toolbar {
 		this.$anchorY = document.querySelector('.anchor-y')!
 		this.$anchorY.addEventListener('click', (e) => {
 			editingElement!.anchorY += 1
-			if (editingElement!.anchorY > 2) editingElement!.anchorY = AnchorY.TOP
+			if (editingElement!.anchorY > AnchorY.CENTER) editingElement!.anchorY = AnchorY.TOP
 			this.render()
 			editingElement!.render()
 			anchorLines.update()
@@ -112,7 +112,7 @@ export class Toolbar {
 		this._y = y
 
 		for (const $mode of Array.from(this.$modes)) {
-			const mode = parseInt($mode.dataset.mode!)
+			const mode = parseInt($mode.dataset.mode!, 10)
 			if (isNaN(mode)) continue
 			$mode.classList[this.mode === mode ? 'add' : 'remove']('active-mode')
 		}
