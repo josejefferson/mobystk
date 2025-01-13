@@ -81,7 +81,15 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          body: ''
+          body: |
+            # Downloads
+
+            Veja [Instruções de uso](https://github.com/josejefferson/mobystk/#instru%C3%A7%C3%B5es-de-uso)
+
+            | Sistema | Arquivo |
+            | ------- | ------- |
+            | ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0ODc1IDQ4NzUiPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0wIDBoMjMxMXYyMzEwSDB6bTI1NjQgMGgyMzExdjIzMTBIMjU2NHpNMCAyNTY0aDIzMTF2MjMxMUgwem0yNTY0IDBoMjMxMXYyMzExSDI1NjQiLz48L3N2Zz4=&logoColor=white) | [MobyStk-${{github.ref_name}}-Windows-x64.exe](https://github.com/josejefferson/mobystk/releases/download/${{github.ref_name}}/MobyStk-${{github.ref_name}}-Windows-x64.exe) |
+            | ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black) | [MobyStk-${{github.ref_name}}-Linux-x64](https://github.com/josejefferson/mobystk/releases/download/${{github.ref_name}}/MobyStk-${{github.ref_name}}-Linux-x64) |
           files: |
             ./MobyStk-${{github.ref_name}}-Windows-x64.exe
             ./MobyStk-${{github.ref_name}}-Linux-x64
