@@ -1,3 +1,5 @@
+import { BarController, BarElement, CategoryScale, Chart, LinearScale } from 'chart.js'
+import chroma from 'chroma-js'
 import options from '../shared/options'
 import loading from '../utils/loading'
 import { toast } from '../utils/toast'
@@ -10,7 +12,7 @@ import {
 	$DIClock,
 	$DIPlayerNumber,
 	$edit,
-	$ping,
+	$pingChart,
 	$root,
 	$version
 } from './elements'
@@ -18,9 +20,6 @@ import {
 // ELEMENTOS
 if (options.hidden.includes('mobystk:deviceInfo')) {
 	$deviceInfo.classList.add('hidden')
-}
-if (options.hidden.includes('mobystk:ping')) {
-	$ping.classList.add('hidden')
 }
 if (options.hidden.includes('mobystk:version')) {
 	$version.classList.add('hidden')
@@ -126,4 +125,60 @@ if (options.debug)
 		updateInfo()
 	})
 
-export {}
+// GRÁFICO DE LATÊNCIA
+Chart.register(BarController, CategoryScale, LinearScale, BarElement)
+
+const MAX_PINGS = 30
+const hidePingChart = options.hidden.includes('mobystk:ping_chart')
+const pings = Array(MAX_PINGS).fill(0)
+
+const chart = hidePingChart
+	? null
+	: new Chart($pingChart, {
+			type: 'bar',
+			options: {
+				responsive: false,
+				animation: {
+					duration: 500,
+					easing: 'easeOutQuart'
+				},
+				scales: {
+					x: { display: false },
+					y: { display: false, min: 0, max: 999 }
+				},
+				plugins: {
+					legend: { display: false },
+					tooltip: { enabled: false }
+				}
+			},
+			data: {
+				labels: pings.map((_, i) => i + 1),
+				datasets: [
+					{
+						data: pings,
+						backgroundColor: pings.map(pingBarColor),
+						borderWidth: 0
+					}
+				]
+			}
+	  })
+
+/** Adiciona um novo ping ao gráfico */
+export function addPing(time: number) {
+	if (!chart) return
+	if (pings.length >= MAX_PINGS) pings.shift()
+	pings.push(time)
+	chart.data.labels = pings.map((_, i) => i + 1)
+	chart.data.datasets[0].data = pings
+	chart.data.datasets[0].backgroundColor = pings.map(pingBarColor)
+	chart.update('active')
+}
+
+/** Retorna a cor da barra baseado no valor */
+export function pingBarColor(time: number) {
+	return chroma
+		.scale(['#00bcff', '#fdc700', '#fb2c36'])
+		.domain([0, 300, 999])
+		.mode('lab')(time)
+		.hex()
+}

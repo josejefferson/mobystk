@@ -39,7 +39,8 @@ const hidden = getOpt('hidden', [
 	'mobystk:diag_left_up',
 	'mobystk:diag_right_up',
 	'mobystk:diag_left_down',
-	'mobystk:diag_right_down'
+	'mobystk:diag_right_down',
+	'mobystk:ping_chart'
 ])
 for (const item of locked) {
 	const $input = document.querySelector<HTMLInputElement>(

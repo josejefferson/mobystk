@@ -595,7 +595,7 @@ const buttons: IButton[] = [
 		anchorX: AnchorX.CENTER,
 		anchorY: AnchorY.CENTER,
 		x: [0, 'px'],
-		y: [-50, 'px'],
+		y: [-70, 'px'],
 		width: [70, 'px'],
 		height: [20, 'px'],
 		content: { type: 'mobystk:text', value: 'Tela cheia' },

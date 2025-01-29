@@ -1,6 +1,6 @@
 {
 	"name": "mobystk",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"repository": "https://github.com/josejefferson/mobystk",
 	"author": "Jefferson Dantas <jeffersonn.jjdaj@gmail.com>",
 	"type": "module",
@@ -14,6 +14,7 @@
 	},
 	"devDependencies": {
 		"@josejefferson/eslint-config-typescript": "^1.1.0",
+		"@types/chroma-js": "^3.1.1",
 		"esbuild": "^0.20.2",
 		"esbuild-plugin-clean": "^1.0.1",
 		"eslint": "^8",
@@ -26,6 +27,8 @@
 	"dependencies": {
 		"@simonwep/pickr": "^1.8.2",
 		"@types/semver": "^7.5.8",
+		"chart.js": "^4.4.7",
+		"chroma-js": "^3.1.2",
 		"nipplejs": "^0.9.1",
 		"semver": "^7.6.3",
 		"store2": "^2.14.2"

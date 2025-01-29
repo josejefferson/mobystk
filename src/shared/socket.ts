@@ -1,7 +1,7 @@
 import semver from 'semver'
 import { lastMacro, recordingMacro } from '../joystick/element-actions'
 import { $controllerIndicator } from '../joystick/elements'
-import { updateInfo } from '../joystick/user-interface'
+import { addPing, updateInfo } from '../joystick/user-interface'
 import { Joystick, GamepadKey, SocketMessages } from '../types/socket'
 import { toast } from '../utils/toast'
 import vibrate from '../utils/vibrate'
@@ -69,10 +69,13 @@ class MobyStkSocket {
 	}
 
 	sendPing() {
-		if (this.instance.readyState !== this.instance.OPEN) return
-		if (this.pingID && $ping) $ping.innerText = '+999ms'
+		if (this.pingID && $ping) {
+			$ping.innerText = 'Ping: +999ms'
+			addPing(999)
+		}
 		this.pingID = Math.floor(Math.random() * 1000000)
 		this.pingTime = Date.now()
+		if (this.instance.readyState !== this.instance.OPEN) return
 		this.sendCommand('ping', { id: this.pingID })
 	}
 
@@ -141,7 +144,11 @@ class MobyStkSocket {
 
 	onPong(data: SocketMessages.Server.Pong) {
 		if (Number(data.id) === this.pingID) {
-			if ($ping) $ping.innerText = String(Date.now() - this.pingTime) + 'ms'
+			if ($ping) {
+				const pingTime = Date.now() - this.pingTime
+				$ping.innerText = `Ping: ${pingTime}ms`
+				addPing(pingTime)
+			}
 			this.pingID = undefined
 		}
 	}
